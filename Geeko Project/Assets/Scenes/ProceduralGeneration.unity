@@ -365,7 +365,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 6aa35657d2d54124c8b6f162f7c60f59, type: 3}
   RoomObj: {fileID: 1802759937364105971, guid: bfd7dfd91faffa4409636f09bc1cf585, type: 3}
   roomDimensions: {x: 272, y: 144}
-  gutterSize: {x: 144, y: 64}
+  gutterSizeX: 18
+  gutterSizeY: 10
 --- !u!1 &573588107
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +379,7 @@ GameObject:
   - component: {fileID: 573588109}
   - component: {fileID: 573588108}
   - component: {fileID: 573588111}
+  - component: {fileID: 573588112}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -471,6 +473,20 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &573588112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573588107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd784e38d0d8ce24ab989077c0e7e27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1000
+  moveJump: {x: 0, y: 0, z: 0}
 --- !u!1 &708296056
 GameObject:
   m_ObjectHideFlags: 0
