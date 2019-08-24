@@ -10,6 +10,7 @@ public abstract class Spell : ScriptableObject
     public Image m_SpellImage;
     public Image m_BorderImage;
     public AudioClip m_SpellSound;
+    [HideInInspector] public GameObject gameObject;
     [SerializeField] public GameObject m_Prefab;
 
     public abstract void Initialize(GameObject obj);
