@@ -11,7 +11,6 @@ public class PlayerUIManager : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
-
         if (!m_StatusComponent)
         {
             m_StatusComponent = GetComponent<StatusComponent>();
@@ -20,10 +19,8 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void UpdateHealthBar()
     {
-        // TODO: Remove from Update() and make listener to StatusComponent TakeDamage function to update UI from there
-        if (m_HealthBar)
-            m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
+        m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
     }
 }
