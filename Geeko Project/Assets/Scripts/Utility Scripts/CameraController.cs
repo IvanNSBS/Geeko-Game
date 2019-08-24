@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
         moveJump = new Vector3(SA.gutterSizeX, SA.gutterSizeY, 0);
         Debug.Log(moveJump.x + ", " + moveJump.y);
     }
-
+    /*
     void Update()
     {
         if (Input.GetKeyDown("w") || Input.GetKeyDown("s") ||
@@ -28,5 +28,5 @@ public class CameraController : MonoBehaviour
             transform.position = targetPos;
         }
     }
-
+    */
 }
