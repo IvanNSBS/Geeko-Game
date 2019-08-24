@@ -9,9 +9,9 @@ public class StatusComponent : MonoBehaviour
 
     [SerializeField] private float m_MaxHealth = 100.0f;
     [SerializeField] private UnityEvent Die;
-    [SerializeField] private UnityEvent OnTakeDamage;
-    [SerializeField] private UnityEvent OnReceiveHeal;
-    [SerializeField] private UnityEvent OnSetMaxHealth;
+    [SerializeField] private UnityEvent OnTakeDamage;  // Useful/used to update things like UI without Update method
+    [SerializeField] private UnityEvent OnReceiveHeal; // Useful/used to update things like UI without Update method
+    [SerializeField] private UnityEvent OnSetMaxHealth;// Useful/used to update things like UI without Update method
 
 
     private float m_CurrentHealth;

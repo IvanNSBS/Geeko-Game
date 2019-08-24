@@ -21,6 +21,8 @@ public class PlayerUIManager : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
+        if(m_HealthBar)
+            m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
     }
+
 }
