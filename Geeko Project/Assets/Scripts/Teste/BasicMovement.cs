@@ -7,10 +7,12 @@ public class BasicMovement : MonoBehaviour
     [System.NonSerialized]
     public Transform player;
     public float speed;
+    public Rigidbody2D mRigidbody2D;
 
     private void Start()
     {
         player = this.transform;
+        mRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     void Update()
