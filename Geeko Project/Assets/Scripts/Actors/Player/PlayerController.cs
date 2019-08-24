@@ -5,21 +5,32 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] MovementComponent mMovementComponent;
-
+    private MovementComponent m_MovementComponent;
+    private StatusComponent m_StatusComponent;
     void Start()
     {
-        if (!mMovementComponent)
+        if (!m_MovementComponent)
         {
-            mMovementComponent = GetComponent<MovementComponent>();
-            if (!mMovementComponent)
-                Debug.LogWarning("Actor MovementComponent wasn't successfully set. Actor won't be able to use this component");
+            m_MovementComponent = GetComponent<MovementComponent>();
+            if (!m_MovementComponent)
+                Debug.LogWarning("Actor MovementComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+        }
+
+        if (!m_StatusComponent)
+        {
+            m_StatusComponent = GetComponent<StatusComponent>();
+            if (!m_StatusComponent)
+                Debug.LogWarning("Actor StatusComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
         }
     }
+
+    public void PlayerDeath() { Debug.Log("Player Has Died.."); }
 
     // Update is called once per frame
     void Update()
     {
-        mMovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
+        m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
+        if (Input.GetButtonDown("Fire1"))
+            m_StatusComponent.TakeDamage(5);
     }
 }
