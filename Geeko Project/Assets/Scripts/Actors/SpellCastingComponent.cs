@@ -8,11 +8,10 @@ public class SpellCastingComponent : MonoBehaviour
     [SerializeField] private Spell m_Spell2;
     [SerializeField] private Spell m_Spell3;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_Spell1.m_SpellOwner = this.gameObject;
     }
 
     // Update is called once per frame

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1623317735016259174}
   - component: {fileID: 1623317735016259170}
   - component: {fileID: 1623317735016259173}
-  - component: {fileID: 1623317735016259171}
+  - component: {fileID: 6465737131628447464}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Main Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.12, y: -0.07}
@@ -144,13 +144,13 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1623317735016259171
+  m_Constraints: 4
+--- !u!114 &6465737131628447464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,8 +159,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623317735016259177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae0f5b9e3a6ed6347b182a745de5cd1b, type: 3}
+  m_Script: {fileID: 11500000, guid: a29a70b07747ae3408a306cc8a4d71e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damage: 0
-  m_ProjectileSpeed: 0
+  m_OnCollideEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_OnTriggerTick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_OnCollisionTick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_OnTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null

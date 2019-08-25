@@ -39,6 +39,6 @@ public class PlayerController : MonoBehaviour
     {
         m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
         if (Input.GetButtonDown("Fire1"))
-            Instantiate(m_SpellComponent.m_Spell1.m_Prefab);
+            m_SpellComponent.m_Spell1.CastSpell();
     }
 }
