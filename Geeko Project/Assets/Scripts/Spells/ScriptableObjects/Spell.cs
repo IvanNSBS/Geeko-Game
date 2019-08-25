@@ -13,7 +13,7 @@ public abstract class Spell : ScriptableObject
     public List<string> m_ActorsToIgnore = new List<string>(); // List of tags of valid entities
                                                                // that can interact with the spell
     [HideInInspector] public GameObject m_SpellOwner;
-    [HideInInspector] public GameObject m_Prefab;
+    public GameObject m_Prefab;
     [HideInInspector] public GameObject m_InstantiatedPrefab;
 
     public abstract void Initialize(GameObject obj);

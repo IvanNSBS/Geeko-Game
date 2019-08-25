@@ -20,7 +20,8 @@ MonoBehaviour:
   m_SpellSound: {fileID: 0}
   m_ActorsToIgnore: []
   m_SpellOwner: {fileID: 0}
-  m_Prefab: {fileID: 0}
+  m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
+    type: 3}
   m_InstantiatedPrefab: {fileID: 0}
   m_Damage: 10
   m_ProjectileSpeed: 20
