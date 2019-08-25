@@ -10,8 +10,9 @@ public abstract class Spell : ScriptableObject
     public Image m_SpellImage;
     public Image m_BorderImage;
     public AudioClip m_SpellSound;
-    [HideInInspector] public GameObject gameObject;
-    [SerializeField] public GameObject m_Prefab;
+    public List<string> m_ActorsToAffect = new List<string>();
+    [HideInInspector] public GameObject owner;
+    [HideInInspector] public GameObject m_Prefab;
 
     public abstract void Initialize(GameObject obj);
     public abstract void CastSpell(); 
