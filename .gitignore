@@ -19,6 +19,7 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
+*.vs/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
