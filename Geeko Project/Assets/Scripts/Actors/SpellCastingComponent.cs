@@ -11,7 +11,7 @@ public class SpellCastingComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Spell1.owner = this.gameObject;
+        m_Spell1.m_SpellOwner = this.gameObject;
     }
 
     // Update is called once per frame

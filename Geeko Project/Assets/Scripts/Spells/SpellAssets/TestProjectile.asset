@@ -18,8 +18,10 @@ MonoBehaviour:
   m_SpellImage: {fileID: 0}
   m_BorderImage: {fileID: 0}
   m_SpellSound: {fileID: 0}
-  gameObject: {fileID: 0}
+  m_ActorsToIgnore: []
+  m_SpellOwner: {fileID: 0}
   m_Prefab: {fileID: 1623317735016259177, guid: 0a095bceb67ae5d48aafbc83b223cc09,
     type: 3}
+  m_InstantiatedPrefab: {fileID: 0}
   m_Damage: 10
   m_ProjectileSpeed: 10
