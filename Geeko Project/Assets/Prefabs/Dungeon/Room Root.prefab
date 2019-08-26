@@ -907,21 +907,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17a10cb83b3c8748963de16c258c1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tex: {fileID: 0}
+  tex: {fileID: 2800000, guid: 6aa35657d2d54124c8b6f162f7c60f59, type: 3}
   gridPos: {x: 0, y: 0}
   type: 0
   doorTop: 0
   doorBot: 0
   doorLeft: 0
   doorRight: 0
-  doorU: {fileID: 5075063008634335466, guid: 72555480b77f3c7449d1aa9f95833038, type: 3}
-  doorD: {fileID: 758313913488586308, guid: fb1878795e8246a42848cdb3eedd6771, type: 3}
-  doorL: {fileID: 8356912223600015793, guid: 6b335ae22ee3bb048a1ed1e4f792227e, type: 3}
-  doorR: {fileID: 759698086436141642, guid: 6c1cb0f760389bf4989149b4074934d1, type: 3}
-  wallU: {fileID: 7162388488327345507, guid: 53230ee5be2997b43a962b689c9119d5, type: 3}
-  wallD: {fileID: 8963554332414836255, guid: fc14b18fcf0fae14c932599473974e68, type: 3}
-  wallL: {fileID: 3808611395660741793, guid: 71a2e484a0dd218459751b24c9f725f2, type: 3}
-  wallR: {fileID: 2204679326277676718, guid: 6dd0f50b75deaaa4183c131ada5298e8, type: 3}
+  doorU: {fileID: 5075063008634335466, guid: bd81232f795ce364aa098b49fa7d5f4f, type: 3}
+  doorD: {fileID: 758313913488586308, guid: 783ed0c3036caec4ab56a1126347701c, type: 3}
+  doorL: {fileID: 8356912223600015793, guid: 6afb36dd59b3a6b4bab0e57615dffa81, type: 3}
+  doorR: {fileID: 759698086436141642, guid: db0119085e57bb4438f1887cfb2902db, type: 3}
+  wallU: {fileID: 7162388488327345507, guid: 530f7c97ba4548e49a746084d719654e, type: 3}
+  wallD: {fileID: 8963554332414836255, guid: a3f8ee3102d1a77419863382fe55a4d3, type: 3}
+  wallL: {fileID: 3808611395660741793, guid: 5bdf543328fb9a344988549268d3a09c, type: 3}
+  wallR: {fileID: 2204679326277676718, guid: 3e13e8990755f53468be8af8f7964d66, type: 3}
   mappings:
   - color: {r: 1, g: 1, b: 1, a: 1}
     prefab: {fileID: 5654085527131941461, guid: 626f381878d34244d9a40cdfc06af22b,
