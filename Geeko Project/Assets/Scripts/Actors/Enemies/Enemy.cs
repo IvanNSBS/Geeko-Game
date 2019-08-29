@@ -25,28 +25,40 @@ public class Enemy : MonoBehaviour
     
     void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        } else if (Vector2.Distance(transform.position, player.position) < stoppingDistance &&
-            Vector2.Distance(transform.position, player.position) > retreatDistance)
-        {
-            transform.position = this.transform.position;
-        }
-        else if (Vector2.Distance(transform.position, player.position) < retreatDistance){
-            transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-
-        }
-
+        FollowAndRetreat(transform, player, stoppingDistance, retreatDistance);
         
+        Shooting(timeBtwShots,startTimeBtwShots);
+    }
+
+
+    public void Shooting(float timeBtwShots, float startTimeBtwShots)
+    {
         if(timeBtwShots <= 0)
         {
             Instantiate(projectile, transform.position, transform.rotation);
-            timeBtwShots = startTimeBtwShots;
+            this.timeBtwShots = startTimeBtwShots;
         }
         else
         {
-            timeBtwShots -= Time.deltaTime;
+           this.timeBtwShots -= Time.deltaTime;
         }
     }
+    
+    public void FollowAndRetreat(Transform enemy, Transform player, float stoppingDistance, float retreatDistance)
+    {
+        if (Vector2.Distance(enemy.position, player.position) > stoppingDistance) //following
+        {
+           transform.position = Vector2.MoveTowards(enemy.position, player.position, speed * Time.deltaTime);
+            
+        } else if (Vector2.Distance(enemy.position, player.position) < stoppingDistance &&
+                   Vector2.Distance(enemy.position, player.position) > retreatDistance)
+        { //where to stop
+            this.transform.position = enemy.position;
+        }
+        else if (Vector2.Distance(enemy.position, player.position) < retreatDistance){ //retreat
+            this.transform.position = Vector2.MoveTowards(enemy.position, player.position, -speed * Time.deltaTime);
+
+        }
+    }
+    
 }
