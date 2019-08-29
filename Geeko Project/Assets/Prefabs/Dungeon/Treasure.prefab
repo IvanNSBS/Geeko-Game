@@ -95,13 +95,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable:
-  - item: {fileID: 0}
-    dropRate: 0
-  - item: {fileID: 0}
-    dropRate: 0
-  - item: {fileID: 0}
-    dropRate: 0
-  - item: {fileID: 0}
-    dropRate: 0
-  - item: {fileID: 0}
-    dropRate: 0
+  - item: {fileID: 8027353428034923817, guid: 3404f702e7b98924f91bfaa2ac1a0700, type: 3}
+    dropRate: 50
+  - item: {fileID: 1934385918486034781, guid: c5293487f5477fa43b613fac679e40d9, type: 3}
+    dropRate: 40
+  - item: {fileID: 8536475305572326278, guid: 5bc5985e57551544886a41f9d81e5c31, type: 3}
+    dropRate: 30
+  - item: {fileID: 4917518854157979185, guid: ec815a28bb546cc47970075a32166f8c, type: 3}
+    dropRate: 20
+  - item: {fileID: 1124717153621622088, guid: d4d73959e9813db42970d89c5b7a9ddd, type: 3}
+    dropRate: 10
+  dropChance: 100
