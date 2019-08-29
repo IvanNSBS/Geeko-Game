@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
     public float moveSpeed;
     public Vector3 moveJump = Vector2.zero;
-    float horMove, vertMove;
 
     void Start()
     {
@@ -14,19 +13,31 @@ public class CameraController : MonoBehaviour
         moveJump = new Vector3(SA.gutterSizeX, SA.gutterSizeY, 0);
         Debug.Log(moveJump.x + ", " + moveJump.y);
     }
-    /*
-    void Update()
+
+    public void MoveCameraUp()
     {
-        if (Input.GetKeyDown("w") || Input.GetKeyDown("s") ||
-            Input.GetKeyDown("a") || Input.GetKeyDown("d")) //if any 'wasd' key is pressed
-        {
-            horMove = System.Math.Sign(Input.GetAxisRaw("Horizontal"));//capture input
-            vertMove = System.Math.Sign(Input.GetAxisRaw("Vertical"));
-            Vector3 targetPos = transform.position;
-            targetPos += Vector3.right * horMove * moveJump.x; //jump bnetween rooms based opn input
-            targetPos += Vector3.up * vertMove * moveJump.y;
-            transform.position = targetPos;
-        }
+        Vector3 targetPos = transform.position;
+        targetPos += Vector3.up * moveJump.y;
+        transform.position = targetPos;
     }
-    */
+    public void MoveCameraRight()
+    {
+        Vector3 targetPos = transform.position;
+        targetPos += Vector3.right * moveJump.x;
+        transform.position = targetPos;
+    }
+
+    public void MoveCameraLeft()
+    {
+        Vector3 targetPos = transform.position;
+        targetPos += Vector3.left * moveJump.x;
+        transform.position = targetPos;
+    }
+
+    public void MoveCameraDown()
+    {
+        Vector3 targetPos = transform.position;
+        targetPos += Vector3.down * moveJump.y;
+        transform.position = targetPos;
+    }
 }
