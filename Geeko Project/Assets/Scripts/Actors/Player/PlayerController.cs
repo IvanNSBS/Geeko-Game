@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
-        if (Input.GetButtonDown("Fire1"))
-            m_SpellComponent.m_Spell1.CastSpell();
+        //if (Input.GetButtonDown("Fire1"))
+        //    m_SpellComponent.m_Spell1.CastSpell();
     }
 }
