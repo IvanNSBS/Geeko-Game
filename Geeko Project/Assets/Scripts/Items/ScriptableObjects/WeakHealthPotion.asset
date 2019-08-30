@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3f516848c35974d83b2f6dca3d5c1c, type: 3}
+  m_Name: WeakHealthPotion
+  m_EditorClassIdentifier: 
+  m_ItemName: Health Potion
+  m_GameSprite: {fileID: 0}
+  m_Animation: {fileID: 0}
+  m_PickupSound: {fileID: 0}
+  m_OnPickup:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_HealAmount: 80

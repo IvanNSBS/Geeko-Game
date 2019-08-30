@@ -49,10 +49,17 @@ public class MovementComponent : MonoBehaviour
         if (m_ActorRigidBody)
         {
             Vector2 newspeed = new Vector2(speed_x * GetMoveSpeed(), speed_y*GetMoveSpeed());
-            if(newspeed.magnitude >= GetVelocity().magnitude)
-                m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_AccelerationTime);
-            else
-                m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_DeaccelerationTime);
+            //gameObject.transform.position += new Vector3(newspeed.x, newspeed.y, 0 );
+            if (newspeed.magnitude >= GetVelocity().magnitude)
+            {
+                //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_AccelerationTime);
+                m_ActorRigidBody.velocity = newspeed;
+            }
+            else {
+                //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_DeaccelerationTime);
+                m_ActorRigidBody.velocity = newspeed;
+            }
+
         }
         if (m_ActorSprite && speed_x > 0.0f)
             m_ActorSprite.flipX = false;

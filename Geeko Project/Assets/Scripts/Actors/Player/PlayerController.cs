@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementComponent m_MovementComponent;
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
+    [SerializeField] private Joystick m_Joystick;
     void Start()
     {
         if (!m_MovementComponent)
@@ -38,7 +39,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
+        m_MovementComponent.Move(m_Joystick.Horizontal*Time.deltaTime, m_Joystick.Vertical*Time.deltaTime);
         if (Input.GetButtonDown("Fire1"))
-            m_SpellComponent.m_Spell1.CastSpell();
+            m_StatusComponent.TakeDamage(10);
+        //    m_SpellComponent.m_Spell1.CastSpell();
     }
 }
