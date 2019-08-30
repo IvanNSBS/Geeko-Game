@@ -23,13 +23,13 @@ public class StatusComponent : MonoBehaviour
     public void TakeDamage(float amount)
     {
         m_CurrentHealth -= amount;
-        Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
+        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
         if (m_CurrentHealth <= 0.0f) Die.Invoke();
         OnTakeDamage.Invoke();
     }
     public void Heal(float amount) {
         m_CurrentHealth += amount;
-        Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
+        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
         OnReceiveHeal.Invoke();
     }
 
