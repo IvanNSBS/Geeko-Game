@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f3f516848c35974d83b2f6dca3d5c1c, type: 3}
-  m_Name: New Health Potion
+  m_Name: WeakHealthPotion
   m_EditorClassIdentifier: 
   m_ItemName: Health Potion
   m_GameSprite: {fileID: 0}
@@ -21,4 +21,4 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  m_HealAmount: 55
+  m_HealAmount: 80
