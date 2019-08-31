@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float moveSpeed;
-    public Vector3 moveJump = Vector2.zero;
+    Vector3 moveJump = Vector2.zero;
 
     void Start()
     {
