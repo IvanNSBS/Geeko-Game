@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public enum EnemyState{
@@ -27,9 +29,9 @@ public enum EnemyType
 {
     Melee,
     Ranged,
-}
+};
 
-public class Enemy : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public EnemyState currState = EnemyState.Wander;
     public EnemyType enemyType;
@@ -39,11 +41,13 @@ public class Enemy : MonoBehaviour
     public float speed;
     public float dashSpeed;
     public float startDashTime;
+    public float iddleTime;
     
     public float stoppingDistance;
     public float retreatDistance;
 
     public float coolDown;
+    
     private bool coolDownAttack = false;
     public float startTimeBtwShots;
 
@@ -60,6 +64,13 @@ public class Enemy : MonoBehaviour
     public GameObject projectile;
     private Transform player;
     private Vector3 lastPlayerPosition;
+    
+    private MovementComponent _movementComponent;
+
+    private void Awake()
+    {
+        _movementComponent = GetComponent<MovementComponent>();
+    }
 
     void Start()
     {
@@ -137,13 +148,12 @@ public class Enemy : MonoBehaviour
     {
         if (!waiting)
         {
-            StartCoroutine(waitingSecs(2));
             waiting = true;
-            
+            StartCoroutine(WaitingIddleTime(iddleTime));
         }
     }
 
-    public IEnumerator waitingSecs(float sec)
+    public IEnumerator WaitingIddleTime(float sec)
     {
         yield return new WaitForSeconds(sec);
         Debug.Log("wander after iddle");
@@ -264,7 +274,9 @@ public class Enemy : MonoBehaviour
 
     public void Follow()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        Vector3 dir = Vector3.Normalize(player.position - transform.position);
+        _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 
     public bool IsTimeToRetreat(float retreatDistance)

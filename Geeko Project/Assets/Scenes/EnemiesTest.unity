@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 156726687}
   - component: {fileID: 156726688}
   - component: {fileID: 156726689}
+  - component: {fileID: 156726690}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -239,10 +240,11 @@ MonoBehaviour:
   currState: 0
   enemyType: 0
   range: 10
-  attackRange: 6
+  attackRange: 1
   speed: 3
   dashSpeed: 30
   startDashTime: 0.15
+  iddleTime: 2
   stoppingDistance: 0
   retreatDistance: 0
   coolDown: 2
@@ -296,6 +298,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.724493, y: 3.814248}
   m_EdgeRadius: 0
+--- !u!114 &156726690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156726683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42080933b8450954aa589ddf34b15b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MovementSpeed: 10
+  m_AccelerationTime: 0
+  m_DeaccelerationTime: 0
 --- !u!1 &225099585
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,8 +345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd784e38d0d8ce24ab989077c0e7e27d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1000
-  moveJump: {x: 0, y: 0, z: 0}
 --- !u!114 &225099587
 MonoBehaviour:
   m_ObjectHideFlags: 0
