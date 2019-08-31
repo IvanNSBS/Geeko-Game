@@ -1,21 +1,110 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MapCamera : MonoBehaviour
 {
-    public GameObject mapRoot;
-    public GameObject mapCamera;
-    
-    void Start()
+    List<RoomInstance> rooms = new List<RoomInstance>();
+    List<MapSpriteSelector> minimapSprites = new List<MapSpriteSelector>();
+    RoomInstance actualRoom;
+   
+    public void GetRoomsReferences()
     {
-        float posX = mapRoot.transform.position.x;
-        float posY = mapRoot.transform.position.y;
-        AdjustCameraPosition(posX, posY);
+        rooms = FindObjectsOfType<RoomInstance>().ToList();
     }
 
-    void AdjustCameraPosition(float x, float y)
+    public void GetMinimapReferences()
     {
-        mapCamera.transform.Translate(x, y, -10);
+        minimapSprites = FindObjectsOfType<MapSpriteSelector>().ToList();
     }
-}
+
+    public RoomInstance GetActualRoom()
+    {
+        return actualRoom;
+    }
+
+    public void HideAllMinimapSprites()
+    {
+        foreach (MapSpriteSelector sprite in minimapSprites)
+        {
+            sprite.ColorMinimapRoom(0);
+        }
+    }
+
+    public RoomInstance SearchMapSpritByGridPos(Vector2 gridPos)
+    {
+        foreach(RoomInstance room in rooms)
+        {
+            if(room.gridPos == gridPos)
+            {
+                return room;
+            }
+        }
+        return null;
+    }
+
+    public void DiscoverNeighborRooms()
+    {
+        Vector2 searchGrid;
+        if (actualRoom.doorTop)
+        {
+            searchGrid = new Vector2(actualRoom.gridPos.x, actualRoom.gridPos.y + 1);
+            RoomInstance room = SearchMapSpritByGridPos(searchGrid);
+            if (!room.visited)
+            {
+                room.minimapSprite.ColorMinimapRoom(1);
+            }
+        }
+        if (actualRoom.doorBot)
+        {
+            searchGrid = new Vector2(actualRoom.gridPos.x, actualRoom.gridPos.y - 1);
+            RoomInstance room = SearchMapSpritByGridPos(searchGrid);
+            if (!room.visited)
+            {
+                room.minimapSprite.ColorMinimapRoom(1);
+            }
+        }
+        if (actualRoom.doorRight)
+        {
+            searchGrid = new Vector2(actualRoom.gridPos.x + 1, actualRoom.gridPos.y);
+            RoomInstance room = SearchMapSpritByGridPos(searchGrid);
+            if (!room.visited)
+            {
+                room.minimapSprite.ColorMinimapRoom(1);
+            }
+        }
+        if (actualRoom.doorLeft)
+        {
+            searchGrid = new Vector2(actualRoom.gridPos.x - 1, actualRoom.gridPos.y);
+            RoomInstance room = SearchMapSpritByGridPos(searchGrid);
+            if (!room.visited)
+            {
+                room.minimapSprite.ColorMinimapRoom(1);
+            }
+        }
+    }
+
+    public void UpdateActualRoom(RoomInstance room)
+    {
+        if(actualRoom != null)
+        {
+            actualRoom.minimapSprite.ColorMinimapRoom(2);
+        }
+        actualRoom = room;
+        if(actualRoom.visited == false)
+        {
+            DiscoverNeighborRooms();
+            actualRoom.visited = true;
+        }
+        UpdateCameraPosition();
+        room.minimapSprite.ColorMinimapRoom(3);
+    }
+
+    void UpdateCameraPosition()
+    {
+        Vector3 targetPosition = new Vector3(actualRoom.gridPos.x * 16, actualRoom.gridPos.y * 8, -10);
+        this.gameObject.transform.position = targetPosition;
+    }
+  
+}   
