@@ -9,7 +9,7 @@ public class MapSpriteSelector : MonoBehaviour {
 			spULD, spRUL, spDRU, spLDR, spUDRL;
 	public bool up, down, left, right;
 	public int type; // 0: normal, 1: enter
-	public Color normalColor, enterColor;
+	public Color undiscoveredColor, discoveredColor, visitedColor, normalColor, enterColor;
 	Color mainColor;
 	SpriteRenderer rend;
 	void Start () {
@@ -80,4 +80,23 @@ public class MapSpriteSelector : MonoBehaviour {
 		}
 		rend.color = mainColor;
 	}
+    
+    public void ColorMinimapRoom(int color)
+    {
+        switch (color)
+        {
+            case 0:
+                rend.color = undiscoveredColor;
+                break;
+            case 1:
+                rend.color = discoveredColor;
+                break;
+            case 2:
+                rend.color = visitedColor;
+                break;
+            case 3:
+                rend.color = normalColor;
+                break;
+        }
+    }
 }

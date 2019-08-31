@@ -5,7 +5,6 @@ using UnityEngine;
 public class RoomInstance : MonoBehaviour
 {
     public Texture2D tex;
-    [HideInInspector]
     public Vector2 gridPos;
     public int type; //0: normal, 1: enter
     [HideInInspector]
@@ -16,8 +15,11 @@ public class RoomInstance : MonoBehaviour
     ColorToGameObject[] mappings;
     float tileSize = 1;
     Vector2 roomSizeInTiles = new Vector2(9, 17);
+    public MapSpriteSelector minimapSprite;
+    private MapCamera minimapCam;
+    public bool visited;
 
-    public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
+    public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, MapSpriteSelector _minimapSprite)
     {
         tex = _tex;
         gridPos = _gridPos;
@@ -26,6 +28,8 @@ public class RoomInstance : MonoBehaviour
         doorBot = _doorBot;
         doorLeft = _doorLeft;
         doorRight = _doorRight;
+        minimapSprite = _minimapSprite;
+        minimapCam = FindObjectOfType<MapCamera>();
         MakeDoors();
         GenerateRoomTiles();
     }
@@ -110,6 +114,14 @@ public class RoomInstance : MonoBehaviour
         //find scaled up position at the offset
         ret = new Vector3(tileSize * (float)x, -tileSize * (float)y, 0) + offset + transform.position;
         return ret;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            minimapCam.UpdateActualRoom(this);
+        }
     }
 
 }
