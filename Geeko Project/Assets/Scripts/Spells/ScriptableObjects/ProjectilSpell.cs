@@ -38,16 +38,30 @@ public class ProjectilSpell : Spell
 
         SpellPrefabManager s_manager = target_obj.GetComponent<SpellPrefabManager>();
         if (target_obj != m_SpellOwner && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door"))) {
-            Debug.Log("Collided!");
             StatusComponent obj_status = target_obj.GetComponent<StatusComponent>();
             if(obj_status) obj_status.TakeDamage(m_Damage);
 
             if (s_manager) {
                 if (s_manager.GetOwner() != m_SpellOwner)
+                {
+                    if (m_OnHitEffect) {
+                        //TODO: Have collider info on collide function to spawn fx on the correct position
+                        GameObject fx = Instantiate(m_OnHitEffect);
+                        fx.transform.position = target_obj.transform.position;
+                    }
                     Destroy(source_obj);
+                }
             }
             else
+            {
+                if (m_OnHitEffect)
+                {
+                    //TODO: Have collider info on collide function to spawn fx on the correct position
+                    GameObject fx = Instantiate(m_OnHitEffect);
+                    fx.transform.position = target_obj.transform.position;
+                }
                 Destroy(source_obj);
+            }
         }
     }
 

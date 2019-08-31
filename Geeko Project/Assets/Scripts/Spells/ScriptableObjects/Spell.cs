@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public abstract class Spell : ScriptableObject
 {
     public GameObject m_Prefab;
+    public GameObject m_OnHitEffect;
     public string m_SpellName = "New Spell";
     public float m_SpellCooldown = 0.0f;
     public float m_SpellDuration = 0.0f;

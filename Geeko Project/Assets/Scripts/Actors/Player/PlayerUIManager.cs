@@ -34,17 +34,26 @@ public class PlayerUIManager : MonoBehaviour
             UpdateHealthBar();
         }
 
+
+        //TODO: Make function to update spell UI when you change your spell
         if (!m_SpellComponent)
         {
             m_SpellComponent = GetComponent<SpellCastingComponent>();
             if (!m_SpellComponent)
                 Debug.LogWarning("Actor SpellCastingComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
             else {
-                m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell1().m_SpellImage;
-                m_Spell_1_Border.sprite = m_SpellComponent.GetSpell1().m_BorderImage;
+                if (m_SpellComponent.GetSpell1()){
+                    m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell1().m_SpellImage;
+                    m_Spell_1_Border.sprite = m_SpellComponent.GetSpell1().m_BorderImage;
+                }
+                else m_Spell_1_Icon.gameObject.SetActive(false);
 
-                m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell2().m_SpellImage;
-                m_Spell_2_Border.sprite = m_SpellComponent.GetSpell2().m_BorderImage;
+                if (m_SpellComponent.GetSpell2())
+                {
+                    m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell2().m_SpellImage;
+                    m_Spell_2_Border.sprite = m_SpellComponent.GetSpell2().m_BorderImage;
+                }
+                else m_Spell_2_Icon.gameObject.SetActive(false);
             }
         }
     }
@@ -64,24 +73,31 @@ public class PlayerUIManager : MonoBehaviour
 
     public void UpdateSpellUI()
     {
-        if (!m_SpellComponent.m_Spell1OnCD)
-            m_Spell_1_CD.gameObject.SetActive(false);
-        else {
-            m_Spell_1_CD.gameObject.SetActive(true);
-            float pct_s1 = m_SpellComponent.m_Spell1CurrentCD / m_SpellComponent.GetSpell1TotalCD();
-            m_Spell_1_CD.fillAmount = pct_s1;
-            m_Spell_1_CDtext.text = m_SpellComponent.m_Spell1CurrentCD.ToString("0.0");
+        if (m_SpellComponent.GetSpell1())
+        {
+            if (!m_SpellComponent.m_Spell1OnCD)
+                m_Spell_1_CD.gameObject.SetActive(false);
+            else {
+                m_Spell_1_CD.gameObject.SetActive(true);
+                float pct_s1 = m_SpellComponent.m_Spell1CurrentCD / m_SpellComponent.GetSpell1TotalCD();
+                m_Spell_1_CD.fillAmount = pct_s1;
+                m_Spell_1_CDtext.text = m_SpellComponent.m_Spell1CurrentCD.ToString("0.0");
+            }
         }
 
-        if (!m_SpellComponent.m_Spell2OnCD)
-            m_Spell_2_CD.gameObject.SetActive(false);
-        else
+        if (m_SpellComponent.GetSpell2())
         {
-            m_Spell_2_CD.gameObject.SetActive(true);
-            float pct_s2 = m_SpellComponent.m_Spell2CurrentCD / m_SpellComponent.GetSpell2TotalCD();
-            m_Spell_2_CD.fillAmount = pct_s2;
-            m_Spell_2_CDtext.text = m_SpellComponent.m_Spell2CurrentCD.ToString("0.0");
+            if (!m_SpellComponent.m_Spell2OnCD)
+                m_Spell_2_CD.gameObject.SetActive(false);
+            else
+            {
+                m_Spell_2_CD.gameObject.SetActive(true);
+                float pct_s2 = m_SpellComponent.m_Spell2CurrentCD / m_SpellComponent.GetSpell2TotalCD();
+                m_Spell_2_CD.fillAmount = pct_s2;
+                m_Spell_2_CDtext.text = m_SpellComponent.m_Spell2CurrentCD.ToString("0.0");
+            }
         }
+
     }
 
 }

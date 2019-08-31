@@ -19,8 +19,6 @@ public class BlackHole : Spell
     {
         if (m_Prefab && m_SpellOwner)
         {
-            Debug.Log("Spell was casted");
-
             Vector3 from = Input.mousePosition;
             from = Camera.main.ScreenToWorldPoint(from);
             GameObject obj = Instantiate(m_Prefab);
