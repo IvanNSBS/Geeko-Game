@@ -62,7 +62,6 @@ public class SpellCastingComponent : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        Debug.Log("spell2 cd = ");
         if (m_Spell1OnCD)
         {
             m_Spell1CurrentCD -= Time.deltaTime;
@@ -76,7 +75,6 @@ public class SpellCastingComponent : MonoBehaviour
             m_Spell2CurrentCD = Mathf.Clamp(m_Spell2CurrentCD, 0.0f, m_Spell2.m_SpellCooldown);
             if (m_Spell2CurrentCD == 0.0f)
                 m_Spell2OnCD = false;
-            Debug.Log("spell2 cd = " + m_Spell2CurrentCD);
         }
         if (m_Spell3OnCD)
         {
