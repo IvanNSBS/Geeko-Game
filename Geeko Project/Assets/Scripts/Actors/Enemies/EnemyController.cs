@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using Random = UnityEngine.Random;
 
 
@@ -48,38 +49,40 @@ public class EnemyController : MonoBehaviour
 
     public float coolDown;
     
-    private bool coolDownAttack = false;
+    private bool _coolDownAttack = false;
     public float startTimeBtwShots;
 
     
-    private float timeBtwShots;
-    private bool chooseDir;
-    private Vector3 randomDir;
-    private float dashTime;
-    private bool holding;
-    private bool dashing;
-    private bool waiting = false;
-    private bool iddle= false;
+    private float _timeBtwShots;
+    private bool _wandering;
+    private Vector3 _randomDir;
+    private float _dashTime;
+    private bool _holding = false;
+    private bool _dashing = false;
+    private bool _waiting = false;
+    private bool _iddle= false;
+    
     
     public GameObject projectile;
-    private Transform player;
-    private Vector3 lastPlayerPosition;
+    private Transform _player;
+    private Vector3 _lastPlayerPosition;
     
     private MovementComponent _movementComponent;
+    private StatusComponent _statusComponent;
+    private bool _dashed = false;
 
     private void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
+        _statusComponent = GetComponent<StatusComponent>();
     }
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        dashTime = startDashTime;
-        timeBtwShots = startTimeBtwShots;
-        holding = false;
-        dashing = false;
+        _dashTime = startDashTime;
+        _timeBtwShots = startTimeBtwShots;
     }
 
     
@@ -121,18 +124,18 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Wander;
         }
 
-        if (iddle)
+        if ( (_iddle)) 
         {
             currState = EnemyState.Iddle;
         }
         else if (IsEnemyHoldingToDash())
         {
             currState = EnemyState.Hold;
-        }else if (dashing)
+        }else if (_dashing)
         {
             currState = EnemyState.Dash;
         }
-        else if (IsPlayerInAttackRange(attackRange)&&(!dashing))
+        else if (IsPlayerInAttackRange(attackRange)&&(!_dashing))
         {
             currState = EnemyState.Attack;
         }
@@ -146,11 +149,40 @@ public class EnemyController : MonoBehaviour
 
     public void Iddle()
     {
-        if (!waiting)
+        if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
         {
-            waiting = true;
+            _waiting = true;
+           
             StartCoroutine(WaitingIddleTime(iddleTime));
         }
+        else if ( !_waiting && _wandering)
+        {
+            _waiting = true;
+            StartCoroutine(RandomlyWanderingIn(Random.Range(1.0f,2.0f)));
+        }
+        else if (_wandering)
+        {
+            if (IsPlayerInRange(range))
+            {
+                _wandering = false;
+                _iddle = false;
+                _waiting = false;
+                currState = EnemyState.Attack;
+            }
+        }
+        
+    }
+
+    public IEnumerator RandomlyWanderingIn(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (currState == EnemyState.Iddle)
+        {
+            _iddle = false;
+            _wandering = false;
+            _waiting = false;
+        }
+        
     }
 
     public IEnumerator WaitingIddleTime(float sec)
@@ -158,50 +190,52 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(sec);
         Debug.Log("wander after iddle");
         currState = EnemyState.Wander;
-        iddle = false;
-        waiting = false;
+        _iddle = false;
+        _waiting = false;
+        _dashed = false;
     }
     
     public void Holding()
     {
-        if (!dashing)
+        if (!_dashing)
         {
-            lastPlayerPosition = player.position;
-            dashing = true;
+            _lastPlayerPosition = _player.position;
+            _dashing = true;
             StartCoroutine(CoolDown());
         }
-        else if(!coolDownAttack)
+        else if(!_coolDownAttack)
         {
-            holding = false;
+            _holding = false;
         }
         
     }
     
     public void Dash()
     {
-        if (dashTime <= 0)
+        if (_dashTime <= 0)
         {
-            dashTime = startDashTime;
-            dashing = false;
-            iddle = true;
+            _dashTime = startDashTime;
+            _dashing = false;
+            _iddle = true;
+            _dashed = true;
         }
         else
         {
-            dashTime -= Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, lastPlayerPosition, dashSpeed * Time.deltaTime);
+            _dashTime -= Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, _lastPlayerPosition, dashSpeed * Time.deltaTime);
         }
     }
 
     private void Attack()
     {
         //not implemented yet
-        if (!coolDownAttack)
+        if (!_coolDownAttack)
         {
             switch (enemyType)
             {
                 case(EnemyType.Melee):
                     //now only dashing, so he's holding to dash
-                    holding = true;
+                    _holding = true;
                     Debug.Log("ATTACK MELEE!!");
                     //StartCoroutine(CoolDown());
                     break;
@@ -215,73 +249,100 @@ public class EnemyController : MonoBehaviour
 
     public bool IsEnemyHoldingToDash()
     {
-        return holding;
+        return _holding;
     }
     
     public bool IsPlayerInRange(float range)
     {
-        return Vector3.Distance(transform.position, player.position) <= range;
+        return Vector3.Distance(transform.position, _player.position) <= range;
     }
     
     public bool IsPlayerInAttackRange(float attackRange)
     {
-        return Vector3.Distance(transform.position, player.position) <= attackRange;
+        return Vector3.Distance(transform.position, _player.position) <= attackRange;
     }
 
     private IEnumerator CoolDown()
     {
-        coolDownAttack = true;
+        _coolDownAttack = true;
         yield return new WaitForSeconds(coolDown);
-        coolDownAttack = false;
+        _coolDownAttack = false;
     }
     
     public void Wander()
     {
-        if (!chooseDir)
+        if (!_wandering)
         {
-            StartCoroutine(ChooseDirection());
+            _wandering = true;
+            ChooseDirectionRandomlyToWalk();
+            StartCoroutine(RandomlyIddleIn(Random.Range(1f, 4f)));
         }
-
-        transform.position += -transform.right * speed * Time.deltaTime;
-        if (IsPlayerInRange(range))
-        {
-            currState = EnemyState.Follow;
-        }
+        //walk for Random(1f,4f) seconds in a random direction
+        _movementComponent.Move(_randomDir.x * speed * Time.deltaTime, _randomDir.y * speed * Time.deltaTime);
+        
     }
 
-    private IEnumerator ChooseDirection()
+    private IEnumerator RandomlyIddleIn( float seconds)
     {
-        chooseDir = true;
-        yield return new WaitForSeconds(Random.Range(2f,8f));
-        randomDir = new Vector3(0,0,Random.Range(0,360));
-        Quaternion nextRotation = Quaternion.Euler(randomDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));
-        chooseDir = false;
-    }
-    
-    public void Shooting()
-    {
-        if(timeBtwShots <= 0)
+        yield return new WaitForSeconds(seconds);
+        if (currState == EnemyState.Wander) // to prevent a coroutine in the wrong time
         {
-            Instantiate(projectile, transform.position, transform.rotation);
-            timeBtwShots = startTimeBtwShots;
+            _iddle = true;
         }
         else
         {
-           timeBtwShots -= Time.deltaTime;
+            _wandering = false;
+        }
+    }
+    
+    private IEnumerator ChooseDirection()
+    {
+        Debug.Log("choosing..");
+        _wandering = true;
+        
+        yield return new WaitForSeconds(Random.Range(2f,6f));
+
+        _wandering = false;
+    }
+    
+    public void ChooseDirectionRandomlyToWalk()
+    {
+        Vector3 randomPoint = transform.position;
+        float aux = Random.Range(-1.0f, 1.0f);
+        while (aux == 0)
+        {
+            aux = Random.Range(-1.0f, 1.0f);
+            Debug.Log("re-lottery direction");
+        }
+        randomPoint = randomPoint + new Vector3(aux,aux,0);
+        _randomDir = Vector3.Normalize(randomPoint - transform.position);
+    }
+    
+   
+    
+    public void Shooting()
+    {
+        if(_timeBtwShots <= 0)
+        {
+            Instantiate(projectile, transform.position, transform.rotation);
+            _timeBtwShots = startTimeBtwShots;
+        }
+        else
+        {
+           _timeBtwShots -= Time.deltaTime;
         }
     }
 
     public void Follow()
     {
-        Vector3 dir = Vector3.Normalize(player.position - transform.position);
+        Vector3 dir = Vector3.Normalize(_player.position - transform.position);
         _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
         //transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 
     public bool IsTimeToRetreat(float retreatDistance)
     {
-        if(Vector2.Distance(transform.position, player.position) < retreatDistance)
+        if(Vector2.Distance(transform.position, _player.position) < retreatDistance)
         {
             return true;
         }
@@ -290,7 +351,7 @@ public class EnemyController : MonoBehaviour
     }
     public void Retreat()
     {
-        this.transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+        this.transform.position = Vector2.MoveTowards(transform.position, _player.position, -speed * Time.deltaTime);
     }
 
     public void Death()
