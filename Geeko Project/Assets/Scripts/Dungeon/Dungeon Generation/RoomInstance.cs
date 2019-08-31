@@ -16,7 +16,7 @@ public class RoomInstance : MonoBehaviour
     float tileSize = 1;
     Vector2 roomSizeInTiles = new Vector2(9, 17);
     public MapSpriteSelector minimapSprite;
-    private MapCamera minimapCam;
+    private MiniMapCamera minimapCam;
     public bool visited;
 
     public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, MapSpriteSelector _minimapSprite)
@@ -29,7 +29,7 @@ public class RoomInstance : MonoBehaviour
         doorLeft = _doorLeft;
         doorRight = _doorRight;
         minimapSprite = _minimapSprite;
-        minimapCam = FindObjectOfType<MapCamera>();
+        minimapCam = FindObjectOfType<MiniMapCamera>();
         MakeDoors();
         GenerateRoomTiles();
     }
