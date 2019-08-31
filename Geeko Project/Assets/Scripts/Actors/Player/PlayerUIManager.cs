@@ -23,7 +23,7 @@ public class PlayerUIManager : MonoBehaviour
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
     // Update is called once per frame
-    private void Awake()
+    private void Start()
     {
         if (!m_StatusComponent)
         {
