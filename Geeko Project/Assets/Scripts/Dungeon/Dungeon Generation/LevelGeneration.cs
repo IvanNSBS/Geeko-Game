@@ -31,7 +31,7 @@ public class LevelGeneration : MonoBehaviour
     {
         if (finishedDrawingMap)
         {
-            MapCamera minimapCam = FindObjectOfType<MapCamera>();
+            MiniMapCamera minimapCam = FindObjectOfType<MiniMapCamera>();
             minimapCam.GetMinimapReferences();
             minimapCam.HideAllMinimapSprites();
             if (GetComponent<SheetAssigner>().finished)

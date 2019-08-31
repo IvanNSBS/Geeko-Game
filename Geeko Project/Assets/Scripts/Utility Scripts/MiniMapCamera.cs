@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class MapCamera : MonoBehaviour
+public class MiniMapCamera : MonoBehaviour
 {
     List<RoomInstance> rooms = new List<RoomInstance>();
     List<MapSpriteSelector> minimapSprites = new List<MapSpriteSelector>();
@@ -51,7 +51,7 @@ public class MapCamera : MonoBehaviour
         {
             searchGrid = new Vector2(actualRoom.gridPos.x, actualRoom.gridPos.y + 1);
             RoomInstance room = SearchMapSpritByGridPos(searchGrid);
-            if (!room.visited)
+            if (room != null && !room.visited)
             {
                 room.minimapSprite.ColorMinimapRoom(1);
             }
@@ -60,7 +60,7 @@ public class MapCamera : MonoBehaviour
         {
             searchGrid = new Vector2(actualRoom.gridPos.x, actualRoom.gridPos.y - 1);
             RoomInstance room = SearchMapSpritByGridPos(searchGrid);
-            if (!room.visited)
+            if (room != null && !room.visited)
             {
                 room.minimapSprite.ColorMinimapRoom(1);
             }
@@ -69,7 +69,7 @@ public class MapCamera : MonoBehaviour
         {
             searchGrid = new Vector2(actualRoom.gridPos.x + 1, actualRoom.gridPos.y);
             RoomInstance room = SearchMapSpritByGridPos(searchGrid);
-            if (!room.visited)
+            if (room != null && !room.visited)
             {
                 room.minimapSprite.ColorMinimapRoom(1);
             }
@@ -78,7 +78,7 @@ public class MapCamera : MonoBehaviour
         {
             searchGrid = new Vector2(actualRoom.gridPos.x - 1, actualRoom.gridPos.y);
             RoomInstance room = SearchMapSpritByGridPos(searchGrid);
-            if (!room.visited)
+            if (room != null && !room.visited)
             {
                 room.minimapSprite.ColorMinimapRoom(1);
             }
@@ -106,5 +106,4 @@ public class MapCamera : MonoBehaviour
         Vector3 targetPosition = new Vector3(actualRoom.gridPos.x * 16, actualRoom.gridPos.y * 8, -10);
         this.gameObject.transform.position = targetPosition;
     }
-  
 }   
