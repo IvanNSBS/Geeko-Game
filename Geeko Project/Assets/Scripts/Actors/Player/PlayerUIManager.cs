@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerUIManager : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private Image m_HealthBar;
     [SerializeField] private Text m_HealthText;
+
+    [SerializeField] private Image m_Spell_1_Icon;
+    [SerializeField] private Image m_Spell_1_Border;
+    [SerializeField] private Image m_Spell_1_CD;
+    [SerializeField] private TextMeshProUGUI m_Spell_1_CDtext;
+
+    [SerializeField] private Image m_Spell_2_Icon;
+    [SerializeField] private Image m_Spell_2_Border;
+    [SerializeField] private Image m_Spell_2_CD;
+    [SerializeField] private TextMeshProUGUI m_Spell_2_CDtext;
+
     private StatusComponent m_StatusComponent;
+    private SpellCastingComponent m_SpellComponent;
     // Update is called once per frame
-    private void Start()
+    private void Awake()
     {
         if (!m_StatusComponent)
         {
@@ -20,6 +33,20 @@ public class PlayerUIManager : MonoBehaviour
 
             UpdateHealthBar();
         }
+
+        if (!m_SpellComponent)
+        {
+            m_SpellComponent = GetComponent<SpellCastingComponent>();
+            if (!m_SpellComponent)
+                Debug.LogWarning("Actor SpellCastingComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+            else {
+                m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell1().m_SpellImage;
+                m_Spell_1_Border.sprite = m_SpellComponent.GetSpell1().m_BorderImage;
+
+                m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell2().m_SpellImage;
+                m_Spell_2_Border.sprite = m_SpellComponent.GetSpell2().m_BorderImage;
+            }
+        }
     }
 
     public void UpdateHealthBar()
@@ -28,6 +55,33 @@ public class PlayerUIManager : MonoBehaviour
             m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
         if (m_HealthText)
             m_HealthText.text = ((int)m_StatusComponent.GetCurrentHealth()).ToString() + " / " + ((int)m_StatusComponent.GetMaxHealth()).ToString();
+    }
+
+    public void Update()
+    {
+        UpdateSpellUI();
+    }
+
+    public void UpdateSpellUI()
+    {
+        if (!m_SpellComponent.m_Spell1OnCD)
+            m_Spell_1_CD.gameObject.SetActive(false);
+        else {
+            m_Spell_1_CD.gameObject.SetActive(true);
+            float pct_s1 = m_SpellComponent.m_Spell1CurrentCD / m_SpellComponent.GetSpell1TotalCD();
+            m_Spell_1_CD.fillAmount = pct_s1;
+            m_Spell_1_CDtext.text = m_SpellComponent.m_Spell1CurrentCD.ToString("0.0");
+        }
+
+        if (!m_SpellComponent.m_Spell2OnCD)
+            m_Spell_2_CD.gameObject.SetActive(false);
+        else
+        {
+            m_Spell_2_CD.gameObject.SetActive(true);
+            float pct_s2 = m_SpellComponent.m_Spell2CurrentCD / m_SpellComponent.GetSpell2TotalCD();
+            m_Spell_2_CD.fillAmount = pct_s2;
+            m_Spell_2_CDtext.text = m_SpellComponent.m_Spell2CurrentCD.ToString("0.0");
+        }
     }
 
 }
