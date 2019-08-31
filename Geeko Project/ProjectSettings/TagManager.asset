@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Door
   - Wall
+  - Item
+  - SpellUninteractive
+  - SpellInteractive
   layers:
   - Default
   - TransparentFX

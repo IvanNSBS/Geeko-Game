@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 
@@ -13,36 +14,61 @@ public enum EnemyState{
     
     Attack,
     
-    Retreat
+    Retreat,
+    
+    Dash,
+    
+    Hold,
+    
+    Iddle,
 };
+
+public enum EnemyType
+{
+    Melee,
+    Ranged,
+}
 
 public class Enemy : MonoBehaviour
 {
     public EnemyState currState = EnemyState.Wander;
+    public EnemyType enemyType;
     
-    public float range;
+    public float range; //sight range
     public float attackRange;
     public float speed;
+    public float dashSpeed;
+    public float startDashTime;
     
     public float stoppingDistance;
     public float retreatDistance;
 
+    public float coolDown;
+    private bool coolDownAttack = false;
     public float startTimeBtwShots;
 
     
     private float timeBtwShots;
     private bool chooseDir;
     private Vector3 randomDir;
+    private float dashTime;
+    private bool holding;
+    private bool dashing;
+    private bool waiting = false;
+    private bool iddle= false;
     
     public GameObject projectile;
     private Transform player;
-
+    private Vector3 lastPlayerPosition;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
+        dashTime = startDashTime;
         timeBtwShots = startTimeBtwShots;
+        holding = false;
+        dashing = false;
     }
 
     
@@ -59,11 +85,20 @@ public class Enemy : MonoBehaviour
             case(EnemyState.Die):
                 Death();
                 break;
+            case(EnemyState.Dash):
+                Dash();
+                break;
+            case(EnemyState.Hold):
+                Holding();
+                break;
             case(EnemyState.Attack):
-                RangeAttack();
+                Attack();
                 break;
             case(EnemyState.Retreat):
                 Retreat();
+                break;
+            case(EnemyState.Iddle):
+                Iddle();
                 break;
         }
 
@@ -75,7 +110,18 @@ public class Enemy : MonoBehaviour
             currState = EnemyState.Wander;
         }
 
-        if (IsPlayerInAttackRange(attackRange))
+        if (iddle)
+        {
+            currState = EnemyState.Iddle;
+        }
+        else if (IsEnemyHoldingToDash())
+        {
+            currState = EnemyState.Hold;
+        }else if (dashing)
+        {
+            currState = EnemyState.Dash;
+        }
+        else if (IsPlayerInAttackRange(attackRange)&&(!dashing))
         {
             currState = EnemyState.Attack;
         }
@@ -87,12 +133,81 @@ public class Enemy : MonoBehaviour
         */
     }
 
-    private void RangeAttack()
+    public void Iddle()
     {
-        //not implemented yet
-        Shooting();
+        if (!waiting)
+        {
+            StartCoroutine(waitingSecs(2));
+            waiting = true;
+            
+        }
     }
 
+    public IEnumerator waitingSecs(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Debug.Log("wander after iddle");
+        currState = EnemyState.Wander;
+        iddle = false;
+        waiting = false;
+    }
+    
+    public void Holding()
+    {
+        if (!dashing)
+        {
+            lastPlayerPosition = player.position;
+            dashing = true;
+            StartCoroutine(CoolDown());
+        }
+        else if(!coolDownAttack)
+        {
+            holding = false;
+        }
+        
+    }
+    
+    public void Dash()
+    {
+        if (dashTime <= 0)
+        {
+            dashTime = startDashTime;
+            dashing = false;
+            iddle = true;
+        }
+        else
+        {
+            dashTime -= Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, lastPlayerPosition, dashSpeed * Time.deltaTime);
+        }
+    }
+
+    private void Attack()
+    {
+        //not implemented yet
+        if (!coolDownAttack)
+        {
+            switch (enemyType)
+            {
+                case(EnemyType.Melee):
+                    //now only dashing, so he's holding to dash
+                    holding = true;
+                    Debug.Log("ATTACK MELEE!!");
+                    //StartCoroutine(CoolDown());
+                    break;
+                case(EnemyType.Ranged):
+                    Shooting();
+                    StartCoroutine(CoolDown());
+                    break;
+            }
+        }
+    }
+
+    public bool IsEnemyHoldingToDash()
+    {
+        return holding;
+    }
+    
     public bool IsPlayerInRange(float range)
     {
         return Vector3.Distance(transform.position, player.position) <= range;
@@ -101,6 +216,13 @@ public class Enemy : MonoBehaviour
     public bool IsPlayerInAttackRange(float attackRange)
     {
         return Vector3.Distance(transform.position, player.position) <= attackRange;
+    }
+
+    private IEnumerator CoolDown()
+    {
+        coolDownAttack = true;
+        yield return new WaitForSeconds(coolDown);
+        coolDownAttack = false;
     }
     
     public void Wander()

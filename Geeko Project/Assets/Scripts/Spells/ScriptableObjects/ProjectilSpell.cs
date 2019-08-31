@@ -61,4 +61,9 @@ public class ProjectilSpell : Spell
     {
         throw new System.NotImplementedException();
     }
+
+    public override void OnTick(GameObject obj)
+    {
+        throw new System.NotImplementedException();
+    }
 }
