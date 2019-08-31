@@ -27,7 +27,7 @@ Material:
     m_Floats:
     - Boolean_F0513A62: 1
     - _FlashSlider: 32
-    - _FlashSpeed: 28
+    - _FlashSpeed: 32
     - _TookDamage: 0
     m_Colors:
     - Color_185B6CD2: {r: 0.6226415, g: 0, b: 0, a: 0}

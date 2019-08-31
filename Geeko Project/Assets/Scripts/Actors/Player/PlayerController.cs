@@ -42,8 +42,7 @@ public class PlayerController : MonoBehaviour
         m_MovementComponent.Move(m_Joystick.Horizontal*Time.deltaTime, m_Joystick.Vertical*Time.deltaTime);
         if (Input.GetButtonDown("Fire1"))
         {
-            m_StatusComponent.TakeDamage(20);
-            //m_SpellComponent.CastSpell1();
+            m_SpellComponent.CastSpell1();
         }
         if (Input.GetButtonDown("Fire2"))
             m_SpellComponent.CastSpell2();

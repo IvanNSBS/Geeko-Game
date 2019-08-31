@@ -23,7 +23,7 @@ public class ProjectilSpell : Spell
 
             GameObject obj = Instantiate(m_Prefab);
             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(m_ProjectileSpeed*vec.x, m_ProjectileSpeed*vec.y);
-            obj.transform.position = m_SpellOwner.transform.position + new Vector3(vec.x*1.2f, vec.y*1.2f, 0.0f);
+            obj.transform.position = m_SpellOwner.transform.position + new Vector3(vec.x*1.5f, vec.y*1.5f, 0.0f);
 
             float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
             obj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -37,9 +37,8 @@ public class ProjectilSpell : Spell
     public void Collide(GameObject target_obj, GameObject source_obj) {
 
         SpellPrefabManager s_manager = target_obj.GetComponent<SpellPrefabManager>();
-
-
-        if (target_obj != m_SpellOwner) {
+        if (target_obj != m_SpellOwner && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door"))) {
+            Debug.Log("Collided!");
             StatusComponent obj_status = target_obj.GetComponent<StatusComponent>();
             if(obj_status) obj_status.TakeDamage(m_Damage);
 

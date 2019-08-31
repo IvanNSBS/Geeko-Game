@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 250.31145
-    y: 118.81096
+    x: 194.61963
+    y: 59.607487
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -869,13 +869,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5880589383016503992}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50059b6e0c2c16448895c52d2e1cfcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spell1: {fileID: 11400000, guid: 9e9394f2aed160f4dbe9301b36cb1156, type: 2}
-  m_Spell2: {fileID: 0}
+  m_Spell2: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
   m_Spell3: {fileID: 0}
   m_Spell1CurrentCD: 0
   m_Spell2CurrentCD: 0
@@ -1426,6 +1426,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerActor
+      objectReference: {fileID: 0}
     - target: {fileID: 258808940029362228, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1490,11 +1495,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerActor
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362228, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
@@ -1636,6 +1636,21 @@ PrefabInstance:
       propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_CanUseIFrames
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_IFrameTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_HitFlashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 258808940029362231, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_MovementSpeed
@@ -1647,6 +1662,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2646890070539828941, guid: 7689c2634d95e444f80e81ed834d5da1,
         type: 3}
+    - target: {fileID: 258808940029362229, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a749f7cff3848e45a12ac7b7541e48f, type: 2}
     - target: {fileID: 258808940029362234, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_Controller
