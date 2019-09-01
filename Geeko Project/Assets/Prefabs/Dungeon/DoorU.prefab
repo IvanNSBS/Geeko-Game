@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5075063007009656377}
   m_Layer: 0
   m_Name: DungeonStarter_20
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: 6309025234729461361, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5075063007450220324}
   m_Layer: 0
   m_Name: DungeonStarter_18
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: -7049436017856382887, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 5075063008141074522}
   m_Layer: 0
   m_Name: DungeonStarter_40
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -230,7 +230,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -30
   m_Sprite: {fileID: -4702191824165456812, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 5075063008177122896}
   m_Layer: 0
   m_Name: DungeonStarter_19
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,7 +311,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: -979124228309671077, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 4832983800568918377}
   m_Layer: 0
   m_Name: Gate
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,7 +467,7 @@ GameObject:
   - component: {fileID: 5075063008890250621}
   m_Layer: 0
   m_Name: Door Frame
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

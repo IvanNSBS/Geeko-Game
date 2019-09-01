@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 758313913229386707}
   m_Layer: 0
   m_Name: Door Frame
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 1875673673219555559}
   m_Layer: 0
   m_Name: Gate
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 758313914080012542}
   m_Layer: 0
   m_Name: DungeonStarter_19
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,7 +255,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: 3130054841254399894, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 758313914116056820}
   m_Layer: 0
   m_Name: DungeonStarter_40
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,7 +336,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -30
   m_Sprite: {fileID: 138199917180545214, guid: a7a0be9cf201c4445ad60c5ea39e9596, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 758313914939015562}
   m_Layer: 0
   m_Name: DungeonStarter_18
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -416,7 +416,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: -3686345087394548490, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 758313915111147671}
   m_Layer: 0
   m_Name: DungeonStarter_20
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -497,7 +497,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -35
   m_Sprite: {fileID: 2782489652876736392, guid: a7a0be9cf201c4445ad60c5ea39e9596,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
