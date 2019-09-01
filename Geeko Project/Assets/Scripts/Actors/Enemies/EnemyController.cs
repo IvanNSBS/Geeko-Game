@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
     public float dashSpeed;
     public float startDashTime;
     public float iddleTime;
-    
+    public float holdingTime;
     public float stoppingDistance;
     public float retreatDistance;
 
@@ -115,7 +115,6 @@ public class EnemyController : MonoBehaviour
                 Iddle();
                 break;
         }
-
         if (IsPlayerInRange(range) && currState != EnemyState.Die)
         {
             currState = EnemyState.Follow;
@@ -123,7 +122,8 @@ public class EnemyController : MonoBehaviour
         {
             currState = EnemyState.Wander;
         }
-
+        
+        
         if ( (_iddle)) 
         {
             currState = EnemyState.Iddle;
@@ -139,6 +139,8 @@ public class EnemyController : MonoBehaviour
         {
             currState = EnemyState.Attack;
         }
+
+        
         /*
         if (IsTimeToRetreat(retreatDistance))
         {
@@ -149,6 +151,7 @@ public class EnemyController : MonoBehaviour
 
     public void Iddle()
     {
+        Debug.Log("iddleling");
         if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
         {
             _waiting = true;
@@ -162,7 +165,8 @@ public class EnemyController : MonoBehaviour
         }
         else if (_wandering)
         {
-            if (IsPlayerInRange(range))
+            Debug.Log("iddle ~wandering cancelled, to attack");
+            if (IsPlayerInAttackRange(range))
             {
                 _wandering = false;
                 _iddle = false;
@@ -179,39 +183,47 @@ public class EnemyController : MonoBehaviour
         if (currState == EnemyState.Iddle)
         {
             _iddle = false;
-            _wandering = false;
-            _waiting = false;
+            
         }
+        _wandering = false;
+        _waiting = false;
         
     }
 
     public IEnumerator WaitingIddleTime(float sec)
     {
         yield return new WaitForSeconds(sec);
-        Debug.Log("wander after iddle");
-        currState = EnemyState.Wander;
+        Debug.Log("wander after iddle: "+sec+" seconds");
+        _coolDownAttack = false; //reseted 
         _iddle = false;
         _waiting = false;
         _dashed = false;
+        currState = EnemyState.Wander;
+        
     }
     
     public void Holding()
     {
+        Debug.Log("Holding");
         if (!_dashing)
         {
             _lastPlayerPosition = _player.position;
             _dashing = true;
-            StartCoroutine(CoolDown());
-        }
-        else if(!_coolDownAttack)
-        {
-            _holding = false;
+            
+           StartCoroutine(StopHolding());
         }
         
+    }
+
+    public IEnumerator StopHolding()
+    {
+        yield return new WaitForSeconds(holdingTime);
+        _holding = false;
     }
     
     public void Dash()
     {
+        Debug.Log("Dashing");
         if (_dashTime <= 0)
         {
             _dashTime = startDashTime;
@@ -222,12 +234,16 @@ public class EnemyController : MonoBehaviour
         else
         {
             _dashTime -= Time.deltaTime;
+            Vector3 dir = Vector3.Normalize(_lastPlayerPosition-transform.position);
+            float aux = dashSpeed * Time.deltaTime;
+           // _movementComponent.Move(dir.x * aux,dir.y * aux);
             transform.position = Vector2.MoveTowards(transform.position, _lastPlayerPosition, dashSpeed * Time.deltaTime);
         }
     }
 
     private void Attack()
     {
+        _wandering = false;
         //not implemented yet
         if (!_coolDownAttack)
         {
@@ -235,8 +251,9 @@ public class EnemyController : MonoBehaviour
             {
                 case(EnemyType.Melee):
                     //now only dashing, so he's holding to dash
-                    _holding = true;
                     Debug.Log("ATTACK MELEE!!");
+                    _holding = true;
+                    
                     //StartCoroutine(CoolDown());
                     break;
                 case(EnemyType.Ranged):
@@ -275,11 +292,12 @@ public class EnemyController : MonoBehaviour
         {
             _wandering = true;
             ChooseDirectionRandomlyToWalk();
-            StartCoroutine(RandomlyIddleIn(Random.Range(1f, 4f)));
+            StartCoroutine(RandomlyIddleIn(Random.Range(1.0f, 4.0f)));
         }
         //walk for Random(1f,4f) seconds in a random direction
-        _movementComponent.Move(_randomDir.x * speed * Time.deltaTime, _randomDir.y * speed * Time.deltaTime);
-        
+        Debug.Log("wandering....");
+        //_movementComponent.Move(_randomDir.x * speed * Time.deltaTime, _randomDir.y * speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
     }
 
     private IEnumerator RandomlyIddleIn( float seconds)
@@ -295,26 +313,17 @@ public class EnemyController : MonoBehaviour
         }
     }
     
-    private IEnumerator ChooseDirection()
-    {
-        Debug.Log("choosing..");
-        _wandering = true;
-        
-        yield return new WaitForSeconds(Random.Range(2f,6f));
-
-        _wandering = false;
-    }
     
     public void ChooseDirectionRandomlyToWalk()
     {
         Vector3 randomPoint = transform.position;
-        float aux = Random.Range(-1.0f, 1.0f);
+        /*float aux = Random.Range(-1.0f, 1.0f);
         while (aux == 0)
         {
             aux = Random.Range(-1.0f, 1.0f);
             Debug.Log("re-lottery direction");
-        }
-        randomPoint = randomPoint + new Vector3(aux,aux,0);
+        }*/
+        randomPoint = randomPoint + new Vector3(Random.Range(-1.0f, 1.0f),Random.Range(-1.0f, 1.0f),0);
         _randomDir = Vector3.Normalize(randomPoint - transform.position);
     }
     
@@ -335,9 +344,10 @@ public class EnemyController : MonoBehaviour
 
     public void Follow()
     {
+        Debug.Log("following");
         Vector3 dir = Vector3.Normalize(_player.position - transform.position);
-        _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
-        //transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+       // _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
     }
 
     public bool IsTimeToRetreat(float retreatDistance)
