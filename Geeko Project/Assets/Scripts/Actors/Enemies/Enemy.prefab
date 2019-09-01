@@ -132,6 +132,10 @@ MonoBehaviour:
   coolDown: 2
   startTimeBtwShots: 0.2
   explodeWhenDie: 1
+  moveWhileShoot: 0
+  stopShootToReload: 0
+  timeToReload: 1
+  timeAmmo: 3
   projectile: {fileID: 2798826248672319028, guid: 3692400cfa9bfb640b1da52ad9ff1e45,
     type: 3}
 --- !u!50 &8967112234905524127

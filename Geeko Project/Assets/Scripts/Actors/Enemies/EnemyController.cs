@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Experimental.PlayerLoop;
 using Random = UnityEngine.Random;
 
 
@@ -52,6 +53,10 @@ public class EnemyController : MonoBehaviour
     private bool _coolDownAttack = false;
     public float startTimeBtwShots;
     public bool explodeWhenDie;
+    public bool moveWhileShoot;
+    public bool stopShootToReload;
+    public float timeToReload;
+    public float timeAmmo;
     
     private float _timeBtwShots;
     private bool _wandering;
@@ -70,7 +75,13 @@ public class EnemyController : MonoBehaviour
     private MovementComponent _movementComponent;
     private StatusComponent _statusComponent;
     private bool _dashed = false;
-
+    private bool _reloading = false;
+    private bool _outOfAmmo = false;
+    
+    /* TO-DO
+    BOSS
+    Walks and shootings
+    */
     private void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
@@ -240,10 +251,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             _dashTime -= Time.deltaTime;
-            Vector3 dir = Vector3.Normalize(_lastPlayerPosition-transform.position);
-            float aux = dashSpeed * Time.deltaTime;
-           // _movementComponent.Move(dir.x * aux,dir.y * aux);
-            transform.position = Vector2.MoveTowards(transform.position, _lastPlayerPosition, dashSpeed * Time.deltaTime);
+          MoveEnemy(DirectionNormalized(transform.position,_lastPlayerPosition),dashSpeed);
         }
     }
 
@@ -262,12 +270,81 @@ public class EnemyController : MonoBehaviour
                     
                     break;
                 case(EnemyType.Ranged):
-                    //now only shooting projectiles
-                    Shooting();
-                    //StartCoroutine(CoolDown());
+                    //now only shooting temporary projectiles
+                    
+                    LoadOrShoot(); //if you not chose to stop bullets to reload, it will just shoot
+                    
+                    if (moveWhileShoot)
+                    {
+                        WalkShoot(); //shoot and move at same time;
+                    }
+                    
                     break;
             }
         }
+    }
+
+    public void LoadOrShoot()
+    {
+        if (!IsEnemyOutOfAmmo())
+        {
+            Shooting(); //temporary
+            if (stopShootToReload)
+            {
+                StartCoroutine(WasteBullets());
+            }
+        }
+        else
+        {
+            Reload();
+        }
+    }
+
+    public IEnumerator WasteBullets()
+    {
+        stopShootToReload = false;
+        yield return new WaitForSeconds(timeAmmo);
+        stopShootToReload = true;
+        _outOfAmmo = true;
+    }
+    
+    public bool IsEnemyOutOfAmmo()
+    {
+        return _outOfAmmo;
+    }
+    
+    public void Reload()
+    {
+        if (!_reloading)
+        {
+            StartCoroutine(LoadingAmmo()); //one to load
+        }
+    }
+    
+    public IEnumerator LoadingAmmo()
+    {
+        _reloading = true;
+        yield return new WaitForSeconds(timeToReload);
+        _reloading = false;
+        _outOfAmmo = false;
+    }
+    
+    private void WalkShoot()
+    {
+        //RandomWalk();
+        //ZigZagWalk();
+        HorizontalWalk();
+        //VerticalWalk();
+        //CircleWalk();
+        //FollowWalk();
+        
+        throw new NotImplementedException();
+    }
+
+    public void HorizontalWalk()
+    {
+        Vector3 actualPos = transform.position;
+        Vector3 dir = (actualPos)-actualPos;
     }
 
     public bool IsEnemyHoldingToDash()
@@ -302,8 +379,7 @@ public class EnemyController : MonoBehaviour
             //walk for Random(1f,4f) seconds in a random direction
         }
         
-        //_movementComponent.Move(_randomDir.x * speed * Time.deltaTime, _randomDir.y * speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
+        MoveEnemy(_randomDir,speed);
     }
 
     private IEnumerator RandomlyIddleIn( float seconds)
@@ -350,11 +426,20 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    public Vector3 DirectionNormalized(Vector3 current, Vector3 target)
+    {
+        return Vector3.Normalize(target - current);
+    }
+    
     public void Follow()
     {
-        Vector3 dir = Vector3.Normalize(_player.position - transform.position);
-       // _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
-        transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
+        MoveEnemy(DirectionNormalized(transform.position,_player.position),speed);
+    }
+
+    public void MoveEnemy(Vector3 dir,float speed)
+    {
+        // _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
+       transform.position += dir * speed * Time.deltaTime;
     }
 
     public bool IsTimeToRetreat(float retreatDistance)
@@ -368,9 +453,7 @@ public class EnemyController : MonoBehaviour
     }
     public void Retreat()
     {
-       Vector3 dir = Vector3.Normalize(_player.position - transform.position);
-        //_movementComponent.Move(-dir.x*speed*Time.deltaTime,-dir.y *speed*Time.deltaTime);
-        this.transform.position = Vector2.MoveTowards(transform.position, _player.position, -speed * Time.deltaTime);
+        MoveEnemy(DirectionNormalized(transform.position,_player.position), -speed);
     }
 
     public void Death()
