@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 156726688}
   - component: {fileID: 156726689}
   - component: {fileID: 156726690}
+  - component: {fileID: 156726691}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currState: 0
   enemyType: 0
-  range: 10
+  range: 3
   attackRange: 1
   speed: 3
   dashSpeed: 30
@@ -313,6 +314,39 @@ MonoBehaviour:
   m_MovementSpeed: 10
   m_AccelerationTime: 0
   m_DeaccelerationTime: 0
+--- !u!114 &156726691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156726683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxHealth: 100
+  Die:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveHeal:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnSetMaxHealth:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &225099585
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +800,7 @@ PrefabInstance:
     - target: {fileID: 5880589383016503999, guid: 5e27081bae8573f47a78f844feecd026,
         type: 3}
       propertyPath: m_Mass
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e27081bae8573f47a78f844feecd026, type: 3}
