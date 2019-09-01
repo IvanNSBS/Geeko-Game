@@ -39,6 +39,7 @@ public class LevelGeneration : MonoBehaviour
                 DungeonManager dungeonManager = FindObjectOfType<DungeonManager>();
                 dungeonManager.SpawnPlayer();
                 dungeonManager.GetDoorsReferences();
+                dungeonManager.OpenAllDoors();
                 minimapCam.GetRoomsReferences();
                 Destroy(this.gameObject);
             }
