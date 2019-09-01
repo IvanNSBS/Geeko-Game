@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currState: 0
-  enemyType: 0
-  range: 6
-  attackRange: 4
+  enemyType: 1
+  range: 8
+  attackRange: 6
   speed: 1
   dashSpeed: 30
   startDashTime: 0.15
@@ -130,7 +130,7 @@ MonoBehaviour:
   stoppingDistance: 0
   retreatDistance: 0
   coolDown: 2
-  startTimeBtwShots: 0.5
+  startTimeBtwShots: 0.2
   projectile: {fileID: 2798826248672319028, guid: 3692400cfa9bfb640b1da52ad9ff1e45,
     type: 3}
 --- !u!50 &8967112234905524127

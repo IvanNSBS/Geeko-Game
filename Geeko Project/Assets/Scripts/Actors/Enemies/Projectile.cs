@@ -33,10 +33,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("triggered");
         if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")))
         {
-            Debug.Log("hit something");
             DestroyProjectile();
         }
     }

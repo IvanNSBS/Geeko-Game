@@ -146,6 +146,10 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Retreat;
         }
         */
+        if (_statusComponent.GetCurrentHealth() <= 0)
+        {
+            currState = EnemyState.Die;
+        }
     }
 
     public void Iddle()
@@ -258,8 +262,9 @@ public class EnemyController : MonoBehaviour
                     
                     break;
                 case(EnemyType.Ranged):
+                    //now only shooting projectiles
                     Shooting();
-                    StartCoroutine(CoolDown());
+                    //StartCoroutine(CoolDown());
                     break;
             }
         }
@@ -332,6 +337,7 @@ public class EnemyController : MonoBehaviour
     
     public void Shooting()
     {
+        
         if(_timeBtwShots <= 0)
         {
             Instantiate(projectile, transform.position, transform.rotation);
@@ -341,6 +347,7 @@ public class EnemyController : MonoBehaviour
         {
            _timeBtwShots -= Time.deltaTime;
         }
+        
     }
 
     public void Follow()
@@ -369,6 +376,7 @@ public class EnemyController : MonoBehaviour
     public void Death()
     {
         Destroy(gameObject);
+        Debug.Log("enemy killed");
     }
 
     public void OnCollisionEnter2D(Collision2D other)
