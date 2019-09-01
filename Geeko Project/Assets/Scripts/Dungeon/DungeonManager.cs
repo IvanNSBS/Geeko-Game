@@ -30,23 +30,33 @@ public class DungeonManager : MonoBehaviour
         doors = FindObjectsOfType<Door>().ToList();
     }
 
+    public void OpenAllDoors()
+    {
+        foreach (Door d in doors)
+        {
+            d.OpenDoor();
+        }
+    }
+
+    public void CloseAllDoors()
+    {
+        foreach (Door d in doors)
+        {
+            d.CloseDoor();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            foreach (Door d in doors)
-            {
-                d.OpenDoor();
-            }
+            OpenAllDoors();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            foreach(Door d in doors)
-            {
-                d.CloseDoor();
-            }
+            CloseAllDoors();
         }
     }
 }

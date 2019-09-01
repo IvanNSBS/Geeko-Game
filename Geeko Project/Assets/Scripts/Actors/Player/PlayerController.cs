@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
     private MovementComponent m_MovementComponent;
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
+    private WeaponComponent m_WeaponComponent;
     [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
+    [SerializeField] private Transform m_FirePoint;
     void Start()
     {
         if (!m_MovementComponent)
@@ -37,6 +39,19 @@ public class PlayerController : MonoBehaviour
             if (!m_SpellComponent)
                 Debug.LogWarning("Actor SpellCastingComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
         }
+        
+        if (!m_WeaponComponent)
+        {
+            m_WeaponComponent = GetComponent<WeaponComponent>();
+            if (!m_WeaponComponent)
+                Debug.LogWarning("Actor WeaponComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+        }
+        
+        m_WeaponComponent.SetTargetingFunction(() =>
+        {
+            var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
+            return new Vector2(vec3.x, vec3.y);
+        });
     }
 
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
@@ -70,6 +85,11 @@ public class PlayerController : MonoBehaviour
             float angle = Mathf.Atan2(m_Joystick.Vertical, m_Joystick.Horizontal) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+        }
+
+        if (Input.GetButton("Fire1"))
+        {
+            m_WeaponComponent.AttemptToShoot();
         }
     }
 }
