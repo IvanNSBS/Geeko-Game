@@ -44,7 +44,7 @@ public class BlackHole : Spell
 
     public void Pull(GameObject target, GameObject src)
     {
-        if (target.CompareTag("SpellUninteractive"))
+        if (target.CompareTag("SpellUninteractive") || target.CompareTag("Item"))
             return;
         if (target.GetComponent<Rigidbody2D>() && target.gameObject != m_SpellOwner)
         {

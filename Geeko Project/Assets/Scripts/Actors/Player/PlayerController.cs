@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
             {
                 m_MovementComponent.m_OnFlip = new UnityEngine.Events.UnityEvent();
                 m_MovementComponent.m_OnFlip.AddListener( FlipHand );
+                m_MovementComponent.SetMoveSpeed(18.0f);
             }
         }
 
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
-        m_MovementComponent.Move(m_Joystick.Horizontal*Time.deltaTime, m_Joystick.Vertical*Time.deltaTime);
+        m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime, m_Joystick.Vertical * Time.deltaTime);
         if (Input.GetButtonDown("Fire1"))
         {
             m_SpellComponent.CastSpell1();

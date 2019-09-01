@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/SpellTests.unity
+    guid: 3ea6f53ca8dc0304fab24a7c6c0e5eb9
   m_configObjects: {}
