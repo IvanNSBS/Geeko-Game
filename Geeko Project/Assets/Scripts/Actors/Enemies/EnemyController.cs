@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
     
     private bool _coolDownAttack = false;
     public float startTimeBtwShots;
-
+    public bool explodeWhenDie;
     
     private float _timeBtwShots;
     private bool _wandering;
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-
+        projectile.transform.localScale = Vector3.one / 2;
         _dashTime = startDashTime;
         _timeBtwShots = startTimeBtwShots;
     }
@@ -375,6 +375,11 @@ public class EnemyController : MonoBehaviour
 
     public void Death()
     {
+        if (explodeWhenDie)
+        {
+           projectile.transform.localScale = Vector3.one*2;
+            Instantiate(projectile, transform.position, transform.rotation);
+        }
         Destroy(gameObject);
         Debug.Log("enemy killed");
     }

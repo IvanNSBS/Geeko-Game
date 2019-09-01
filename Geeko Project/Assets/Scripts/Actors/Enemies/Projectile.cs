@@ -35,6 +35,10 @@ public class Projectile : MonoBehaviour
     {
         if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")))
         {
+            if(other.CompareTag("Player"))
+            {
+                other.gameObject.GetComponent<StatusComponent>().TakeDamage(1);
+            }
             DestroyProjectile();
         }
     }
