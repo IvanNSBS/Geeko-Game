@@ -120,9 +120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currState: 0
   enemyType: 1
-  range: 8
-  attackRange: 6
-  speed: 1
+  range: 15
+  attackRange: 15
+  speed: 3
   dashSpeed: 30
   startDashTime: 0.15
   iddleTime: 2
@@ -132,12 +132,19 @@ MonoBehaviour:
   coolDown: 2
   startTimeBtwShots: 0.2
   explodeWhenDie: 1
-  moveWhileShoot: 0
   stopShootToReload: 0
   timeToReload: 1
   timeAmmo: 3
+  moveWhileShoot: 1
+  timeWalkingOneDirection: 1
   projectile: {fileID: 2798826248672319028, guid: 3692400cfa9bfb640b1da52ad9ff1e45,
     type: 3}
+  zigZagWalkHorizontal: 1
+  zigZagWalkVertical: 0
+  horizontalWalk: 0
+  verticalWalk: 0
+  randomWalk: 0
+  followWalk: 0
 --- !u!50 &8967112234905524127
 Rigidbody2D:
   serializedVersion: 4

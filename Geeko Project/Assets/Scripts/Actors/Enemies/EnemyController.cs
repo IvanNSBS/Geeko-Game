@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -53,10 +54,12 @@ public class EnemyController : MonoBehaviour
     private bool _coolDownAttack = false;
     public float startTimeBtwShots;
     public bool explodeWhenDie;
-    public bool moveWhileShoot;
+    
     public bool stopShootToReload;
     public float timeToReload;
     public float timeAmmo;
+    public bool moveWhileShoot;
+    public float timeWalkingOneDirection;
     
     private float _timeBtwShots;
     private bool _wandering;
@@ -77,6 +80,17 @@ public class EnemyController : MonoBehaviour
     private bool _dashed = false;
     private bool _reloading = false;
     private bool _outOfAmmo = false;
+    private float _timeWalking = 0;
+    private bool _zigZagHorizontal=false;
+    private bool _zigZagVertical = false;
+
+    public bool zigZagWalkHorizontal;
+    public bool zigZagWalkVertical;
+    public bool horizontalWalk;
+    public bool verticalWalk;
+    public bool randomWalk;
+    public bool followWalk;
+    
     
     /* TO-DO
     BOSS
@@ -276,6 +290,7 @@ public class EnemyController : MonoBehaviour
                     
                     if (moveWhileShoot)
                     {
+                       // Debug.Log("what");
                         WalkShoot(); //shoot and move at same time;
                     }
                     
@@ -331,20 +346,122 @@ public class EnemyController : MonoBehaviour
     
     private void WalkShoot()
     {
-        //RandomWalk();
-        //ZigZagWalk();
-        HorizontalWalk();
-        //VerticalWalk();
-        //CircleWalk();
-        //FollowWalk();
-        
-        throw new NotImplementedException();
+        //Debug.Log("walkshoot");
+        if (timeWalkingOneDirection > 0)
+        {
+            if (_timeWalking <= 0)
+            {
+                _timeWalking = timeWalkingOneDirection;
+                _randomDir = ChooseTypeOfWalk();
+                Debug.Log("reset Direction");
+            }
+            else
+            {
+               // Debug.Log("time: "+_timeWalking);
+                _timeWalking -= Time.deltaTime;
+                MoveEnemy(_randomDir,speed);
+            }
+        }
     }
 
-    public void HorizontalWalk()
+    private Vector3 ChooseTypeOfWalk() // return a direction to walk
     {
-        Vector3 actualPos = transform.position;
-        Vector3 dir = (actualPos)-actualPos;
+        //to-do circle
+        
+        Vector3 newPoint = transform.position;
+
+        if (zigZagWalkHorizontal)
+        {
+            newPoint = ZigZagWalkHorizontal(newPoint);
+        }
+
+        if (zigZagWalkVertical)
+        {
+            newPoint = ZigZagWalkVertical(newPoint);
+        }
+
+        if (horizontalWalk)
+        {
+            newPoint = HorizontalWalk(newPoint);
+        }
+
+        if (verticalWalk)
+        {
+            newPoint = VerticalWalk(newPoint);
+        }
+
+        if (randomWalk)
+        {
+            newPoint =  ChoosePointRandomlyToWalk(newPoint);
+        }
+
+        if (followWalk) //ignore the others
+        {
+            newPoint = FollowWalk();
+        }
+
+        Vector3 dirToWalk = DirectionNormalized(transform.position, newPoint);
+        return dirToWalk;
+    }
+
+    public Vector3 FollowWalk()
+    {
+        return _player.position;
+    }
+
+    public Vector3 ZigZagWalkVertical(Vector3 pos)
+    {
+
+        int[] lottery = new int[2] {- 1, 1 };
+
+        int aux = Random.Range(0, 2); 
+        
+        if (!_zigZagVertical)  // 
+        {
+            pos = new Vector3(pos.x-1,pos.y+lottery[aux],pos.z);
+        }
+        else if(_zigZagVertical) 
+        {
+            pos = new Vector3(pos.x+1,pos.y+lottery[aux],pos.z);
+        }
+
+        _zigZagVertical = !_zigZagVertical;
+        return pos;
+    }
+    
+    public Vector3 ZigZagWalkHorizontal(Vector3 pos)
+    {
+        int[] lottery = new int[2] {- 1, 1 };
+        int aux = Random.Range(0, 2); 
+        
+        if (!_zigZagHorizontal)  // 
+        {
+            pos = new Vector3(pos.x+lottery[aux],pos.y+1,pos.z);
+        }
+        else if(_zigZagHorizontal) 
+        {
+            pos = new Vector3(pos.x+ lottery[aux],pos.y-1,pos.z);
+        }
+        _zigZagHorizontal = !_zigZagHorizontal;
+        return pos;
+    }
+
+    public Vector3 HorizontalWalk(Vector3 pos)
+    {
+        int[] lottery = new int[2] {- 1, 1 };
+        int aux = Random.Range(0, 2);
+        Debug.Log("lottery: "+aux);
+        pos = new Vector3(pos.x+lottery[aux],pos.y,pos.z);
+        return pos;
+    }
+    
+    public Vector3 VerticalWalk(Vector3 pos)
+    {
+        int[] lottery = new int[2] {- 1, 1 };
+        int aux = Random.Range(0, 2
+        ); 
+        pos = new Vector3(pos.x,pos.y+lottery[aux],pos.z);
+        return pos;
     }
 
     public bool IsEnemyHoldingToDash()
@@ -374,7 +491,8 @@ public class EnemyController : MonoBehaviour
         if (!_wandering)
         {
             _wandering = true;
-            ChooseDirectionRandomlyToWalk();
+            Vector3 aux = ChoosePointRandomlyToWalk(transform.position);
+            _randomDir = DirectionNormalized(transform.position,aux);
             StartCoroutine(RandomlyIddleIn(Random.Range(1.0f, 4.0f)));
             //walk for Random(1f,4f) seconds in a random direction
         }
@@ -396,17 +514,10 @@ public class EnemyController : MonoBehaviour
     }
     
     
-    public void ChooseDirectionRandomlyToWalk()
+    public Vector3 ChoosePointRandomlyToWalk(Vector3 pos)
     {
-        Vector3 randomPoint = transform.position;
-        /*float aux = Random.Range(-1.0f, 1.0f);
-        while (aux == 0)
-        {
-            aux = Random.Range(-1.0f, 1.0f);
-            Debug.Log("re-lottery direction");
-        }*/
-        randomPoint = randomPoint + new Vector3(Random.Range(-1.0f, 1.0f),Random.Range(-1.0f, 1.0f),0);
-        _randomDir = Vector3.Normalize(randomPoint - transform.position);
+        pos = pos + new Vector3(Random.Range(-1.0f, 1.0f),Random.Range(-1.0f, 1.0f),0);
+        return pos;
     }
     
    
