@@ -140,7 +140,6 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Attack;
         }
 
-        
         /*
         if (IsTimeToRetreat(retreatDistance))
         {
@@ -151,7 +150,8 @@ public class EnemyController : MonoBehaviour
 
     public void Iddle()
     {
-        Debug.Log("iddleling");
+       // Debug.Log("iddleling");
+        
         if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
         {
             _waiting = true;
@@ -165,7 +165,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (_wandering)
         {
-            Debug.Log("iddle ~wandering cancelled, to attack");
+           // Debug.Log("iddle ~wandering cancelled, to attack");
             if (IsPlayerInAttackRange(range))
             {
                 _wandering = false;
@@ -193,7 +193,7 @@ public class EnemyController : MonoBehaviour
     public IEnumerator WaitingIddleTime(float sec)
     {
         yield return new WaitForSeconds(sec);
-        Debug.Log("wander after iddle: "+sec+" seconds");
+       // Debug.Log("wander after iddle: "+sec+" seconds");
         _coolDownAttack = false; //reseted 
         _iddle = false;
         _waiting = false;
@@ -204,7 +204,8 @@ public class EnemyController : MonoBehaviour
     
     public void Holding()
     {
-        Debug.Log("Holding");
+        //Debug.Log("Holding");
+        
         if (!_dashing)
         {
             _lastPlayerPosition = _player.position;
@@ -223,7 +224,8 @@ public class EnemyController : MonoBehaviour
     
     public void Dash()
     {
-        Debug.Log("Dashing");
+      //  Debug.Log("Dashing");
+      
         if (_dashTime <= 0)
         {
             _dashTime = startDashTime;
@@ -241,20 +243,19 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Attack() //not implemented yet
     {
         _wandering = false;
-        //not implemented yet
+        
         if (!_coolDownAttack)
         {
             switch (enemyType)
             {
                 case(EnemyType.Melee):
                     //now only dashing, so he's holding to dash
-                    Debug.Log("ATTACK MELEE!!");
+                    //Debug.Log("ATTACK MELEE!! DASH");
                     _holding = true;
                     
-                    //StartCoroutine(CoolDown());
                     break;
                 case(EnemyType.Ranged):
                     Shooting();
@@ -293,9 +294,9 @@ public class EnemyController : MonoBehaviour
             _wandering = true;
             ChooseDirectionRandomlyToWalk();
             StartCoroutine(RandomlyIddleIn(Random.Range(1.0f, 4.0f)));
+            //walk for Random(1f,4f) seconds in a random direction
         }
-        //walk for Random(1f,4f) seconds in a random direction
-        Debug.Log("wandering....");
+        
         //_movementComponent.Move(_randomDir.x * speed * Time.deltaTime, _randomDir.y * speed * Time.deltaTime);
         transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
     }
@@ -344,7 +345,6 @@ public class EnemyController : MonoBehaviour
 
     public void Follow()
     {
-        Debug.Log("following");
         Vector3 dir = Vector3.Normalize(_player.position - transform.position);
        // _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
         transform.position = Vector2.MoveTowards(transform.position, _player.position, speed * Time.deltaTime);
@@ -361,6 +361,8 @@ public class EnemyController : MonoBehaviour
     }
     public void Retreat()
     {
+       Vector3 dir = Vector3.Normalize(_player.position - transform.position);
+        //_movementComponent.Move(-dir.x*speed*Time.deltaTime,-dir.y *speed*Time.deltaTime);
         this.transform.position = Vector2.MoveTowards(transform.position, _player.position, -speed * Time.deltaTime);
     }
 
@@ -368,5 +370,14 @@ public class EnemyController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<StatusComponent>().TakeDamage(1);
+            Debug.Log("collision hit, player taking damage.");
+        }
+        
+    }
 }
