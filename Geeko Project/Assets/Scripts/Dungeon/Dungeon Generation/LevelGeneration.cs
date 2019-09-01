@@ -10,9 +10,11 @@ public class LevelGeneration : MonoBehaviour
     int gridSizeX, gridSizeY, numberOfRooms = 20;
     public GameObject roomWhiteObj;
     public Transform mapRoot;
+    bool finishedDrawingMap;
 
     void Start()
     {
+        finishedDrawingMap = false;
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         { // make sure we dont try to make more rooms than can fit in our grid
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
@@ -23,6 +25,24 @@ public class LevelGeneration : MonoBehaviour
         SetRoomDoors(); //assigns the doors where rooms would connect
         DrawMap(); //instantiates objects to make up a map
         GetComponent<SheetAssigner>().Assign(rooms); //passes room info to another script which handles generatating the level geometry
+    }
+
+    private void Update()
+    {
+        if (finishedDrawingMap)
+        {
+            MiniMapCamera minimapCam = FindObjectOfType<MiniMapCamera>();
+            minimapCam.GetMinimapReferences();
+            minimapCam.HideAllMinimapSprites();
+            if (GetComponent<SheetAssigner>().finished)
+            {
+                DungeonManager dungeonManager = FindObjectOfType<DungeonManager>();
+                dungeonManager.SpawnPlayer();
+                dungeonManager.GetDoorsReferences();
+                minimapCam.GetRoomsReferences();
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     void CreateRooms()
@@ -229,6 +249,7 @@ public class LevelGeneration : MonoBehaviour
             drawPos.y *= 8;
             //create map obj and assign its variables
             MapSpriteSelector mapper = Object.Instantiate(roomWhiteObj, drawPos, Quaternion.identity).GetComponent<MapSpriteSelector>();
+            room.minimapSprite = mapper;
             mapper.type = room.type;
             mapper.up = room.doorTop;
             mapper.down = room.doorBot;
@@ -236,5 +257,6 @@ public class LevelGeneration : MonoBehaviour
             mapper.left = room.doorLeft;
             mapper.gameObject.transform.parent = mapRoot;
         }
+        finishedDrawingMap = true;
     }
 }

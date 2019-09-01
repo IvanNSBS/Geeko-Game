@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementComponent m_MovementComponent;
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
+    [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
     void Start()
     {
@@ -16,6 +17,11 @@ public class PlayerController : MonoBehaviour
             m_MovementComponent = GetComponent<MovementComponent>();
             if (!m_MovementComponent)
                 Debug.LogWarning("Actor MovementComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+            else
+            {
+                m_MovementComponent.m_OnFlip = new UnityEngine.Events.UnityEvent();
+                m_MovementComponent.m_OnFlip.AddListener( FlipHand );
+            }
         }
 
         if (!m_StatusComponent)
@@ -34,14 +40,36 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
-
+    public void FlipHand()
+    {
+        if (m_MovementComponent.GetSprite().flipX)
+        {
+            m_PlayerHand.transform.localPosition = new Vector3(0.66f, -1.303f, 0.0f);
+            m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 90.0f);
+        }
+        else
+        {
+            m_PlayerHand.transform.localPosition = new Vector3(-0.66f, -1.303f, 0.0f);
+            m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
+        //m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
         m_MovementComponent.Move(m_Joystick.Horizontal*Time.deltaTime, m_Joystick.Vertical*Time.deltaTime);
         if (Input.GetButtonDown("Fire1"))
-            m_StatusComponent.TakeDamage(10);
-        //    m_SpellComponent.m_Spell1.CastSpell();
+        {
+            m_SpellComponent.CastSpell1();
+        }
+        if (Input.GetButtonDown("Fire2"))
+            m_SpellComponent.CastSpell2();
+
+        if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)
+        {
+            float angle = Mathf.Atan2(m_Joystick.Vertical, m_Joystick.Horizontal) * Mathf.Rad2Deg;
+            Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+            m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+        }
     }
 }

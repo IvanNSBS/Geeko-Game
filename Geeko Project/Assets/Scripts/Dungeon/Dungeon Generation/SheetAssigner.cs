@@ -11,8 +11,10 @@ public class SheetAssigner : MonoBehaviour
     public Vector2 roomDimensions = new Vector2(16 * 17, 16 * 9);
     public float gutterSizeX = 18;
     public float gutterSizeY = 10;
+    public bool finished;
     public void Assign(Room[,] rooms)
     {
+        finished = false;
         foreach (Room room in rooms)
         {
             //skip point where there is no room
@@ -25,7 +27,8 @@ public class SheetAssigner : MonoBehaviour
             //find position to place room
             Vector3 pos = new Vector3(room.gridPos.x * gutterSizeX, room.gridPos.y * gutterSizeY, 0);
             RoomInstance myRoom = Instantiate(RoomObj, pos, Quaternion.identity).GetComponent<RoomInstance>();
-            myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight);
+            myRoom.Setup(sheetsNormal[index], room.gridPos, room.type, room.doorTop, room.doorBot, room.doorLeft, room.doorRight, room.minimapSprite);
         }
+        finished = true;
     }
 }

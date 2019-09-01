@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public class CollisionEvent : UnityEvent<GameObject, GameObject> { }
+public class SpellEvent : UnityEvent<GameObject> { }
 public class SpellPrefabManager : MonoBehaviour
 {
     [SerializeField] private CollisionEvent m_OnCollideEnter;   // called when a collision happens and the
@@ -15,11 +16,12 @@ public class SpellPrefabManager : MonoBehaviour
     [SerializeField] private CollisionEvent m_OnTriggerTick;    // Called on a collision stay
     [SerializeField] private CollisionEvent m_OnCollisionTick;  // Called on a trigger stay
     [SerializeField] private CollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
-                                                                        // is a trigger
-
+                                                                // is a trigger
+    [SerializeField] private SpellEvent m_OnUpdate;
     // private List<GameObject> m_CollidingActors = new List<GameObject>();
     private GameObject m_Owner;
- 
+    [HideInInspector] public float m_TimeToLive;
+
     public void SetOwner(GameObject n_owner) { m_Owner = n_owner; }
     public GameObject GetOwner() { return m_Owner; }
 
@@ -43,8 +45,18 @@ public class SpellPrefabManager : MonoBehaviour
             m_OnTriggerTick = new CollisionEvent();
         m_OnTriggerTick.AddListener(action);
     }
+    public void AddOnUpdate( UnityAction<GameObject> action )
+    {
+        if (m_OnUpdate == null)
+            m_OnUpdate = new SpellEvent();
+        m_OnUpdate.AddListener(action);
+    }
 
-
+    public void Update()
+    {
+        if (m_OnUpdate != null)
+            m_OnUpdate.Invoke(this.gameObject);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

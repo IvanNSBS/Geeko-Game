@@ -19,7 +19,7 @@ public class HealthPotion : Item
         {
             StatusComponent comp = obj.GetComponent<StatusComponent>();
             comp.Heal(m_HealAmount);
-
+            Debug.Log("Current Health = " + comp.GetCurrentHealth());
             if (m_OnPickup != null)
                 m_OnPickup.Invoke(obj, obj);
 

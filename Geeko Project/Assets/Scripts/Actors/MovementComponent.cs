@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MovementComponent : MonoBehaviour
 {
@@ -8,11 +9,15 @@ public class MovementComponent : MonoBehaviour
     [SerializeField][Range(0,100)] private float m_MovementSpeed = 10.0f; // max actor speed
     [SerializeField][Range(0,2)] private float m_AccelerationTime = 0.0f; // time to reach max speed
     [SerializeField][Range(0,2)] private float m_DeaccelerationTime = 0.0f; // time to zero your speed
+    public UnityEvent m_OnFlip;
+
 
     private Rigidbody2D m_ActorRigidBody = null;
     private SpriteRenderer m_ActorSprite = null;
     private Vector2 m_RefSpeed = Vector2.zero;
     private float m_Magnitude = 10.0f; // movement speed magnitude. Used only to not need crazy values on movespeed.
+
+    public SpriteRenderer GetSprite() { return m_ActorSprite; }
     public bool SetRigidBody()
     {
         m_ActorRigidBody = GetComponent<Rigidbody2D>();
@@ -62,8 +67,16 @@ public class MovementComponent : MonoBehaviour
 
         }
         if (m_ActorSprite && speed_x > 0.0f)
+        {
             m_ActorSprite.flipX = false;
+            if (m_OnFlip != null)
+                m_OnFlip.Invoke();
+        }
         else if (m_ActorSprite && speed_x < 0.0f)
+        {
             m_ActorSprite.flipX = true;
+            if (m_OnFlip != null)
+                m_OnFlip.Invoke();
+        }
     }
 }
