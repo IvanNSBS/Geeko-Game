@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 203.46072
-    y: 787.35364
-    width: 287.50504
-    height: 66.057556
+    x: 187.06552
+    y: 856.36035
+    width: 264.3374
+    height: 71.847046
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 168.97974
-    y: 34.13319
+    x: 164.66899
+    y: 41.130013
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -393,8 +393,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.3593
-    y: 32.152283
+    x: 105.82274
+    y: 36.74279
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -2002,7 +2002,7 @@ PrefabInstance:
     - target: {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}

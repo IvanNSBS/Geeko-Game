@@ -49,6 +49,15 @@ public class MovementComponent : MonoBehaviour
     public void SetMoveSpeed(float nspeed) { m_MovementSpeed = nspeed;  }
     public float GetMoveSpeed() { return m_MovementSpeed * m_Magnitude; }
     public Vector2 GetVelocity() { return m_ActorRigidBody.velocity;  }
+
+    public void StopMovement()
+    {
+        if (m_ActorRigidBody)
+        {
+            m_ActorRigidBody.angularVelocity = 0;
+            m_ActorRigidBody.velocity = Vector3.zero;
+        }
+    }
     public void Move(float speed_x, float speed_y)
     {
         if (m_ActorRigidBody)
