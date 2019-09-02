@@ -179,6 +179,7 @@ public class EnemyController : MonoBehaviour
 
     public void Iddle()
     {
+        _movementComponent.StopMovement();
        // Debug.Log("iddleling");
         
         if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
@@ -233,6 +234,7 @@ public class EnemyController : MonoBehaviour
     
     public void Holding()
     {
+        _movementComponent.StopMovement();
         //Debug.Log("Holding");
         
         if (!_dashing)
@@ -292,6 +294,10 @@ public class EnemyController : MonoBehaviour
                     {
                        // Debug.Log("what");
                         WalkShoot(); //shoot and move at same time;
+                    }
+                    else
+                    {
+                        _movementComponent.StopMovement();
                     }
                     
                     break;
@@ -549,8 +555,8 @@ public class EnemyController : MonoBehaviour
 
     public void MoveEnemy(Vector3 dir,float speed)
     {
-        // _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
-       transform.position += dir * speed * Time.deltaTime;
+        _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
+       //transform.position += dir * speed * Time.deltaTime;
     }
 
     public bool IsTimeToRetreat(float retreatDistance)

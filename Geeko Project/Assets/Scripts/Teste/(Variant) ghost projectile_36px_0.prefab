@@ -85,6 +85,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: (Variant) ghost projectile_36px_0
       objectReference: {fileID: 0}
+    - target: {fileID: 6814519031583201309, guid: d2e4022efd24c924fa049a759de7a40e,
+        type: 3}
+      propertyPath: m_TagString
+      value: SpellUninteractive
+      objectReference: {fileID: 0}
     - target: {fileID: 6814519031583201310, guid: d2e4022efd24c924fa049a759de7a40e,
         type: 3}
       propertyPath: m_LocalPosition.x
