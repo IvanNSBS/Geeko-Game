@@ -11,7 +11,6 @@ public class ProjectilSpell : Spell
     public float m_ProjectileSpeed = 700.0f;
 
     private float m_Magnitude = 10.0f;
-    private SpellCastingComponent m_SpellComponent;
     public override void CastSpell()
     {
         if (m_Prefab && m_SpellOwner) {
@@ -67,7 +66,7 @@ public class ProjectilSpell : Spell
 
     public override void Initialize(GameObject obj)
     {
-        m_SpellComponent = obj.GetComponent<SpellCastingComponent>();
+        throw new System.NotImplementedException();
     }
 
     public override void ApplyDamage(GameObject obj)

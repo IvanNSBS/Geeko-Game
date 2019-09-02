@@ -6,16 +6,19 @@ using UnityEngine.Events;
 // This script is used to manage the Main Spell Prefab
 // collision and other useful spell behavior
 
+// TODO: Move those collision to a GameplayStatics class
 [System.Serializable]
-public class CollisionEvent : UnityEvent<GameObject, GameObject> { }
+public class BasicCollisionEvent : UnityEvent<GameObject, GameObject> { }
+public class CollisionEvent : UnityEvent<Collision2D, GameObject> { }
+public class TriggerEvent: UnityEvent<Collider2D, GameObject> { }
 public class SpellEvent : UnityEvent<GameObject> { }
 public class SpellPrefabManager : MonoBehaviour
 {
-    [SerializeField] private CollisionEvent m_OnCollideEnter;   // called when a collision happens and the
+    [SerializeField] private BasicCollisionEvent m_OnCollideEnter;   // called when a collision happens and the
                                                                         // collider is not a trigger
-    [SerializeField] private CollisionEvent m_OnTriggerTick;    // Called on a collision stay
-    [SerializeField] private CollisionEvent m_OnCollisionTick;  // Called on a trigger stay
-    [SerializeField] private CollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
+    [SerializeField] private BasicCollisionEvent m_OnTriggerTick;    // Called on a collision stay
+    [SerializeField] private BasicCollisionEvent m_OnCollisionTick;  // Called on a trigger stay
+    [SerializeField] private BasicCollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
                                                                 // is a trigger
     [SerializeField] private SpellEvent m_OnUpdate;
     // private List<GameObject> m_CollidingActors = new List<GameObject>();
@@ -27,22 +30,22 @@ public class SpellPrefabManager : MonoBehaviour
 
     public void AddCollideEnter( UnityAction<GameObject, GameObject> action) {
         if (m_OnCollideEnter == null)
-            m_OnCollideEnter = new CollisionEvent();
+            m_OnCollideEnter = new BasicCollisionEvent();
         m_OnCollideEnter.AddListener(action);
     }
     public void AddTriggerEnter( UnityAction<GameObject, GameObject> action) {
         if (m_OnTriggerEnter == null)
-            m_OnTriggerEnter = new CollisionEvent();
+            m_OnTriggerEnter = new BasicCollisionEvent();
         m_OnTriggerEnter.AddListener(action);
     }
     public void AddCollideTick( UnityAction<GameObject, GameObject> action) {
         if (m_OnCollisionTick == null)
-            m_OnCollisionTick = new CollisionEvent();
+            m_OnCollisionTick = new BasicCollisionEvent();
         m_OnCollisionTick.AddListener(action);
     }
     public void AddTriggerTick( UnityAction<GameObject, GameObject> action) {
         if (m_OnTriggerTick == null)
-            m_OnTriggerTick = new CollisionEvent();
+            m_OnTriggerTick = new BasicCollisionEvent();
         m_OnTriggerTick.AddListener(action);
     }
     public void AddOnUpdate( UnityAction<GameObject> action )

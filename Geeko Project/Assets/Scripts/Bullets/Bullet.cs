@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject != owner)
+        if (other.gameObject != owner && !other.CompareTag("Untagged"))
         {
             Debug.Log(owner);
             Debug.Log(other.gameObject);

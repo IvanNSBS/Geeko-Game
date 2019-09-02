@@ -9,7 +9,7 @@ public abstract class Item : ScriptableObject
     public Sprite m_GameSprite;
     public Animation m_Animation;
     public AudioClip m_PickupSound;
-    public CollisionEvent m_OnPickup;
+    public BasicCollisionEvent m_OnPickup;
 
     protected GameObject m_ItemPrefab;
     protected ItemPrefabManager m_ItemManager;

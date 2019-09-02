@@ -44,32 +44,19 @@ public class BlackHole : Spell
 
     public void Pull(GameObject target, GameObject src)
     {
-        if (target.CompareTag("SpellUninteractive") || target.CompareTag("Item"))
-            return;
-        if (target.GetComponent<Rigidbody2D>() && target.gameObject != m_SpellOwner)
-        {
-            Vector3 pos = src.transform.position;
-            Vector3 enemy = target.transform.position;
-            Vector3 dir = pos - enemy;
-            dir.Normalize();
-            Vector3 newpos = (dir * 0.001f * m_PullStrength);
-            newpos = new Vector3(newpos.x, newpos.y, 0);
-            target.transform.position += newpos;
-            //target.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            //target.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
-            //target.GetComponent<Rigidbody2D>().AddForce(dir * m_PullStrength);
-        }
+        List<GameObject> ignore = new List<GameObject>();
+        ignore.Add(m_SpellOwner);
+
+        //TODO: Move to ig_tag to class List
+        List<string> ig_tag = new List<string>();
+        ig_tag.Add("SpellUninteractive");
+        ig_tag.Add("Item");
+        SpellUtilities.PullTargetToSrc(target, src, m_PullStrength, ignore, ig_tag);
     }
 
     public override void OnTick(GameObject obj)
     {
-        SpellPrefabManager manager = obj.GetComponent<SpellPrefabManager>();
-        if (manager && m_SpellDuration != 0.0f)
-        {
-            manager.m_TimeToLive -= Time.deltaTime;
-            if (manager.m_TimeToLive < 0.0f)
-                Destroy(obj);
-        }
+        SpellUtilities.UpdateSpellTTL(obj, this);
     }
 
     public override void Initialize(GameObject obj)

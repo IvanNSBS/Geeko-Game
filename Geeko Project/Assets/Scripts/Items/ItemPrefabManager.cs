@@ -5,11 +5,11 @@ using UnityEngine.Events;
 
 public class ItemPrefabManager : MonoBehaviour
 {
-    [SerializeField] private CollisionEvent m_OnCollideEnter;   // called when a collision happens and the
+    [SerializeField] private BasicCollisionEvent m_OnCollideEnter;   // called when a collision happens and the
                                                                 // collider is not a trigger
-    [SerializeField] private CollisionEvent m_OnTriggerTick;    // Called on a collision stay
-    [SerializeField] private CollisionEvent m_OnCollisionTick;  // Called on a trigger stay
-    [SerializeField] private CollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
+    [SerializeField] private BasicCollisionEvent m_OnTriggerTick;    // Called on a collision stay
+    [SerializeField] private BasicCollisionEvent m_OnCollisionTick;  // Called on a trigger stay
+    [SerializeField] private BasicCollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
                                                                 // is a trigger
     [SerializeField] private Item m_ItemData;
 
@@ -22,25 +22,25 @@ public class ItemPrefabManager : MonoBehaviour
     public void AddCollideEnter(UnityAction<GameObject, GameObject> action)
     {
         if (m_OnCollideEnter == null)
-            m_OnCollideEnter = new CollisionEvent();
+            m_OnCollideEnter = new BasicCollisionEvent();
         m_OnCollideEnter.AddListener(action);
     }
     public void AddTriggerEnter(UnityAction<GameObject, GameObject> action)
     {
         if (m_OnTriggerEnter == null)
-            m_OnTriggerEnter = new CollisionEvent();
+            m_OnTriggerEnter = new BasicCollisionEvent();
         m_OnTriggerEnter.AddListener(action);
     }
     public void AddCollideTick(UnityAction<GameObject, GameObject> action)
     {
         if (m_OnCollisionTick == null)
-            m_OnCollisionTick = new CollisionEvent();
+            m_OnCollisionTick = new BasicCollisionEvent();
         m_OnCollisionTick.AddListener(action);
     }
     public void AddTriggerTick(UnityAction<GameObject, GameObject> action)
     {
         if (m_OnTriggerTick == null)
-            m_OnTriggerTick = new CollisionEvent();
+            m_OnTriggerTick = new BasicCollisionEvent();
         m_OnTriggerTick.AddListener(action);
     }
 
