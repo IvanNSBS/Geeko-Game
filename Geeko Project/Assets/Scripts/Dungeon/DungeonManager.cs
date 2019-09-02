@@ -22,7 +22,10 @@ public class DungeonManager : MonoBehaviour
 
     public void SpawnEnemy() //temporary, delete
     {
-        Instantiate(enemy, Vector3.one, Quaternion.identity);
+        if (!enemy)
+        {
+            Instantiate(enemy, Vector3.one, Quaternion.identity);
+        }
     }
     
     public void GetDoorsReferences()
