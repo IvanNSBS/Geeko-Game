@@ -21,9 +21,5 @@ public class StartButton : MonoBehaviour
         m_Sequence.Append(start.DOFade(0f, 1f));
         m_Sequence.Append(start.DOFade(1f, 1f));
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }
