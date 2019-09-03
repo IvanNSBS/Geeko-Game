@@ -12,10 +12,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject != owner && !other.CompareTag("Untagged"))
+        if ( other.CompareTag("Enemy") || other.CompareTag("Wall") || other.CompareTag("Door"))
         {
-            Debug.Log(owner);
-            Debug.Log(other.gameObject);
+            if (other.CompareTag("Enemy")) 
+            {
+                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+            } 
             Destroy(gameObject);
         }
     }

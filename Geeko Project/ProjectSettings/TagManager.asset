@@ -9,6 +9,7 @@ TagManager:
   - Item
   - SpellUninteractive
   - SpellInteractive
+  - Enemy
   layers:
   - Default
   - TransparentFX
