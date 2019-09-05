@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 
 // THIS IS A TEST SCRIPT!!
-[CreateAssetMenu (menuName = "Spells/ProjectileSpell")]
-public class ProjectilSpell : Spell
+[CreateAssetMenu (menuName = "Spells/TravellingSpell")]
+public class TravellingSpell : Spell
 {
-    public float m_Damage = 10.0f;
-    public float m_ProjectileSpeed = 700.0f;
-
+    public Spell m_SpellToCast;
+    public float m_TravelDistance = 10.0f;
+    public float m_ProjectileSpeed = 1.0f;
     public override void CastSpell()
     {
         if (m_Prefab && m_SpellOwner) {
@@ -29,6 +29,7 @@ public class ProjectilSpell : Spell
             obj.GetComponent<SpellPrefabManager>().SetOwner(m_SpellOwner);
             obj.GetComponent<SpellPrefabManager>().AddCollideEnter(this.Collide);
             obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(this.Collide);
+            obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
         }
     }
 
@@ -36,28 +37,28 @@ public class ProjectilSpell : Spell
 
         SpellPrefabManager s_manager = target_obj.GetComponent<SpellPrefabManager>();
         if (target_obj != m_SpellOwner && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door"))) {
-            StatusComponent obj_status = target_obj.GetComponent<StatusComponent>();
-            if(obj_status) obj_status.TakeDamage(m_Damage);
-
             if (s_manager) {
                 if (s_manager.GetOwner() != m_SpellOwner)
                 {
-                    if (m_OnHitEffect) {
-                        //TODO: Have collider info on collide function to spawn fx on the correct position
-                        GameObject fx = Instantiate(m_OnHitEffect);
-                        fx.transform.position = target_obj.transform.position;
+                    if (m_SpellToCast) {
+                        Debug.Log("Casting spell!");
+                        m_SpellToCast.m_SpellOwner = m_SpellOwner;
+                        m_SpellToCast.CastSpell();
                     }
+                    else
+                        Debug.LogError("No spell to cast!");
                     Destroy(source_obj);
                 }
             }
             else
             {
-                if (m_OnHitEffect)
-                {
-                    //TODO: Have collider info on collide function to spawn fx on the correct position
-                    GameObject fx = Instantiate(m_OnHitEffect);
-                    fx.transform.position = target_obj.transform.position;
+                if (m_SpellToCast) {
+                    Debug.Log("Casting spell!");
+                    m_SpellToCast.m_SpellOwner = m_SpellOwner;
+                    m_SpellToCast.CastSpell();
                 }
+                else
+                    Debug.LogError("No spell to cast!");
                 Destroy(source_obj);
             }
         }
@@ -75,6 +76,13 @@ public class ProjectilSpell : Spell
 
     public override void OnTick(GameObject obj)
     {
-        throw new System.NotImplementedException();
+        if((obj.transform.position - m_SpellOwner.transform.position).magnitude > m_TravelDistance)
+            if (m_SpellToCast)
+            {
+                Debug.Log("Casting spell!");
+                m_SpellToCast.m_SpellOwner = m_SpellOwner;
+                m_SpellToCast.CastSpell();
+                Destroy(obj);
+            }
     }
 }

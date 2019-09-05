@@ -1172,7 +1172,7 @@ MonoBehaviour:
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
     m_RemainingCharges: 0
-  - m_Spell: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
+  - m_Spell: {fileID: 11400000, guid: 09820c77c991a2f41ae2dcd8d4626e4d, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
