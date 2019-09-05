@@ -50,6 +50,7 @@ public class MovementComponent : MonoBehaviour
     public float GetMoveSpeed() { return m_MovementSpeed * m_Magnitude; }
     public Vector2 GetVelocity() { return m_ActorRigidBody.velocity;  }
 
+    //Stop rigidbody acceleration so it can actually stop moving
     public void StopMovement()
     {
         if (m_ActorRigidBody)
@@ -60,31 +61,35 @@ public class MovementComponent : MonoBehaviour
     }
     public void Move(float speed_x, float speed_y)
     {
-        if (m_ActorRigidBody)
+        if (m_ActorRigidBody) // if the actor has a rigidbody
         {
+            //update actor speed
             Vector2 newspeed = new Vector2(speed_x * GetMoveSpeed(), speed_y*GetMoveSpeed());
-            //gameObject.transform.position += new Vector3(newspeed.x, newspeed.y, 0 );
             if (newspeed.magnitude >= GetVelocity().magnitude)
             {
+                //interp current speed based on acceleration time
                 //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_AccelerationTime);
                 m_ActorRigidBody.velocity = newspeed;
             }
             else {
+                //interp current speed to idle based on deacceleration time
                 //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_DeaccelerationTime);
                 m_ActorRigidBody.velocity = newspeed;
             }
 
         }
+        // If actor tried to move right, make sprite look to right
         if (m_ActorSprite && speed_x > 0.0f)
         {
             m_ActorSprite.flipX = false;
-            if (m_OnFlip != null)
+            if (m_OnFlip != null) // call auxiliary OnFlip Event
                 m_OnFlip.Invoke();
         }
+        // If actor tried to move left, make sprite look to right
         else if (m_ActorSprite && speed_x < 0.0f)
         {
-            m_ActorSprite.flipX = true;
-            if (m_OnFlip != null)
+            m_ActorSprite.flipX = true; 
+            if (m_OnFlip != null)// call auxiliary OnFlip Event
                 m_OnFlip.Invoke();
         }
     }

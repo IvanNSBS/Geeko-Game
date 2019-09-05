@@ -24,17 +24,17 @@ public class StatusComponent : MonoBehaviour
     public void SetMaxHealth(float newhealth) { m_MaxHealth = newhealth; OnSetMaxHealth.Invoke(); }
     public void TakeDamage(float amount)
     {
-        if (!m_IsInvincible)
+        if (!m_IsInvincible) // if the target can take damage
         {
-            m_CurrentHealth -= amount;
+            m_CurrentHealth -= amount; // reduce your health
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
-            if (m_CurrentHealth <= 0.0f) Die.Invoke();
-            OnTakeDamage.Invoke();
+            if (m_CurrentHealth <= 0.0f) Die.Invoke(); //if the actor is dead, call death event
+            OnTakeDamage.Invoke(); // call take damage event
 
-            StartCoroutine(FlashSprite(m_HitFlashDuration));
-            if (m_CanUseIFrames)
+            StartCoroutine(FlashSprite(m_HitFlashDuration)); // flash the sprite material if it can
+            if (m_CanUseIFrames) // if the actor can use i frames
             {
-                m_IsInvincible = true;
+                m_IsInvincible = true; // make it invincible for the iframe duration
                 StartCoroutine(StartIFrame(m_IFrameTime));
             }
         }

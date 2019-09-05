@@ -28,6 +28,7 @@ internal class Timer : MonoBehaviour
 }
 public static class GameplayStatics
 {
+    public enum DefaultColliders { Box, Circle, Capsulse };
 
     public static void AddTimer(GameObject obj, float ttl, UnityAction action)
     {
@@ -36,7 +37,6 @@ public static class GameplayStatics
             timer.InitTimer(ttl, action);
         }
     }
-    public enum DefaultColliders { Box, Circle, Capsulse };
     public static bool IsObjInList(GameObject obj, List<GameObject> list)
     {
         foreach (GameObject o in list)

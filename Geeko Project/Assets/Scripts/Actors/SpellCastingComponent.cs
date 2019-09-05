@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpellCastingComponent : MonoBehaviour
 {
-
+    //List of actor spells
     [SerializeField] private List<SpellData> m_Spells = new List<SpellData>();
 
     // Start is called before the first frame update

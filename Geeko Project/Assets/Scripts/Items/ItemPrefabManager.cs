@@ -11,14 +11,15 @@ public class ItemPrefabManager : MonoBehaviour
     [SerializeField] private BasicCollisionEvent m_OnCollisionTick;  // Called on a trigger stay
     [SerializeField] private BasicCollisionEvent m_OnTriggerEnter;   // called when a collision happens and collider
                                                                 // is a trigger
-    [SerializeField] private Item m_ItemData;
+    [SerializeField] private Item m_ItemData;   // Item ScriptableObject data
 
     public void Start()
     {
-        m_ItemData.SetPrefab(this.gameObject);
+        m_ItemData.SetPrefab(this.gameObject); //set the prefab
         m_ItemData.Initialize();
     }
 
+    //basic functions to add Actions
     public void AddCollideEnter(UnityAction<GameObject, GameObject> action)
     {
         if (m_OnCollideEnter == null)
@@ -44,6 +45,7 @@ public class ItemPrefabManager : MonoBehaviour
         m_OnTriggerTick.AddListener(action);
     }
 
+    //Call Unity Action functions when the correct event is triggered
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (m_OnTriggerEnter != null)
