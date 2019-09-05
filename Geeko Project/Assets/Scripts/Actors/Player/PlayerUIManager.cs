@@ -14,11 +14,13 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private Image m_Spell_1_Border;
     [SerializeField] private Image m_Spell_1_CD;
     [SerializeField] private TextMeshProUGUI m_Spell_1_CDtext;
+    [SerializeField] private TextMeshProUGUI m_Spell_1_Charges;
 
     [SerializeField] private Image m_Spell_2_Icon;
     [SerializeField] private Image m_Spell_2_Border;
     [SerializeField] private Image m_Spell_2_CD;
     [SerializeField] private TextMeshProUGUI m_Spell_2_CDtext;
+    [SerializeField] private TextMeshProUGUI m_Spell_2_Charges;
 
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
@@ -45,6 +47,11 @@ public class PlayerUIManager : MonoBehaviour
                 if (m_SpellComponent.GetSpell(0) != null){
                     m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_SpellImage;
                     m_Spell_1_Border.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_BorderImage;
+
+                    if (m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges == 1)
+                        m_Spell_1_Charges.gameObject.SetActive(false);
+                    else
+                        m_Spell_1_Charges.text = m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges.ToString();
                 }
                 else m_Spell_1_Icon.gameObject.SetActive(false);
 
@@ -52,6 +59,11 @@ public class PlayerUIManager : MonoBehaviour
                 {
                     m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_SpellImage;
                     m_Spell_2_Border.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_BorderImage;
+
+                    if (m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges == 1)
+                        m_Spell_2_Charges.gameObject.SetActive(false);
+                    else
+                        m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges.ToString();
                 }
                 else m_Spell_2_Icon.gameObject.SetActive(false);
             }
@@ -75,6 +87,7 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (m_SpellComponent.GetSpell(0) != null)
         {
+            m_Spell_1_Charges.text = m_SpellComponent.GetSpell(0).m_RemainingCharges.ToString();
             if (!m_SpellComponent.GetSpell(0).m_IsSpellOnCD)
                 m_Spell_1_CD.gameObject.SetActive(false);
             else {
@@ -87,6 +100,8 @@ public class PlayerUIManager : MonoBehaviour
 
         if (m_SpellComponent.GetSpell(1) != null)
         {
+            m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_RemainingCharges.ToString();
+
             if (!m_SpellComponent.GetSpell(1).m_IsSpellOnCD)
                 m_Spell_2_CD.gameObject.SetActive(false);
             else
@@ -95,6 +110,7 @@ public class PlayerUIManager : MonoBehaviour
                 float pct_s2 = m_SpellComponent.GetSpell(1).m_RemainingCD / m_SpellComponent.GetSpell(1).GetTotalCD();
                 m_Spell_2_CD.fillAmount = pct_s2;
                 m_Spell_2_CDtext.text = m_SpellComponent.GetSpell(1).m_RemainingCD.ToString("0.0");
+
             }
         }
 

@@ -5,24 +5,6 @@ using UnityEngine.Events;
 
 public static class SpellUtilities
 {
-    public static bool IsObjInList(GameObject obj, List<GameObject> list)
-    {
-        foreach(GameObject o in list)
-            if (obj == o)
-                return true;
-
-        return false;
-    }
-
-    public static bool ObjHasTag(GameObject obj, List<string> list)
-    {
-        foreach (string tag in list)
-            if (obj.CompareTag(tag))
-                return true;
-
-        return false;
-    }
-
     public static void PullTargetToSrc(
         GameObject target, 
         GameObject src, 
@@ -30,9 +12,9 @@ public static class SpellUtilities
         List<GameObject> objs_to_ignore,
         List<string> tags_to_ignore)
     {
-        if (ObjHasTag(target, tags_to_ignore))
+        if (GameplayStatics.ObjHasTag(target, tags_to_ignore))
             return;
-        if (target.GetComponent<Rigidbody2D>() && !IsObjInList(target.gameObject, objs_to_ignore))
+        if (target.GetComponent<Rigidbody2D>() && !GameplayStatics.IsObjInList(target.gameObject, objs_to_ignore))
         {
             Vector3 pos = src.transform.position;
             Vector3 enemy = target.transform.position;

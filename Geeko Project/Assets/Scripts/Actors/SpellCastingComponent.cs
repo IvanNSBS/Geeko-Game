@@ -11,9 +11,7 @@ public class SpellCastingComponent : MonoBehaviour
     void Start()
     {
         foreach(SpellData spell in m_Spells)
-        {
-            spell.SetOwner(this.gameObject);
-        }
+            spell.StartSpellData(this.gameObject);
     }
 
     public SpellData GetSpell(int idx) {

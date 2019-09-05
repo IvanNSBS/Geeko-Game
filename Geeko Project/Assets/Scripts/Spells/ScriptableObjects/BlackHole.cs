@@ -33,6 +33,9 @@ public class BlackHole : Spell
             obj.GetComponent<CircleCollider2D>().radius = 0.5f;
             obj.GetComponent<CircleCollider2D>().isTrigger = true;
             obj.transform.localScale *= (2*m_Radius);
+
+            // GameplayStatics.AddQuad(obj, m_Material);
+
             if (m_Material)
                 obj.GetComponent<MeshRenderer>().material = m_Material;
 
