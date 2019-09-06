@@ -111,7 +111,7 @@ public class EnemyController : MonoBehaviour
     }
 
     
-    void Update()
+    public virtual void Update()
     {
         switch (currState)
         {
@@ -177,9 +177,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void Iddle()
+    public virtual void StopMovement()
     {
         _movementComponent.StopMovement();
+    }
+    
+    public virtual void Iddle()
+    {
+        StopMovement();
        // Debug.Log("iddleling");
         
         if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
@@ -234,7 +239,7 @@ public class EnemyController : MonoBehaviour
     
     public void Holding()
     {
-        _movementComponent.StopMovement();
+        StopMovement();
         //Debug.Log("Holding");
         
         if (!_dashing)
@@ -271,7 +276,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Attack() //not implemented yet
+    public virtual void Attack() //not implemented yet
     {
         _wandering = false;
         
@@ -297,7 +302,7 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        _movementComponent.StopMovement();
+                        StopMovement();
                     }
                     
                     break;
@@ -553,7 +558,7 @@ public class EnemyController : MonoBehaviour
         MoveEnemy(DirectionNormalized(transform.position,_player.position),speed);
     }
 
-    public void MoveEnemy(Vector3 dir,float speed)
+    public virtual void MoveEnemy(Vector3 dir,float speed)
     {
         _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
        //transform.position += dir * speed * Time.deltaTime;
@@ -573,7 +578,7 @@ public class EnemyController : MonoBehaviour
         MoveEnemy(DirectionNormalized(transform.position,_player.position), -speed);
     }
 
-    public void Death()
+    public virtual void Death()
     {
         if (explodeWhenDie)
         {
@@ -593,4 +598,5 @@ public class EnemyController : MonoBehaviour
         }
         
     }
+
 }
