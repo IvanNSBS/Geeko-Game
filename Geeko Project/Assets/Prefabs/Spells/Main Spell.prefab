@@ -162,24 +162,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12b6aa3ec3f6014aa04b0b141cda21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnCollideEnter:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BasicCollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  m_OnTriggerTick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BasicCollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  m_OnCollisionTick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BasicCollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  m_OnTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BasicCollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   m_TimeToLive: 0

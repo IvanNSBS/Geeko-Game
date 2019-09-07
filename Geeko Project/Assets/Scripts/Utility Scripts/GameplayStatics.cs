@@ -64,6 +64,19 @@ public static class GameplayStatics
         return false;
     }
 
+    public static bool GetTriggerContactPoint(GameObject src, out Vector3 point)
+    {
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(src.transform.position, src.transform.forward);
+
+        if(hit.collider != null){
+            point = hit.point;
+            return true;
+        }
+        point = hit.point;
+        return false;
+    }
+
     public static bool ApplyDamage(GameObject src, float amount)
     {
         StatusComponent status = src.GetComponent<StatusComponent>();

@@ -62,6 +62,7 @@ public class SpellPrefabManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("collided");
         if(m_OnCollideEnter != null)
             m_OnCollideEnter.Invoke(collision, this.gameObject);
     }
