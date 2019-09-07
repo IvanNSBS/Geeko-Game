@@ -42,4 +42,27 @@ public static class SpellUtilities
         }
         return false;
     }
+
+    public static GameObject InstantiateSpell(
+        GameObject spell_prefab,
+        GameObject owner,
+        Spell spell,
+        Vector3 position,
+        Quaternion rotation,
+        bool isTrigger = true,
+        Vector2 spell_velocity = default(Vector2),
+        GameplayStatics.DefaultColliders col = GameplayStatics.DefaultColliders.Box, 
+        string tag = null)
+    {
+        GameObject obj = MonoBehaviour.Instantiate(spell_prefab);
+        if (tag != null)
+            obj.tag = tag;
+        obj.GetComponent<SpellPrefabManager>().m_TimeToLive = spell.m_SpellDuration;
+        obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
+        obj.GetComponent<Rigidbody2D>().velocity = spell_velocity;
+        obj.transform.position = position;
+        obj.transform.rotation = rotation;
+
+        return obj;
+    }
 }

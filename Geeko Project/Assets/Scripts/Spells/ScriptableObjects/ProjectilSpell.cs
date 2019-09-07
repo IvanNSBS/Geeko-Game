@@ -13,21 +13,15 @@ public class ProjectilSpell : Spell
     public override void CastSpell(GameObject owner, Transform inst_transform = null)
     {
         if (m_Prefab && owner) {
-            Vector3 from = Input.mousePosition;
-            from = Camera.main.ScreenToWorldPoint(from);
+            Vector3 from = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 at = owner.transform.position;
-            Vector2 vec = new Vector2(from.x - at.x, from.y - at.y);
-            vec.Normalize();
+            Vector2 dir = new Vector2(from.x - at.x, from.y - at.y).normalized;
 
-            GameObject obj = Instantiate(m_Prefab);
-            obj.GetComponent<Rigidbody2D>().velocity = new Vector2(m_ProjectileSpeed*vec.x, m_ProjectileSpeed*vec.y);
-            obj.transform.position = owner.transform.position + new Vector3(vec.x*1.5f, vec.y*1.5f, 0.0f);
-            obj.tag = "SpellUninteractive";
+            Vector3 pos = owner.transform.position;
+            Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
+            Vector2 speed = new Vector2(m_ProjectileSpeed * dir.x, m_ProjectileSpeed * dir.y);
 
-            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
-            obj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
+            GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, this, pos, rot, spell_velocity:speed, tag:"SpellUninteractive");
             obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(this.Collide);
         }
     }

@@ -136,6 +136,19 @@ public static class GameplayStatics
         return false;
     }
 
+    public static Quaternion GetRotationFromDir( Vector2 dir )
+    {
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    public static Quaternion GetRotationFromLookAt(Vector3 from, Vector3 at)
+    {
+        Vector2 dir = new Vector2(from.x - at.x, from.y - at.y).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+
     public static bool AddDefaultCollider(GameObject obj, DefaultColliders type, bool is_trigger = false)
     {
         switch (type)
