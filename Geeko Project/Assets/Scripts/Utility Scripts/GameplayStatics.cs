@@ -64,6 +64,15 @@ public static class GameplayStatics
         return false;
     }
 
+    //TODO: Make more tests to be sure if when it enters trigger it'll
+    //      really get the contact point correctly
+    public static Vector3 GetTriggerContactPoint(GameObject src)
+    {
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(src.transform.position, src.transform.forward);
+        return hit.point;
+    }
+
     public static bool ApplyDamage(GameObject src, float amount)
     {
         StatusComponent status = src.GetComponent<StatusComponent>();
@@ -126,6 +135,19 @@ public static class GameplayStatics
         Debug.LogError("Couldn't add SpriteRenderer to Selected GameObject");
         return false;
     }
+
+    public static Quaternion GetRotationFromDir( Vector2 dir )
+    {
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    public static Quaternion GetRotationFromLookAt(Vector3 from, Vector3 at)
+    {
+        Vector2 dir = new Vector2(from.x - at.x, from.y - at.y).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
 
     public static bool AddDefaultCollider(GameObject obj, DefaultColliders type, bool is_trigger = false)
     {

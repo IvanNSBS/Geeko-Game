@@ -10,17 +10,13 @@ public class BlackHole : Spell
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void CastSpell()
+    public override void CastSpell(GameObject owner, Transform inst_transform = null)
     {
-        if (m_Prefab && m_SpellOwner)
+        if (m_Prefab && owner)
         {
-            Vector3 from = Input.mousePosition;
-            from = Camera.main.ScreenToWorldPoint(from);
             GameObject obj = Instantiate(m_Prefab);
-            obj.transform.position = new Vector3(from.x, from.y, 3.0f);
 
-
-            obj.GetComponent<SpellPrefabManager>().SetOwner(m_SpellOwner);
+            obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
             obj.tag = "SpellUninteractive";
             Destroy(obj.GetComponent<BoxCollider2D>());
 
@@ -28,6 +24,7 @@ public class BlackHole : Spell
             obj.GetComponent<CircleCollider2D>().radius = 0.5f;
             obj.GetComponent<CircleCollider2D>().isTrigger = true;
             obj.transform.localScale *= (2*m_Radius);
+            obj.transform.position = inst_transform.position;
 
             // GameplayStatics.AddQuad(obj, m_Material);
 
@@ -43,7 +40,9 @@ public class BlackHole : Spell
     public void Pull(Collider2D target, GameObject src)
     {
         List<GameObject> ignore = new List<GameObject>();
-        ignore.Add(m_SpellOwner);
+        GameObject owner = src.GetComponent<SpellPrefabManager>().GetOwner();
+        if( owner )
+            ignore.Add(owner);
 
         //TODO: Move to ig_tag to class List
         List<string> ig_tag = new List<string>();

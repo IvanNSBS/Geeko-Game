@@ -24,14 +24,14 @@ public abstract class Spell : ScriptableObject
 
     public List<string> m_ActorsToIgnore = new List<string>(); // List of tags of valid entities
                                                                // that can interact with the spell
-    [HideInInspector] public GameObject m_SpellOwner;
-    public abstract void CastSpell(); // What happens when the player casts such 
+
+    public abstract void CastSpell(GameObject owner, Transform inst_transform = null); // What happens when the player casts such 
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
 }
 
 public class AuxSpell : Spell
 {
-    public override void CastSpell()
+    public override void CastSpell(GameObject owner, Transform inst_transform = null)
     {
         throw new System.NotImplementedException();
     }
@@ -58,7 +58,6 @@ public class SpellData
         m_RemainingCharges = m_Spell.m_SpellCharges;
     }
 
-
     public void SetOwner(GameObject obj) { m_Owner = obj; }
     public float GetTotalCD() { return m_Spell.m_SpellCooldown; }
     public bool CastSpell()
@@ -67,8 +66,8 @@ public class SpellData
         if (!m_IsSpellOnCD || m_RemainingCharges > 0)
         {
             // TODO: Saving owner on ScriptableObject is bad, since it's static!
-            m_Spell.m_SpellOwner = m_Owner; // guarantee the owner is set
-            m_Spell.CastSpell();
+            // m_Spell.m_SpellOwner = m_Owner; // guarantee the owner is set
+            m_Spell.CastSpell(m_Owner);
 
             m_RemainingCharges--;
             // only update cooldown if it's not already on cooldown
