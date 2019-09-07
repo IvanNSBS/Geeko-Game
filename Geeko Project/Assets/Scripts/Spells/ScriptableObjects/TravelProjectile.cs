@@ -26,14 +26,14 @@ public class TravellingSpell : Spell
             obj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             obj.GetComponent<SpellPrefabManager>().SetOwner(m_SpellOwner);
-            obj.GetComponent<SpellPrefabManager>().AddCollideEnter(this.Collide);
             obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(this.Collide);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
         }
     }
 
-    public void Collide(GameObject target_obj, GameObject source_obj) {
-
+    public void Collide(Collider2D target, GameObject source_obj)
+    {
+        GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = target_obj.GetComponent<SpellPrefabManager>();
         if (target_obj != m_SpellOwner && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door"))) {
             if (s_manager) {

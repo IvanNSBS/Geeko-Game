@@ -40,7 +40,7 @@ public class BlackHole : Spell
         }
     }
 
-    public void Pull(GameObject target, GameObject src)
+    public void Pull(Collider2D target, GameObject src)
     {
         List<GameObject> ignore = new List<GameObject>();
         ignore.Add(m_SpellOwner);
@@ -49,7 +49,7 @@ public class BlackHole : Spell
         List<string> ig_tag = new List<string>();
         ig_tag.Add("SpellUninteractive");
         ig_tag.Add("Item");
-        SpellUtilities.PullTargetToSrc(target, src, m_PullStrength, ignore, ig_tag);
+        SpellUtilities.PullTargetToSrc(target.gameObject, src, m_PullStrength, ignore, ig_tag);
     }
 
     public override void OnTick(GameObject obj)

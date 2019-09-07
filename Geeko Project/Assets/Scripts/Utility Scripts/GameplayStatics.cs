@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ File: GameplayStatics.cs
+ Contains several GameplayStatic functions and other Utilities functions
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,6 +34,10 @@ internal class Timer : MonoBehaviour
 public static class GameplayStatics
 {
     public enum DefaultColliders { Box, Circle, Capsulse };
+    public class CollisionEvent : UnityEvent<Collision2D, GameObject> { }   // Collision Event layout
+    public class TriggerEvent : UnityEvent<Collider2D, GameObject> { }      // Trigger Event layout
+    public class SpellEvent : UnityEvent<GameObject> { }    // SpellEvent Layout. 
+                                                            // Only uses the game object that casted spell
 
     public static void AddTimer(GameObject obj, float ttl, UnityAction action)
     {
