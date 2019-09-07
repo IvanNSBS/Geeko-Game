@@ -22,6 +22,7 @@ public class ProjectilSpell : Spell
             GameObject obj = Instantiate(m_Prefab);
             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(m_ProjectileSpeed*vec.x, m_ProjectileSpeed*vec.y);
             obj.transform.position = owner.transform.position + new Vector3(vec.x*1.5f, vec.y*1.5f, 0.0f);
+            obj.tag = "SpellUninteractive";
 
             float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
             obj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -45,9 +46,7 @@ public class ProjectilSpell : Spell
                     if (m_OnHitEffect) {
                         //TODO: Have collider info on collide function to spawn fx on the correct position
                         GameObject fx = Instantiate(m_OnHitEffect);
-                        Vector3 pt;
-                        if(GameplayStatics.GetTriggerContactPoint(source_obj, out pt))
-                            fx.transform.position = pt;
+                        fx.transform.position = GameplayStatics.GetTriggerContactPoint(source_obj);
                     }
                     Destroy(source_obj);
                 }
@@ -58,9 +57,7 @@ public class ProjectilSpell : Spell
                 {
                     //TODO: Have collider info on collide function to spawn fx on the correct position
                     GameObject fx = Instantiate(m_OnHitEffect);
-                    Vector3 pt;
-                    if (GameplayStatics.GetTriggerContactPoint(source_obj, out pt))
-                        fx.transform.position = pt;
+                    fx.transform.position = GameplayStatics.GetTriggerContactPoint(source_obj);
                 }
                 Destroy(source_obj);
             }

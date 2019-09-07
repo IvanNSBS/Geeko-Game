@@ -64,17 +64,13 @@ public static class GameplayStatics
         return false;
     }
 
-    public static bool GetTriggerContactPoint(GameObject src, out Vector3 point)
+    //TODO: Make more tests to be sure if when it enters trigger it'll
+    //      really get the contact point correctly
+    public static Vector3 GetTriggerContactPoint(GameObject src)
     {
         RaycastHit2D hit;
         hit = Physics2D.Raycast(src.transform.position, src.transform.forward);
-
-        if(hit.collider != null){
-            point = hit.point;
-            return true;
-        }
-        point = hit.point;
-        return false;
+        return hit.point;
     }
 
     public static bool ApplyDamage(GameObject src, float amount)

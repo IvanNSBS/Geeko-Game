@@ -21,6 +21,7 @@ public class TravellingSpell : Spell
             GameObject obj = Instantiate(m_Prefab);
             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(m_ProjectileSpeed*vec.x, m_ProjectileSpeed*vec.y);
             obj.transform.position = owner.transform.position + new Vector3(vec.x*1.5f, vec.y*1.5f, 0.0f);
+            obj.tag = "SpellUninteractive";
 
             float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
             obj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -42,12 +43,10 @@ public class TravellingSpell : Spell
                 if (m_SpellToCast)
                 {
                     Debug.Log("Casting spell!");
-                    Vector3 pt;
-                    if (GameplayStatics.GetTriggerContactPoint(source_obj, out pt)) {
-                        Transform transf = source_obj.transform;
-                        transf.position = pt;
-                        m_SpellToCast.CastSpell(s_manager.GetOwner(), transf);
-                    }
+                    Transform transf = source_obj.transform;
+                    transf.position = GameplayStatics.GetTriggerContactPoint(source_obj);
+                    m_SpellToCast.CastSpell(s_manager.GetOwner(), transf);
+
                 }
                 else
                     Debug.LogError("No spell to cast!");

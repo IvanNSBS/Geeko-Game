@@ -14,10 +14,7 @@ public class BlackHole : Spell
     {
         if (m_Prefab && owner)
         {
-            Vector3 from = Input.mousePosition;
-            from = Camera.main.ScreenToWorldPoint(from);
             GameObject obj = Instantiate(m_Prefab);
-
 
             obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
             obj.tag = "SpellUninteractive";
