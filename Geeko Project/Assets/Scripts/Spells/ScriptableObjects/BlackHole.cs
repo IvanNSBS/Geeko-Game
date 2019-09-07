@@ -10,11 +10,6 @@ public class BlackHole : Spell
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void ApplyDamage(GameObject obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void CastSpell()
     {
         if (m_Prefab && m_SpellOwner)
@@ -60,10 +55,5 @@ public class BlackHole : Spell
     public override void OnTick(GameObject obj)
     {
         SpellUtilities.UpdateSpellTTL(obj, this);
-    }
-
-    public override void Initialize(GameObject obj)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -63,16 +63,6 @@ public class ProjectilSpell : Spell
         }
     }
 
-    public override void Initialize(GameObject obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void ApplyDamage(GameObject obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnTick(GameObject obj)
     {
         throw new System.NotImplementedException();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-// THIS IS A TEST SCRIPT!!
 [CreateAssetMenu (menuName = "Spells/TravellingSpell")]
 public class TravellingSpell : Spell
 {
@@ -62,16 +61,6 @@ public class TravellingSpell : Spell
                 Destroy(source_obj);
             }
         }
-    }
-
-    public override void Initialize(GameObject obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void ApplyDamage(GameObject obj)
-    {
-        throw new System.NotImplementedException();
     }
 
     public override void OnTick(GameObject obj)

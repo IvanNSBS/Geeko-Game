@@ -25,10 +25,21 @@ public abstract class Spell : ScriptableObject
     public List<string> m_ActorsToIgnore = new List<string>(); // List of tags of valid entities
                                                                // that can interact with the spell
     [HideInInspector] public GameObject m_SpellOwner;
-    public abstract void Initialize(GameObject obj);
     public abstract void CastSpell(); // What happens when the player casts such 
-    public abstract void ApplyDamage(GameObject obj);
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
+}
+
+public class AuxSpell : Spell
+{
+    public override void CastSpell()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnTick(GameObject obj)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 [System.Serializable]

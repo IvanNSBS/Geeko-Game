@@ -25,5 +25,5 @@ MonoBehaviour:
   m_ActorsToIgnore: []
   m_SpellOwner: {fileID: 0}
   m_SpellToCast: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
-  m_TravelDistance: 10
+  m_TravelDistance: 100
   m_ProjectileSpeed: 10
