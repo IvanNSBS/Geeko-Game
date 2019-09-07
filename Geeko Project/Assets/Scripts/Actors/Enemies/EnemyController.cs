@@ -533,19 +533,20 @@ public class EnemyController : MonoBehaviour
     
    
     
-    public void Shooting()
+    public virtual GameObject Shooting()
     {
-        
+        GameObject aux = null;
         if(_timeBtwShots <= 0)
         {
-            Instantiate(projectile, transform.position, transform.rotation);
+            aux = Instantiate(projectile, transform.position, transform.rotation);
             _timeBtwShots = startTimeBtwShots;
         }
         else
         {
            _timeBtwShots -= Time.deltaTime;
         }
-        
+
+        return aux;
     }
 
     public Vector3 DirectionNormalized(Vector3 current, Vector3 target)

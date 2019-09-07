@@ -7,22 +7,41 @@ public class ImpController : EnemyController
 {
     public Animator impAnimator;
 
+    private bool _iddleAnimation = false;
+    private bool _attackAnimation = false;
+
     public override void Iddle()
     {
         base.Iddle();
         impAnimator.SetBool("isIdle",true);
-        impAnimator.SetBool("isAttacking",false);
-      //  impAnimator.SetBool("isTakingDamage",false);
+        //impAnimator.SetBool("isAttacking",false);
     }
     
+    /*
     public override void Attack()
     {
         base.Attack();
         impAnimator.SetBool("isAttacking",true);
         impAnimator.SetBool("isIdle",false);
-     //   impAnimator.SetBool("isTakingDamage",false);
+    }
+         */
+    public override GameObject Shooting()
+    {
+        GameObject aux = base.Shooting();
+        if (aux != null) //shooting
+        {
+            impAnimator.SetTrigger("isAttacking");
+            impAnimator.SetBool("isIdle",false);
+        }
+        
+        return aux;
     }
 
+    public void IdlingAfterAttack()
+    {
+        impAnimator.SetBool("isIdle",true);
+    }
+    
     public override void Death()
     {
         
@@ -38,23 +57,15 @@ public class ImpController : EnemyController
         base.MoveEnemy(dir,speed);
         impAnimator.SetBool("isMoving",true);
         impAnimator.SetBool("isIdle",false);
-        impAnimator.SetBool("isAttacking",false);
-   //     impAnimator.SetBool("isTakingDamage",false);
+       // impAnimator.SetBool("isAttacking",false);
     }
 
     public void onHit()
     {
         impAnimator.SetTrigger("isTakingDamage");
-      //  Debug.Log(impAnimator.GetBool("isTakingDamage"));
         impAnimator.SetBool("isIdle",false);
-        impAnimator.SetBool("isAttacking",false);
-        //Invoke("offHit",0.2f);
+      //  impAnimator.SetBool("isAttacking",false);
         
-    }
-
-    public void offHit()
-    {
-        impAnimator.SetBool("isTakingDamage",false);
     }
     
     public override void StopMovement()
