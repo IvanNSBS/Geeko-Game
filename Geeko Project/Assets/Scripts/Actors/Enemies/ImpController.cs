@@ -44,11 +44,11 @@ public class ImpController : EnemyController
 
     public void onHit()
     {
-        impAnimator.SetBool("isTakingDamage",true);
+        impAnimator.SetTrigger("isTakingDamage");
       //  Debug.Log(impAnimator.GetBool("isTakingDamage"));
         impAnimator.SetBool("isIdle",false);
         impAnimator.SetBool("isAttacking",false);
-        Invoke("offHit",0.2f);
+        //Invoke("offHit",0.2f);
         
     }
 
