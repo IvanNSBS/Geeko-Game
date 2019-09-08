@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public static class SpellUtilities
 {
-    public static List<string> invalid  = new List<string> { "Item", "SpellUninteractive", "Untagged" };
+    public static List<string> invalid  = new List<string> { "Item", "SpellUninteractive", "Room" };
     public static List<string> entities = new List<string> { "Wall", "Door" };
     public static void PullTargetToSrc(
         GameObject target, 
