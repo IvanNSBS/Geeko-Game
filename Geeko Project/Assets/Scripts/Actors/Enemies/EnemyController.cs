@@ -115,6 +115,7 @@ public class EnemyController : MonoBehaviour
     private float _timeWalking = 0;
     private bool _zigZagHorizontal=false;
     private bool _zigZagVertical = false;
+    private bool _dead=false;
 
     /* TO-DO
     BOSS
@@ -628,13 +629,27 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
-        if (explodeWhenDie)
+        if (!_dead)
         {
-           projectile.transform.localScale = Vector3.one*2;
-            Instantiate(projectile, transform.position, transform.rotation);
+            if (explodeWhenDie)
+            {
+               projectile.transform.localScale = Vector3.one*2; //demonstration
+                Instantiate(projectile, transform.position, transform.rotation);
+            }
+            StopMovement();
+            Destroy(this.GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
+            
+            StartCoroutine(DestroyEnemy(2.5f)); //default time
+            Debug.Log("enemy killed");
+            _dead = true;
         }
+    }
+
+    public IEnumerator DestroyEnemy(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
-        Debug.Log("enemy killed");
     }
 
     public void OnCollisionEnter2D(Collision2D other)
