@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
             {
                 m_MovementComponent.m_OnFlip = new UnityEngine.Events.UnityEvent();
                 m_MovementComponent.m_OnFlip.AddListener( FlipHand );
-                m_MovementComponent.SetMoveSpeed(18.0f);
             }
         }
 

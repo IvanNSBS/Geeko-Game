@@ -22,16 +22,16 @@ public abstract class Spell : ScriptableObject
 
     public GameObject m_Prefab; // SpellPrefab
 
-    public List<string> m_ActorsToIgnore = new List<string>(); // List of tags of valid entities
-                                                               // that can interact with the spell
+    public List<string> m_ActorsAffect = new List<string>(); // List of tags of valid entities
+                                                             // that can interact with the spell
 
-    public abstract void CastSpell(GameObject owner, Transform inst_transform = null); // What happens when the player casts such 
+    public abstract void CastSpell(GameObject owner, Vector3? spawn_pos = null); // What happens when the player casts such 
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
 }
 
 public class AuxSpell : Spell
 {
-    public override void CastSpell(GameObject owner, Transform inst_transform = null)
+    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
     {
         throw new System.NotImplementedException();
     }

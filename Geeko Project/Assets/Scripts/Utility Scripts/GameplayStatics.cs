@@ -33,7 +33,7 @@ internal class Timer : MonoBehaviour
 }
 public static class GameplayStatics
 {
-    public enum DefaultColliders { Box, Circle, Capsulse };
+    public enum DefaultColliders { Box, Circle, Capsulse, Polygon };
     public class CollisionEvent : UnityEvent<Collision2D, GameObject> { }   // Collision Event layout
     public class TriggerEvent : UnityEvent<Collider2D, GameObject> { }      // Trigger Event layout
     public class SpellEvent : UnityEvent<GameObject> { }    // SpellEvent Layout. 
@@ -55,13 +55,13 @@ public static class GameplayStatics
         return false;
     }
 
-    public static bool ObjHasTag(GameObject obj, List<string> list)
+    public static bool ObjHasTag(GameObject obj, List<string> list, bool negate_ignore = false)
     {
         foreach (string tag in list)
             if (obj.CompareTag(tag))
-                return true;
+                return !negate_ignore;
 
-        return false;
+        return negate_ignore;
     }
 
     //TODO: Make more tests to be sure if when it enters trigger it'll
@@ -155,23 +155,34 @@ public static class GameplayStatics
         {
             case DefaultColliders.Box:
                 BoxCollider2D bcol = obj.AddComponent<BoxCollider2D>();
-                if (bcol)
+                if (bcol) { 
+                    bcol.isTrigger = is_trigger;
                     return true;
-                bcol.isTrigger = is_trigger;
+                }
                 return false;
 
             case DefaultColliders.Capsulse:
                 CapsuleCollider2D ccol = obj.AddComponent<CapsuleCollider2D>();
-                if (ccol)
+                if (ccol){
+                    ccol.isTrigger = is_trigger;
                     return true;
-                ccol.isTrigger = is_trigger;
+                }
                 return false;
 
             case DefaultColliders.Circle:
                 CircleCollider2D cicol = obj.AddComponent<CircleCollider2D>();
-                if (cicol)
+                if (cicol){
+                    cicol.isTrigger = is_trigger;
                     return true;
-                cicol.isTrigger = is_trigger;
+                }
+                return false;
+            case DefaultColliders.Polygon:
+                PolygonCollider2D poly = obj.AddComponent<PolygonCollider2D>();
+                if (poly){
+                    poly.isTrigger = is_trigger;
+                    poly.autoTiling = true;
+                    return true;
+                }
                 return false;
         }
         return false;

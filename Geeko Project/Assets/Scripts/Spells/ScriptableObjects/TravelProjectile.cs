@@ -9,7 +9,7 @@ public class TravellingSpell : Spell
     public Spell m_SpellToCast;
     public float m_TravelDistance = 10.0f;
     public float m_ProjectileSpeed = 1.0f;
-    public override void CastSpell(GameObject owner, Transform inst_transform = null)
+    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
     {
         if (m_Prefab && owner) {
             Vector3 from = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -30,24 +30,10 @@ public class TravellingSpell : Spell
     {
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = source_obj.GetComponent<SpellPrefabManager>();
-        if (s_manager)
-        {
-            if (target_obj != s_manager.GetOwner() && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door")))
-            {
-                if (m_SpellToCast)
-                {
-                    Debug.Log("Casting spell!");
-                    Transform transf = source_obj.transform;
-                    transf.position = GameplayStatics.GetTriggerContactPoint(source_obj);
-                    m_SpellToCast.CastSpell(s_manager.GetOwner(), transf);
+        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(source_obj), SpellUtilities.invalid);
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+            GameObject.Destroy(source_obj);
 
-                }
-                else
-                    Debug.LogError("No spell to cast!");
-                Destroy(source_obj);
-            }
-        }
-        
     }
 
     public override void OnTick(GameObject obj)
@@ -60,7 +46,7 @@ public class TravellingSpell : Spell
             if (m_SpellToCast)
             {
                 Debug.Log("Casting spell!");
-                m_SpellToCast.CastSpell(obj_owner, obj.transform);
+                m_SpellToCast.CastSpell(obj_owner, obj.transform.position);
                 Destroy(obj);
             }
     }

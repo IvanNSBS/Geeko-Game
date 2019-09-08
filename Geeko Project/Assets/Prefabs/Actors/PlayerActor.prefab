@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 188.78584
-    y: 66.20245
+    x: 198.1392
+    y: 77.59271
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -2248,6 +2248,11 @@ PrefabInstance:
     - target: {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_AutoTiling
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362231, guid: 3c3c96037e8b263448a49a499b1e549c,

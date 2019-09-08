@@ -5,14 +5,17 @@ using UnityEngine.Events;
 
 public static class SpellUtilities
 {
+    public static List<string> invalid  = new List<string> { "Item", "SpellUninteractive", "Untagged" };
+    public static List<string> entities = new List<string> { "Wall", "Door" };
     public static void PullTargetToSrc(
         GameObject target, 
         GameObject src, 
         float pull_str, 
         List<GameObject> objs_to_ignore,
-        List<string> tags_to_ignore)
+        List<string> tags_to_ignore,
+        bool negate_ignore = false)
     {
-        if (GameplayStatics.ObjHasTag(target, tags_to_ignore))
+        if (GameplayStatics.ObjHasTag(target, tags_to_ignore, negate_ignore))
             return;
         if (target.GetComponent<Rigidbody2D>() && !GameplayStatics.IsObjInList(target.gameObject, objs_to_ignore))
         {
@@ -51,7 +54,7 @@ public static class SpellUtilities
         Quaternion rotation,
         bool isTrigger = true,
         Vector2 spell_velocity = default(Vector2),
-        GameplayStatics.DefaultColliders col = GameplayStatics.DefaultColliders.Box, 
+        GameplayStatics.DefaultColliders col = GameplayStatics.DefaultColliders.Polygon, 
         string tag = null)
     {
         GameObject obj = MonoBehaviour.Instantiate(spell_prefab);
@@ -64,5 +67,63 @@ public static class SpellUtilities
         obj.transform.rotation = rotation;
 
         return obj;
+    }
+
+    public static bool DamageOnCollide(
+        GameObject target, 
+        SpellPrefabManager src, 
+        float damage, 
+        List<string> ignore = null)
+    {
+        if (ignore != null)
+            if (GameplayStatics.ObjHasTag(target, ignore))
+                return false;
+
+        if (src)
+            if (target != src.GetOwner()) { 
+                GameplayStatics.ApplyDamage(target, damage);
+                return true;
+            }
+        return false;
+    }
+
+    public static bool SpawnEffectOnCollide(
+        GameObject target, 
+        SpellPrefabManager src, 
+        GameObject effect, 
+        List<string> ignore = null)
+    {
+        if (ignore != null)
+            if (GameplayStatics.ObjHasTag(target, ignore))
+                return false;
+
+        if (src)
+            if (target != src.GetOwner()) {
+                GameObject fx = MonoBehaviour.Instantiate(effect);
+                fx.transform.position = GameplayStatics.GetTriggerContactPoint(src.gameObject);
+                return true;
+            }
+
+        return false;
+    }
+
+    public static bool CastSpellOnCollide(
+        GameObject target, 
+        SpellPrefabManager src, 
+        Spell spell, 
+        Vector3? spawn_pos = null, 
+        List<string> ignore = null)
+    {
+        if (ignore != null)
+            if (GameplayStatics.ObjHasTag(target, ignore))
+                return false;
+
+        if (src)
+            if (target != src.GetOwner()) { 
+                spell.CastSpell(src.GetOwner(), spawn_pos);
+                return true;
+            }
+
+        return false;
     }
 }
