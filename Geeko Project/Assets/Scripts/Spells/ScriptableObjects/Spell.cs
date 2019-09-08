@@ -7,39 +7,31 @@ public abstract class Spell : ScriptableObject
     /*
      * Spell is the parent ScriptableObject that defines the shape of a Spell
      */
+    public string m_SpellName = "New Spell";
     public float m_SpellCooldown = 0.0f;
 
     // how much time the instantiated prefab shoud live. If the default
     // duration is set to 0, it won't be destroyed with a timer
     public float m_SpellDuration = 0.0f;
     public int m_SpellCharges = 1; 
+    public Sprite m_SpellImage;  // Spell Icon image
+    public Sprite m_BorderImage; // Border of the spell icon
+public GameObject m_Prefab;  // SpellPrefab
 
     public Sprite m_GameSprite;
-    public Sprite m_SpellImage; // Spell Icon image
-    public Sprite m_BorderImage; // Border of the spell icon
     public AudioClip m_SpellSound; // Sound to play when the spell is cast
     public GameObject m_OnHitEffect; // FX to play if the spell hitted something
 
-    public GameObject m_Prefab; // SpellPrefab
 
-    public List<string> m_ActorsAffect = new List<string>(); // List of tags of valid entities
-                                                             // that can interact with the spell
+    public List<string> m_Invalid = SpellUtilities.invalid; // List of tags of entities
+                                                            // that can't interact with the spell
 
-    public abstract void CastSpell(GameObject owner, Vector3? spawn_pos = null); // What happens when the player casts such 
+    public abstract void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null); // What happens when the player casts such 
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
-}
-
-public class AuxSpell : Spell
-{
-    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnTick(GameObject obj)
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void SpellCollisionEnter(Collision2D target, GameObject src);
+    public abstract void SpellCollisionTick(Collision2D target, GameObject src);
+    public abstract void SpellTriggerEnter(Collider2D target, GameObject src);
+    public abstract void SpellTriggerTick(Collider2D target, GameObject src);
 }
 
 [System.Serializable]
@@ -50,12 +42,16 @@ public class SpellData
     [HideInInspector] public bool m_IsSpellOnCD;
     [HideInInspector] public GameObject m_Owner; // Who is casting the spell
     [HideInInspector] public int m_RemainingCharges;
-    public void StartSpellData(GameObject owner)
+    [HideInInspector] public Transform m_SpawnPoint;
+    [HideInInspector] public Transform m_SpawnParent;
+    public void StartSpellData(GameObject owner, Transform pt, Transform pt_parent)
     {
         m_Owner = owner;
         m_RemainingCD = 0.0f;
         m_IsSpellOnCD = false;
         m_RemainingCharges = m_Spell.m_SpellCharges;
+        m_SpawnPoint = pt;
+        m_SpawnParent = pt_parent;
     }
 
     public void SetOwner(GameObject obj) { m_Owner = obj; }
@@ -67,7 +63,7 @@ public class SpellData
         {
             // TODO: Saving owner on ScriptableObject is bad, since it's static!
             // m_Spell.m_SpellOwner = m_Owner; // guarantee the owner is set
-            m_Spell.CastSpell(m_Owner);
+            m_Spell.CastSpell(m_Owner, m_SpawnPoint.position, m_SpawnParent.rotation);
 
             m_RemainingCharges--;
             // only update cooldown if it's not already on cooldown
