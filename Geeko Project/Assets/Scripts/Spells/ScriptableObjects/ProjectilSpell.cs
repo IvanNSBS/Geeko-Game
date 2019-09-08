@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-// THIS IS A TEST SCRIPT!!
 [CreateAssetMenu (menuName = "Spells/ProjectileSpell")]
 public class ProjectilSpell : Spell
 {

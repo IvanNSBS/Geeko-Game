@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu (menuName = "Spells/TravellingSpell")]
-public class TravellingSpell : Spell
+[CreateAssetMenu(menuName = "Spells/TravelSpell")]
+public class TravelProjectile : Spell
 {
     public Spell m_SpellToCast;
     public float m_TravelDistance = 10.0f;
