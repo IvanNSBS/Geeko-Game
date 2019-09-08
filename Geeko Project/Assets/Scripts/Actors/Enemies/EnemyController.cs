@@ -65,9 +65,11 @@ public class EnemyController : MonoBehaviour
     public float dashSpeed;
    
     [Header("Features")]
-    [Tooltip("Health value between 0 and 100.")]
+    [Tooltip("The enemy stop shooting to reload for sometime")]
     public bool stopShootToReload;
+    [Tooltip("The enemy explode when dies and can call a function to handle this")]
     public bool explodeWhenDie;
+    [Tooltip("The enemy shoots while moves")]
     public bool moveWhileShoot;
     
     [Header("Type of Walk (when wandering or shooting)")]
@@ -79,13 +81,21 @@ public class EnemyController : MonoBehaviour
     public bool followWalk;
     
     [Header("Time Attributes (seconds)")]
+    [Tooltip("Time that the enemy will be idling to change state")]
     public float iddleTime;
+    [Tooltip("Time that the enemy will be wandering to change state")]
     public float wanderingTime;
+    [Tooltip("Time that the enemy will be dashing")]
     public float dashTime;
+    [Tooltip("Time that the enemy will be holding to dash")]
     public float holdingTime;
+    [Tooltip("Time that the enemy will spend reloading to be able to shoot again")]
     public float timeToReload;
+    [Tooltip("Time that the enemy spend shooting before reload")]
     public float timeAmmo;
+    [Tooltip("Time between the enemy bullets")]
     public float timeBtwShots;
+    [Tooltip("Time that the enemy walk in a direction when moving and shooting")]
     public float timeWalkingOneDirection;
 
     
