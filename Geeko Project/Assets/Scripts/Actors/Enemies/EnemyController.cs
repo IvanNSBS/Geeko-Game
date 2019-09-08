@@ -38,6 +38,7 @@ public enum EnemyType
 public class EnemyController : MonoBehaviour
 {
     [Header("Enemy State")]
+    [Tooltip("The enemy current state")]
     public EnemyState currState = EnemyState.Wander;
 
     [NonSerialized]
@@ -46,21 +47,29 @@ public class EnemyController : MonoBehaviour
     public bool stateHasChanged = false;
     
     [Header("Enemy Type Attack")]
+    [Tooltip("Choose one type of attack, be careful to choose the attributes accordingly")]
     public EnemyType enemyType;
     
     [Header("Bullet Prefab")]
+    [Tooltip("If the enemy is ranged, choose the bullet prefab")]
     public GameObject projectile;
     
     [Header("Enemy Attributes")]
-    
+    [Tooltip("The range that the enemy sees the opponent")]
     public float sightRange; 
+    [Tooltip("The range of the attack of the enemy that triggers its attack")]
     public float attackRange;
+    [Tooltip("The speed of the monster movement")]
     public float speed;
+    [Tooltip("The speed of the Dash movement, if it dashes")]
     public float dashSpeed;
    
     [Header("Features")]
+    [Tooltip("The enemy stop shooting to reload for sometime")]
     public bool stopShootToReload;
+    [Tooltip("The enemy explode when dies and can call a function to handle this")]
     public bool explodeWhenDie;
+    [Tooltip("The enemy shoots while moves")]
     public bool moveWhileShoot;
     
     [Header("Type of Walk (when wandering or shooting)")]
@@ -72,13 +81,21 @@ public class EnemyController : MonoBehaviour
     public bool followWalk;
     
     [Header("Time Attributes (seconds)")]
+    [Tooltip("Time that the enemy will be idling to change state")]
     public float iddleTime;
+    [Tooltip("Time that the enemy will be wandering to change state")]
     public float wanderingTime;
+    [Tooltip("Time that the enemy will be dashing")]
     public float dashTime;
+    [Tooltip("Time that the enemy will be holding to dash")]
     public float holdingTime;
+    [Tooltip("Time that the enemy will spend reloading to be able to shoot again")]
     public float timeToReload;
+    [Tooltip("Time that the enemy spend shooting before reload")]
     public float timeAmmo;
+    [Tooltip("Time between the enemy bullets")]
     public float timeBtwShots;
+    [Tooltip("Time that the enemy walk in a direction when moving and shooting")]
     public float timeWalkingOneDirection;
 
     
@@ -115,6 +132,7 @@ public class EnemyController : MonoBehaviour
     private float _timeWalking = 0;
     private bool _zigZagHorizontal=false;
     private bool _zigZagVertical = false;
+    private bool _dead=false;
 
     /* TO-DO
     BOSS
@@ -628,20 +646,34 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
-        if (explodeWhenDie)
+        if (!_dead)
         {
-           projectile.transform.localScale = Vector3.one*2;
-            Instantiate(projectile, transform.position, transform.rotation);
+            if (explodeWhenDie)
+            {
+               projectile.transform.localScale = Vector3.one*2; //demonstration
+                Instantiate(projectile, transform.position, transform.rotation);
+            }
+            StopMovement();
+            Destroy(this.GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
+            
+            StartCoroutine(DestroyEnemy(2.5f)); //default time
+            Debug.Log("enemy killed");
+            _dead = true;
         }
+    }
+
+    public IEnumerator DestroyEnemy(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
-        Debug.Log("enemy killed");
     }
 
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<StatusComponent>().TakeDamage(1);
+            other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             Debug.Log("collision hit, player taking damage.");
         }
         

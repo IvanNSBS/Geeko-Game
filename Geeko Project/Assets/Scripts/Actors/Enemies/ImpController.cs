@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Security.Permissions;
 using UnityEngine;
+using DG.Tweening;
 
 public class ImpController : EnemyController
 {
     [Header("Animation")]
+    [Tooltip("Animation of the enemy")]
     public Animator impAnimator;
 
     public override void Iddle()
@@ -45,7 +47,9 @@ public class ImpController : EnemyController
     
     public override void Death()
     {
-        
+        base.Death();
+        SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
+        aux.DOColor(new Color(255,255,255,0),5);
     }
 
     public void OnDeath()
@@ -64,9 +68,6 @@ public class ImpController : EnemyController
     public void onHit()
     {
         impAnimator.SetTrigger("isTakingDamage");
-        impAnimator.SetBool("isIdle",false);
-      //  impAnimator.SetBool("isAttacking",false);
-        
     }
     
     public override void StopMovement()

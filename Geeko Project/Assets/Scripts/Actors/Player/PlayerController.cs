@@ -68,17 +68,44 @@ public class PlayerController : MonoBehaviour
             m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
+
+    public void AutoAim()
+    {
+        Vector3 pos = this.gameObject.transform.position;
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 55.0f);
+
+        float min_dist = Mathf.Infinity;
+        GameObject last_obj = null;
+        foreach(Collider2D overlap in overlaps)
+        {
+            if (overlap.gameObject.CompareTag("Enemy"))
+            {
+                Vector2 hit_pos = GameplayStatics.GetTriggerContactPoint(gameObject);
+                Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
+                if (min_dist > sub.magnitude)
+                {
+                    last_obj = overlap.gameObject;
+                    min_dist = sub.magnitude;
+                }
+            }
+        }
+
+        if(last_obj != null)
+        {
+            Vector2 dir = (last_obj.transform.position - pos).normalized;
+            m_MovementComponent.FlipSprite(dir.x);
+            Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
+            m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+        }
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         //m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
         m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime, m_Joystick.Vertical * Time.deltaTime);
-        if (Input.GetButtonDown("Fire1"))
-        {
-            m_SpellComponent.CastSpell(0);
-        }
-        if (Input.GetButtonDown("Fire2"))
-            m_SpellComponent.CastSpell(1);
+
 
         if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)
         {
@@ -86,6 +113,8 @@ public class PlayerController : MonoBehaviour
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
         }
+
+        AutoAim();
 
         if (Input.GetButton("Fire1"))
         {

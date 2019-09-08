@@ -59,6 +59,24 @@ public class MovementComponent : MonoBehaviour
             m_ActorRigidBody.velocity = Vector3.zero;
         }
     }
+
+    public void FlipSprite(float x)
+    {
+        // If actor tried to move right, make sprite look to right
+        if (m_ActorSprite && x > 0.0f)
+        {
+            m_ActorSprite.flipX = false;
+            if (m_OnFlip != null) // call auxiliary OnFlip Event
+                m_OnFlip.Invoke();
+        }
+        // If actor tried to move left, make sprite look to right
+        else if (m_ActorSprite && x < 0.0f)
+        {
+            m_ActorSprite.flipX = true;
+            if (m_OnFlip != null)// call auxiliary OnFlip Event
+                m_OnFlip.Invoke();
+        }
+    }
     public void Move(float speed_x, float speed_y)
     {
         if (m_ActorRigidBody) // if the actor has a rigidbody
@@ -78,19 +96,7 @@ public class MovementComponent : MonoBehaviour
             }
 
         }
-        // If actor tried to move right, make sprite look to right
-        if (m_ActorSprite && speed_x > 0.0f)
-        {
-            m_ActorSprite.flipX = false;
-            if (m_OnFlip != null) // call auxiliary OnFlip Event
-                m_OnFlip.Invoke();
-        }
-        // If actor tried to move left, make sprite look to right
-        else if (m_ActorSprite && speed_x < 0.0f)
-        {
-            m_ActorSprite.flipX = true; 
-            if (m_OnFlip != null)// call auxiliary OnFlip Event
-                m_OnFlip.Invoke();
-        }
+
+        FlipSprite(speed_x);
     }
 }
