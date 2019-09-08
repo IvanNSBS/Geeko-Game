@@ -62,6 +62,10 @@ public static class SpellUtilities
             obj.tag = tag;
         obj.GetComponent<SpellPrefabManager>().m_TimeToLive = spell.m_SpellDuration;
         obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
+        obj.GetComponent<SpellPrefabManager>().AddCollideEnter(spell.SpellCollisionEnter);
+        obj.GetComponent<SpellPrefabManager>().AddCollideTick(spell.SpellCollisionTick);
+        obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(spell.SpellTriggerEnter);
+        obj.GetComponent<SpellPrefabManager>().AddTriggerTick(spell.SpellTriggerTick);
         obj.GetComponent<Rigidbody2D>().velocity = spell_velocity;
         obj.transform.position = position;
         obj.transform.rotation = rotation;

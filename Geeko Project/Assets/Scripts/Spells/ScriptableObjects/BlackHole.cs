@@ -9,7 +9,7 @@ public class BlackHole : Spell
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
+    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner)
         {
@@ -32,22 +32,34 @@ public class BlackHole : Spell
                 obj.GetComponent<MeshRenderer>().material = m_Material;
 
             obj.GetComponent<SpellPrefabManager>().m_TimeToLive = m_SpellDuration;
-            obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.Pull);
+            obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.SpellTriggerTick);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
         }
-    }
-
-    public void Pull(Collider2D target, GameObject src)
-    {
-        List<GameObject> ignore = new List<GameObject>();
-        GameObject owner = src.GetComponent<SpellPrefabManager>().GetOwner();
-        if( owner )
-            ignore.Add(owner);
-        SpellUtilities.PullTargetToSrc(target.gameObject, src, m_PullStrength, ignore, SpellUtilities.invalid);
     }
 
     public override void OnTick(GameObject obj)
     {
         SpellUtilities.UpdateSpellTTL(obj, this);
+    }
+
+    public override void SpellCollisionEnter(Collision2D target, GameObject src)
+    {
+    }
+
+    public override void SpellCollisionTick(Collision2D target, GameObject src)
+    {
+    }
+
+    public override void SpellTriggerEnter(Collider2D target, GameObject src)
+    {
+    }
+
+    public override void SpellTriggerTick(Collider2D target, GameObject src)
+    {
+        List<GameObject> ignore = new List<GameObject>();
+        GameObject owner = src.GetComponent<SpellPrefabManager>().GetOwner();
+        if (owner)
+            ignore.Add(owner);
+        SpellUtilities.PullTargetToSrc(target.gameObject, src, m_PullStrength, ignore, SpellUtilities.invalid);
     }
 }
