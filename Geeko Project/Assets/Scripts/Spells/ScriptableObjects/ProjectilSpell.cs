@@ -10,7 +10,7 @@ public class ProjectilSpell : Spell
     public float m_Damage = 10.0f;
     public float m_ProjectileSpeed = 700.0f;
 
-    public override void CastSpell(GameObject owner, Transform inst_transform = null)
+    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
     {
         if (m_Prefab && owner) {
             Vector3 from = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -30,32 +30,12 @@ public class ProjectilSpell : Spell
     {
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = source_obj.GetComponent<SpellPrefabManager>();
-        if (target_obj != s_manager.GetOwner() && (target_obj.GetComponent<StatusComponent>() || target_obj.CompareTag("Wall") || target_obj.CompareTag("Door"))) {
-            StatusComponent obj_status = target_obj.GetComponent<StatusComponent>();
-            if(obj_status) obj_status.TakeDamage(m_Damage);
+        if(m_OnHitEffect)
+            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
+        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
 
-            if (s_manager) {
-                if (s_manager.GetOwner() != target_obj)
-                {
-                    if (m_OnHitEffect) {
-                        //TODO: Have collider info on collide function to spawn fx on the correct position
-                        GameObject fx = Instantiate(m_OnHitEffect);
-                        fx.transform.position = GameplayStatics.GetTriggerContactPoint(source_obj);
-                    }
-                    Destroy(source_obj);
-                }
-            }
-            else
-            {
-                if (m_OnHitEffect)
-                {
-                    //TODO: Have collider info on collide function to spawn fx on the correct position
-                    GameObject fx = Instantiate(m_OnHitEffect);
-                    fx.transform.position = GameplayStatics.GetTriggerContactPoint(source_obj);
-                }
-                Destroy(source_obj);
-            }
-        }
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+            GameObject.Destroy(source_obj);
     }
 
     public override void OnTick(GameObject obj)

@@ -6,11 +6,10 @@ using UnityEditor;
 [CreateAssetMenu (menuName = "Spells/Black Hole")]
 public class BlackHole : Spell
 {
-
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void CastSpell(GameObject owner, Transform inst_transform = null)
+    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null)
     {
         if (m_Prefab && owner)
         {
@@ -24,7 +23,8 @@ public class BlackHole : Spell
             obj.GetComponent<CircleCollider2D>().radius = 0.5f;
             obj.GetComponent<CircleCollider2D>().isTrigger = true;
             obj.transform.localScale *= (2*m_Radius);
-            obj.transform.position = inst_transform.position;
+            if(spawn_pos != null)
+                obj.transform.position = (Vector3)spawn_pos;
 
             // GameplayStatics.AddQuad(obj, m_Material);
 
@@ -43,12 +43,7 @@ public class BlackHole : Spell
         GameObject owner = src.GetComponent<SpellPrefabManager>().GetOwner();
         if( owner )
             ignore.Add(owner);
-
-        //TODO: Move to ig_tag to class List
-        List<string> ig_tag = new List<string>();
-        ig_tag.Add("SpellUninteractive");
-        ig_tag.Add("Item");
-        SpellUtilities.PullTargetToSrc(target.gameObject, src, m_PullStrength, ignore, ig_tag);
+        SpellUtilities.PullTargetToSrc(target.gameObject, src, m_PullStrength, ignore, SpellUtilities.invalid);
     }
 
     public override void OnTick(GameObject obj)

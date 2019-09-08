@@ -5,26 +5,27 @@ using UnityEngine;
 
 public class ImpController : EnemyController
 {
+    [Header("Animation")]
     public Animator impAnimator;
-
-    private bool _iddleAnimation = false;
-    private bool _attackAnimation = false;
 
     public override void Iddle()
     {
         base.Iddle();
         impAnimator.SetBool("isIdle",true);
-        //impAnimator.SetBool("isAttacking",false);
     }
-    
-    /*
+
     public override void Attack()
     {
+        if (stateHasChanged)
+        {
+            StopMovement();  // so the player cant be in moving animation, without shooting when enemystate = atack
+            impAnimator.SetBool("isIdle",true);
+        }
+
         base.Attack();
-        impAnimator.SetBool("isAttacking",true);
-        impAnimator.SetBool("isIdle",false);
+
     }
-         */
+         
     public override GameObject Shooting()
     {
         GameObject aux = base.Shooting();
