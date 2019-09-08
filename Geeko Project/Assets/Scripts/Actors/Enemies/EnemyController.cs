@@ -38,6 +38,7 @@ public enum EnemyType
 public class EnemyController : MonoBehaviour
 {
     [Header("Enemy State")]
+    [Tooltip("The enemy current state")]
     public EnemyState currState = EnemyState.Wander;
 
     [NonSerialized]
@@ -46,19 +47,25 @@ public class EnemyController : MonoBehaviour
     public bool stateHasChanged = false;
     
     [Header("Enemy Type Attack")]
+    [Tooltip("Choose one type of attack, be careful to choose the attributes accordingly")]
     public EnemyType enemyType;
     
     [Header("Bullet Prefab")]
+    [Tooltip("If the enemy is ranged, choose the bullet prefab")]
     public GameObject projectile;
     
     [Header("Enemy Attributes")]
-    
+    [Tooltip("The range that the enemy sees the opponent")]
     public float sightRange; 
+    [Tooltip("The range of the attack of the enemy that triggers its attack")]
     public float attackRange;
+    [Tooltip("The speed of the monster movement")]
     public float speed;
+    [Tooltip("The speed of the Dash movement, if it dashes")]
     public float dashSpeed;
    
     [Header("Features")]
+    [Tooltip("Health value between 0 and 100.")]
     public bool stopShootToReload;
     public bool explodeWhenDie;
     public bool moveWhileShoot;
@@ -656,7 +663,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.collider.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<StatusComponent>().TakeDamage(1);
+            other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             Debug.Log("collision hit, player taking damage.");
         }
         

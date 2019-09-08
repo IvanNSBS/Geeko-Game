@@ -7,6 +7,7 @@ using DG.Tweening;
 public class ImpController : EnemyController
 {
     [Header("Animation")]
+    [Tooltip("Animation of the enemy")]
     public Animator impAnimator;
 
     public override void Iddle()
