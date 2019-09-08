@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 192.61432
-    y: 831.6906
-    width: 272.17825
-    height: 69.77734
+    x: 217.69345
+    y: 735.8768
+    width: 307.61694
+    height: 61.73877
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 188.78584
-    y: 66.20245
+    x: 178.28197
+    y: 34.317272
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -393,8 +393,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.00433
-    y: 35.101715
+    x: 106.82508
+    y: 28.727901
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -1250,6 +1250,22 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!58 &5912930117456031050
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880589383016503992}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.75}
+  serializedVersion: 2
+  m_Radius: 0.75
 --- !u!114 &-8223184592019134740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1900,6 +1916,176 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerActor
       objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_MaxHealth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: Die.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1711620568955538631}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: Die.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayerDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6454055631467675495}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6454055631467675495}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_CanUseIFrames
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_IFrameTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_HitFlashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6454055631467675495}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6454055631467675495}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362231, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_MovementSpeed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 258808940029362228, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2029,21 +2215,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362229, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
@@ -2181,147 +2352,23 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362231, guid: 3c3c96037e8b263448a49a499b1e549c,
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
-      propertyPath: m_MovementSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
-      propertyPath: m_MaxHealth
-      value: 150
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: Die.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1711620568955538631}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: Die.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlayerDeath
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 6454055631467675495}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateHealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 6454055631467675495}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateHealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_CanUseIFrames
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_IFrameTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_HitFlashDuration
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnSetMaxHealth.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 6454055631467675495}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateHealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3c3c96037e8b263448a49a499b1e549c, type: 3}
 --- !u!4 &5880589383016503986 stripped
 Transform:
