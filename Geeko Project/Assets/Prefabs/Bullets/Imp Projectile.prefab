@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7341970121176085478}
   m_Layer: 0
   m_Name: Imp Projectile
-  m_TagString: Untagged
+  m_TagString: SpellUninteractive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
