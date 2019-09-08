@@ -12,3 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2284c17ba471a48b8a2fef6590b61e, type: 3}
   m_Name: Blackhole Proj
   m_EditorClassIdentifier: Assembly-CSharp::TravellingSpell
+  m_SpellCooldown: 5
+  m_SpellDuration: 0
+  m_SpellCharges: 5
+  m_GameSprite: {fileID: 0}
+  m_SpellImage: {fileID: 21300000, guid: 7009fca8f5911f24ab666a9888775d57, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: aa5ba4395c3f9a9409d286ea87566301, type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 0}
+  m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
+    type: 3}
+  m_ActorsAffect: []
+  m_SpellToCast: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
+  m_TravelDistance: 15
+  m_ProjectileSpeed: 20
