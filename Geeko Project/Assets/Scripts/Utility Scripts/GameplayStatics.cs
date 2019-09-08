@@ -11,26 +11,40 @@ using UnityEngine.Events;
 internal class Timer : MonoBehaviour
 {
     private UnityEvent m_OnTick;
+    private float m_TickDelay = 0.0f;
     private float m_TimeToLive = 0.0f;
-    private float m_RemainingTime = 0.0f;
 
-    public void InitTimer(float ttl, UnityAction action)
+    private float m_RemainingTime = 0.0f;
+    private float m_RemainingDelay = 0.0f;
+
+    private bool is_Locked = false;
+
+    public void InitTimer(float ttl, float delay, UnityAction action)
     {
         m_TimeToLive = ttl;
         m_RemainingTime = ttl;
+        m_TickDelay = delay;
+        m_RemainingDelay = delay;
+
+        if (m_OnTick == null)
+            m_OnTick = new UnityEvent();
         m_OnTick.AddListener(action);
     }
     public float GetTotalTime() { return m_TimeToLive; }
     public float GetRemainingTime() { return m_RemainingTime; }
+
     private void Update()
     {
-        if (m_OnTick != null)
+        if (m_OnTick != null && !is_Locked) {
             m_OnTick.Invoke();
+            StartCoroutine( GameplayStatics.Delay(m_TickDelay, () => is_Locked = true, () => is_Locked = false, !is_Locked) );
+        }
         m_RemainingTime -= Time.deltaTime;
         if (m_RemainingTime <= 0.0f)
             Destroy(this);
     }
 }
+
 public static class GameplayStatics
 {
     public enum DefaultColliders { Box, Circle, Capsulse, Polygon };
@@ -39,13 +53,29 @@ public static class GameplayStatics
     public class SpellEvent : UnityEvent<GameObject> { }    // SpellEvent Layout. 
                                                             // Only uses the game object that casted spell
 
-    public static void AddTimer(GameObject obj, float ttl, UnityAction action)
+    public static void AddTimer(GameObject obj, float ttl, float delay, UnityAction action)
     {
         if (obj) {
             Timer timer = obj.AddComponent<Timer>();
-            timer.InitTimer(ttl, action);
+            timer.InitTimer(ttl, delay, action);
         }
     }
+
+    public static IEnumerator Delay(
+        float delay,
+        UnityAction call_before,
+        UnityAction call_after = null,
+        bool condition = true)
+    {
+        if (condition)
+        {
+            call_before.Invoke();
+            yield return new WaitForSeconds(delay);
+            if (call_after != null)
+                call_after.Invoke();
+        }
+    }
+
     public static bool IsObjInList(GameObject obj, List<GameObject> list)
     {
         foreach (GameObject o in list)
