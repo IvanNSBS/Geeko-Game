@@ -139,9 +139,9 @@ MonoBehaviour:
   wanderingTime: 1.5
   dashTime: 0
   holdingTime: 0
-  timeToReload: 3
+  timeToReload: 1.8
   timeAmmo: 1.5
-  timeBtwShots: 0.25
+  timeBtwShots: 0.1
   timeWalkingOneDirection: 1
   impAnimator: {fileID: 4691489343516902085}
 --- !u!114 &3732007113272402807
