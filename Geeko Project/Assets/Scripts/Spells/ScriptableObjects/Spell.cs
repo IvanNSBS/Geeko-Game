@@ -16,7 +16,7 @@ public abstract class Spell : ScriptableObject
     public int m_SpellCharges = 1; 
     public Sprite m_SpellImage;  // Spell Icon image
     public Sprite m_BorderImage; // Border of the spell icon
-public GameObject m_Prefab;  // SpellPrefab
+    public GameObject m_Prefab;  // SpellPrefab
 
     public Sprite m_GameSprite;
     public AudioClip m_SpellSound; // Sound to play when the spell is cast
@@ -25,7 +25,6 @@ public GameObject m_Prefab;  // SpellPrefab
 
     public List<string> m_Invalid = SpellUtilities.invalid; // List of tags of entities
                                                             // that can't interact with the spell
-
     public abstract void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null); // What happens when the player casts such 
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
     public abstract void SpellCollisionEnter(Collision2D target, GameObject src);
