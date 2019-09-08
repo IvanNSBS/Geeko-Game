@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.Events;
 public class DungeonManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject enemy; //temporary, delete
     List<Door> doors = new List<Door>();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public void SpawnPlayer()
     {
@@ -24,7 +18,9 @@ public class DungeonManager : MonoBehaviour
     {
         if (enemy)
         {
-            Instantiate(enemy, Vector3.one, Quaternion.identity);
+            GameObject e = Instantiate(enemy, Vector3.one, Quaternion.identity);
+            //e.GetComponent<StatusComponent>().Die = new UnityEvent();
+            //e.GetComponent<StatusComponent>().Die.AddListener(OpenAllDoors);
         }
     }
     
@@ -60,6 +56,11 @@ public class DungeonManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             CloseAllDoors();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SpawnEnemy();
         }
     }
 }

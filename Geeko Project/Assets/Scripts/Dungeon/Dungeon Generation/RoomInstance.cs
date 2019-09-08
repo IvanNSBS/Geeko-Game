@@ -1,23 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RoomInstance : MonoBehaviour
 {
     public Texture2D tex;
     public Vector2 gridPos;
     public int type; //0: normal, 1: enter
-    [HideInInspector]
-    public bool doorTop, doorBot, doorLeft, doorRight;
-    [SerializeField]
-    GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
-    [SerializeField]
-    ColorToGameObject[] mappings;
-    float tileSize = 1;
-    Vector2 roomSizeInTiles = new Vector2(9, 17);
-    public MapSpriteSelector minimapSprite;
-    private MiniMapCamera minimapCam;
     public bool visited;
+    [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
+    public MapSpriteSelector minimapSprite;
+    public int enemysInThisRoom;
+
+    [SerializeField] private GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
+    [SerializeField] private ColorToGameObject[] mappings;
+    private float tileSize = 1;
+    private Vector2 roomSizeInTiles = new Vector2(9, 17);
+    private MiniMapCamera minimapCam;
+    private DungeonManager dungeonManager;
+
+    private void Start()
+    {
+        dungeonManager = FindObjectOfType<DungeonManager>();
+    }
 
     public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, MapSpriteSelector _minimapSprite)
     {
@@ -30,6 +36,7 @@ public class RoomInstance : MonoBehaviour
         doorRight = _doorRight;
         minimapSprite = _minimapSprite;
         minimapCam = FindObjectOfType<MiniMapCamera>();
+        enemysInThisRoom = 0;
         MakeDoors();
         GenerateRoomTiles();
     }
@@ -116,12 +123,25 @@ public class RoomInstance : MonoBehaviour
         return ret;
     }
 
+    private void checkEnemies()
+    {
+        enemysInThisRoom--;
+        if(enemysInThisRoom <= 0)
+        {
+            dungeonManager.OpenAllDoors();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             minimapCam.UpdateActualRoom(this);
         }
+        if (collision.CompareTag("Enemy"))
+        {
+            enemysInThisRoom++;
+            dungeonManager.CloseAllDoors();
+        }
     }
-
 }
