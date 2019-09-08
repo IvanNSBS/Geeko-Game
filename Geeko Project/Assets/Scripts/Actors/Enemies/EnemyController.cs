@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -36,31 +37,63 @@ public enum EnemyType
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Enemy State")]
     public EnemyState currState = EnemyState.Wander;
+
+    [NonSerialized]
+    public EnemyState previousState = EnemyState.Wander;
+    [NonSerialized]
+    public bool stateHasChanged = false;
+    
+    [Header("Enemy Type Attack")]
     public EnemyType enemyType;
     
-    public float range; //sight range
+    [Header("Bullet Prefab")]
+    public GameObject projectile;
+    
+    [Header("Enemy Attributes")]
+    
+    public float sightRange; 
     public float attackRange;
     public float speed;
     public float dashSpeed;
-    public float startDashTime;
-    public float iddleTime;
-    public float holdingTime;
-    public float stoppingDistance;
-    public float retreatDistance;
-
-    public float coolDown;
-    
-    private bool _coolDownAttack = false;
-    public float startTimeBtwShots;
-    public bool explodeWhenDie;
-    
+   
+    [Header("Features")]
     public bool stopShootToReload;
+    public bool explodeWhenDie;
+    public bool moveWhileShoot;
+    
+    [Header("Type of Walk (when wandering or shooting)")]
+    public bool zigZagWalkHorizontal;
+    public bool zigZagWalkVertical;
+    public bool horizontalWalk;
+    public bool verticalWalk;
+    public bool randomWalk;
+    public bool followWalk;
+    
+    [Header("Time Attributes (seconds)")]
+    public float iddleTime;
+    public float wanderingTime;
+    public float dashTime;
+    public float holdingTime;
     public float timeToReload;
     public float timeAmmo;
-    public bool moveWhileShoot;
+    public float timeBtwShots;
     public float timeWalkingOneDirection;
+
     
+    
+    /*
+    [Header("Deprecated ->Retreat <-")]
+    public float stoppingDistance;
+    public float retreatDistance;
+    */
+    
+    
+    //public float coolDown;
+    
+    
+    private bool _coolDownAttack = false;
     private float _timeBtwShots;
     private bool _wandering;
     private Vector3 _randomDir;
@@ -69,14 +102,13 @@ public class EnemyController : MonoBehaviour
     private bool _dashing = false;
     private bool _waiting = false;
     private bool _iddle= false;
-    
-    
-    public GameObject projectile;
+
     private Transform _player;
     private Vector3 _lastPlayerPosition;
     
     private MovementComponent _movementComponent;
     private StatusComponent _statusComponent;
+    
     private bool _dashed = false;
     private bool _reloading = false;
     private bool _outOfAmmo = false;
@@ -84,14 +116,6 @@ public class EnemyController : MonoBehaviour
     private bool _zigZagHorizontal=false;
     private bool _zigZagVertical = false;
 
-    public bool zigZagWalkHorizontal;
-    public bool zigZagWalkVertical;
-    public bool horizontalWalk;
-    public bool verticalWalk;
-    public bool randomWalk;
-    public bool followWalk;
-    
-    
     /* TO-DO
     BOSS
     Walks and shootings
@@ -106,61 +130,83 @@ public class EnemyController : MonoBehaviour
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         projectile.transform.localScale = Vector3.one / 2;
-        _dashTime = startDashTime;
-        _timeBtwShots = startTimeBtwShots;
+        _dashTime = dashTime;
+        _timeBtwShots = timeBtwShots;
     }
 
-    
     public virtual void Update()
+    {
+        StateMachine();
+
+        previousState = currState;
+        stateHasChanged = false;
+        
+        CheckTransitions();
+
+        if (previousState != currState)
+        {
+            stateHasChanged = true;
+        }
+        
+    }
+
+    public virtual void StateMachine()
     {
         switch (currState)
         {
-            case(EnemyState.Wander):
+            case (EnemyState.Wander):
                 Wander();
                 break;
-            case(EnemyState.Follow):
+            case (EnemyState.Follow):
                 Follow();
                 break;
-            case(EnemyState.Die):
+            case (EnemyState.Die):
                 Death();
                 break;
-            case(EnemyState.Dash):
+            case (EnemyState.Dash):
                 Dash();
                 break;
-            case(EnemyState.Hold):
+            case (EnemyState.Hold):
                 Holding();
                 break;
-            case(EnemyState.Attack):
+            case (EnemyState.Attack):
                 Attack();
                 break;
-            case(EnemyState.Retreat):
+            case (EnemyState.Retreat):
                 Retreat();
                 break;
-            case(EnemyState.Iddle):
+            case (EnemyState.Iddle):
                 Iddle();
                 break;
         }
-        if (IsPlayerInRange(range) && currState != EnemyState.Die)
+    }
+
+    public virtual void CheckTransitions() // the order can change the preference about the state.
+                                            // Becareful.
+    {
+        if (IsPlayerInRange(sightRange) && currState != EnemyState.Die)
         {
             currState = EnemyState.Follow;
-        }else if (!IsPlayerInRange(range) && currState != EnemyState.Die)
+        }
+        
+        else if (!IsPlayerInRange(sightRange) && currState != EnemyState.Die)
         {
             currState = EnemyState.Wander;
         }
-        
-        
-        if ( (_iddle)) 
+
+        if ((_iddle))
         {
             currState = EnemyState.Iddle;
         }
         else if (IsEnemyHoldingToDash())
         {
             currState = EnemyState.Hold;
-        }else if (_dashing)
+        }
+        else if (_dashing)
         {
             currState = EnemyState.Dash;
         }
-        else if (IsPlayerInAttackRange(attackRange)&&(!_dashing))
+        else if (IsPlayerInAttackRange(attackRange) && (!_dashing))
         {
             currState = EnemyState.Attack;
         }
@@ -191,17 +237,17 @@ public class EnemyController : MonoBehaviour
         {
             _waiting = true;
            
-            StartCoroutine(WaitingIddleTime(iddleTime));
+            StartCoroutine(WaitingIddleTime(iddleTime)); //can be random
         }
         else if ( !_waiting && _wandering)
         {
             _waiting = true;
-            StartCoroutine(RandomlyWanderingIn(Random.Range(1.0f,2.0f)));
+            StartCoroutine(RandomlyWanderingIn(iddleTime)); //can be random
         }
         else if (_wandering)
         {
            // Debug.Log("iddle ~wandering cancelled, to attack");
-            if (IsPlayerInAttackRange(range))
+            if (IsPlayerInAttackRange(sightRange))
             {
                 _wandering = false;
                 _iddle = false;
@@ -264,7 +310,7 @@ public class EnemyController : MonoBehaviour
       
         if (_dashTime <= 0)
         {
-            _dashTime = startDashTime;
+            _dashTime = dashTime;
             _dashing = false;
             _iddle = true;
             _dashed = true;
@@ -358,7 +404,7 @@ public class EnemyController : MonoBehaviour
     private void WalkShoot()
     {
         //Debug.Log("walkshoot");
-        if (timeWalkingOneDirection > 0)
+        if (timeWalkingOneDirection > 0) // can be random the time...
         {
             if (_timeWalking <= 0)
             {
@@ -381,6 +427,11 @@ public class EnemyController : MonoBehaviour
         
         Vector3 newPoint = transform.position;
 
+        if (followWalk) //ignore the others
+        {
+            newPoint = FollowWalk(newPoint);
+        }
+        
         if (zigZagWalkHorizontal)
         {
             newPoint = ZigZagWalkHorizontal(newPoint);
@@ -405,19 +456,18 @@ public class EnemyController : MonoBehaviour
         {
             newPoint =  ChoosePointRandomlyToWalk(newPoint);
         }
-
-        if (followWalk) //ignore the others
-        {
-            newPoint = FollowWalk();
-        }
+       
 
         Vector3 dirToWalk = DirectionNormalized(transform.position, newPoint);
         return dirToWalk;
     }
 
-    public Vector3 FollowWalk()
+    public Vector3 FollowWalk(Vector3 pos)
     {
-        return _player.position;
+        Vector3 dirToWalk = DirectionNormalized(transform.position, _player.position);
+        Vector3 newPoint = dirToWalk + pos;
+        
+        return newPoint;
     }
 
     public Vector3 ZigZagWalkVertical(Vector3 pos)
@@ -461,7 +511,6 @@ public class EnemyController : MonoBehaviour
     {
         int[] lottery = new int[2] {- 1, 1 };
         int aux = Random.Range(0, 2);
-        Debug.Log("lottery: "+aux);
         pos = new Vector3(pos.x+lottery[aux],pos.y,pos.z);
         return pos;
     }
@@ -469,8 +518,7 @@ public class EnemyController : MonoBehaviour
     public Vector3 VerticalWalk(Vector3 pos)
     {
         int[] lottery = new int[2] {- 1, 1 };
-        int aux = Random.Range(0, 2
-        ); 
+        int aux = Random.Range(0, 2); 
         pos = new Vector3(pos.x,pos.y+lottery[aux],pos.z);
         return pos;
     }
@@ -490,22 +538,21 @@ public class EnemyController : MonoBehaviour
         return Vector3.Distance(transform.position, _player.position) <= attackRange;
     }
 
+    /* Deprecated
     private IEnumerator CoolDown()
     {
         _coolDownAttack = true;
         yield return new WaitForSeconds(coolDown);
         _coolDownAttack = false;
     }
-    
+    */
     public void Wander()
     {
         if (!_wandering)
         {
             _wandering = true;
-            Vector3 aux = ChoosePointRandomlyToWalk(transform.position);
-            _randomDir = DirectionNormalized(transform.position,aux);
-            StartCoroutine(RandomlyIddleIn(Random.Range(1.0f, 4.0f)));
-            //walk for Random(1f,4f) seconds in a random direction
+            _randomDir = ChooseTypeOfWalk();
+            StartCoroutine(RandomlyIddleIn(wanderingTime)); //can be random
         }
         
         MoveEnemy(_randomDir,speed);
@@ -539,7 +586,7 @@ public class EnemyController : MonoBehaviour
         if(_timeBtwShots <= 0)
         {
             aux = Instantiate(projectile, transform.position, transform.rotation);
-            _timeBtwShots = startTimeBtwShots;
+            _timeBtwShots = timeBtwShots;
         }
         else
         {
