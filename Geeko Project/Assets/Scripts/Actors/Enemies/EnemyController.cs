@@ -577,9 +577,23 @@ public class EnemyController : MonoBehaviour
             _wandering = true;
             _randomDir = ChooseTypeOfWalk();
             StartCoroutine(RandomlyIddleIn(wanderingTime)); //can be random
+            if (wanderingTime > timeWalkingOneDirection)
+            {
+                StartCoroutine(timeWalkingOneDirectionWandering());
+            }
         }
         
         MoveEnemy(_randomDir,speed);
+    }
+
+    private IEnumerator timeWalkingOneDirectionWandering()
+    {
+        yield return new WaitForSeconds(timeWalkingOneDirection);
+        if (_wandering && EnemyState.Wander == currState)
+        {
+            _randomDir = ChooseTypeOfWalk();
+            StartCoroutine(timeWalkingOneDirectionWandering());
+        }
     }
 
     private IEnumerator RandomlyIddleIn( float seconds)
