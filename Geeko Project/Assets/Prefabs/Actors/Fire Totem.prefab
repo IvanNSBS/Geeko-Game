@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8238340072252030824}
   m_Layer: 0
   m_Name: Fire Totem
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7725079296847367180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   projectile: {fileID: 7306324552287374457, guid: ef68a79f978e1af49afe280a45d653b8,
     type: 3}
   sightRange: 0
-  attackRange: 6
+  attackRange: 9
   speed: 0
   dashSpeed: 0
   stopShootToReload: 1
@@ -139,9 +139,9 @@ MonoBehaviour:
   wanderingTime: 2
   dashTime: 0
   holdingTime: 0
-  timeToReload: 2
-  timeAmmo: 2
-  timeBtwShots: 0.5
+  timeToReload: 1
+  timeAmmo: 3
+  timeBtwShots: 0.3
   timeWalkingOneDirection: 0
   fireTotemAnimator: {fileID: 2306564074543050816}
 --- !u!61 &1928573517990464141

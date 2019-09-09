@@ -161,7 +161,7 @@ public class RoomInstance : MonoBehaviour
                 break;
             case 1:
                 hasEnemyInThisRoom = true;
-                encounter = Instantiate(Encounters[1], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter = Instantiate(Encounters[2], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
                 encounter.HideEnemies();
                 break;
         }

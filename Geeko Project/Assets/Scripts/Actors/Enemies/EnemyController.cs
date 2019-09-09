@@ -609,7 +609,8 @@ public class EnemyController : MonoBehaviour
         GameObject aux = null;
         if(_timeBtwShots <= 0)
         {
-            aux = Instantiate(projectile, transform.position, transform.rotation);
+            Vector3 centerBox = GetComponent<BoxCollider2D>().offset;
+            aux = Instantiate(projectile,transform.TransformPoint(centerBox), transform.rotation);
             _timeBtwShots = timeBtwShots;
         }
         else
@@ -682,6 +683,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public bool isDead()
+    {
+        return _dead;
+    }
+    
+    
     public IEnumerator DestroyEnemy(float seconds)
     {
         yield return new WaitForSeconds(seconds);
