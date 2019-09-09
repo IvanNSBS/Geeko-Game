@@ -173,7 +173,7 @@ public class RoomInstance : MonoBehaviour
         if (enemysInThisRoom <= 0)
         {
             hasEnemyInThisRoom = false;
-            Destroy(encounter);
+            Destroy(encounter.gameObject);
             dungeonManager.OpenAllDoors();
             minimapCam.ShowMinimap();
         }
