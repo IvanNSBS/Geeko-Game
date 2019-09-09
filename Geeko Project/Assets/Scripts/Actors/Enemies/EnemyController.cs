@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
     public virtual void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        projectile.transform.localScale = Vector3.one / 2;
+      //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
     }
@@ -684,8 +684,9 @@ public class EnemyController : MonoBehaviour
         {
             if (explodeWhenDie)
             {
-               projectile.transform.localScale = Vector3.one*2; //demonstration
-                Instantiate(projectile, transform.position, transform.rotation);
+               //projectile.transform.localScale = Vector3.one*2; //demonstration
+               //do something bigger
+               Instantiate(projectile, transform.position, transform.rotation);
             }
             StopMovement();
             Destroy(this.GetComponent<Rigidbody2D>());
