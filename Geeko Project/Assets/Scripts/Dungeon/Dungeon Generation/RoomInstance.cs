@@ -135,7 +135,12 @@ public class RoomInstance : MonoBehaviour
             if (hasEnemyInThisRoom)
             {
                 SpawnEnemies();
+                minimapCam.HideMinimap();
             }
+        }
+        if (collision.CompareTag("Enemy"))
+        {
+            enemysInThisRoom++;
         }
     }
 
@@ -143,7 +148,7 @@ public class RoomInstance : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            
+            checkEnemies();
         }
     }
 
@@ -170,6 +175,7 @@ public class RoomInstance : MonoBehaviour
             hasEnemyInThisRoom = false;
             Destroy(encounter);
             dungeonManager.OpenAllDoors();
+            minimapCam.ShowMinimap();
         }
     }
     
