@@ -26,7 +26,7 @@ public class DungeonManager : MonoBehaviour
     {
         if (enemy)
         {
-            GameObject e = Instantiate(enemy, Vector3.one, Quaternion.identity);
+            //GameObject e = Instantiate(enemy, Vector3.one, Quaternion.identity);
             //e.GetComponent<StatusComponent>().Die = new UnityEvent();
             //e.GetComponent<StatusComponent>().Die.AddListener(OpenAllDoors);
         }

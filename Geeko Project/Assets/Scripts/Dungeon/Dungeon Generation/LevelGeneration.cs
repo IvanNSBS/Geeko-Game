@@ -51,7 +51,7 @@ public class LevelGeneration : MonoBehaviour
     {
         //setup
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, 1);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, 0);
         takenPositions.Insert(0, Vector2.zero);
         Vector2 checkPos = Vector2.zero;
         //magic numbers
@@ -76,8 +76,19 @@ public class LevelGeneration : MonoBehaviour
                     print("error: could not create with fewer neighbors than : " + NumberOfNeighbors(checkPos, takenPositions));
             }
             //finalize position
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 0);
-            takenPositions.Insert(0, checkPos);
+            if(i == numberOfRooms - 2)
+            {
+                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 3);
+                takenPositions.Insert(0, checkPos);
+            } else if (i == numberOfRooms - 3)
+            {
+                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 2);
+                takenPositions.Insert(0, checkPos);
+            } else
+            {
+                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 1);
+                takenPositions.Insert(0, checkPos);
+            }
         }
     }
 
