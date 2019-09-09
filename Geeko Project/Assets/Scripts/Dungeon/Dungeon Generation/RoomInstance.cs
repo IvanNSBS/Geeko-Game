@@ -7,22 +7,26 @@ public class RoomInstance : MonoBehaviour
 {
     public Texture2D tex;
     public Vector2 gridPos;
-    public int type; //0: normal, 1: enter
+    public int type; //0: initial room, 1: normal room, 2: miniboss, 3: boss
     public bool visited;
-    [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
     public MapSpriteSelector minimapSprite;
-    public int enemysInThisRoom;
 
-    [SerializeField] private GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
-    [SerializeField] private ColorToGameObject[] mappings;
     private float tileSize = 1;
     private Vector2 roomSizeInTiles = new Vector2(9, 17);
     private MiniMapCamera minimapCam;
     private DungeonManager dungeonManager;
+    private int enemysInThisRoom;
+    private bool hasEnemyInThisRoom;
+    private Encounter encounter;
+    [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
+    [SerializeField] private ColorToGameObject[] mappings;
+    [SerializeField] private GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
+    [SerializeField] private List<GameObject> Encounters = new List<GameObject>();
 
     private void Start()
     {
         dungeonManager = FindObjectOfType<DungeonManager>();
+        SetupEncounter();
     }
 
     public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, MapSpriteSelector _minimapSprite)
@@ -123,24 +127,63 @@ public class RoomInstance : MonoBehaviour
         return ret;
     }
 
-    private void checkEnemies()
-    {
-        enemysInThisRoom--;
-        if(enemysInThisRoom <= 0)
-        {
-            dungeonManager.OpenAllDoors();
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             minimapCam.UpdateActualRoom(this);
+            if (hasEnemyInThisRoom)
+            {
+                SpawnEnemies();
+                minimapCam.HideMinimap();
+            }
         }
         if (collision.CompareTag("Enemy"))
         {
             enemysInThisRoom++;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            checkEnemies();
+        }
+    }
+
+    private void SetupEncounter()
+    {
+        switch(type){
+
+            case 0:
+                hasEnemyInThisRoom = false;
+                break;
+            case 1:
+                hasEnemyInThisRoom = true;
+                encounter = Instantiate(Encounters[1], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter.HideEnemies();
+                break;
+        }
+    }
+
+    private void checkEnemies()
+    {
+        enemysInThisRoom--;
+        if (enemysInThisRoom <= 0)
+        {
+            hasEnemyInThisRoom = false;
+            Destroy(encounter);
+            dungeonManager.OpenAllDoors();
+            minimapCam.ShowMinimap();
+        }
+    }
+    
+    private void SpawnEnemies()
+    {
+        if (encounter && hasEnemyInThisRoom)
+        {
+            encounter.SpawnEnemies();
             dungeonManager.CloseAllDoors();
         }
     }

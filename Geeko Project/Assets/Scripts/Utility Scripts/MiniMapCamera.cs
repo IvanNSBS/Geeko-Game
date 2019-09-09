@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class MiniMapCamera : MonoBehaviour
 {
     List<RoomInstance> rooms = new List<RoomInstance>();
     List<MapSpriteSelector> minimapSprites = new List<MapSpriteSelector>();
     RoomInstance actualRoom;
+    private RawImage minimapImage;
    
     public void GetRoomsReferences()
     {
@@ -105,5 +108,20 @@ public class MiniMapCamera : MonoBehaviour
     {
         Vector3 targetPosition = new Vector3(actualRoom.gridPos.x * 16, actualRoom.gridPos.y * 8, -10);
         this.gameObject.transform.position = targetPosition;
+    }
+
+    public void SetMinimapImageRef(RawImage Image)
+    {
+        minimapImage = Image;
+    }
+
+    public void HideMinimap()
+    {
+        minimapImage.DOFade(0f, 0.5f);
+    }
+
+    public void ShowMinimap()
+    {
+        minimapImage.DOFade(1f, 0.5f);
     }
 }   

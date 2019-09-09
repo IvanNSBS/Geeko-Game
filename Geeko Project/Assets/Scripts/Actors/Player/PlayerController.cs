@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
-            //m_WeaponComponent.AttemptToShoot();
+            m_WeaponComponent.AttemptToShoot();
         }
     }
 }
