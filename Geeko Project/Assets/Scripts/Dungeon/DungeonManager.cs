@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
+using UnityEngine.UI;
 public class DungeonManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject enemy; //temporary, delete
-    List<Door> doors = new List<Door>();
+    private List<Door> doors = new List<Door>();
+    private MiniMapCamera miniMapCamera;
+
+    private void Start()
+    {
+        miniMapCamera = FindObjectOfType<MiniMapCamera>();
+    }
 
     public void SpawnPlayer()
     {
-        Instantiate(player, Vector3.zero, Quaternion.identity);
+        GameObject m_player = Instantiate(player, Vector3.zero, Quaternion.identity);
+        miniMapCamera.SetMinimapImageRef(m_player.GetComponentInChildren<RawImage>());
     }
 
     public void SpawnEnemy() //temporary, delete
@@ -51,11 +59,13 @@ public class DungeonManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             OpenAllDoors();
+            miniMapCamera.ShowMinimap();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             CloseAllDoors();
+            miniMapCamera.HideMinimap();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
