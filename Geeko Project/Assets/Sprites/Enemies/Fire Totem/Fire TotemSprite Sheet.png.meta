@@ -1,7 +1,136 @@
 fileFormatVersion: 2
 guid: 5c763c2910bbb7b4fa20f8d9ba38508d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -4035746850229498089
+    second: Fire TotemSprite Sheet_0
+  - first:
+      213: 6912084256274302956
+    second: Fire TotemSprite Sheet_1
+  - first:
+      213: 848071076575857793
+    second: Fire TotemSprite Sheet_2
+  - first:
+      213: -8306282088390072537
+    second: Fire TotemSprite Sheet_3
+  - first:
+      213: 8044931951307140030
+    second: Fire TotemSprite Sheet_4
+  - first:
+      213: 5117429117409804114
+    second: Fire TotemSprite Sheet_5
+  - first:
+      213: 7921421254580896832
+    second: Fire TotemSprite Sheet_6
+  - first:
+      213: -471837834037224903
+    second: Fire TotemSprite Sheet_7
+  - first:
+      213: -480517093643130968
+    second: Fire TotemSprite Sheet_8
+  - first:
+      213: -6333370235711370210
+    second: Fire TotemSprite Sheet_9
+  - first:
+      213: 2059616115735804656
+    second: Fire TotemSprite Sheet_10
+  - first:
+      213: 6048437549117963303
+    second: Fire TotemSprite Sheet_11
+  - first:
+      213: 2925279602860196932
+    second: Fire TotemSprite Sheet_12
+  - first:
+      213: 6004739868758258797
+    second: Fire TotemSprite Sheet_13
+  - first:
+      213: 5494490866752732285
+    second: Fire TotemSprite Sheet_14
+  - first:
+      213: 2002545634065447108
+    second: Fire TotemSprite Sheet_15
+  - first:
+      213: 68867727895908292
+    second: Fire TotemSprite Sheet_16
+  - first:
+      213: -3566301655613393329
+    second: Fire TotemSprite Sheet_17
+  - first:
+      213: -6669159893557886047
+    second: Fire TotemSprite Sheet_18
+  - first:
+      213: 4961637960110966462
+    second: Fire TotemSprite Sheet_19
+  - first:
+      213: -4459822174871934967
+    second: Fire TotemSprite Sheet_20
+  - first:
+      213: -8372787464095526882
+    second: Fire TotemSprite Sheet_21
+  - first:
+      213: 1440648705006038290
+    second: Fire TotemSprite Sheet_22
+  - first:
+      213: -1289706484365804046
+    second: Fire TotemSprite Sheet_23
+  - first:
+      213: 4092445464988809550
+    second: Fire TotemSprite Sheet_24
+  - first:
+      213: -9052312551913318315
+    second: Fire TotemSprite Sheet_25
+  - first:
+      213: 5226931072988293431
+    second: Fire TotemSprite Sheet_26
+  - first:
+      213: -2766196962655628800
+    second: Fire TotemSprite Sheet_27
+  - first:
+      213: -2656276278833642720
+    second: Fire TotemSprite Sheet_28
+  - first:
+      213: -3096463090447700218
+    second: Fire TotemSprite Sheet_29
+  - first:
+      213: -1493952266986509848
+    second: Fire TotemSprite Sheet_30
+  - first:
+      213: -4034308451480100021
+    second: Fire TotemSprite Sheet_31
+  - first:
+      213: -4168206515363543372
+    second: Fire TotemSprite Sheet_32
+  - first:
+      213: 8958932688171011883
+    second: Fire TotemSprite Sheet_33
+  - first:
+      213: 9159224695981394398
+    second: Fire TotemSprite Sheet_34
+  - first:
+      213: -8442927747900387356
+    second: Fire TotemSprite Sheet_35
+  - first:
+      213: -6277709015738894558
+    second: Fire TotemSprite Sheet_36
+  - first:
+      213: 5086232182454700684
+    second: Fire TotemSprite Sheet_37
+  - first:
+      213: -8826146715674712146
+    second: Fire TotemSprite Sheet_38
+  - first:
+      213: -452394023893352437
+    second: Fire TotemSprite Sheet_39
+  - first:
+      213: 6626830096631646323
+    second: Fire TotemSprite Sheet_40
+  - first:
+      213: 992101991265956926
+    second: Fire TotemSprite Sheet_41
+  - first:
+      213: 4926350051777933635
+    second: Fire TotemSprite Sheet_42
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +160,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +169,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,7 +192,43 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -72,7 +237,637 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 11}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea11292778d56149826c43b451fe396
+      internalID: -4035746850229498089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4780f773a95e9b49a7c2fde565a6fab
+      internalID: 6912084256274302956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c16e3f28030d314dbc9cf6d15a63a10
+      internalID: 848071076575857793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d9dd1399ee7e0643a16ef0fdff5f26e
+      internalID: -8306282088390072537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f708fca048806c84c82c688dce23b852
+      internalID: 8044931951307140030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 145
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05214d5ee8fee4c4db118ada25cb04cf
+      internalID: 5117429117409804114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 113
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 23}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a71dbef84a6592d44b307be1a2bf3666
+      internalID: 7921421254580896832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 113
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 18}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a8ef1482fc49934db7e778910e90779
+      internalID: -471837834037224903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 113
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b29057cea23a5cd4ca64da36a3c35072
+      internalID: -480517093643130968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 113
+        width: 38
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 12, y: 1, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211567d955c383043844212e66256d66
+      internalID: 2059616115735804656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 113
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7bbfd89d4b9ce14399c330dfa9043dd
+      internalID: 6048437549117963303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 1, z: 9, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0f1837d0bc71df4da81c2e6997935e9
+      internalID: 6004739868758258797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 431fa743a927a5342b5c0c54d8e0fa27
+      internalID: 5494490866752732285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 6, y: 1, z: 11, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0498f0bf4d1a624584873661662877c
+      internalID: 2002545634065447108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 1, z: 9, w: 5}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56a5ba223a6e38c48af8a0f0dbd02cb9
+      internalID: 68867727895908292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 1, z: 10, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3dcfb8ba11caca42a5b90f0109d8225
+      internalID: -3566301655613393329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 81
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 1, z: 9, w: 13}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a7f227592f123c479ec7b8b106ce12b
+      internalID: -6669159893557886047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 5, y: 1, z: 10, w: 13}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79a9bc13e7394ea46a1d1afb4c93beb5
+      internalID: 1440648705006038290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 5, y: 1, z: 8, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a7304abf057acd41851fb89faed318b
+      internalID: -1289706484365804046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 8, w: 5}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07b8a78a43a34874f9d38862d8135700
+      internalID: 4092445464988809550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb374e5af6010624a86a7166f9dee1b3
+      internalID: -9052312551913318315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 1, z: 9, w: 14}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47bb0f7976359464fbaa2468c0db2344
+      internalID: 5226931072988293431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 49
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 1, z: 9, w: 13}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ccb88ade38ed104086fdb7ba93c985f
+      internalID: -2766196962655628800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 17
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 681381d3473a0594caa735ff691206d1
+      internalID: -2656276278833642720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 17
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3e374410269f141813c9ee200922c0
+      internalID: -3096463090447700218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 17
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c23a529290673d4b90a82414ffa4480
+      internalID: -1493952266986509848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 17
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c9240c010e76dd478c5c1335522c07b
+      internalID: -4034308451480100021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 17
+        width: 54
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3819ba11ecbcf6e47adb14e4054e782f
+      internalID: 8958932688171011883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 17
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51b6282f411d94b4e86779bb8e1673f8
+      internalID: -8442927747900387356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire TotemSprite Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 17
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05d8dcf60efeee34485144756b816d02
+      internalID: -6277709015738894558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

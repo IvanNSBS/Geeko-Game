@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour
         _statusComponent = GetComponent<StatusComponent>();
     }
 
-    void Start()
+    public virtual void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         projectile.transform.localScale = Vector3.one / 2;
@@ -235,11 +235,17 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Retreat;
         }
         */
-        if (_statusComponent.GetCurrentHealth() <= 0)
+        if (GetCurrentHealth() <= 0)
         {
             currState = EnemyState.Die;
         }
     }
+
+    public float GetCurrentHealth()
+    {
+        return _statusComponent.GetCurrentHealth();
+    }
+
 
     public virtual void StopMovement()
     {
@@ -564,7 +570,7 @@ public class EnemyController : MonoBehaviour
         _coolDownAttack = false;
     }
     */
-    public void Wander()
+    public virtual void Wander()
     {
         if (!_wandering)
         {
@@ -614,6 +620,19 @@ public class EnemyController : MonoBehaviour
         return aux;
     }
 
+    public void flipStaticEnemy(SpriteRenderer sprite)
+    {
+        Vector3 dir = DirectionNormalized(transform.position, _player.position);
+        if (dir.x < 0)
+        {
+            sprite.flipX = true;
+        }
+        else
+        {
+            sprite.flipX = false;
+        }
+    }
+    
     public Vector3 DirectionNormalized(Vector3 current, Vector3 target)
     {
         return Vector3.Normalize(target - current);
