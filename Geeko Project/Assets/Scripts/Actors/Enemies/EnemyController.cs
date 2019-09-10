@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using DG.Tweening;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -71,6 +72,8 @@ public class EnemyController : MonoBehaviour
     public bool explodeWhenDie;
     [Tooltip("The enemy shoots while moves")]
     public bool moveWhileShoot;
+    [Tooltip("The enemy dashes in the direction of the player every (x) seconds")]
+    public bool enemyMeleeDash;
     
     [Header("Type of Walk (when wandering or shooting)")]
     public bool zigZagWalkHorizontal;
@@ -87,6 +90,10 @@ public class EnemyController : MonoBehaviour
     public float wanderingTime;
     [Tooltip("Time that the enemy will be dashing")]
     public float dashTime;
+    [Tooltip("Time that the enemy will be basic Attacking")]
+    public float basicMeleeAttackTime = 0.05f;
+    [Tooltip("Time of the cd of the basic attack melee")]
+    public float cooldownBasicMeleeAttackTime;
     [Tooltip("Time that the enemy will be holding to dash")]
     public float holdingTime;
     [Tooltip("Time that the enemy will spend reloading to be able to shoot again")]
@@ -119,7 +126,9 @@ public class EnemyController : MonoBehaviour
     private bool _dashing = false;
     private bool _waiting = false;
     private bool _iddle= false;
-
+    private bool _basicMeleeAttack = false;
+    
+    
     private Transform _player;
     private Vector3 _lastPlayerPosition;
     
@@ -355,9 +364,16 @@ public class EnemyController : MonoBehaviour
             switch (enemyType)
             {
                 case(EnemyType.Melee):
-                    //now only dashing, so he's holding to dash
-                    //Debug.Log("ATTACK MELEE!! DASH");
-                    _holding = true;
+                    if (enemyMeleeDash)
+                    {
+                        _holding = true;
+                    }
+                    else
+                    {
+                       
+                        BasicAttack();
+                        
+                    }
                     
                     break;
                 case(EnemyType.Ranged):
@@ -378,6 +394,36 @@ public class EnemyController : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public bool getBasicMeleeAttack()
+    {
+        return _basicMeleeAttack;
+    }
+
+    public void BasicAttack()
+    {
+        if (!_basicMeleeAttack) // if not used yet
+        {
+            _randomDir = DirectionNormalized(transform.position, _player.position);
+            if(basicMeleeAttackTime <= 0)
+            {
+                basicMeleeAttackTime = 0.05f;
+                StartCoroutine(BasicAttackCooldown());
+            }
+            else
+            {
+                MoveEnemy(_randomDir,speed*70*Time.deltaTime);
+                basicMeleeAttackTime -= Time.deltaTime;
+            }
+        }
+    }
+
+    public IEnumerator BasicAttackCooldown()
+    {
+        _basicMeleeAttack = true;
+        yield return new WaitForSeconds(cooldownBasicMeleeAttackTime);
+        _basicMeleeAttack = false;
     }
 
     public void LoadOrShoot()
@@ -692,6 +738,9 @@ public class EnemyController : MonoBehaviour
             Destroy(this.GetComponent<Rigidbody2D>());
             Destroy(GetComponent<BoxCollider2D>());
             
+            SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
+            aux.DOColor(new Color(255,255,255,0),5);
+            
             StartCoroutine(DestroyEnemy(2.5f)); //default time
             Debug.Log("enemy killed");
             _dead = true;
@@ -710,7 +759,7 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void OnCollisionEnter2D(Collision2D other)
+    public virtual void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.CompareTag("Player"))
         {
