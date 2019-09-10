@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 203.97438
-    y: 785.3707
-    width: 288.23087
-    height: 65.891174
+    x: 203.46072
+    y: 787.35364
+    width: 287.50504
+    height: 66.057556
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 178.52301
-    y: 42.267647
+    x: 168.97974
+    y: 34.13319
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -394,8 +394,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.37611
-    y: 32.02036
+    x: 106.3593
+    y: 32.152283
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -1357,6 +1357,7 @@ MonoBehaviour:
   owner: {fileID: 5880589383016503992}
   speed: 20
   cooldown: 0.2
+  targetTag: Enemy
 --- !u!114 &312984197883616580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2305,26 +2306,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6cd79efb710261545841d90b665503fb, type: 2}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size
@@ -2444,6 +2425,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c, type: 3}
