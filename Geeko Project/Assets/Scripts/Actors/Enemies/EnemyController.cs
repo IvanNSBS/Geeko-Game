@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
     public virtual void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        projectile.transform.localScale = Vector3.one / 2;
+      //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
     }
@@ -577,9 +577,23 @@ public class EnemyController : MonoBehaviour
             _wandering = true;
             _randomDir = ChooseTypeOfWalk();
             StartCoroutine(RandomlyIddleIn(wanderingTime)); //can be random
+            if (wanderingTime > timeWalkingOneDirection)
+            {
+                StartCoroutine(timeWalkingOneDirectionWandering());
+            }
         }
         
         MoveEnemy(_randomDir,speed);
+    }
+
+    private IEnumerator timeWalkingOneDirectionWandering()
+    {
+        yield return new WaitForSeconds(timeWalkingOneDirection);
+        if (_wandering && EnemyState.Wander == currState)
+        {
+            _randomDir = ChooseTypeOfWalk();
+            StartCoroutine(timeWalkingOneDirectionWandering());
+        }
     }
 
     private IEnumerator RandomlyIddleIn( float seconds)
@@ -609,7 +623,8 @@ public class EnemyController : MonoBehaviour
         GameObject aux = null;
         if(_timeBtwShots <= 0)
         {
-            aux = Instantiate(projectile, transform.position, transform.rotation);
+            Vector3 centerBox = GetComponent<BoxCollider2D>().offset;
+            aux = Instantiate(projectile,transform.TransformPoint(centerBox), transform.rotation);
             _timeBtwShots = timeBtwShots;
         }
         else
@@ -669,8 +684,9 @@ public class EnemyController : MonoBehaviour
         {
             if (explodeWhenDie)
             {
-               projectile.transform.localScale = Vector3.one*2; //demonstration
-                Instantiate(projectile, transform.position, transform.rotation);
+               //projectile.transform.localScale = Vector3.one*2; //demonstration
+               //do something bigger
+               Instantiate(projectile, transform.position, transform.rotation);
             }
             StopMovement();
             Destroy(this.GetComponent<Rigidbody2D>());
@@ -682,6 +698,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public bool isDead()
+    {
+        return _dead;
+    }
+    
+    
     public IEnumerator DestroyEnemy(float seconds)
     {
         yield return new WaitForSeconds(seconds);

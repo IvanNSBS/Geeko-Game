@@ -931,8 +931,9 @@ MonoBehaviour:
   wallR: {fileID: 2204679326277676718, guid: 3e13e8990755f53468be8af8f7964d66, type: 3}
   Encounters:
   - {fileID: 4072245563677062441, guid: f04010307abb4954c9166585042cd7c0, type: 3}
+  - {fileID: 7558159995128276793, guid: 95619ae26f4223b4ca71c004579af789, type: 3}
   - {fileID: 1240413144840286557, guid: ea80c52d30e23624b9f6b2b4892e29dd, type: 3}
-  EncounterRate: 460000001e000000
+  EncounterRate: 280000002800000014000000
 --- !u!61 &4650931244247357742
 BoxCollider2D:
   m_ObjectHideFlags: 0

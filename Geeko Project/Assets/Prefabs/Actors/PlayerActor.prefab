@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 180.46635
-    y: 44.3274
+    x: 178.52301
+    y: 42.267647
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -2087,12 +2087,12 @@ PrefabInstance:
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_IFrameTime
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_HitFlashDuration
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
@@ -2319,6 +2319,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362232, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
