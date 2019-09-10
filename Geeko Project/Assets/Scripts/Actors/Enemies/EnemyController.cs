@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
 using DG.Tweening;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.Experimental.PlayerLoop;
 using Random = UnityEngine.Random;
 
 
@@ -364,16 +358,8 @@ public class EnemyController : MonoBehaviour
             switch (enemyType)
             {
                 case(EnemyType.Melee):
-                    if (enemyMeleeDash)
-                    {
-                        _holding = true;
-                    }
-                    else
-                    {
-                       
-                        BasicAttack();
-                        
-                    }
+                    
+                    MeleeAttacks();
                     
                     break;
                 case(EnemyType.Ranged):
@@ -396,12 +382,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public virtual void MeleeAttacks()
+    {
+        if (enemyMeleeDash)
+        {
+            _holding = true;
+        }
+        else
+        {
+            BasicAttack();
+        }
+    }
+
     public bool getBasicMeleeAttack()
     {
         return _basicMeleeAttack;
     }
 
-    public void BasicAttack()
+    public virtual void BasicAttack()
     {
         if (!_basicMeleeAttack) // if not used yet
         {
@@ -747,6 +745,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public float getMaximumHealth()
+    {
+        return _statusComponent.GetMaxHealth();
+    }
+    
     public bool isDead()
     {
         return _dead;

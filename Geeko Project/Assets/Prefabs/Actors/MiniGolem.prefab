@@ -139,7 +139,7 @@ MonoBehaviour:
   iddleTime: 3
   wanderingTime: 2
   dashTime: 0
-  basicMeleeAttackTime: 0.1
+  basicMeleeAttackTime: 0.05
   cooldownBasicMeleeAttackTime: 2
   holdingTime: 0
   timeToReload: 0
