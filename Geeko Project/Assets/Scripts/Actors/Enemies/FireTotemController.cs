@@ -62,16 +62,6 @@ public class FireTotemController : EnemyController
         return aux;
     }
     
-    public override void Death()
-    {
-        base.Death();
-        if (!isDead())
-        {
-            SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
-            aux.DOColor(new Color(255,255,255,0),5);
-            
-        }
-    }
     
     public void onHit()
     {
