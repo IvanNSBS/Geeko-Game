@@ -21,8 +21,9 @@ public class RoomInstance : MonoBehaviour
     [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
     [SerializeField] private ColorToGameObject[] mappings;
     [SerializeField] private GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
-    [SerializeField] private List<GameObject> Encounters = new List<GameObject>();
-
+    [SerializeField] private List<Encounter> Encounters = new List<Encounter>();
+    [SerializeField] private List<int> EncounterRate = new List<int>();
+ 
     private void Start()
     {
         dungeonManager = FindObjectOfType<DungeonManager>();
@@ -161,7 +162,14 @@ public class RoomInstance : MonoBehaviour
                 break;
             case 1:
                 hasEnemyInThisRoom = true;
-                encounter = Instantiate(Encounters[1], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                int random = Random.Range(1, 100);
+                int spawn = -1;
+                while(random >= 0)
+                {
+                    spawn++;
+                    random -= EncounterRate[spawn];
+                }
+                encounter = Instantiate(Encounters[spawn], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
                 encounter.HideEnemies();
                 break;
         }
@@ -173,7 +181,7 @@ public class RoomInstance : MonoBehaviour
         if (enemysInThisRoom <= 0)
         {
             hasEnemyInThisRoom = false;
-            Destroy(encounter.gameObject);
+            Destroy(encounter.Enemies);
             dungeonManager.OpenAllDoors();
             minimapCam.ShowMinimap();
         }

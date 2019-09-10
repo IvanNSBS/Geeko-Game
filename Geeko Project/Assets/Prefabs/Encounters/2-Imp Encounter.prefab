@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5334947429557580701}
-  - component: {fileID: 7894950174034126095}
+  - component: {fileID: 4072245563677062441}
   m_Layer: 0
   m_Name: 2-Imp Encounter
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7894950174034126095
+--- !u!114 &4072245563677062441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies: {fileID: 5334947429373697115}
+  spawnRate: 30
 --- !u!1001 &5334947428110602765
 PrefabInstance:
   m_ObjectHideFlags: 0

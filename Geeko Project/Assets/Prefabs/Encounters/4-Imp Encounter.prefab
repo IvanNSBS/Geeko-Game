@@ -1471,7 +1471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6004615579644590665}
-  - component: {fileID: 5037598748685363054}
+  - component: {fileID: 1240413144840286557}
   m_Layer: 0
   m_Name: 4-Imp Encounter
   m_TagString: Untagged
@@ -1495,7 +1495,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5037598748685363054
+--- !u!114 &1240413144840286557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1508,6 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies: {fileID: 6198388727124332175}
+  spawnRate: 70
 --- !u!1 &6555230499565489291
 GameObject:
   m_ObjectHideFlags: 0
