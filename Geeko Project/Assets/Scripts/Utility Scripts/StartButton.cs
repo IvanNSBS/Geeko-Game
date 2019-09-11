@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GameAnalyticsSDK;
 using TMPro;
 public class StartButton : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class StartButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameAnalytics.Initialize();
         start = this.GetComponent<TextMeshProUGUI>();
         AnimateStartButton();
     }
