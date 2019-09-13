@@ -21,7 +21,7 @@ public enum EnemyState{
     
     Hold,
     
-    Iddle,
+    Idle,
 };
 
 public enum EnemyType
@@ -79,13 +79,13 @@ public class EnemyController : MonoBehaviour
     
     [Header("Time Attributes (seconds)")]
     [Tooltip("Time that the enemy will be idling to change state")]
-    public float iddleTime;
+    public float idleTime;
     [Tooltip("Time that the enemy will be wandering to change state")]
     public float wanderingTime;
     [Tooltip("Time that the enemy will be dashing")]
     public float dashTime;
     [Tooltip("Time that the enemy will be basic Attacking")]
-    public float basicMeleeAttackTime = 0.05f;
+    public float basicMeleeAttackTime;
     [Tooltip("Time of the cd of the basic attack melee")]
     public float cooldownBasicMeleeAttackTime;
     [Tooltip("Time that the enemy will be holding to dash")]
@@ -119,7 +119,7 @@ public class EnemyController : MonoBehaviour
     private bool _holding = false;
     private bool _dashing = false;
     private bool _waiting = false;
-    private bool _iddle= false;
+    private bool _idle= false;
     private bool _basicMeleeAttack = false;
     
     
@@ -136,7 +136,8 @@ public class EnemyController : MonoBehaviour
     private bool _zigZagHorizontal=false;
     private bool _zigZagVertical = false;
     private bool _dead=false;
-
+    private float _basicMeleeAttackTime=0;
+    
     /* TO-DO
     BOSS
     Walks and shootings
@@ -196,8 +197,8 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Retreat):
                 Retreat();
                 break;
-            case (EnemyState.Iddle):
-                Iddle();
+            case (EnemyState.Idle):
+                Idle();
                 break;
         }
     }
@@ -215,9 +216,9 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Wander;
         }
 
-        if ((_iddle))
+        if ((_idle))
         {
-            currState = EnemyState.Iddle;
+            currState = EnemyState.Idle;
         }
         else if (IsEnemyHoldingToDash())
         {
@@ -249,13 +250,22 @@ public class EnemyController : MonoBehaviour
         return _statusComponent.GetCurrentHealth();
     }
 
+    public void setIdle(bool idle)
+    {
+        _idle = idle;
+    }
 
+    public bool getIdle()
+    {
+        return _idle;
+    }
+    
     public virtual void StopMovement()
     {
         _movementComponent.StopMovement();
     }
     
-    public virtual void Iddle()
+    public virtual void Idle()
     {
         StopMovement();
        // Debug.Log("iddleling");
@@ -264,12 +274,12 @@ public class EnemyController : MonoBehaviour
         {
             _waiting = true;
            
-            StartCoroutine(WaitingIddleTime(iddleTime)); //can be random
+            StartCoroutine(WaitingIdleTime(idleTime)); //can be random
         }
         else if ( !_waiting && _wandering)
         {
             _waiting = true;
-            StartCoroutine(RandomlyWanderingIn(iddleTime)); //can be random
+            StartCoroutine(RandomlyWanderingIn(idleTime)); //can be random
         }
         else if (_wandering)
         {
@@ -277,7 +287,7 @@ public class EnemyController : MonoBehaviour
             if (IsPlayerInAttackRange(sightRange))
             {
                 _wandering = false;
-                _iddle = false;
+                _idle = false;
                 _waiting = false;
                 currState = EnemyState.Attack;
             }
@@ -288,9 +298,9 @@ public class EnemyController : MonoBehaviour
     public IEnumerator RandomlyWanderingIn(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        if (currState == EnemyState.Iddle)
+        if (currState == EnemyState.Idle)
         {
-            _iddle = false;
+            _idle = false;
             
         }
         _wandering = false;
@@ -298,12 +308,12 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    public IEnumerator WaitingIddleTime(float sec)
+    public IEnumerator WaitingIdleTime(float sec)
     {
         yield return new WaitForSeconds(sec);
        // Debug.Log("wander after iddle: "+sec+" seconds");
         _coolDownAttack = false; //reseted 
-        _iddle = false;
+        _idle = false;
         _waiting = false;
         _dashed = false;
         currState = EnemyState.Wander;
@@ -339,7 +349,7 @@ public class EnemyController : MonoBehaviour
         {
             _dashTime = dashTime;
             _dashing = false;
-            _iddle = true;
+            _idle = true;
             _dashed = true;
         }
         else
@@ -359,7 +369,7 @@ public class EnemyController : MonoBehaviour
             {
                 case(EnemyType.Melee):
                     
-                    MeleeAttacks();
+                    BasicAttacks();
                     
                     break;
                 case(EnemyType.Ranged):
@@ -382,7 +392,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public virtual void MeleeAttacks()
+    public virtual void BasicAttacks()
     {
         if (enemyMeleeDash)
         {
@@ -404,15 +414,15 @@ public class EnemyController : MonoBehaviour
         if (!_basicMeleeAttack) // if not used yet
         {
             _randomDir = DirectionNormalized(transform.position, _player.position);
-            if(basicMeleeAttackTime <= 0)
+            if(_basicMeleeAttackTime <= 0)
             {
-                basicMeleeAttackTime = 0.05f;
+                _basicMeleeAttackTime = basicMeleeAttackTime;
                 StartCoroutine(BasicAttackCooldown());
             }
             else
             {
                 MoveEnemy(_randomDir,speed*70*Time.deltaTime);
-                basicMeleeAttackTime -= Time.deltaTime;
+                _basicMeleeAttackTime -= Time.deltaTime;
             }
         }
     }
@@ -620,7 +630,7 @@ public class EnemyController : MonoBehaviour
         {
             _wandering = true;
             _randomDir = ChooseTypeOfWalk();
-            StartCoroutine(RandomlyIddleIn(wanderingTime)); //can be random
+            StartCoroutine(RandomlyIdleIn(wanderingTime)); //can be random
             if (wanderingTime > timeWalkingOneDirection)
             {
                 StartCoroutine(timeWalkingOneDirectionWandering());
@@ -640,12 +650,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator RandomlyIddleIn( float seconds)
+    private IEnumerator RandomlyIdleIn( float seconds)
     {
         yield return new WaitForSeconds(seconds);
         if (currState == EnemyState.Wander) // to prevent a coroutine in the wrong time
         {
-            _iddle = true;
+            _idle = true;
         }
         else
         {

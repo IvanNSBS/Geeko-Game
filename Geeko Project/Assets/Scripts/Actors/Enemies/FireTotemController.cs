@@ -9,7 +9,7 @@ public class FireTotemController : EnemyController
     [Tooltip("Animation of the enemy")]
     public Animator fireTotemAnimator;
 
-    private bool _idle = false;
+    private bool _idleAnimation = false;
     private SpriteRenderer _sprite;
 
 
@@ -22,16 +22,16 @@ public class FireTotemController : EnemyController
     {
         base.Wander();
         
-        if(_idle)
+        if(_idleAnimation)
         {
             fireTotemAnimator.SetBool("isIdle",true);
         }
     }
-    public override void Iddle()
+    public override void Idle()
     {
-        base.Iddle();
+        base.Idle();
         
-        if(_idle)
+        if(_idleAnimation)
         {
             fireTotemAnimator.SetBool("isIdle",true);
         }
@@ -40,7 +40,7 @@ public class FireTotemController : EnemyController
     public void FinishAppear()
     {
         fireTotemAnimator.SetBool("isIdle",true);
-        _idle = true;
+        _idleAnimation = true;
     }
 
     public override void Attack()
