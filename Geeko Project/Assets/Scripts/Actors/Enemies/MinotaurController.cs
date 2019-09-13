@@ -1,7 +1,6 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -47,18 +46,9 @@ public class MinotaurController : EnemyController
     private float _timeBtwFloorHitAttack;
     private bool _waitingIdle;
     private bool _floorHit;
-    private SpriteRenderer _sprite;
-
-    public override void Update()
-    {
-        base.Update();
-    }
-
-    public void OnFlip()
-    {
-        Debug.Log("hmm...");
-    }
+    private bool _changeState;
     
+
     public override void CheckTransitions()
     {
         if (IsPlayerInRange(sightRange) && currState != EnemyState.Die)
@@ -69,7 +59,7 @@ public class MinotaurController : EnemyController
         if ((getIdle()))
         {
             currState = EnemyState.Idle;
-        }else if (IsPlayerInAttackRange(attackRange) || _floorHit)
+        }else if (IsPlayerInAttackRange(attackRange) || _attacking)
         {
             currState = EnemyState.Attack;
         }
@@ -190,14 +180,14 @@ public class MinotaurController : EnemyController
         Collider2D hit = Physics2D.OverlapCircle(axeAttackPosition.position, axeAttackRange, layerMask);
         if (hit)
         {
-            Debug.Log(hit.name);
             hit.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             Debug.Log("damaged by axe");
         }
+        /*
         else
         {
             Debug.Log("got nothing in the axe");
-        }
+        } */
     }
 
     private void HitBoxPoke()
@@ -205,14 +195,13 @@ public class MinotaurController : EnemyController
         Collider2D hit = Physics2D.OverlapBox(pokePosition.position, pokeAttackRange, 0,layerMask);
         if (hit)
         {
-            Debug.Log(hit.name);
             hit.gameObject.GetComponent<StatusComponent>().TakeDamage(5);
             Debug.Log("damaged by poke");
-        }
+        }/*
         else
         {
             Debug.Log("got nothing in the poke");
-        }
+        }*/
     }
     
     private void Poke()
@@ -262,7 +251,7 @@ public class MinotaurController : EnemyController
         {
             if (!_attackingFloorHit)
             {
-                minotaurAnimator.SetTrigger("isAttackHittingFloor");
+                minotaurAnimator.SetBool("isHittingFloor",true);
                 minotaurAnimator.SetBool("isIdle",false);
                 
                 ShootPattern();
@@ -272,6 +261,7 @@ public class MinotaurController : EnemyController
             }
             else
             {
+                minotaurAnimator.SetBool("isIdle",true);
                 _attackingFloorHit = false;
                 setIdle(true);
             }
@@ -297,12 +287,13 @@ public class MinotaurController : EnemyController
                 SpiralPattern();
                 break;
         }
-        //Invoke("DeactivateWeapon",2.1f);
+        Invoke("DeactivateWeapon",2.1f);
     }
 
     private void DeactivateWeapon()
     {
         projectile.SetActive(false);
+        minotaurAnimator.SetBool("isHittingFloor",false);
     }
 
     private void SpiralPattern()
@@ -312,16 +303,15 @@ public class MinotaurController : EnemyController
         var vec3 =  projectile.transform.position - pokePosition.position;
         var vec2 = new Vector2(vec3.x, vec3.y);
         weaponComponent.Spiral(vec2,36,2,1);
-        Debug.Log("Spiral");
     }
 
 
     public override void Idle()
     {
         base.Idle();
-        if (!_waitingIdle && _attacking)
+        if (!GetWaiting() && _attacking)
         {
-            _waitingIdle = true;
+            SetWaiting(true);
             StartCoroutine(WaitingToAttack(idleTime));
         }
         minotaurAnimator.SetBool("isIdle",true);
@@ -331,7 +321,6 @@ public class MinotaurController : EnemyController
     public IEnumerator WaitingToAttack(float sec)
     {
         yield return new WaitForSeconds(sec);
-        Debug.Log("waited : "+sec+" seconds");
         
         if (!_floorHit)
         {
@@ -344,17 +333,17 @@ public class MinotaurController : EnemyController
             _floorHit = false;
         }
         
-        _waitingIdle = false;
+        SetWaiting(false);
         setIdle(false);
     }
 
-    public void onHit()
+    public void OnHit()
     {
         UpdateRage();
         minotaurAnimator.SetTrigger("isTakingDamage");
     }
 
-    public void onDeath()
+    public void OnDeath()
     {
         minotaurAnimator.SetBool("isDead",true);
     }
@@ -377,7 +366,7 @@ public class MinotaurController : EnemyController
     {
         base.StopMovement();
         minotaurAnimator.SetBool("isMoving",false);
-        //idling true?
+        minotaurAnimator.SetBool("isIdle",true);
     }
 
     public override void Attack()
@@ -385,7 +374,6 @@ public class MinotaurController : EnemyController
         if (stateHasChanged)
         {
             StopMovement();  // so the player cant be in moving animation, without shooting when enemystate = atack
-            minotaurAnimator.SetBool("isIdle",true);
         }
 
         base.Attack();
@@ -394,20 +382,28 @@ public class MinotaurController : EnemyController
     
     public void UpdateRage()
     {
+        var previousMinotaurState = minotaurState;
         var aux = (GetCurrentHealth() / getMaximumHealth()) * 100;
         _rage = 100 - aux;
         
         if (_rage >= 70)
         {
             minotaurState = MinotaurState.Rage;
-        }else if (_rage >= 30)
+        }else if (_rage >= 35)
         {
             minotaurState = MinotaurState.Stressed;
         }
+        /*
         else
         {
             minotaurState = MinotaurState.Normal;
+        }*/
+
+        if (previousMinotaurState != minotaurState)
+        {
+            Debug.Log("Rage in ("+_rage+") Updated to: "+minotaurState+" mode, with life(%): "+aux);
         }
+        
     }
 }
 

@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e8a2ba56b50b343a1bcba769fcfc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currState: 0
+  currState: 1
   enemyType: 1
   projectile: {fileID: 7306324552287374457, guid: ef68a79f978e1af49afe280a45d653b8,
     type: 3}
@@ -129,15 +129,19 @@ MonoBehaviour:
   stopShootToReload: 1
   explodeWhenDie: 0
   moveWhileShoot: 0
+  enemyMeleeDash: 0
   zigZagWalkHorizontal: 0
   zigZagWalkVertical: 0
   horizontalWalk: 0
   verticalWalk: 0
   randomWalk: 0
   followWalk: 0
-  iddleTime: 2
+  idleTime: 2
   wanderingTime: 2
+  maxTimeFollowing: 0
   dashTime: 0
+  basicMeleeAttackTime: 0
+  cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
   timeToReload: 1
   timeAmmo: 3

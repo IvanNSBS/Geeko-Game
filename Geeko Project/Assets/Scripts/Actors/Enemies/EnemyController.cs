@@ -82,6 +82,8 @@ public class EnemyController : MonoBehaviour
     public float idleTime;
     [Tooltip("Time that the enemy will be wandering to change state")]
     public float wanderingTime;
+    [Tooltip("Max time that the enemy will be chasing the player")]
+    public float maxTimeFollowing;
     [Tooltip("Time that the enemy will be dashing")]
     public float dashTime;
     [Tooltip("Time that the enemy will be basic Attacking")]
@@ -137,7 +139,9 @@ public class EnemyController : MonoBehaviour
     private bool _zigZagVertical = false;
     private bool _dead=false;
     private float _basicMeleeAttackTime=0;
-    
+    private float _timeFollowing=0;
+    private bool _followingTimeIsOver;
+
     /* TO-DO
     BOSS
     Walks and shootings
@@ -291,10 +295,32 @@ public class EnemyController : MonoBehaviour
                 _waiting = false;
                 currState = EnemyState.Attack;
             }
+        }else if (!_waiting && _followingTimeIsOver)
+        {
+            _waiting = true;
+            StartCoroutine(WaitingIdleTimeAfterFollowing(idleTime));
         }
         
     }
 
+    public bool GetWaiting()
+    {
+        return _waiting;
+    }
+
+    public void SetWaiting(bool aux)
+    {
+        _waiting = aux;
+    }
+
+    public IEnumerator WaitingIdleTimeAfterFollowing(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _idle = false;
+        _followingTimeIsOver = false;
+        _waiting = false;
+    }
+    
     public IEnumerator RandomlyWanderingIn(float seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -707,9 +733,23 @@ public class EnemyController : MonoBehaviour
         return Vector3.Normalize(target - current);
     }
     
-    public void Follow()
+    public virtual void Follow()
     {
-        MoveEnemy(DirectionNormalized(transform.position,_player.position),speed);
+        if (stateHasChanged) //reset timer
+        {
+            _timeFollowing = maxTimeFollowing;
+        }
+        
+        if (_timeFollowing <= 0)
+        {
+            _idle = true;
+            _followingTimeIsOver = true;
+        }
+        else
+        {
+            _timeFollowing -= Time.deltaTime;
+            MoveEnemy(DirectionNormalized(transform.position,_player.position),speed);
+        }
     }
 
     public virtual void MoveEnemy(Vector3 dir,float speed)
