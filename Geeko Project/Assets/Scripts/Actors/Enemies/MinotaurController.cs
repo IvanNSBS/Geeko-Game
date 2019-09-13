@@ -48,6 +48,11 @@ public class MinotaurController : EnemyController
     private bool _floorHit;
     private bool _changeState;
     
+    
+    /*
+     *To-do after implement the minotaur states:
+     * adjust minotaur children on flip and make it shoot not in opposite direction of the player
+     */
 
     public override void CheckTransitions()
     {
