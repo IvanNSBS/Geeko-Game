@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6864348889499539999}
   m_Layer: 0
   m_Name: BulletPrefab
-  m_TagString: Untagged
+  m_TagString: SpellUninteractive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,4 +133,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2475138701028881808}
-  owner: {fileID: 0}
+  targetTag: 

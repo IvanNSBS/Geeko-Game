@@ -10,6 +10,17 @@ public class Projectile : MonoBehaviour
     private Transform player;
     private Vector2 target;
     private Vector3 direction;
+    private GameObject instantiator;
+
+    public void SetInstantiator(GameObject instantiator)
+    {
+        this.instantiator = instantiator;
+    }
+
+    public GameObject GetInstantiator()
+    {
+        return instantiator;
+    }
 
     void Start()
     {
@@ -31,9 +42,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")))
+        if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")) || other.CompareTag("SpellInteractive"))
         {
-            if(other.CompareTag("Player"))
+            if(other.CompareTag("Player") || other.CompareTag("SpellInteractive"))
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             }

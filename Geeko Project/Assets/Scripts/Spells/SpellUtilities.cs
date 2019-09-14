@@ -124,7 +124,7 @@ public static class SpellUtilities
 
         if (src)
             if (target != src.GetOwner()) { 
-                spell.CastSpell(src.GetOwner(), spawn_pos);
+                spell.CastSpell(src.GetOwner(), null, spawn_pos);
                 return true;
             }
 

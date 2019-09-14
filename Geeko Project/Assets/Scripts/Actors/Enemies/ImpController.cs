@@ -10,9 +10,9 @@ public class ImpController : EnemyController
     [Tooltip("Animation of the enemy")]
     public Animator impAnimator;
 
-    public override void Iddle()
+    public override void Idle()
     {
-        base.Iddle();
+        base.Idle();
         impAnimator.SetBool("isIdle",true);
     }
 

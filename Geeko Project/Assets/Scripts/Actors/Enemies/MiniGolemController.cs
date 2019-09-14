@@ -7,9 +7,9 @@ public class MiniGolemController : EnemyController
 {
     public Animator miniGolemController;
     private bool _damaging;
-    public override void Iddle()
+    public override void Idle()
     {
-        base.Iddle();
+        base.Idle();
         miniGolemController.SetBool("isIdle",true);
     }
     public override void Attack()

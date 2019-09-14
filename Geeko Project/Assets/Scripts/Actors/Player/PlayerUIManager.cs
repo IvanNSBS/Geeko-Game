@@ -33,7 +33,7 @@ public class PlayerUIManager : MonoBehaviour
             if (!m_StatusComponent)
                 Debug.LogWarning("Actor StatusComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
 
-            UpdateHealthBar(); // Update Canvas HealthBar
+            UpdateHealthBar(0); // Update Canvas HealthBar
         }
 
 
@@ -70,7 +70,7 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    public void UpdateHealthBar()
+    public void UpdateHealthBar(float damage)
     {
         if(m_HealthBar)
             m_HealthBar.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth(); // get pct of fill

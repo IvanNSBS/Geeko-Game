@@ -12,21 +12,25 @@ public class StatusComponent : MonoBehaviour
     [SerializeField] private float m_IFrameTime = 0.2f;
     [SerializeField] private float m_HitFlashDuration = 0.2f;
     [SerializeField] private UnityEvent m_OnDeath;
-    [SerializeField] private UnityEvent m_OnTakeDamage;  // Useful/used to update things like UI without Update method
+    [SerializeField] private GameplayStatics.DamageEvent m_OnTakeDamage;  // Useful/used to update things like UI without Update method
     [SerializeField] private UnityEvent m_OnReceiveHeal; // Useful/used to update things like UI without Update method
     [SerializeField] private UnityEvent m_OnSetMaxHealth;// Useful/used to update things like UI without Update method
     [HideInInspector] public bool m_IsInvincible = false;  // used for iFrames. Mobs won't use it ever
     private float m_CurrentHealth;
-    private delegate void m_HealthHandler();
 
     public float GetCurrentHealth() { return m_CurrentHealth; }
     public float GetMaxHealth() { return m_MaxHealth; }
-    public void SetMaxHealth(float newhealth) { m_MaxHealth = newhealth; m_OnSetMaxHealth.Invoke(); }
+    public void SetMaxHealth(float newhealth) {
+        m_MaxHealth = newhealth;
+        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, newhealth);
+        if (m_OnSetMaxHealth != null)
+            m_OnSetMaxHealth.Invoke();
+    }
 
-    public void AddOnTakeDamage(UnityAction action)
+    public void AddOnTakeDamage(UnityAction<float> action)
     {
         if (m_OnTakeDamage == null)
-            m_OnTakeDamage = new UnityEvent();
+            m_OnTakeDamage = new GameplayStatics.DamageEvent();
         m_OnTakeDamage.AddListener(action);
     }
     public void AddOnReceiveHeal(UnityAction action)
@@ -44,9 +48,9 @@ public class StatusComponent : MonoBehaviour
 
     public void AddOnDeath(UnityAction action)
     {
-        if (m_OnSetMaxHealth == null)
-            m_OnSetMaxHealth = new UnityEvent();
-        m_OnSetMaxHealth.AddListener(action);
+        if (m_OnDeath == null)
+            m_OnDeath = new UnityEvent();
+        m_OnDeath.AddListener(action);
     }
 
 
@@ -56,8 +60,8 @@ public class StatusComponent : MonoBehaviour
         {
             m_CurrentHealth -= amount; // reduce your health
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
-            if (m_CurrentHealth <= 0.0f) m_OnDeath.Invoke(); //if the actor is dead, call death event
-            m_OnTakeDamage.Invoke(); // call take damage event
+            if (m_CurrentHealth <= 0.0f && m_OnDeath != null) m_OnDeath.Invoke(); //if the actor is dead, call death event
+            if (m_OnTakeDamage != null) m_OnTakeDamage.Invoke(amount); // call take damage event
 
             StartCoroutine(FlashSprite(m_HitFlashDuration)); // flash the sprite material if it can
             if (m_CanUseIFrames) // if the actor can use i frames
@@ -89,7 +93,8 @@ public class StatusComponent : MonoBehaviour
     public void Heal(float amount) {
         m_CurrentHealth += amount;
         m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
-        m_OnReceiveHeal.Invoke();
+        if(m_OnReceiveHeal != null)
+            m_OnReceiveHeal.Invoke();
     }
 
     //Default function called when the actor is killed.   

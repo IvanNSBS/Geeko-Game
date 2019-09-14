@@ -14,6 +14,7 @@ public class SpellPrefabManager : MonoBehaviour
     [SerializeField] private GameplayStatics.TriggerEvent m_OnTriggerEnter;     // called when a collision happens and collider
                                                                                 // is a trigger
     [SerializeField] private GameplayStatics.SpellEvent m_OnUpdate;
+    [SerializeField] private UnityEvent m_OnDestruction;
     // private List<GameObject> m_CollidingActors = new List<GameObject>();
     private GameObject m_Owner;
     [HideInInspector] public float m_TimeToLive;
@@ -47,6 +48,14 @@ public class SpellPrefabManager : MonoBehaviour
             m_OnUpdate = new GameplayStatics.SpellEvent();
         m_OnUpdate.AddListener(action);
     }
+    public void AddOnDestruction(UnityAction action)
+    {
+        if (m_OnDestruction == null)
+            m_OnDestruction = new UnityEvent();
+        m_OnDestruction.AddListener(action);
+    }
+
+    public void OnDestroy() { if (m_OnDestruction != null) m_OnDestruction.Invoke(); }
 
     public void Update()
     {

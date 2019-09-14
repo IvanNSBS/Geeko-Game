@@ -29,8 +29,10 @@ public class MovementComponent : MonoBehaviour
     public bool SetSprite()
     {
         m_ActorSprite = GetComponent<SpriteRenderer>();
-        if (m_ActorSprite)
+        if (m_ActorSprite) {
+            m_ActorSprite.flipX = false;
             return true;
+        }
         else
             return false;
     }
@@ -65,16 +67,16 @@ public class MovementComponent : MonoBehaviour
         // If actor tried to move right, make sprite look to right
         if (m_ActorSprite && x > 0.0f)
         {
-            m_ActorSprite.flipX = false;
-            if (m_OnFlip != null) // call auxiliary OnFlip Event
+            if (m_OnFlip != null && m_ActorSprite.flipX) // call auxiliar OnFlip Event
                 m_OnFlip.Invoke();
+            m_ActorSprite.flipX = false;
         }
         // If actor tried to move left, make sprite look to right
         else if (m_ActorSprite && x < 0.0f)
         {
-            m_ActorSprite.flipX = true;
-            if (m_OnFlip != null)// call auxiliary OnFlip Event
+            if (m_OnFlip != null && !m_ActorSprite.flipX)// call auxiliar OnFlip Event
                 m_OnFlip.Invoke();
+            m_ActorSprite.flipX = true;
         }
     }
     public void Move(float speed_x, float speed_y)
@@ -96,7 +98,6 @@ public class MovementComponent : MonoBehaviour
             }
 
         }
-
         FlipSprite(speed_x);
     }
 }
