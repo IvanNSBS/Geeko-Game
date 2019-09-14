@@ -42,9 +42,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")))
+        if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")) || other.CompareTag("SpellInteractive"))
         {
-            if(other.CompareTag("Player"))
+            if(other.CompareTag("Player") || other.CompareTag("SpellInteractive"))
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             }

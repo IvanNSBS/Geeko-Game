@@ -9,7 +9,7 @@ public class TravelProjectile : Spell
     public Spell m_SpellToCast;
     public float m_TravelDistance = 10.0f;
     public float m_ProjectileSpeed = 1.0f;
-    public override void CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
+    public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
             Vector3 dir = target == null ? ((Quaternion)spawn_rot * Vector3.right).normalized : (target.transform.position - owner.transform.position).normalized;
@@ -17,7 +17,10 @@ public class TravelProjectile : Spell
             Vector2 speed = new Vector2(m_ProjectileSpeed * dir.x, m_ProjectileSpeed * dir.y);
 
             GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, this, (Vector3)spawn_pos, rot, spell_velocity: speed, tag: "SpellUninteractive");
+            return obj;
         }
+
+        return null;
     }
     public override void OnTick(GameObject obj)
     {
@@ -31,6 +34,10 @@ public class TravelProjectile : Spell
                 m_SpellToCast.CastSpell(obj_owner, null, obj.transform.position);
                 Destroy(obj);
             }
+    }
+    public override void StopConcentration(GameObject owner = null)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override void SpellCollisionEnter(Collision2D target, GameObject src)

@@ -9,7 +9,7 @@ public class BlackHole : Spell
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
+    public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner)
         {
@@ -34,7 +34,13 @@ public class BlackHole : Spell
             obj.GetComponent<SpellPrefabManager>().m_TimeToLive = m_SpellDuration;
             obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.SpellTriggerTick);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
+            return obj;
         }
+        return null;
+    }
+    public override void StopConcentration(GameObject owner = null)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override void OnTick(GameObject obj)

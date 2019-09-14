@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementComponent m_MovementComponent;
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
+    private EffectManagerComponent m_EffectManager;
     private WeaponComponent m_WeaponComponent;
     [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
@@ -55,6 +56,13 @@ public class PlayerController : MonoBehaviour
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
             return new Vector2(vec3.x, vec3.y);
         });
+
+        if (!m_EffectManager)
+        {
+            m_EffectManager = GetComponent<EffectManagerComponent>();
+            if (!m_EffectManager)
+                Debug.LogWarning("Actor EffectManagerComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+        }
     }
 
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
@@ -75,7 +83,7 @@ public class PlayerController : MonoBehaviour
     public void AutoAim()
     {
         Vector3 pos = this.gameObject.transform.position;
-        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 55.0f);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 7.0f);
 
         float min_dist = Mathf.Infinity;
         target = null;
@@ -83,7 +91,8 @@ public class PlayerController : MonoBehaviour
         {
             if (overlap.gameObject.CompareTag("Enemy"))
             {
-                Vector2 hit_pos = GameplayStatics.GetTriggerContactPoint(gameObject);
+                Debug.Log("Object is: " + overlap.gameObject);
+                Vector2 hit_pos = new Vector2(overlap.gameObject.transform.position.x, overlap.gameObject.transform.position.y);
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
                 if (min_dist > sub.magnitude)
                 {
@@ -108,7 +117,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
-        m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime, m_Joystick.Vertical * Time.deltaTime);
+        m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime * m_EffectManager.GetSpeedMult(), m_Joystick.Vertical * Time.deltaTime * m_EffectManager.GetSpeedMult());
 
 
         if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)
@@ -120,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
 
-        if (Input.GetButton("Fire1") && false)
+        if (Input.GetButton("Fire1"))
         {
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
