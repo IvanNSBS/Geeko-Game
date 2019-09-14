@@ -17,7 +17,20 @@ public class SpellPrefabManager : MonoBehaviour
     [SerializeField] private UnityEvent m_OnDestruction;
     // private List<GameObject> m_CollidingActors = new List<GameObject>();
     private GameObject m_Owner;
+    private float m_RemainingTickTime = 0.0f;
+
     [HideInInspector] public float m_TimeToLive;
+    [HideInInspector] public float m_TimeAlive = 0.0f;
+    [HideInInspector] public GameObject m_Target = null;
+    [HideInInspector] public Quaternion m_SpawnRot;
+    [HideInInspector] public bool m_Toggle = false;
+    [HideInInspector] public Vector3? m_TargetInitialPos;
+    [HideInInspector] public float m_TickDelay = 0.0f;
+
+    public void ResetTickLock()
+    {
+        m_RemainingTickTime = m_TickDelay;
+    }
 
     public void SetOwner(GameObject n_owner) { m_Owner = n_owner; }
     public GameObject GetOwner() { return m_Owner; }
@@ -59,8 +72,12 @@ public class SpellPrefabManager : MonoBehaviour
 
     public void Update()
     {
-        if (m_OnUpdate != null)
+        if (m_OnUpdate != null && m_RemainingTickTime == m_TickDelay)
             m_OnUpdate.Invoke(this.gameObject);
+        m_TimeAlive += Time.deltaTime;
+
+        m_RemainingTickTime -= Time.deltaTime;
+        if (m_RemainingTickTime <= 0.0f) ResetTickLock();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

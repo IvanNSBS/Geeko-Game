@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7200059b4e52ac46a1f23372310828e, type: 3}
+  m_Name: MultiStrike
+  m_EditorClassIdentifier: 
+  m_SpellName: MultiStrike
+  m_SpellCooldown: 0
+  m_CastType: 0
+  m_SpellDuration: 0
+  m_SpellCharges: 1
+  m_UseAllAvailableCharges: 0
+  m_SpellImage: {fileID: 21300000, guid: 86c1eca555aba6c4c99df664248bca77, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: e6b372ce9b621be47b2b2b0feb4c8f2e, type: 3}
+  m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
+    type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 205511384356532666, guid: b02230cb30b606c498392fe4d882e780,
+    type: 3}
+  m_Invalid:
+  - Item
+  - SpellUninteractive
+  - Room
+  m_Damage: 10
+  m_ProjectileSpeed: 15
+  m_Delay: 0.08
+  DMG:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null

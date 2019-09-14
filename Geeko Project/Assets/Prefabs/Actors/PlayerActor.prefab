@@ -1805,7 +1805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spells:
-  - m_Spell: {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
+  - m_Spell: {fileID: 11400000, guid: e3785cd09d1de06498a825c2e980c34f, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
@@ -1814,7 +1814,7 @@ MonoBehaviour:
     m_SpawnParent: {fileID: 0}
     m_InstantiatedSpell: {fileID: 0}
     m_IsConcentrating: 0
-  - m_Spell: {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
+  - m_Spell: {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
