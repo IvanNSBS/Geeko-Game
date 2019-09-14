@@ -20,7 +20,7 @@ public class LootManager : MonoBehaviour
         if(m_dropChance > dropChance)
         {
             Debug.Log("No Loot for me");
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
             return;
         }
         else
@@ -37,7 +37,7 @@ public class LootManager : MonoBehaviour
                 if (randomValue <= lootTable[j].dropRate)
                 {
                     Instantiate(lootTable[j].item, transform.position, Quaternion.identity);
-                    Destroy(this.gameObject);
+                    //Destroy(this.gameObject);
                     return;
                 }
                 randomValue -= lootTable[j].dropRate;
