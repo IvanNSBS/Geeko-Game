@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class WeaponComponent : MonoBehaviour
@@ -12,6 +14,8 @@ public class WeaponComponent : MonoBehaviour
     
     private Func<Vector2> _determineTarget;
     private float _lastShot = 0;
+    [NotNull] private List<Func<bool>> shootingFuncs = new List<Func<bool>>();
+    [NotNull] private List<int> funcsToRemove = new List<int>();
 
     public void SetTargetingFunction(Func<Vector2> fun)
     {
@@ -33,64 +37,95 @@ public class WeaponComponent : MonoBehaviour
         return vec2.normalized * speed;
     }
 
-    private bool doSpiral = false;
-    private float spiralLastShotTime;
-    private Vector2 spiralStartingDirection;
-    private Quaternion spiralRotation;
-    private Quaternion spiralRotationIncrement;
-    private int spiralShotsFired;
-    private int spiralNumberOfShots;
-    private int spiralLoops;
-    private float spiralShootInterval;
+    public void GenericStream(
+        TargetingManager tm,
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var shotsFired = 0;
+        var lastShotTime = Time.time;
+
+        shootingFuncs.Add((() =>
+        {
+            while (Time.time > lastShotTime + timeBetweenShots && shotsFired < numberOfShots)
+            {
+                lastShotTime += timeBetweenShots;
+                ++shotsFired;
+                var dir = tm.Target().normalized;
+                var obj = Instantiate(bulletPrefab, firePoint.position, GameplayStatics.GetRotationFromDir(dir));
+                var bullet = obj.GetComponent<Bullet>();
+                bullet.rb.velocity = dir * bulletSpeed;
+                bullet.targetTag = targetTag;
+            }
+
+            return shotsFired >= numberOfShots;
+        }));
+    }
+
+    public void StreamFollowingPlayer(
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed,
+        float offsetDegrees = 0.0f
+    )
+    {
+        var tm = new TargetingManager().InitFollowPlayer(firePoint).Offset(offsetDegrees);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+
+    public void Stream(
+        Vector2 startingDirection,
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager().InitStartingDirection(startingDirection);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
 
     public void Spiral(
         Vector2 startingDirection,
         int numberOfShotsPerLoop,
         float timeToSpiralOnce,
-        int loops
+        int loops,
+        float bulletSpeed
         )
     {
-        doSpiral = true;
-        spiralLastShotTime = Time.time;
-        spiralStartingDirection = startingDirection;
-        spiralRotation = Quaternion.identity;
-        var angle = 360 / ((float) numberOfShotsPerLoop / loops);
-        spiralRotationIncrement = Quaternion.Euler(0, 0, angle);
-        spiralShotsFired = 0;
-        spiralNumberOfShots = numberOfShotsPerLoop * loops;
-        spiralShootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
+        var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
+        var shootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
+        var tm = new TargetingManager().InitStartingDirection(startingDirection).Spiral(angle);
+        GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, bulletSpeed);
     }
-
-    private void SpiralShoot()
-    {
-        if (doSpiral)
+    
+    private void RunShootingFuncs() {
+        var i = 0;
+        shootingFuncs.ForEach(func =>
         {
-            if (spiralShotsFired > spiralNumberOfShots)
+            var shouldRemove = func();
+            if (shouldRemove)
             {
-                doSpiral = false;
-                return;
+                funcsToRemove.Add(i);
+                --i;
             }
-
-            while (Time.time > spiralLastShotTime + spiralShootInterval && spiralShotsFired <= spiralNumberOfShots)
-            {
-                ++spiralShotsFired;
-                spiralLastShotTime += spiralShootInterval;
-                var direction = (spiralRotation * spiralStartingDirection).normalized;
-                var obj = Instantiate(bulletPrefab, firePoint.position, GameplayStatics.GetRotationFromDir(direction));
-                spiralRotation *= spiralRotationIncrement;
-                var bullet = obj.GetComponent<Bullet>();
-                bullet.rb.velocity = direction * speed;
-                bullet.targetTag = this.targetTag;
-            }
-        }
+            ++i;
+        });
+        funcsToRemove.ForEach(index =>
+        {
+            shootingFuncs.RemoveAt(index);
+        });
+        funcsToRemove.Clear();
     }
+    
 
     private void Update()
     {
-        SpiralShoot();
+        RunShootingFuncs();
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         var vel = DetermineVelocity();
         var obj = Instantiate(bulletPrefab, firePoint.position, GameplayStatics.GetRotationFromDir(vel));

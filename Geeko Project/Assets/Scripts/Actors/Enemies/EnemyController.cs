@@ -705,6 +705,7 @@ public class EnemyController : MonoBehaviour
         {
             Vector3 centerBox = GetComponent<BoxCollider2D>().offset;
             aux = Instantiate(projectile,transform.TransformPoint(centerBox), transform.rotation);
+            aux.GetComponent<Projectile>().SetInstantiator(this.gameObject);
             _timeBtwShots = timeBtwShots;
         }
         else
@@ -780,16 +781,17 @@ public class EnemyController : MonoBehaviour
             {
                //projectile.transform.localScale = Vector3.one*2; //demonstration
                //do something bigger
-               Instantiate(projectile, transform.position, transform.rotation);
+               var foo = Instantiate(projectile, transform.position, transform.rotation);
+               foo.GetComponent<Projectile>().SetInstantiator(gameObject);
             }
             StopMovement();
             Destroy(this.GetComponent<Rigidbody2D>());
             Destroy(GetComponent<BoxCollider2D>());
             
             SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
-            aux.DOColor(new Color(255,255,255,0),5);
+            Tween tween = aux.DOColor(new Color(255,255,255,0),5);
             
-            StartCoroutine(DestroyEnemy(2.5f)); //default time
+            StartCoroutine(DestroyEnemy(2.5f,tween)); //default time
             Debug.Log("enemy killed");
             _dead = true;
         }
@@ -806,9 +808,10 @@ public class EnemyController : MonoBehaviour
     }
     
     
-    public IEnumerator DestroyEnemy(float seconds)
+    public IEnumerator DestroyEnemy(float seconds, Tween tween)
     {
         yield return new WaitForSeconds(seconds);
+        tween.Kill();
         Destroy(gameObject);
     }
 
