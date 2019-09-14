@@ -338,7 +338,8 @@ public class MinotaurController : EnemyController
        // weaponComponent.AttemptToShoot();
         var vec3 =  projectile.transform.position - pokePosition.position;
         var vec2 = new Vector2(vec3.x, vec3.y);
-        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops);
+        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, weaponComponent.speed);
+        Debug.Log("Spiral");
     }
 
 
