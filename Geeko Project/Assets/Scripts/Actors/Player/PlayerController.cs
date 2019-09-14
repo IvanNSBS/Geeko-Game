@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
     public void FlipHand()
     {
-        if (m_MovementComponent.GetSprite().flipX)
+        if (!m_MovementComponent.GetSprite().flipX)
         {
             m_PlayerHand.transform.localPosition = new Vector3(0.66f, -1.303f, 0.0f);
             m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 90.0f);
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && false)
         {
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
