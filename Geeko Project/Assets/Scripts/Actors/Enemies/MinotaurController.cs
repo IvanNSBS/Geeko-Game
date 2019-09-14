@@ -334,7 +334,7 @@ public class MinotaurController : EnemyController
 
     private void SpiralPattern(int numberOfShotsPerLoop,float timeToSpiralOnce, int loops)
     {
-        var weaponComponent = projectile.GetComponent<WeaponComponent>();
+        var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
        // weaponComponent.AttemptToShoot();
         var vec3 =  projectile.transform.position - pokePosition.position;
         var vec2 = new Vector2(vec3.x, vec3.y);
