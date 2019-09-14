@@ -55,10 +55,13 @@ public static class GameplayStatics
 
     public static void AddTimer(GameObject obj, float ttl, float delay, UnityAction action)
     {
-        if (obj) {
+        if (obj)
+        {
             Timer timer = obj.AddComponent<Timer>();
             timer.InitTimer(ttl, delay, action);
         }
+        else
+            Debug.LogWarning("Invalid GameObject to attach timer to");
     }
 
     public static IEnumerator Delay(
