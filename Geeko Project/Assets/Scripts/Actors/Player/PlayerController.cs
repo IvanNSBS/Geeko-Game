@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
     [SerializeField] private Transform m_FirePoint;
+
+    [HideInInspector] public GameObject target;
+
     void Start()
     {
         if (!m_MovementComponent)
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 55.0f);
 
         float min_dist = Mathf.Infinity;
-        GameObject last_obj = null;
+        target = null;
         foreach(Collider2D overlap in overlaps)
         {
             if (overlap.gameObject.CompareTag("Enemy"))
@@ -84,20 +87,21 @@ public class PlayerController : MonoBehaviour
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
                 if (min_dist > sub.magnitude)
                 {
-                    last_obj = overlap.gameObject;
+                    target = overlap.gameObject;
                     min_dist = sub.magnitude;
                 }
             }
         }
 
-        if(last_obj != null)
+        if(target != null)
         {
-            Vector2 dir = (last_obj.transform.position - pos).normalized;
+            Vector2 dir = (target.transform.position - pos).normalized;
             m_MovementComponent.FlipSprite(dir.x);
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
         }
 
+        m_SpellComponent.SetTarget(target);
     }
 
     // Update is called once per frame

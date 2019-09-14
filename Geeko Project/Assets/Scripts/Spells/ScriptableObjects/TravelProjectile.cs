@@ -9,10 +9,10 @@ public class TravelProjectile : Spell
     public Spell m_SpellToCast;
     public float m_TravelDistance = 10.0f;
     public float m_ProjectileSpeed = 1.0f;
-    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
+    public override void CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
-            Vector3 dir = ((Quaternion)spawn_rot * Vector3.right).normalized;
+            Vector3 dir = target == null ? ((Quaternion)spawn_rot * Vector3.right).normalized : (target.transform.position - owner.transform.position).normalized;
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             Vector2 speed = new Vector2(m_ProjectileSpeed * dir.x, m_ProjectileSpeed * dir.y);
 
@@ -28,8 +28,7 @@ public class TravelProjectile : Spell
         if ((obj.transform.position - obj_owner.transform.position).magnitude > m_TravelDistance)
             if (m_SpellToCast)
             {
-                Debug.Log("Casting spell!");
-                m_SpellToCast.CastSpell(obj_owner, obj.transform.position);
+                m_SpellToCast.CastSpell(obj_owner, null, obj.transform.position);
                 Destroy(obj);
             }
     }

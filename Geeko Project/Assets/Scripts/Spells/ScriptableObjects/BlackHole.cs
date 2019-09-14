@@ -9,7 +9,7 @@ public class BlackHole : Spell
     [SerializeField] private float m_PullStrength= 50.0f;
     [SerializeField] private float m_Radius = 5.0f;
     [SerializeField] private Material m_Material;
-    public override void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
+    public override void CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner)
         {

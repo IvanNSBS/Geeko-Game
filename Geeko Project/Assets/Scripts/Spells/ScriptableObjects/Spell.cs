@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum SpellCastType { FireAndForget, Concentration }
 public abstract class Spell : ScriptableObject
 {
     /*
@@ -9,6 +11,7 @@ public abstract class Spell : ScriptableObject
      */
     public string m_SpellName = "New Spell";
     public float m_SpellCooldown = 0.0f;
+    public SpellCastType m_CastType = SpellCastType.FireAndForget;
 
     // how much time the instantiated prefab shoud live. If the default
     // duration is set to 0, it won't be destroyed with a timer
@@ -25,7 +28,7 @@ public abstract class Spell : ScriptableObject
 
     public List<string> m_Invalid = SpellUtilities.invalid; // List of tags of entities
                                                             // that can't interact with the spell
-    public abstract void CastSpell(GameObject owner, Vector3? spawn_pos = null, Quaternion? spawn_rot = null); // What happens when the player casts such 
+    public abstract void CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null); // What happens when the player casts such 
     public abstract void OnTick(GameObject obj); // Function to be called on the instantiated prefab Update()
     public abstract void SpellCollisionEnter(Collision2D target, GameObject src);
     public abstract void SpellCollisionTick(Collision2D target, GameObject src);
@@ -55,14 +58,17 @@ public class SpellData
 
     public void SetOwner(GameObject obj) { m_Owner = obj; }
     public float GetTotalCD() { return m_Spell.m_SpellCooldown; }
-    public bool CastSpell()
+    public bool CastSpell(GameObject target = null)
     {
+        GameObject actual_target = m_Spell.m_CastType == SpellCastType.FireAndForget ? target : m_Owner;
+        string log = actual_target == target ? "Target is: " + target : "Target is: Owner";
+        Debug.Log(log);
         //if the spell is not on CD or it has charges
         if (!m_IsSpellOnCD || m_RemainingCharges > 0)
         {
             // TODO: Saving owner on ScriptableObject is bad, since it's static!
             // m_Spell.m_SpellOwner = m_Owner; // guarantee the owner is set
-            m_Spell.CastSpell(m_Owner, m_SpawnPoint.position, m_SpawnParent.rotation);
+            m_Spell.CastSpell(m_Owner, actual_target, m_SpawnPoint.position, m_SpawnParent.rotation);
 
             m_RemainingCharges--;
             // only update cooldown if it's not already on cooldown

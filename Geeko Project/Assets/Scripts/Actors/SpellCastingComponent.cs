@@ -8,6 +8,10 @@ public class SpellCastingComponent : MonoBehaviour
     [SerializeField] private List<SpellData> m_Spells = new List<SpellData>();
     [SerializeField] Transform m_SpawnPoint = null;
     [SerializeField] Transform m_SpawnParent = null;
+
+
+    private GameObject m_Target = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +20,8 @@ public class SpellCastingComponent : MonoBehaviour
         foreach(SpellData spell in m_Spells)
             spell.StartSpellData(this.gameObject, m_SpawnPoint, m_SpawnParent);
     }
+
+    public void SetTarget(GameObject target) { m_Target = target; }
 
     public SpellData GetSpell(int idx) {
         if (m_Spells.Count > idx && idx >= 0) {
@@ -27,7 +33,7 @@ public class SpellCastingComponent : MonoBehaviour
     public void CastSpell(int idx)
     {
         if (GetSpell(idx) != null){
-            GetSpell(idx).CastSpell();
+            GetSpell(idx).CastSpell(m_Target);
         }
     }
 
