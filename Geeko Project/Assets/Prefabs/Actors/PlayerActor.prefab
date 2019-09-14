@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 184.80064
-    y: 866.85583
-    width: 261.13696
-    height: 72.72766
+    x: 204.88724
+    y: 781.87164
+    width: 289.5208
+    height: 65.597595
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 184.62653
-    y: 69.39801
+    x: 167.09589
+    y: 31.152966
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -394,8 +394,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 105.74862
-    y: 37.441032
+    x: 106.40598
+    y: 31.787579
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spells:
-  - m_Spell: {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
+  - m_Spell: {fileID: 11400000, guid: e3785cd09d1de06498a825c2e980c34f, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
@@ -1380,7 +1380,7 @@ MonoBehaviour:
     m_SpawnParent: {fileID: 0}
     m_InstantiatedSpell: {fileID: 0}
     m_IsConcentrating: 0
-  - m_Spell: {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
+  - m_Spell: {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_Owner: {fileID: 0}
@@ -1407,6 +1407,18 @@ MonoBehaviour:
   m_Joystick: {fileID: 355273086938723280}
   m_FirePoint: {fileID: 8668919136357152478}
   target: {fileID: 0}
+--- !u!114 &5292853927084466578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880589383016503992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bfc39a773a0a84983170ad2ee2417e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6454055631467675495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1431,18 +1443,6 @@ MonoBehaviour:
   m_Spell_2_CD: {fileID: 4300401002133867518}
   m_Spell_2_CDtext: {fileID: 356256635717184945}
   m_Spell_2_Charges: {fileID: 5554366878791735817}
---- !u!114 &5292853927084466578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5880589383016503992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1bfc39a773a0a84983170ad2ee2417e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6442160030235281857
 GameObject:
   m_ObjectHideFlags: 0

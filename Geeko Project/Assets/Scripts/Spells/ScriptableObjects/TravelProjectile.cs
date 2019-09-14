@@ -16,7 +16,7 @@ public class TravelProjectile : Spell
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             Vector2 speed = new Vector2(m_ProjectileSpeed * dir.x, m_ProjectileSpeed * dir.y);
 
-            GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, this, (Vector3)spawn_pos, rot, spell_velocity: speed, tag: "SpellUninteractive");
+            GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, target, this, (Vector3)spawn_pos, rot, spell_velocity: speed, tag: "SpellUninteractive");
             return obj;
         }
 

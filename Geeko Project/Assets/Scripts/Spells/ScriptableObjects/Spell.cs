@@ -16,7 +16,8 @@ public abstract class Spell : ScriptableObject
     // how much time the instantiated prefab shoud live. If the default
     // duration is set to 0, it won't be destroyed with a timer
     public float m_SpellDuration = 0.0f;
-    public int m_SpellCharges = 1; 
+    public int m_SpellCharges = 1;
+    public bool m_UseAllAvailableCharges = false;
     public Sprite m_SpellImage;  // Spell Icon image
     public Sprite m_BorderImage; // Border of the spell icon
     public GameObject m_Prefab;  // SpellPrefab
@@ -69,7 +70,7 @@ public class SpellData
     {
         GameObject actual_target = m_Spell.m_CastType == SpellCastType.FireAndForget ? target : m_Owner;
         //if the spell is not on CD or it has charges
-        if ((!m_IsSpellOnCD || m_RemainingCharges > 0) && !m_IsConcentrating)
+        if ((!m_IsSpellOnCD || m_RemainingCharges > 0) && !m_IsConcentrating && !m_Spell.m_UseAllAvailableCharges)
         {
             m_IsConcentrating = m_Spell.m_CastType == SpellCastType.Concentration;
             m_InstantiatedSpell = m_Spell.CastSpell(m_Owner, actual_target, m_SpawnPoint.position, m_SpawnParent.rotation);
@@ -80,6 +81,24 @@ public class SpellData
             if (!m_IsSpellOnCD)
                 m_RemainingCD = m_Spell.m_SpellCooldown;
             m_IsSpellOnCD = true;
+
+            return true;
+        }
+        else if (m_Spell.m_UseAllAvailableCharges)
+        {
+            m_IsConcentrating = m_Spell.m_CastType == SpellCastType.Concentration;
+            m_RemainingCD = m_Spell.m_SpellCooldown;
+            m_IsSpellOnCD = true;
+
+            float delay = 0.05f;
+            float ttl = delay * m_RemainingCharges*1.5f;
+            GameplayStatics.AddTimer(m_Owner, ttl, delay, () => {
+                if(m_RemainingCharges > 0)
+                {
+                    m_InstantiatedSpell = m_Spell.CastSpell(m_Owner, actual_target, m_SpawnPoint.position, m_SpawnParent.rotation);
+                    m_RemainingCharges--;
+                }
+            });
 
             return true;
         }

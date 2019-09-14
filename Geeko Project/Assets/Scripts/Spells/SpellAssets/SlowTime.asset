@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 436516ba02951954f8ba38d06aa26a8c, type: 3}
-  m_Name: ManaShield
+  m_Script: {fileID: 11500000, guid: 8bb3edd9931816842b64b91ca77f231d, type: 3}
+  m_Name: SlowTime
   m_EditorClassIdentifier: 
-  m_SpellName: Mana Shield
+  m_SpellName: Slow Time
   m_SpellCooldown: 25
   m_CastType: 1
-  m_SpellDuration: 15
+  m_SpellDuration: 10
   m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
-  m_SpellImage: {fileID: 21300000, guid: 37c361e5785937449a6bf548f44d2c08, type: 3}
-  m_BorderImage: {fileID: 21300000, guid: ed16291e2dc7c444f90be509254c93fe, type: 3}
+  m_SpellImage: {fileID: 21300000, guid: 5517e446b80f4c141890079e626592bb, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
   m_Prefab: {fileID: 6458069453319743111, guid: a3e74f2f40cd6c749ba6cc9ea20de48e,
     type: 3}
   m_SpellSound: {fileID: 0}
@@ -28,8 +28,4 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_ShieldHP: 60
-  m_Radius: 1.5
-  m_DmgMitigation: 0.7
-  m_SlowAmount: 0.4
-  m_Material: {fileID: 2100000, guid: 64109fa4944de4148b922313e9a31a66, type: 2}
+  slow_amount: 0.9

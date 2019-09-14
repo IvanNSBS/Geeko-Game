@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
         {
             if (overlap.gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("Object is: " + overlap.gameObject);
                 Vector2 hit_pos = new Vector2(overlap.gameObject.transform.position.x, overlap.gameObject.transform.position.y);
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
                 if (min_dist > sub.magnitude)
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && false)
         {
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
