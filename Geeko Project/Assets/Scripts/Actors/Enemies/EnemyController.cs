@@ -789,9 +789,9 @@ public class EnemyController : MonoBehaviour
             Destroy(GetComponent<BoxCollider2D>());
             
             SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
-            aux.DOColor(new Color(255,255,255,0),5);
+            Tween tween = aux.DOColor(new Color(255,255,255,0),5);
             
-            StartCoroutine(DestroyEnemy(2.5f)); //default time
+            StartCoroutine(DestroyEnemy(2.5f,tween)); //default time
             Debug.Log("enemy killed");
             _dead = true;
         }
@@ -808,9 +808,10 @@ public class EnemyController : MonoBehaviour
     }
     
     
-    public IEnumerator DestroyEnemy(float seconds)
+    public IEnumerator DestroyEnemy(float seconds, Tween tween)
     {
         yield return new WaitForSeconds(seconds);
+        tween.Kill();
         Destroy(gameObject);
     }
 
