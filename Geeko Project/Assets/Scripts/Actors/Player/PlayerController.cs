@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private MovementComponent m_MovementComponent;
     private StatusComponent m_StatusComponent;
     private SpellCastingComponent m_SpellComponent;
+    private EffectManagerComponent m_EffectManager;
     private WeaponComponent m_WeaponComponent;
     [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
@@ -55,6 +56,13 @@ public class PlayerController : MonoBehaviour
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
             return new Vector2(vec3.x, vec3.y);
         });
+
+        if (!m_EffectManager)
+        {
+            m_EffectManager = GetComponent<EffectManagerComponent>();
+            if (!m_EffectManager)
+                Debug.LogWarning("Actor EffectManagerComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+        }
     }
 
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
@@ -109,7 +117,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime, Input.GetAxis("Vertical")*Time.deltaTime);
-        m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime, m_Joystick.Vertical * Time.deltaTime);
+        m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime * m_EffectManager.GetSpeedMult(), m_Joystick.Vertical * Time.deltaTime * m_EffectManager.GetSpeedMult());
 
 
         if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)

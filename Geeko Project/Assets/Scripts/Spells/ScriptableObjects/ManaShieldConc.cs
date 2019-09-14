@@ -9,6 +9,7 @@ public class ManaShieldConc : Spell
     [SerializeField] private float m_ShieldHP = 20.0f;
     [SerializeField] private float m_Radius = 3.0f;
     [SerializeField] private float m_DmgMitigation = 0.7f;
+    [SerializeField] private float m_SlowAmount = 1.0f;
     [SerializeField] private Material m_Material;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
@@ -25,19 +26,24 @@ public class ManaShieldConc : Spell
             obj.GetComponent<CircleCollider2D>().isTrigger = true;
             obj.transform.localScale *= (2*m_Radius);
             CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
-            Vector3 pos = circle.bounds.center + new Vector3(0, 0, 1);
+            Vector3 pos = circle.bounds.center + new Vector3(0, 0, -15);
             obj.transform.position = pos;
             // GameplayStatics.AddQuad(obj, m_Material);
 
             if (m_Material)
                 obj.GetComponent<MeshRenderer>().material = m_Material;
 
-            owner.GetComponent<MovementComponent>().SetMoveSpeed(12);
+            if (owner.GetComponent<EffectManagerComponent>())
+            {
+                Debug.Log("Setting it");
+                owner.GetComponent<EffectManagerComponent>().AddToSpeedMult(-m_SlowAmount);
+            }
 
             obj.GetComponent<SpellPrefabManager>().m_TimeToLive = m_SpellDuration;
             obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.SpellTriggerTick);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
-            obj.GetComponent<SpellPrefabManager>().AddOnDestruction( () => owner.GetComponent<MovementComponent>().SetMoveSpeed(25));
+            obj.GetComponent<SpellPrefabManager>().AddOnDestruction( () => { owner.GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SlowAmount); });
+
             StatusComponent status = obj.AddComponent<StatusComponent>() as StatusComponent;
             status.SetMaxHealth(m_ShieldHP);
             status.Heal(m_ShieldHP);
@@ -52,7 +58,7 @@ public class ManaShieldConc : Spell
     public override void StopConcentration(GameObject spell = null)
     {
         if (spell) {
-            spell.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<MovementComponent>().SetMoveSpeed(25);
+            spell.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SlowAmount);
             GameObject.Destroy(spell);
         }
     }
@@ -60,7 +66,7 @@ public class ManaShieldConc : Spell
     public override void OnTick(GameObject obj)
     {
         CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
-        Vector3 pos = circle.bounds.center + new Vector3(0,0,-8);
+        Vector3 pos = circle.bounds.center + new Vector3(0,0,-15);
         obj.transform.position = pos;
         SpellUtilities.UpdateSpellTTL(obj, this);
     }
