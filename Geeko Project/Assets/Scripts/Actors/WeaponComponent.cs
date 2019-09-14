@@ -81,6 +81,7 @@ public class WeaponComponent : MonoBehaviour
                 var bullet = obj.GetComponent<Bullet>();
                 bullet.rb.velocity = direction * speed;
                 bullet.targetTag = this.targetTag;
+                bullet.SetInstantiator(gameObject);
             }
         }
     }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 'Minotaur Attack Spin '
+  m_Name: Minotaur Attack Spin Init
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -27,24 +27,6 @@ AnimationClip:
         type: 3}
     - time: 0.16666667
       value: {fileID: -8239091726997520733, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.25
-      value: {fileID: 1263595231250603967, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.33333334
-      value: {fileID: -616424306856935608, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.41666666
-      value: {fileID: 8378241899181544251, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.5
-      value: {fileID: -6140590473612720252, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.5833333
-      value: {fileID: -5605965328150943055, guid: 68f2789652ff2bc4c9968957a57edafb,
-        type: 3}
-    - time: 0.6666667
-      value: {fileID: -5768485365255475859, guid: 68f2789652ff2bc4c9968957a57edafb,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -68,18 +50,12 @@ AnimationClip:
     - {fileID: -6140590473612720252, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
     - {fileID: -1839828876958094298, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
     - {fileID: -8239091726997520733, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: 1263595231250603967, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: -616424306856935608, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: 8378241899181544251, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: -6140590473612720252, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: -5605965328150943055, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
-    - {fileID: -5768485365255475859, guid: 68f2789652ff2bc4c9968957a57edafb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,11 +74,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.75
-    functionName: IdlingAfterAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

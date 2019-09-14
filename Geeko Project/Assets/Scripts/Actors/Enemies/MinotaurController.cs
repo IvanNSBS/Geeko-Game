@@ -34,6 +34,7 @@ public class MinotaurController : EnemyController
     public float timeBtwAxeAttack;
     public float timeBtwPokeAttack;
     public float timeBtwFloorHitAttack;
+    public float timeSpinning;
     
     private float _rage = 0;
     private bool _attacking=false;
@@ -44,11 +45,14 @@ public class MinotaurController : EnemyController
     private float _timeBtwAxeAttack=0;
     private float _timeBtwPokeAttack=0;
     private float _timeBtwFloorHitAttack;
+    private float _timeBtwSpinAttack;
     private bool _waitingIdle;
     private bool _floorHit;
     private bool _changeState;
+    private bool _attackingSpin;
     
-    
+
+
     /*
      *To-do after implement the minotaur states:
      * adjust minotaur children on flip and make it shoot not in opposite direction of the player
@@ -247,7 +251,31 @@ public class MinotaurController : EnemyController
 
     private void Spin()
     {
-        throw new System.NotImplementedException();
+        if (_timeBtwSpinAttack <= 0)
+        {
+            if (!_attackingSpin)
+            {
+                //animations things;
+                minotaurAnimator.SetTrigger("isAttackingSpin");
+                minotaurAnimator.SetBool("isIdle", false);
+                
+                //hitbox??
+                
+                ShootPattern();
+
+                _attackingSpin = true;
+                _timeBtwSpinAttack = timeSpinning;
+            }
+            else
+            {
+                _attackingSpin = false;
+                setIdle(true);
+            }
+        }
+        else
+        {
+            _timeBtwSpinAttack -= Time.deltaTime;
+        }
     }
 
     private void FloorHit()
@@ -283,16 +311,19 @@ public class MinotaurController : EnemyController
         switch (_curAttack)
         {
             case MinotaurAttack.FloorHit:
-                SpiralPattern();
+                SpiralPattern(36,0,1);
+                Invoke("DeactivateWeapon",0+0.1f);
                 break;
             case MinotaurAttack.Spin:
-                SpiralPattern();
+                SpiralPattern(40,timeSpinning,2);
+                Invoke("DeactivateWeapon",timeSpinning+0.1f);
                 break;
             case MinotaurAttack.Dash:
-                SpiralPattern();
+                SpiralPattern(36,2,1);
+                Invoke("DeactivateWeapon",2+0.1f);
                 break;
         }
-        Invoke("DeactivateWeapon",2.1f);
+        
     }
 
     private void DeactivateWeapon()
@@ -301,13 +332,13 @@ public class MinotaurController : EnemyController
         minotaurAnimator.SetBool("isHittingFloor",false);
     }
 
-    private void SpiralPattern()
+    private void SpiralPattern(int numberOfShotsPerLoop,float timeToSpiralOnce, int loops)
     {
         var weaponComponent = projectile.GetComponent<WeaponComponent>();
        // weaponComponent.AttemptToShoot();
         var vec3 =  projectile.transform.position - pokePosition.position;
         var vec2 = new Vector2(vec3.x, vec3.y);
-        weaponComponent.Spiral(vec2,36,2,1);
+        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops);
     }
 
 
@@ -357,6 +388,11 @@ public class MinotaurController : EnemyController
     {
        // Debug.Log("idling after attack: "+minotaurAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         minotaurAnimator.SetBool("isIdle",true);
+    }
+
+    public void OnFlip()
+    {
+        Debug.Log("Funcionou?");
     }
 
     public override void MoveEnemy(Vector3 dir, float speed)

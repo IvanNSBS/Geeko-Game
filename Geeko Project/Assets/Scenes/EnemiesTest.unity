@@ -961,6 +961,11 @@ PrefabInstance:
       propertyPath: rage.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2676660101553497855, guid: 8bf3bc439d8ca1f4da7d10b748afa872,
+        type: 3}
+      propertyPath: timeSpinning
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bf3bc439d8ca1f4da7d10b748afa872, type: 3}
 --- !u!1001 &6964215095273732972

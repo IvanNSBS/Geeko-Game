@@ -705,6 +705,7 @@ public class EnemyController : MonoBehaviour
         {
             Vector3 centerBox = GetComponent<BoxCollider2D>().offset;
             aux = Instantiate(projectile,transform.TransformPoint(centerBox), transform.rotation);
+            aux.GetComponent<Projectile>().SetInstantiator(this.gameObject);
             _timeBtwShots = timeBtwShots;
         }
         else
@@ -780,7 +781,8 @@ public class EnemyController : MonoBehaviour
             {
                //projectile.transform.localScale = Vector3.one*2; //demonstration
                //do something bigger
-               Instantiate(projectile, transform.position, transform.rotation);
+               var foo = Instantiate(projectile, transform.position, transform.rotation);
+               foo.GetComponent<Projectile>().SetInstantiator(gameObject);
             }
             StopMovement();
             Destroy(this.GetComponent<Rigidbody2D>());
