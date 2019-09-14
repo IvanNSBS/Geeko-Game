@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 181.1246
-    y: 884.44934
-    width: 255.94244
-    height: 74.203674
+    x: 184.80064
+    y: 866.85583
+    width: 261.13696
+    height: 72.72766
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 183.03221
-    y: 71.46356
+    x: 184.62653
+    y: 69.39801
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -394,8 +394,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 105.62831
-    y: 38.61137
+    x: 105.74862
+    y: 37.441032
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -834,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 733.6, y: -324.7}
+  m_AnchoredPosition: {x: 661.1, y: -340}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3212953832774687019
@@ -1378,6 +1378,8 @@ MonoBehaviour:
     m_RemainingCharges: 0
     m_SpawnPoint: {fileID: 0}
     m_SpawnParent: {fileID: 0}
+    m_InstantiatedSpell: {fileID: 0}
+    m_IsConcentrating: 0
   - m_Spell: {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
@@ -1385,6 +1387,8 @@ MonoBehaviour:
     m_RemainingCharges: 0
     m_SpawnPoint: {fileID: 0}
     m_SpawnParent: {fileID: 0}
+    m_InstantiatedSpell: {fileID: 0}
+    m_IsConcentrating: 0
   m_SpawnPoint: {fileID: 8668919136357152478}
   m_SpawnParent: {fileID: 6055012828228136824}
 --- !u!114 &1711620568955538631
@@ -2405,7 +2409,7 @@ PrefabInstance:
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
@@ -2430,7 +2434,7 @@ PrefabInstance:
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_OnReceiveHeal.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362230, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}

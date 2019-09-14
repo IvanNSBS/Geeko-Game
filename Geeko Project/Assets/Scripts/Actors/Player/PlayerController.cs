@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
     public void AutoAim()
     {
         Vector3 pos = this.gameObject.transform.position;
-        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 55.0f);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 7.0f);
 
         float min_dist = Mathf.Infinity;
         target = null;
@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour
         {
             if (overlap.gameObject.CompareTag("Enemy"))
             {
-                Vector2 hit_pos = GameplayStatics.GetTriggerContactPoint(gameObject);
+                Debug.Log("Object is: " + overlap.gameObject);
+                Vector2 hit_pos = new Vector2(overlap.gameObject.transform.position.x, overlap.gameObject.transform.position.y);
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
                 if (min_dist > sub.magnitude)
                 {
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
 
-        if (Input.GetButton("Fire1") && false)
+        if (Input.GetButton("Fire1"))
         {
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;

@@ -48,6 +48,8 @@ internal class Timer : MonoBehaviour
 public static class GameplayStatics
 {
     public enum DefaultColliders { Box, Circle, Capsulse, Polygon };
+    [System.Serializable]
+    public class DamageEvent : UnityEvent<float> { }   // Damage Event layout
     public class CollisionEvent : UnityEvent<Collision2D, GameObject> { }   // Collision Event layout
     public class TriggerEvent : UnityEvent<Collider2D, GameObject> { }      // Trigger Event layout
     public class SpellEvent : UnityEvent<GameObject> { }    // SpellEvent Layout. 
