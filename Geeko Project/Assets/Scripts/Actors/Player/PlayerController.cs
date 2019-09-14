@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         {
             if (overlap.gameObject.CompareTag("Enemy"))
             {
-                Debug.Log("Object is: " + overlap.gameObject);
+               // Debug.Log("Object is: " + overlap.gameObject);
                 Vector2 hit_pos = new Vector2(overlap.gameObject.transform.position.x, overlap.gameObject.transform.position.y);
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
                 if (min_dist > sub.magnitude)
@@ -134,13 +134,18 @@ public class PlayerController : MonoBehaviour
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
             var vec2 = new Vector2(vec3.x, vec3.y);
-            var tm = new TargetingManager()
+           //  m_WeaponComponent.Spiral(vec2, 36, 2, 1, m_WeaponComponent.speed);
+           /*
+             var tm = new TargetingManager()
                 .InitStartingDirection(vec2)
                 .RandomizeGauss(5)
                 .Spiral(2)
                 .Sine(20, 20)
                 .Offset(180);
             m_WeaponComponent.GenericStream(tm, 100, 0.5f, m_WeaponComponent.speed);
+            */
+            
         }
+         
     }
 }
