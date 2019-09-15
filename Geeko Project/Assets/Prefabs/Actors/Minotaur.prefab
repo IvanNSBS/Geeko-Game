@@ -164,6 +164,9 @@ MonoBehaviour:
   timeBtwPokeAttack: 0.5
   timeBtwFloorHitAttack: 0.5
   timeSpinning: 2
+  timeToCallDashChanceLottery: 0
+  chanceToDashInRage: 0
+  allowToDashInSequence: 0
 --- !u!50 &2676660101553497852
 Rigidbody2D:
   serializedVersion: 4
@@ -247,8 +250,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []

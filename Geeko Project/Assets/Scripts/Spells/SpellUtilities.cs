@@ -79,6 +79,17 @@ public static class SpellUtilities
 
         return obj;
     }
+    public static bool SpellVerifySameOwnership(GameObject src, GameObject owner)
+    {
+        /**
+         * Verifies if a given GameObject is a spell, and if it is, check if it has
+         * the same owner as owner
+         */
+        if (src.GetComponent<SpellPrefabManager>())
+            return src.GetComponent<SpellPrefabManager>().GetOwner() == owner;
+
+        return false;
+    }
 
     public static bool DamageOnCollide(
         GameObject target, 
@@ -91,7 +102,7 @@ public static class SpellUtilities
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) { 
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
                 GameplayStatics.ApplyDamage(target, damage);
                 return true;
             }
@@ -110,7 +121,7 @@ public static class SpellUtilities
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) {
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) {
                 GameObject fx = MonoBehaviour.Instantiate(effect);
                 fx.transform.position = GameplayStatics.GetTriggerContactPoint(src.gameObject);
                 return true;
@@ -124,15 +135,36 @@ public static class SpellUtilities
         SpellPrefabManager src, 
         Spell spell, 
         Vector3? spawn_pos = null, 
-        List<string> ignore = null)
+        List<string> ignore = null,
+        bool reverse_ignore = false)
     {
         if (ignore != null)
-            if (GameplayStatics.ObjHasTag(target, ignore))
+            if (GameplayStatics.ObjHasTag(target, ignore, reverse_ignore))
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) { 
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
                 spell.CastSpell(src.GetOwner(), null, spawn_pos);
+                return true;
+            }
+
+        return false;
+    }
+
+    public static bool DestroyOnCollide(
+    GameObject target,
+    SpellPrefabManager src,
+    List<string> ignore = null,
+    bool reverse_ignore = false)
+    {
+        if (ignore != null)
+            if (GameplayStatics.ObjHasTag(target, ignore, reverse_ignore))
+                return false;
+
+        if (src)
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner()))
+            {
+                GameObject.Destroy(src.gameObject);
                 return true;
             }
 
