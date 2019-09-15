@@ -51,6 +51,14 @@ internal class Timer : MonoBehaviour
 
 public static class GameplayStatics
 {
+    public static int LayerMap = 1 << 8;
+    public static int LayerPlayer = 1 << 9;
+    public static int LayerEnemy = 1 << 10;
+
+    public static int idxLayerMap = 8;
+    public static int idxLayerPlayer = 9;
+    public static int idxLayerEnemy = 10;
+
     public enum DefaultColliders { Box, Circle, Capsulse, Polygon };
     [System.Serializable]
     public class DamageEvent : UnityEvent<float> { }   // Damage Event layout
