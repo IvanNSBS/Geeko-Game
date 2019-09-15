@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
 
-        if (Input.GetButton("Fire1") && false)
+        if (Input.GetButton("Fire1"))
         {
             m_WeaponComponent.AttemptToShoot();
             var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;

@@ -5,6 +5,13 @@ using UnityEngine;
 public class Encounter : MonoBehaviour
 {
     public GameObject Enemies;
+    public GameObject Enviroment;
+
+    private void Start()
+    {
+        if(Enviroment)
+            Enviroment.SetActive(false);    
+    }
 
     public void HideEnemies()
     {
@@ -14,5 +21,11 @@ public class Encounter : MonoBehaviour
     public void SpawnEnemies()
     {
         Enemies.SetActive(true);
+    }
+
+    public void ActivateEnviroment()
+    {
+        if(Enviroment)
+            Enviroment.SetActive(true);
     }
 }

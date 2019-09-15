@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies: {fileID: 4329555818807817715}
+  Enviroment: {fileID: 8510719725120019249}
 --- !u!1 &8510719725120019249
 GameObject:
   m_ObjectHideFlags: 0

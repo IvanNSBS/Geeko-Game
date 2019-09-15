@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4354217926186281382}
+  - component: {fileID: 4354217926186281384}
   - component: {fileID: 4354217926186281381}
   - component: {fileID: 4354217926186281383}
-  - component: {fileID: 4354217926186281384}
+  - component: {fileID: 4628881124832519389}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -33,6 +34,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4354217926186281384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354217926186281380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e32939a85b31254190dd8d3eb01777f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spikeAnimator: {fileID: 4628881124832519389}
+  Damage: 5
+  TimeToActivate: 3
+  TimeActive: 2
 --- !u!212 &4354217926186281381
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -71,7 +88,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -4946533048474979570, guid: b5a832d22f6aa9e47815dece6fdc6075,
+  m_Sprite: {fileID: 5598153355822045950, guid: b5a832d22f6aa9e47815dece6fdc6075,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -109,15 +126,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &4354217926186281384
-MonoBehaviour:
+--- !u!95 &4628881124832519389
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4354217926186281380}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e32939a85b31254190dd8d3eb01777f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b609c6294917d4b429d0a427fc95b296, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

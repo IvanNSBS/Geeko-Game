@@ -178,7 +178,7 @@ public class RoomInstance : MonoBehaviour
     private void checkEnemies()
     {
         enemysInThisRoom--;
-        if (enemysInThisRoom <= 0)
+        if (enemysInThisRoom <= 0 && encounter)
         {
             hasEnemyInThisRoom = false;
             Destroy(encounter.Enemies);
@@ -192,6 +192,7 @@ public class RoomInstance : MonoBehaviour
         if (encounter && hasEnemyInThisRoom)
         {
             encounter.SpawnEnemies();
+            encounter.ActivateEnviroment();
             dungeonManager.CloseAllDoors();
         }
     }
