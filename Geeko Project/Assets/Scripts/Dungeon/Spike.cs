@@ -4,30 +4,60 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
+    [Header("Animation")]
+    public Animator spikeAnimator;
+    [Header("Stats")]
+    public float Damage;
+    public float TimeToActivate;
+    public float TimeActive;
+    private bool isActive;
+    private float TimeSinceLastActivation, ActiveTimer;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        spikeAnimator.SetBool("isActive", false);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (isActive)
         {
-            collision.gameObject.GetComponent<StatusComponent>().TakeDamage(5);
+            ActiveTimer += Time.deltaTime;
+            if (ActiveTimer >= TimeActive)
+            {
+                DeactivateSpikes();
+            }
+        } else
+        {
+            TimeSinceLastActivation += Time.deltaTime;
+            if(TimeSinceLastActivation >= TimeToActivate)
+            {
+                ActivateSpikes();
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void ActivateSpikes()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        isActive = true;
+        spikeAnimator.SetBool("isActive", isActive);
+        TimeSinceLastActivation = 0f;
+    }
+
+    private void DeactivateSpikes()
+    {
+        isActive = false;
+        spikeAnimator.SetBool("isActive", isActive);
+        ActiveTimer = 0f;
+    }
+
+    private void OnTriggerStay2D (Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && isActive)
         {
-            collision.gameObject.GetComponent<StatusComponent>().TakeDamage(5);
+            collision.gameObject.GetComponent<StatusComponent>().TakeDamage(Damage);
         }
     }
 }

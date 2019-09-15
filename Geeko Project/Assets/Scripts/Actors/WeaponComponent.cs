@@ -58,6 +58,7 @@ public class WeaponComponent : MonoBehaviour
                 var bullet = obj.GetComponent<Bullet>();
                 bullet.rb.velocity = dir * bulletSpeed;
                 bullet.targetTag = targetTag;
+                bullet.SetInstantiator(owner);
             }
 
             return shotsFired >= numberOfShots;
@@ -132,5 +133,6 @@ public class WeaponComponent : MonoBehaviour
         var bullet = obj.GetComponent<Bullet>();
         bullet.targetTag = this.targetTag;
         bullet.rb.velocity = vel;
+        bullet.SetInstantiator(owner);
     }
 }

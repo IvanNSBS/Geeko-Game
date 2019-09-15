@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
     Vector3 moveJump = Vector2.zero;
-
+    [Range(0, 1)]public float speed;
     void Start()
     {
         SheetAssigner SA = FindObjectOfType<SheetAssigner>();
@@ -17,26 +18,30 @@ public class CameraController : MonoBehaviour
     {
         Vector3 targetPos = transform.position;
         targetPos += Vector3.up * moveJump.y;
-        transform.position = targetPos;
+        transform.DOMove(targetPos, speed);
+        //transform.position = targetPos;
     }
     public void MoveCameraRight()
     {
         Vector3 targetPos = transform.position;
         targetPos += Vector3.right * moveJump.x;
-        transform.position = targetPos;
+        transform.DOMove(targetPos, speed);
+        //transform.position = targetPos;
     }
 
     public void MoveCameraLeft()
     {
         Vector3 targetPos = transform.position;
         targetPos += Vector3.left * moveJump.x;
-        transform.position = targetPos;
+        transform.DOMove(targetPos, speed);
+        //transform.position = targetPos;
     }
 
     public void MoveCameraDown()
     {
         Vector3 targetPos = transform.position;
         targetPos += Vector3.down * moveJump.y;
-        transform.position = targetPos;
+        transform.DOMove(targetPos, speed);
+        //transform.position = targetPos;
     }
 }
