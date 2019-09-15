@@ -59,7 +59,6 @@ public class ManaShieldConc : Spell
     public override void StopConcentration(GameObject spell = null)
     {
         if (spell) {
-            spell.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SlowAmount);
             GameObject.Destroy(spell);
         }
     }
