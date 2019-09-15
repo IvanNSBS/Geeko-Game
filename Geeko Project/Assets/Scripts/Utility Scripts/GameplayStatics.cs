@@ -18,8 +18,9 @@ internal class Timer : MonoBehaviour
     private float m_RemainingDelay = 0.0f;
 
     private bool is_Locked = false;
+    private GameObject m_Owner = null;
 
-    public void InitTimer(float ttl, float delay, UnityAction action)
+    public void InitTimer(GameObject owner, float ttl, float delay, UnityAction action)
     {
         m_TimeToLive = ttl;
         m_RemainingTime = ttl;
@@ -29,6 +30,7 @@ internal class Timer : MonoBehaviour
         if (m_OnTick == null)
             m_OnTick = new UnityEvent();
         m_OnTick.AddListener(action);
+        m_Owner = owner;
     }
     public float GetTotalTime() { return m_TimeToLive; }
     public float GetRemainingTime() { return m_RemainingTime; }
@@ -41,6 +43,8 @@ internal class Timer : MonoBehaviour
         }
         m_RemainingTime -= Time.deltaTime;
         if (m_RemainingTime <= 0.0f)
+            Destroy(this);
+        if (m_Owner == null)
             Destroy(this);
     }
 }
@@ -60,7 +64,7 @@ public static class GameplayStatics
         if (obj)
         {
             Timer timer = obj.AddComponent<Timer>();
-            timer.InitTimer(ttl, delay, action);
+            timer.InitTimer(obj, ttl, delay, action);
         }
         else
             Debug.LogWarning("Invalid GameObject to attach timer to");

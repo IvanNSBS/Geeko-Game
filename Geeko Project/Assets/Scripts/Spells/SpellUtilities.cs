@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public static class SpellUtilities
 {
-    public static List<string> invalid  = new List<string> { "Item", "SpellUninteractive", "Room" };
+    public static List<string> invalid  = new List<string> { "Item", "SpellUninteractive", "Room", "Untagged" };
     public static List<string> entities = new List<string> { "Wall", "Door" };
     public static void PullTargetToSrc(
         GameObject target, 
@@ -49,28 +49,46 @@ public static class SpellUtilities
     public static GameObject InstantiateSpell(
         GameObject spell_prefab,
         GameObject owner,
+        GameObject target,
         Spell spell,
         Vector3 position,
         Quaternion rotation,
         bool isTrigger = true,
         Vector2 spell_velocity = default(Vector2),
-        GameplayStatics.DefaultColliders col = GameplayStatics.DefaultColliders.Polygon, 
+        GameplayStatics.DefaultColliders col = GameplayStatics.DefaultColliders.Polygon,
+        float tick_delay = 0.0f,
         string tag = null)
     {
         GameObject obj = MonoBehaviour.Instantiate(spell_prefab);
         if (tag != null)
             obj.tag = tag;
         obj.GetComponent<SpellPrefabManager>().m_TimeToLive = spell.m_SpellDuration;
+        obj.GetComponent<SpellPrefabManager>().m_Target = target;
+        obj.GetComponent<SpellPrefabManager>().m_TargetInitialPos = target == null ? (Vector3?)null : target.transform.position;
+        obj.GetComponent<SpellPrefabManager>().m_SpawnRot = rotation;
+        obj.GetComponent<SpellPrefabManager>().m_TickDelay = tick_delay;
         obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
         obj.GetComponent<SpellPrefabManager>().AddCollideEnter(spell.SpellCollisionEnter);
         obj.GetComponent<SpellPrefabManager>().AddCollideTick(spell.SpellCollisionTick);
         obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(spell.SpellTriggerEnter);
         obj.GetComponent<SpellPrefabManager>().AddTriggerTick(spell.SpellTriggerTick);
+        obj.GetComponent<SpellPrefabManager>().AddOnUpdate(spell.OnTick);
         obj.GetComponent<Rigidbody2D>().velocity = spell_velocity;
         obj.transform.position = position;
         obj.transform.rotation = rotation;
 
         return obj;
+    }
+    public static bool SpellVerifySameOwnership(GameObject src, GameObject owner)
+    {
+        /**
+         * Verifies if a given GameObject is a spell, and if it is, check if it has
+         * the same owner as owner
+         */
+        if (src.GetComponent<SpellPrefabManager>())
+            return src.GetComponent<SpellPrefabManager>().GetOwner() == owner;
+
+        return false;
     }
 
     public static bool DamageOnCollide(
@@ -84,7 +102,7 @@ public static class SpellUtilities
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) { 
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
                 GameplayStatics.ApplyDamage(target, damage);
                 return true;
             }
@@ -92,17 +110,18 @@ public static class SpellUtilities
     }
 
     public static bool SpawnEffectOnCollide(
-        GameObject target, 
-        SpellPrefabManager src, 
-        GameObject effect, 
-        List<string> ignore = null)
+        GameObject target,
+        SpellPrefabManager src,
+        GameObject effect,
+        List<string> ignore = null,
+        bool reverse_ignore = false)
     {
         if (ignore != null)
-            if (GameplayStatics.ObjHasTag(target, ignore))
+            if (GameplayStatics.ObjHasTag(target, ignore, reverse_ignore))
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) {
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) {
                 GameObject fx = MonoBehaviour.Instantiate(effect);
                 fx.transform.position = GameplayStatics.GetTriggerContactPoint(src.gameObject);
                 return true;
@@ -116,15 +135,36 @@ public static class SpellUtilities
         SpellPrefabManager src, 
         Spell spell, 
         Vector3? spawn_pos = null, 
-        List<string> ignore = null)
+        List<string> ignore = null,
+        bool reverse_ignore = false)
     {
         if (ignore != null)
-            if (GameplayStatics.ObjHasTag(target, ignore))
+            if (GameplayStatics.ObjHasTag(target, ignore, reverse_ignore))
                 return false;
 
         if (src)
-            if (target != src.GetOwner()) { 
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
                 spell.CastSpell(src.GetOwner(), null, spawn_pos);
+                return true;
+            }
+
+        return false;
+    }
+
+    public static bool DestroyOnCollide(
+    GameObject target,
+    SpellPrefabManager src,
+    List<string> ignore = null,
+    bool reverse_ignore = false)
+    {
+        if (ignore != null)
+            if (GameplayStatics.ObjHasTag(target, ignore, reverse_ignore))
+                return false;
+
+        if (src)
+            if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner()))
+            {
+                GameObject.Destroy(src.gameObject);
                 return true;
             }
 
