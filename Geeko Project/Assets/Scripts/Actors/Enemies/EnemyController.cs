@@ -123,6 +123,7 @@ public class EnemyController : MonoBehaviour
     private bool _waiting = false;
     private bool _idle= false;
     private bool _basicMeleeAttack = false;
+    private bool _waitingHold;
     
     
     private Transform _player;
@@ -232,7 +233,7 @@ public class EnemyController : MonoBehaviour
         {
             currState = EnemyState.Dash;
         }
-        else if (IsPlayerInAttackRange(attackRange) && (!_dashing))
+        else if (IsPlayerInAttackRange(attackRange))
         {
             currState = EnemyState.Attack;
         }
@@ -351,10 +352,10 @@ public class EnemyController : MonoBehaviour
         StopMovement();
         //Debug.Log("Holding");
         
-        if (!_dashing)
+        if (!_waitingHold)
         {
             _lastPlayerPosition = _player.position;
-            _dashing = true;
+            _waitingHold = true;
             
            StartCoroutine(StopHolding());
         }
@@ -364,25 +365,37 @@ public class EnemyController : MonoBehaviour
     public IEnumerator StopHolding()
     {
         yield return new WaitForSeconds(holdingTime);
+        StartDashing();
         _holding = false;
+        
     }
-    
+
+    private void StartDashing()
+    {
+        _dashing = true;
+    }
+
     public void Dash()
     {
       //  Debug.Log("Dashing");
       
         if (_dashTime <= 0)
         {
-            _dashTime = dashTime;
-            _dashing = false;
-            _idle = true;
-            _dashed = true;
+            ResetDash();
         }
         else
         {
             _dashTime -= Time.deltaTime;
           MoveEnemy(DirectionNormalized(transform.position,_lastPlayerPosition),dashSpeed);
         }
+    }
+
+    public void ResetDash()
+    {
+        _dashTime = dashTime;
+        _dashing = false;
+        _idle = true;
+        _dashed = true;
     }
 
     public virtual void Attack() //not implemented yet
@@ -422,12 +435,17 @@ public class EnemyController : MonoBehaviour
     {
         if (enemyMeleeDash)
         {
-            _holding = true;
+            StartHoldToDash();
         }
         else
         {
             BasicAttack();
         }
+    }
+
+    public void StartHoldToDash()
+    {
+        _holding = true;
     }
 
     public bool getBasicMeleeAttack()
@@ -753,6 +771,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public float GetTimeFollowing()
+    {
+        return _timeFollowing;
+    }
+    
     public virtual void MoveEnemy(Vector3 dir,float speed)
     {
         _movementComponent.Move(dir.x * speed * Time.deltaTime,dir.y * speed * Time.deltaTime);
@@ -771,6 +794,11 @@ public class EnemyController : MonoBehaviour
     public void Retreat()
     {
         MoveEnemy(DirectionNormalized(transform.position,_player.position), -speed);
+    }
+
+    public bool IsEnemyDashing()
+    {
+        return _dashing;
     }
 
     public virtual void Death()
