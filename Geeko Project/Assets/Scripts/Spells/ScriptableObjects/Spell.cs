@@ -44,9 +44,12 @@ public abstract class Spell : ScriptableObject
 [System.Serializable]
 public class SpellData
 {
+    // TODO: make those booleans a spell cast state enum
     public Spell m_Spell;
     [HideInInspector] public float m_RemainingCD;
     [HideInInspector] public bool m_IsSpellOnCD;
+    [HideInInspector] public bool m_UsingCharges;
+    [HideInInspector] public bool m_OverCharging;
     [HideInInspector] public GameObject m_Owner; // Who is casting the spell
     [HideInInspector] public int m_RemainingCharges;
     [HideInInspector] public Transform m_SpawnPoint;
@@ -84,16 +87,17 @@ public class SpellData
 
             return true;
         }
-        else if (m_Spell.m_UseAllAvailableCharges)
+        else if (m_Spell.m_UseAllAvailableCharges && !m_UsingCharges )
         {
             m_IsConcentrating = m_Spell.m_CastType == SpellCastType.Concentration;
             m_RemainingCD = m_Spell.m_SpellCooldown;
             m_IsSpellOnCD = true;
 
             float delay = 0.05f;
-            float ttl = delay * m_RemainingCharges*1.5f;
+            float ttl = delay * m_RemainingCharges*1.1f;
+            GameplayStatics.Delay(delay*m_RemainingCD*1.1f, () => m_UsingCharges=true, () => m_UsingCharges = false);
             GameplayStatics.AddTimer(m_Owner, ttl, delay, () => {
-                if(m_RemainingCharges > 0)
+                if (m_RemainingCharges > 0)
                 {
                     m_InstantiatedSpell = m_Spell.CastSpell(m_Owner, actual_target, m_SpawnPoint.position, m_SpawnParent.rotation);
                     m_RemainingCharges--;

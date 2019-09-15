@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MultiStrike
   m_EditorClassIdentifier: 
   m_SpellName: MultiStrike
-  m_SpellCooldown: 0
+  m_SpellCooldown: 10
   m_CastType: 0
   m_SpellDuration: 0
   m_SpellCharges: 1
@@ -30,10 +30,21 @@ MonoBehaviour:
   - SpellUninteractive
   - Room
   m_Damage: 10
-  m_ProjectileSpeed: 15
-  m_Delay: 0.08
+  m_ProjectileSpeed: 30
+  m_Delay: 0.12
   DMG:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 93e86c6c762e4cd48ac76b2101dd5d90, type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null

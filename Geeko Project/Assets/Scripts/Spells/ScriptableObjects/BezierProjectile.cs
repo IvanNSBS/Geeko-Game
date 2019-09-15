@@ -83,8 +83,9 @@ public class BezierProjectile : Spell
             SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
         SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
 
-        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
-            GameObject.Destroy(src);
+        SpellUtilities.DestroyOnCollide(target_obj, s_manager, SpellUtilities.invalid);
+        //if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+        //    GameObject.Destroy(src);
     }
 
     public override void SpellTriggerTick(Collider2D target, GameObject src)
