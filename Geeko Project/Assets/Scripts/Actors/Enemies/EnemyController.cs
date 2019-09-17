@@ -124,10 +124,11 @@ public class EnemyController : MonoBehaviour
     private bool _idle= false;
     private bool _basicMeleeAttack = false;
     private bool _waitingHold;
-    
+    private SpriteRenderer _sprite;
     
     private Transform _player;
     private Vector3 _lastPlayerPosition;
+    private Vector3 _lastEnemyPosition;
     
     private MovementComponent _movementComponent;
     private StatusComponent _statusComponent;
@@ -155,6 +156,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Start()
     {
+        _sprite = GetComponent<SpriteRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
       //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
@@ -298,6 +300,7 @@ public class EnemyController : MonoBehaviour
             }
         }else if (!_waiting && _followingTimeIsOver)
         {
+            Debug.Log("idling after followed");
             _waiting = true;
             StartCoroutine(WaitingIdleTimeAfterFollowing(idleTime));
         }
@@ -340,34 +343,44 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(sec);
        // Debug.Log("wander after iddle: "+sec+" seconds");
         _coolDownAttack = false; //reseted 
-        _idle = false;
         _waiting = false;
         _dashed = false;
+        _idle = false;
         currState = EnemyState.Wander;
         
     }
     
-    public void Holding()
+    public virtual void Holding()
     {
         StopMovement();
-        //Debug.Log("Holding");
         
         if (!_waitingHold)
         {
-            _lastPlayerPosition = _player.position;
+            Debug.Log("Holding:");
+            
+           
             _waitingHold = true;
             
            StartCoroutine(StopHolding());
         }
         
+        flipStaticEnemy();
     }
 
     public IEnumerator StopHolding()
     {
-        yield return new WaitForSeconds(holdingTime);
+        yield return new WaitForSeconds((holdingTime/3)*2);
+        
+        _lastPlayerPosition = _player.position;
+        _lastEnemyPosition = transform.position;
+        Debug.Log("Saving player position: "+_lastPlayerPosition);
+        Debug.Log("Saving enemy position: " + _lastEnemyPosition);
+        
+        yield return new WaitForSeconds(holdingTime/3);
+        
         StartDashing();
         _holding = false;
-        
+
     }
 
     private void StartDashing()
@@ -375,7 +388,7 @@ public class EnemyController : MonoBehaviour
         _dashing = true;
     }
 
-    public void Dash()
+    public virtual void Dash()
     {
       //  Debug.Log("Dashing");
       
@@ -386,16 +399,17 @@ public class EnemyController : MonoBehaviour
         else
         {
             _dashTime -= Time.deltaTime;
-          MoveEnemy(DirectionNormalized(transform.position,_lastPlayerPosition),dashSpeed);
+          MoveEnemy(DirectionNormalized(_lastEnemyPosition,_lastPlayerPosition),dashSpeed);
         }
     }
 
-    public void ResetDash()
+    public virtual void ResetDash()
     {
         _dashTime = dashTime;
         _dashing = false;
         _idle = true;
         _dashed = true;
+        _waitingHold = false;
     }
 
     public virtual void Attack() //not implemented yet
@@ -446,6 +460,7 @@ public class EnemyController : MonoBehaviour
     public void StartHoldToDash()
     {
         _holding = true;
+        Debug.Log("Start Dashing...");
     }
 
     public bool getBasicMeleeAttack()
@@ -734,16 +749,16 @@ public class EnemyController : MonoBehaviour
         return aux;
     }
 
-    public void flipStaticEnemy(SpriteRenderer sprite)
+    public void flipStaticEnemy()
     {
         Vector3 dir = DirectionNormalized(transform.position, _player.position);
         if (dir.x < 0)
         {
-            sprite.flipX = true;
+            _sprite.flipX = true;
         }
         else
         {
-            sprite.flipX = false;
+            _sprite.flipX = false;
         }
     }
     
@@ -756,7 +771,8 @@ public class EnemyController : MonoBehaviour
     {
         if (stateHasChanged) //reset timer
         {
-            _timeFollowing = maxTimeFollowing;
+            Debug.Log("CHANGEDDDDDDDD");
+            ResetFollowingTime();
         }
         
         if (_timeFollowing <= 0)
@@ -769,6 +785,11 @@ public class EnemyController : MonoBehaviour
             _timeFollowing -= Time.deltaTime;
             MoveEnemy(DirectionNormalized(transform.position,_player.position),speed);
         }
+    }
+
+    public void ResetFollowingTime()
+    {
+        _timeFollowing = maxTimeFollowing;
     }
 
     public float GetTimeFollowing()
@@ -814,7 +835,7 @@ public class EnemyController : MonoBehaviour
             }
             StopMovement();
             Destroy(this.GetComponent<Rigidbody2D>());
-            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(GetComponent<Collider2D>());
             
             SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
             Tween tween = aux.DOColor(new Color(255,255,255,0),5);

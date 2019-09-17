@@ -127,8 +127,8 @@ MonoBehaviour:
   projectile: {fileID: 6143250817977481309}
   sightRange: 15
   attackRange: 2
-  speed: 2
-  dashSpeed: 0
+  speed: 1.75
+  dashSpeed: 20
   stopShootToReload: 0
   explodeWhenDie: 0
   moveWhileShoot: 0
@@ -139,13 +139,13 @@ MonoBehaviour:
   verticalWalk: 0
   randomWalk: 0
   followWalk: 0
-  idleTime: 3
+  idleTime: 2
   wanderingTime: 0
   maxTimeFollowing: 3
-  dashTime: 0
+  dashTime: 2
   basicMeleeAttackTime: 0.05
   cooldownBasicMeleeAttackTime: 0
-  holdingTime: 0
+  holdingTime: 1.5
   timeToReload: 0
   timeAmmo: 0
   timeBtwShots: 0
@@ -163,10 +163,15 @@ MonoBehaviour:
   timeBtwAxeAttack: 0.5
   timeBtwPokeAttack: 0.5
   timeBtwFloorHitAttack: 0.5
-  timeSpinning: 2
-  timeToCallDashChanceLottery: 0
-  chanceToDashInRage: 0
-  allowToDashInSequence: 0
+  timeSpinning: 1
+  timeToCallDashChanceLottery: 0.7
+  chanceToDashInRage: 50
+  allowToDashInSequence: 1
+  duration: 1
+  strength: 1
+  vibration: 15
+  randomness: 60
+  fadeOut: 1
 --- !u!50 &2676660101553497852
 Rigidbody2D:
   serializedVersion: 4
@@ -216,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 50000
+  m_MaxHealth: 4000
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -310,7 +315,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
     type: 3}
   owner: {fileID: 2676660101553497850}
-  speed: 10
+  speed: 5
   cooldown: 0.2
   targetTag: Player
 --- !u!1 &3924634654898372090
