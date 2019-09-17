@@ -14,12 +14,12 @@ public class LootManager : MonoBehaviour
     public List<Loot> lootTable = new List<Loot>();
     public int dropChance;
     
-    void calculateLoot()
+    public void calculateLoot()
     {
         int m_dropChance = Random.Range(0, 101);
         if(m_dropChance > dropChance)
         {
-            Debug.Log("No Loot for me");
+            //Debug.Log("No Loot for me");
             //Destroy(this.gameObject);
             return;
         }
@@ -42,14 +42,6 @@ public class LootManager : MonoBehaviour
                 }
                 randomValue -= lootTable[j].dropRate;
             }
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            calculateLoot();
         }
     }
 }

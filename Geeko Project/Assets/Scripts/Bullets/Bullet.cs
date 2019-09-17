@@ -26,9 +26,20 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ( targetTag.Equals("") || other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") )
+        if (targetTag.Equals("All"))
         {
-            if (other.CompareTag(targetTag)) 
+            if (other.CompareTag("Player")|| other.CompareTag("Enemy") || other.CompareTag("DestructibleObject"))
+            {
+                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+                Destroy(gameObject);
+            } else if (other.CompareTag("Wall") || other.CompareTag("Door"))
+            {
+                Destroy(gameObject);
+            }
+
+        } else if (other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("DestructibleObject"))
+        {
+            if (other.CompareTag(targetTag) || other.CompareTag("DestructibleObject")) 
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             } 

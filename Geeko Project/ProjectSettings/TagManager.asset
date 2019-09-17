@@ -11,6 +11,7 @@ TagManager:
   - SpellInteractive
   - Enemy
   - Room
+  - DestructibleObject
   layers:
   - Default
   - TransparentFX
