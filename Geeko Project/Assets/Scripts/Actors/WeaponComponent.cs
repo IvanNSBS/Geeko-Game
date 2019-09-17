@@ -45,7 +45,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var shotsFired = 0;
-        var lastShotTime = Time.time;
+        var lastShotTime = Time.time - timeBetweenShots;
 
         shootingFuncs.Add((() =>
         {
@@ -65,26 +65,150 @@ public class WeaponComponent : MonoBehaviour
         }));
     }
 
-    public void StreamFollowingPlayer(
-        int numberOfShots,
+    public void NwaySpread(
+        TargetingManager tm,
+        int numberOfStreams,
+        int numberOfShotsPerStream,
+        float amplitude,
         float timeBetweenShots,
-        float bulletSpeed,
-        float offsetDegrees = 0.0f
+        float bulletSpeed
     )
     {
-        var tm = new TargetingManager().InitFollowPlayer(firePoint).Offset(offsetDegrees);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        var starter = -amplitude / 2.0f;
+        var step = amplitude / (numberOfStreams - 1);
+        for (var i = 0; i < numberOfStreams; i++)
+        {
+            var localTM = tm.Clone().Offset(starter + step * i);
+            GenericStream(localTM, numberOfShotsPerStream, timeBetweenShots, bulletSpeed);
+        }
     }
 
-    public void Stream(
+    public void SpreadThreeWay(
+        Vector2 mainDirection,
+        int numberOfShotsPerWay,
+        float amplitude,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 3, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
+    }
+
+    public void FourDiagonals(
+        Vector2 mainDirection,
+        int numberOfShotsPerDiagonal,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 4, numberOfShotsPerDiagonal, 270, timeBetweenShots, bulletSpeed);
+    }
+
+    public void Linear(
         Vector2 startingDirection,
         int numberOfShots,
         float timeBetweenShots,
         float bulletSpeed
     )
     {
-        var tm = new TargetingManager().InitStartingDirection(startingDirection);
+        var tm = new TargetingManager(startingDirection);
         GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+
+    public void LinearLockOn(
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(firePoint);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+
+    public void SineWave(
+        Vector2 startingDirection,
+        float amplitudeDegrees,
+        int numberOfShots,
+        int timesToWave,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var shotsPerPeriod = numberOfShots / timesToWave;
+        var tm = new TargetingManager(startingDirection).Sine(amplitudeDegrees, shotsPerPeriod);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+
+    public void RandomUniform(
+        Vector2 startingDirection,
+        float amplitudeDegrees,
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(startingDirection).RandomizeUniform(amplitudeDegrees);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+    
+    public void RandomGauss(
+        Vector2 startingDirection,
+        float amplitudeDegrees,
+        int numberOfShots,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(startingDirection).RandomizeGauss(amplitudeDegrees);
+        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+    }
+    
+    public void SpreadFiveWay(
+        Vector2 mainDirection,
+        int numberOfShotsPerWay,
+        float amplitude,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 5, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
+    }
+
+    public void EightWayAllRange(
+        Vector2 mainDirection,
+        int numberOfShotsPerWay,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 8, numberOfShotsPerWay, 315, timeBetweenShots, bulletSpeed);
+    }
+
+    public void SpreadSevenWay(
+        Vector2 mainDirection,
+        int numberOfShotsPerWay,
+        float amplitude,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 7, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
+    }
+
+    public void SpreadSevenWayLockOn(
+        int numberOfShotsPerWay,
+        float amplitude,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(firePoint);
+        NwaySpread(tm, 7, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
     }
 
     public void Spiral(
@@ -93,11 +217,11 @@ public class WeaponComponent : MonoBehaviour
         float timeToSpiralOnce,
         int loops,
         float bulletSpeed
-        )
+    )
     {
         var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
         var shootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
-        var tm = new TargetingManager().InitStartingDirection(startingDirection).Spiral(angle);
+        var tm = new TargetingManager(startingDirection).Spiral(angle);
         GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, bulletSpeed);
     }
     
