@@ -649,7 +649,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Minotaur Attack Spin Loop
-  m_Speed: 0.75
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7111770684757870951}
@@ -989,7 +989,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Minotaur Attack Spin Init
-  m_Speed: 0.75
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1471741477013587951}
@@ -1232,7 +1232,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Minotaur Attack Spin End
-  m_Speed: 0.75
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7381534055707246387}
