@@ -43,7 +43,8 @@ public class MinotaurController : EnemyController
     [Range(0,100)]
     public float chanceToDashInRage;
     public bool allowToDashInSequence;
-
+    public GameObject particle;
+    
     [Header("Camera Shake")]
     public float duration;
     public float strength;
@@ -625,6 +626,7 @@ public class MinotaurController : EnemyController
     public void OnDeath()
     {
         minotaurAnimator.SetBool("isDead",true);
+        particle.SetActive(false);
     }
     
     public void IdlingAfterAttack()
@@ -702,6 +704,7 @@ public class MinotaurController : EnemyController
                 var weapon = GetComponent<WeaponComponent>();
                 weapon.speed = weapon.speed + 1f;
 
+                particle.SetActive(true);
             }else if (minotaurState == MinotaurState.Stressed)
             {
                 speed = speed + 0.25f;

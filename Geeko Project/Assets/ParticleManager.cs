@@ -5,7 +5,8 @@ using UnityEngine;
 public class ParticleManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    [Range(0, 500)] float m_TimeToLive;
+    [Range(0, 500)] 
+    float m_TimeToLive;
 
     void Start()
     {
