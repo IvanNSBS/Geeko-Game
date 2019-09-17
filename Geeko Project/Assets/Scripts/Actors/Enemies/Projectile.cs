@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
     {
         if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")) || other.CompareTag("SpellInteractive"))
         {
-            if(other.CompareTag("Player") || other.CompareTag("SpellInteractive"))
+            if(other.CompareTag("Player") || other.CompareTag("SpellInteractive") || other.CompareTag("DestructibleObject"))
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             }

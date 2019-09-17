@@ -12,10 +12,6 @@ public class FireTotemController : EnemyController
     private bool _idleAnimation = false;
 
 
-    public override void Start()
-    {
-        base.Start();
-    }
     public override void Wander()
     {
         base.Wander();
