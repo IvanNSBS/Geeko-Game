@@ -23,7 +23,8 @@ public class RoomInstance : MonoBehaviour
     [SerializeField] private GameObject doorU, doorD, doorL, doorR, wallU, wallD, wallL, wallR;
     [SerializeField] private List<Encounter> Encounters = new List<Encounter>();
     [SerializeField] private List<int> EncounterRate = new List<int>();
- 
+    [SerializeField] private List<Encounter> SpecialEncounters = new List<Encounter>();
+
     private void Start()
     {
         dungeonManager = FindObjectOfType<DungeonManager>();
@@ -170,6 +171,11 @@ public class RoomInstance : MonoBehaviour
                     random -= EncounterRate[spawn];
                 }
                 encounter = Instantiate(Encounters[spawn], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter.HideEnemies();
+                break;
+            case 2:
+                hasEnemyInThisRoom = true;
+                encounter = Instantiate(SpecialEncounters[0], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
                 encounter.HideEnemies();
                 break;
         }

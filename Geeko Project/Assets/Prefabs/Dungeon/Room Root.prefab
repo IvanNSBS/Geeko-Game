@@ -935,6 +935,8 @@ MonoBehaviour:
   - {fileID: 4072245563677062441, guid: 507a9cd4dd0d9f14e82ed099484735cc, type: 3}
   - {fileID: 5665426885804399745, guid: 06a43a3691662804897b04f3da99b26a, type: 3}
   EncounterRate: 1e0000001e0000001e0000000a000000
+  SpecialEncounters:
+  - {fileID: 4072245563677062441, guid: db98d18a24f3825448541f4435c2ece6, type: 3}
 --- !u!61 &4650931244247357742
 BoxCollider2D:
   m_ObjectHideFlags: 0

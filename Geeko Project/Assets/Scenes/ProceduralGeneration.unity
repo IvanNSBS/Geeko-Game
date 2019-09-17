@@ -724,7 +724,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Encounters.Array.data[1]
       value: 
-      objectReference: {fileID: 1240413144840286557, guid: ea80c52d30e23624b9f6b2b4892e29dd,
+      objectReference: {fileID: 7558159995128276793, guid: 95619ae26f4223b4ca71c004579af789,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83ea956457b6ec646b3305b259769064, type: 3}
