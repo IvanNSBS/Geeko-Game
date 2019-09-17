@@ -10,14 +10,8 @@ public class FireTotemController : EnemyController
     public Animator fireTotemAnimator;
 
     private bool _idleAnimation = false;
-    private SpriteRenderer _sprite;
 
 
-    public override void Start()
-    {
-        base.Start();
-        _sprite = GetComponent<SpriteRenderer>();
-    }
     public override void Wander()
     {
         base.Wander();
@@ -46,7 +40,7 @@ public class FireTotemController : EnemyController
     public override void Attack()
     {
         base.Attack();
-        flipStaticEnemy(_sprite);
+        flipStaticEnemy();
     }
 
     public override GameObject Shooting()

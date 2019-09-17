@@ -6,41 +6,35 @@ using Random = UnityEngine.Random;
 
 public class TargetingManager
 {
-    private Vector2 initial = Vector2.up;
-    [NotNull] private List<Func<Vector2, Vector2>> targetingList = new List<Func<Vector2, Vector2>>();
+    private Vector2 _initial = Vector2.up;
+    [NotNull] private readonly List<Func<Vector2, Vector2>> _targetingList = new List<Func<Vector2, Vector2>>();
     
     public Vector2 Target()
     {
-        var target = initial;
-        targetingList.ForEach((func => { target = func(target); }));
+        var target = _initial;
+        _targetingList.ForEach((func => { target = func(target); }));
         return target;
     }
 
-    public TargetingManager InitStartingDirection(Vector2 vec)
+    public TargetingManager(Vector2 vec)
     {
-        initial = vec;
-        
-        return this;
+        _initial = vec;
     }
 
-    public TargetingManager InitDynamicStartingDirection(Func<Vector2> func)
+    public TargetingManager(Transform firePoint)
     {
-        targetingList.Add((_ => func()));
-
-        return this;
-    }
-
-    public TargetingManager InitFollowPlayer(Transform firePoint)
-    {
-        targetingList.Add((_ =>
+        _targetingList.Add((_ =>
         {
             var player = GameObject.FindGameObjectWithTag("Player").transform;
             var center = player.TransformPoint(player.GetComponent<CircleCollider2D>().offset);
             var direction = (center - firePoint.position).normalized;
             return new Vector2(direction.x, direction.y);
         }));
+    }
 
-        return this;
+    public TargetingManager(Func<Vector2> func)
+    {
+        _targetingList.Add((_ => func()));
     }
 
     public TargetingManager Spiral(float degrees)
@@ -48,7 +42,7 @@ public class TargetingManager
         var rotation = Quaternion.identity;
         var rotationIncrement = Quaternion.Euler(0, 0, degrees);
         
-        targetingList.Add((vector2 => {
+        _targetingList.Add((vector2 => {
             var rotated = rotation*vector2;
             rotation *= rotationIncrement;
             return rotated;
@@ -63,7 +57,7 @@ public class TargetingManager
         var increment = Math.PI * 2 / shotsPerPeriod;
         var halfAmp = amplitudeDegrees / 2;
         
-        targetingList.Add((vector2 =>
+        _targetingList.Add((vector2 =>
         {
             var sin = (float) Math.Sin(accu);
             accu = (accu + increment);
@@ -78,18 +72,18 @@ public class TargetingManager
     {
         var rotation = Quaternion.Euler(0, 0, offset);
         
-        targetingList.Add((vector2 => rotation*vector2));
+        _targetingList.Add((vector2 => rotation*vector2));
 
         return this;
     }
 
-    private static Func<float> rand = () => (Random.value - 0.5f);
+    private static readonly Func<float> Rand = () => (Random.value - 0.5f);
 
-    public TargetingManager Randomize(float amplitudeDegrees)
+    public TargetingManager RandomizeUniform(float amplitudeDegrees)
     {
-        targetingList.Add((vector2 =>
+        _targetingList.Add((vector2 =>
         {
-            var rot = Quaternion.Euler(0, 0, rand() * amplitudeDegrees);
+            var rot = Quaternion.Euler(0, 0, Rand() * amplitudeDegrees);
             return rot * vector2;
         } ));
 
@@ -108,12 +102,19 @@ public class TargetingManager
 
     public TargetingManager RandomizeGauss(float amplitudeDegrees)
     {
-        targetingList.Add((vector2 =>
+        _targetingList.Add((vector2 =>
         {
             var rot = Quaternion.Euler(0, 0, RandGauss() * amplitudeDegrees);
             return rot * vector2;
         } ));
 
         return this;
+    }
+
+    public TargetingManager Clone()
+    {
+        var tm = new TargetingManager(_initial);
+        tm._targetingList.InsertRange(0, this._targetingList);
+        return tm;
     }
 }

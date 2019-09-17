@@ -169,7 +169,7 @@ MonoBehaviour:
   owner: {fileID: 1766725474455644822}
   speed: 20
   cooldown: 0
-  targetTag: Player
+  targetTag: All
 --- !u!114 &8461238943173755662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 30
+  m_MaxHealth: 10
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2

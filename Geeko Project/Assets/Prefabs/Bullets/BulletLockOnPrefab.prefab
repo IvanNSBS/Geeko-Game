@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7859301353027834236}
   - component: {fileID: 453071288662664103}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: BulletLockOnPrefab
   m_TagString: SpellUninteractive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

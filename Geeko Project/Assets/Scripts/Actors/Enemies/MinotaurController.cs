@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
+using GameAnalyticsSDK.Setup;
 
 public enum MinotaurState
 {
@@ -41,7 +43,13 @@ public class MinotaurController : EnemyController
     [Range(0,100)]
     public float chanceToDashInRage;
     public bool allowToDashInSequence;
-    
+
+    [Header("Camera Shake")]
+    public float duration;
+    public float strength;
+    public int vibration;
+    public float randomness;
+    public bool fadeOut;
     
     private float _rage = 0;
     private bool _attacking=false;
@@ -56,21 +64,22 @@ public class MinotaurController : EnemyController
     private bool _waitingIdle;
     private bool _floorHit;
     private bool _spin;
+    private bool _dash;
     private bool _changeState;
     private bool _attackingSpin;
+    private bool _looping;
     private Coroutine _coroutine;
     private float _timeToCallDashChanceLottery;
     private bool _waitingDashCooldown;
-
+    
     /*
      *To-do after implement the minotaur states:
-     * adjust minotaur children on flip and make it shoot not in opposite direction of the player
+     * 
      *
-     * spin animation
-     *
-     * spin hit box
-     *
-     * Dash
+     * spin hit box doenst exist for now
+     * 
+     * Stressed and Rage visual feedback 
+     * 
      */
 
     public override void Start()
@@ -94,6 +103,11 @@ public class MinotaurController : EnemyController
             currState = EnemyState.Hold;
         }else if (IsEnemyDashing())
         {
+            if (!_dash)
+            {
+                _dash = true;
+                StartDashAnimation();
+            }
             currState = EnemyState.Dash;
         }else if (IsPlayerInAttackRange(attackRange) || _attacking)
         {
@@ -107,10 +121,23 @@ public class MinotaurController : EnemyController
         
     }
 
+    private void StartDashAnimation()
+    {
+        minotaurAnimator.SetBool("isHoldingDash", false);
+        minotaurAnimator.SetBool("isDashing", true);
+    }
+
+    private void StopDashAnimation()
+    {
+        minotaurAnimator.SetBool("isDashing",false);
+        _dash = false;
+    }
+    
     public override void OnCollisionEnter2D(Collision2D other)
     {
         if (IsEnemyDashing())
         {
+            Camera.main.DOShakePosition(duration,strength,vibration,randomness,fadeOut);
             if (other.collider.CompareTag("Player"))
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(20);
@@ -120,7 +147,9 @@ public class MinotaurController : EnemyController
             if (other.collider.CompareTag("Room") || other.collider.CompareTag("Door") || other.collider.CompareTag("Wall"))
             {
                 projectile.SetActive(true);
-                SpiralPattern(other.transform, gameObject.transform.position,36,0,1);
+                var contact = other.GetContact(0);
+                var point = Vector2.MoveTowards(contact.point, gameObject.transform.position,0.2f);
+                SpiralPattern(point, transform.position,36,0,1);
                 Invoke("DeactivateWeapon",0+0.1f);
             } 
             
@@ -132,39 +161,69 @@ public class MinotaurController : EnemyController
         }
     }
 
+    public override void ResetDash()
+    {
+        base.ResetDash();
+        StopDashAnimation();
+    }
+
+    /*
+     public override void Holding()
+    {
+        base.Holding();
+        minotaurAnimator.SetBool("isHoldingDash",true);
+    }
+    */
+
     public override void Wander()
     {
-        Follow();
+        currState = EnemyState.Follow;
+        ResetFollowingTime();
+    }
+
+    public override void Dash()
+    {
+        base.Dash();
+        if (IsEnemyDashing())
+        {
+            
+        }
     }
     
     public override void Follow()
     {
         base.Follow();
         
-        if (allowToDashInSequence)
+        if (minotaurState == MinotaurState.Rage)
         {
-            _waitingDashCooldown = false;
-        }
-        
-        if (!_waitingDashCooldown)
-        {
-            var time = GetTimeFollowing();
-            if (time >= _timeToCallDashChanceLottery)
+            if (allowToDashInSequence)
             {
-                _timeToCallDashChanceLottery *= 2;
+                _waitingDashCooldown = false;
+            }
+            
+            if (!_waitingDashCooldown)
+            {
+                var time = GetTimeFollowing();
+                var threshold = maxTimeFollowing - _timeToCallDashChanceLottery;
 
-                if (DashLottery())
+                if ( (time <= threshold) && !(time<= 0) )
                 {
-                    StartHoldToDash();
-                    _waitingDashCooldown = true;
-                    _timeToCallDashChanceLottery = timeToCallDashChanceLottery;
-                }
-                else
-                {
-                    if (_timeToCallDashChanceLottery >= maxTimeFollowing)
+                    
+                    Debug.Log("Sorteando-> time: " + time + ", threshold: "+threshold);
+                    _timeToCallDashChanceLottery = _timeToCallDashChanceLottery+ timeToCallDashChanceLottery;
+                    if (DashLottery())
                     {
+                        StartHoldToDash();
+                        minotaurAnimator.SetBool("isHoldingDash",true);
+                        _waitingDashCooldown = true;
                         _timeToCallDashChanceLottery = timeToCallDashChanceLottery;
+                        
                     }
+                    
+                }
+                else if (time <= 0) //time's up
+                {
+                    _timeToCallDashChanceLottery = timeToCallDashChanceLottery; //reset local time dashchance
                 }
             }
         }
@@ -172,12 +231,14 @@ public class MinotaurController : EnemyController
 
     public bool DashLottery()
     {
+        
         var random = Random.Range(0, 100);
         if (random <= chanceToDashInRage-1)
         {
+            Debug.Log("dash lottery win");
             return true;
         }
-
+        Debug.Log("dash lottery lose");
         return false;
     }
     
@@ -255,7 +316,8 @@ public class MinotaurController : EnemyController
                     Spin();
                     break;
                 case(MinotaurAttack.Dash):
-                    Dash();
+                    Debug.Log("the bug is on the table");
+                    StartHoldToDash();
                     break;
             }
         }
@@ -292,7 +354,7 @@ public class MinotaurController : EnemyController
         Collider2D hit = Physics2D.OverlapCircle(axeAttackPosition.position, axeAttackRange, layerMask);
         if (hit)
         {
-            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(15);
             Debug.Log("damaged by axe");
         }
         /*
@@ -307,7 +369,7 @@ public class MinotaurController : EnemyController
         Collider2D hit = Physics2D.OverlapBox(pokePosition.position, pokeAttackRange, 0,layerMask);
         if (hit)
         {
-            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(5);
+            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
             Debug.Log("damaged by poke");
         }/*
         else
@@ -350,6 +412,9 @@ public class MinotaurController : EnemyController
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(pokePosition.position, pokeAttackRange);
+        
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(projectile.transform.position, 0.1f);
     }
 
     private void Spin()
@@ -359,8 +424,7 @@ public class MinotaurController : EnemyController
             if (!_attackingSpin)
             {
                 //animations things;
-                minotaurAnimator.SetTrigger("isAttackingSpin");
-                minotaurAnimator.SetBool("isIdle", false);
+                StartSpinningAnimation();
                 
                 //hitbox??
                 
@@ -371,16 +435,45 @@ public class MinotaurController : EnemyController
             }
             else
             {
+                EndSpinningAnimation();
                 _attackingSpin = false;
                 setIdle(true);
             }
         }
         else
         {
+            LoopSpiningAnimation();
             _timeBtwSpinAttack -= Time.deltaTime;
         }
     }
 
+    private void LoopSpiningAnimation()
+    {
+        if (!_looping)
+        {
+            _looping = true;
+            minotaurAnimator.SetBool("SpinLoop",true);
+        }
+    }
+    
+    private void EndSpinningAnimation()
+    {
+        minotaurAnimator.SetBool("SpinLoop",false);
+        minotaurAnimator.SetBool("SpinEnd",true);
+        _looping = false;
+    }
+
+    private void IdleAfterSpinAnimation()
+    {
+        minotaurAnimator.SetBool("SpinEnd",false);
+    }
+    
+    private void StartSpinningAnimation()
+    {
+        minotaurAnimator.SetTrigger("isAttackingSpin");
+        minotaurAnimator.SetBool("isIdle", false);
+    }
+    
     private void FloorHit()
     {
         if (_timeBtwFloorHitAttack <= 0)
@@ -390,7 +483,7 @@ public class MinotaurController : EnemyController
                 minotaurAnimator.SetBool("isHittingFloor",true);
                 minotaurAnimator.SetBool("isIdle",false);
                 
-                ShootPattern();
+                //ShootPattern(); is now being called in the 4th frame of the hittingfloor animation
                 
                 _attackingFloorHit = true;
                 _timeBtwFloorHitAttack = timeBtwFloorHitAttack;
@@ -414,16 +507,15 @@ public class MinotaurController : EnemyController
         switch (_curAttack)
         {
             case MinotaurAttack.FloorHit:
-                SpiralPattern(projectile.transform,pokePosition.position,36,0,1);
+                SpiralPattern(projectile.transform.position,pokePosition.position,24,0,1);
                 Invoke("DeactivateWeapon",0+0.1f);
                 break;
             case MinotaurAttack.Spin:
-                SpiralPattern(transform,pokePosition.position,40,timeSpinning,1);
+                SpiralPattern(transform.position,pokePosition.position,24,timeSpinning,1);
                 Invoke("DeactivateWeapon",timeSpinning+0.1f);
                 break;
             case MinotaurAttack.Dash:
-                SpiralPattern(projectile.transform,pokePosition.position,36,2,1);
-                Invoke("DeactivateWeapon",2+0.1f);
+                Debug.Log("SE CHAMADO ALGO TA ERRADO");
                 break;
         }
         
@@ -435,11 +527,11 @@ public class MinotaurController : EnemyController
         minotaurAnimator.SetBool("isHittingFloor",false);
     }
 
-    private void SpiralPattern(Transform origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops)
+    private void SpiralPattern(Vector3 origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops)
     {
         var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
-        weaponComponent.firePoint = origin;
-        var vec3 =  target - origin.position;
+        weaponComponent.firePoint.position = origin;
+        var vec3 =  target - origin;
         var vec2 = new Vector2(vec3.x, vec3.y);
         weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, weaponComponent.speed);
         Debug.Log("Spiral");
@@ -475,6 +567,7 @@ public class MinotaurController : EnemyController
             setIdle(false);
             _coroutine = null;
             _waitingDashCooldown = false;
+            _timeToCallDashChanceLottery = timeToCallDashChanceLottery; 
     }
 
     private void ChooseHitFloorOrSpin()
@@ -542,7 +635,13 @@ public class MinotaurController : EnemyController
 
     public void OnFlip()
     {
-        Debug.Log("Funcionou?");
+        Debug.Log("Flipped");
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+        }
     }
 
     public override void MoveEnemy(Vector3 dir, float speed)
@@ -580,6 +679,7 @@ public class MinotaurController : EnemyController
         if (_rage >= 70)
         {
             minotaurState = MinotaurState.Rage;
+            
         }else if (_rage >= 35)
         {
             minotaurState = MinotaurState.Stressed;
@@ -593,6 +693,26 @@ public class MinotaurController : EnemyController
         if (previousMinotaurState != minotaurState)
         {
             Debug.Log("Rage in ("+_rage+") Updated to: "+minotaurState+" mode, with life(%): "+aux);
+            if (minotaurState == MinotaurState.Rage)
+            {
+                speed = speed + 0.25f;
+                
+                idleTime = idleTime - 0.5f;
+
+                var weapon = GetComponent<WeaponComponent>();
+                weapon.speed = weapon.speed + 1f;
+
+            }else if (minotaurState == MinotaurState.Stressed)
+            {
+                speed = speed + 0.25f;
+                idleTime = idleTime - 0.25f;
+                
+                var weapon = GetComponent<WeaponComponent>();
+                weapon.speed = weapon.speed + 2f;
+                
+            }
+            
+            
         }
         
     }
