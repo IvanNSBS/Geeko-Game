@@ -7,7 +7,7 @@ public class EffectManagerComponent : MonoBehaviour
 {
     // Start is called before the first frame update
     private float m_MoveSpeedMult = 1.0f; // max actor speed
-
+    private float m_BuffedMaxHP;
     public void SetSpeedMultiplier(float mult)
     {
         m_MoveSpeedMult = mult;

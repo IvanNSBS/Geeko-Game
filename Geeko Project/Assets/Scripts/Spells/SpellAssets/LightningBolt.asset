@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738a55899eff8644aafdf69ddadd287c, type: 3}
+  m_Name: LightningBolt
+  m_EditorClassIdentifier: 
+  m_SpellName: Lightning Bolt
+  m_SpellCooldown: 0
+  m_CastType: 0
+  m_SpellDuration: 0.8
+  m_SpellCharges: 1
+  m_UseAllAvailableCharges: 0
+  m_SpellImage: {fileID: 21300000, guid: 3e2c120638e1bee4fb7e5cf319cb39f0, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: ed16291e2dc7c444f90be509254c93fe, type: 3}
+  m_Prefab: {fileID: 6458069453319743111, guid: a3e74f2f40cd6c749ba6cc9ea20de48e,
+    type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 0}
+  m_Invalid:
+  - Item
+  - SpellUninteractive
+  - Room
+  m_Damage: 50
+  m_Material: {fileID: 2100000, guid: a16d7ef79595d43448203ebe04696d2b, type: 2}
+  m_Iterations: 3

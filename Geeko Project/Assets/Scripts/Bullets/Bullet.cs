@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ( other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") )
+        if ( targetTag.Equals("") || other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") )
         {
             if (other.CompareTag(targetTag)) 
             {

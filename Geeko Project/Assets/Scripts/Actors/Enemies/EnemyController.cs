@@ -161,6 +161,7 @@ public class EnemyController : MonoBehaviour
       //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
+        this.gameObject.layer = GameplayStatics.idxLayerEnemy;
     }
 
     public virtual void Update()
