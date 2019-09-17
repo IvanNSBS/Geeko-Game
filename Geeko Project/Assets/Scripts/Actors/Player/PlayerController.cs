@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
-            /* m_WeaponComponent.AttemptToShoot();
+             m_WeaponComponent.AttemptToShoot();
              var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
              var vec2 = new Vector2(vec3.x, vec3.y);
             //  m_WeaponComponent.Spiral(vec2, 36, 2, 1, m_WeaponComponent.speed);
