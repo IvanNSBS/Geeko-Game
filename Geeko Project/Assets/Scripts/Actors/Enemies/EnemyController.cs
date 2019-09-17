@@ -143,6 +143,7 @@ public class EnemyController : MonoBehaviour
     private float _basicMeleeAttackTime=0;
     private float _timeFollowing=0;
     private bool _followingTimeIsOver;
+    private bool _saveLastPos;
 
     /* TO-DO
     BOSS
@@ -473,10 +474,16 @@ public class EnemyController : MonoBehaviour
     {
         if (!_basicMeleeAttack) // if not used yet
         {
-            _randomDir = DirectionNormalized(transform.position, _player.position);
+            if (!_saveLastPos)
+            {
+                _saveLastPos = true;
+                _randomDir = DirectionNormalized(transform.position, _player.position);
+            }
+            
             if(_basicMeleeAttackTime <= 0)
             {
                 _basicMeleeAttackTime = basicMeleeAttackTime;
+                _saveLastPos = false;
                 StartCoroutine(BasicAttackCooldown());
             }
             else
@@ -772,7 +779,6 @@ public class EnemyController : MonoBehaviour
     {
         if (stateHasChanged) //reset timer
         {
-            Debug.Log("CHANGEDDDDDDDD");
             ResetFollowingTime();
         }
         
@@ -788,6 +794,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void SetTimeFollowing(float dale)
+    {
+        _timeFollowing = dale;
+    }
+    
     public void ResetFollowingTime()
     {
         _timeFollowing = maxTimeFollowing;
