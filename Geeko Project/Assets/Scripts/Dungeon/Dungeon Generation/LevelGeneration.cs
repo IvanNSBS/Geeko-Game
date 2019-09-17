@@ -7,7 +7,8 @@ public class LevelGeneration : MonoBehaviour
     Vector2 worldSize = new Vector2(4, 4);
     Room[,] rooms;
     List<Vector2> takenPositions = new List<Vector2>();
-    int gridSizeX, gridSizeY, numberOfRooms = 20;
+    int gridSizeX, gridSizeY;
+    public int numberOfRooms = 20;
     public GameObject roomWhiteObj;
     public Transform mapRoot;
     bool finishedDrawingMap;

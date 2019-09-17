@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb63ef9f75968443a698c70fee6fecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfRooms: 10
   roomWhiteObj: {fileID: 1975706786332780, guid: c0ea3923a6b14834dacbb66c0befab29,
     type: 3}
   mapRoot: {fileID: 708296057}
