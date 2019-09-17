@@ -244,8 +244,7 @@ public class WeaponComponent : MonoBehaviour
         funcsToRemove.Clear();
     }
     
-
-    private void Update()
+    private void FixedUpdate()
     {
         RunShootingFuncs();
     }
