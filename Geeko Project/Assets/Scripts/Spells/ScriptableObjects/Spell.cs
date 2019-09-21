@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum SpellCastType { FireAndForget, Concentration }
+[System.Serializable]
 public abstract class Spell : ScriptableObject
 {
     /*
@@ -26,6 +27,7 @@ public abstract class Spell : ScriptableObject
     public GameObject m_OnHitEffect; // FX to play if the spell hitted something
 
 
+    //TODO: Start using m_Invalid and create Collision Layer variable for spell
     public List<string> m_Invalid = SpellUtilities.invalid; // List of tags of entities
                                                             // that can't interact with the spell
     public abstract GameObject CastSpell(
@@ -39,6 +41,7 @@ public abstract class Spell : ScriptableObject
     public abstract void SpellCollisionTick(Collision2D target, GameObject src);
     public abstract void SpellTriggerEnter(Collider2D target, GameObject src);
     public abstract void SpellTriggerTick(Collider2D target, GameObject src);
+
 }
 
 [System.Serializable]

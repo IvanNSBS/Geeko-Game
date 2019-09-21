@@ -17,6 +17,7 @@ public class ProjectilSpell : Spell
             Vector2 speed = new Vector2(m_ProjectileSpeed * dir.x, m_ProjectileSpeed * dir.y);
 
             GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, target, this, (Vector3)spawn_pos, rot, spell_velocity:speed, tag:"SpellUninteractive");
+            // ParseSpellActions(this, obj, target);
             return obj;
         }
         return null;
@@ -43,7 +44,7 @@ public class ProjectilSpell : Spell
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
         if (m_OnHitEffect)
             SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
-        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
+        // SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
 
         if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
             GameObject.Destroy(src);
