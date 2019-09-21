@@ -23,6 +23,11 @@ public class SpellCastingComponent : MonoBehaviour
 
     public void SetTarget(GameObject target) { m_Target = target; }
 
+    public void SetSpellAt(int idx, Spell n_spell)
+    {
+        m_Spells[idx].m_Spell = n_spell;
+        m_Spells[idx].StartSpellData(this.gameObject, m_SpawnPoint, m_SpawnParent);
+    }
     public SpellData GetSpell(int idx) {
         if (m_Spells.Count > idx && idx >= 0) {
             return m_Spells[idx];

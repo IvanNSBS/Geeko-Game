@@ -35,39 +35,13 @@ public class PlayerUIManager : MonoBehaviour
 
             UpdateHealthBar(0); // Update Canvas HealthBar
         }
-
-
-        //TODO: Make function to update spell UI when you change your spell
         if (!m_SpellComponent)
         {
             m_SpellComponent = GetComponent<SpellCastingComponent>();
             if (!m_SpellComponent)
                 Debug.LogWarning("Actor SpellCastingComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
-            else {
-                if (m_SpellComponent.GetSpell(0) != null){ // If player does have Spell1 Set
-                    m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_SpellImage; // set UI Image
-                    m_Spell_1_Border.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_BorderImage; // Set UI border
-
-                    if (m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
-                        m_Spell_1_Charges.gameObject.SetActive(false);
-                    else
-                        m_Spell_1_Charges.text = m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
-                }
-                else m_Spell_1_Icon.gameObject.SetActive(false); // hide spell if player dont have it
-
-                if (m_SpellComponent.GetSpell(1) != null) // If player does have Spell2 Set
-                {
-                    m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_SpellImage; // Set UI Image
-                    m_Spell_2_Border.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_BorderImage; // Set UI Border
-
-                    if (m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
-                        m_Spell_2_Charges.gameObject.SetActive(false);
-                    else
-                        m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
-                }
-                else m_Spell_2_Icon.gameObject.SetActive(false); // hide spell if player dont have it
-            }
         }
+        UpdateSpellIconAndBorders();
     }
 
     public void UpdateHealthBar(float damage)
@@ -78,9 +52,36 @@ public class PlayerUIManager : MonoBehaviour
             m_HealthText.text = ((int)m_StatusComponent.GetCurrentHealth()).ToString() + " / " + ((int)m_StatusComponent.GetMaxHealth()).ToString(); // update txt
     }
 
-    public void Update()
+    public void UpdateSpellIconAndBorders()
     {
-        UpdateSpellUI();
+        if(m_SpellComponent)
+        {
+            if (m_SpellComponent.GetSpell(0) != null)
+            { // If player does have Spell1 Set
+                m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_SpellImage; // set UI Image
+                m_Spell_1_Border.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_BorderImage; // Set UI border
+
+                if (m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
+                    m_Spell_1_Charges.gameObject.SetActive(false);
+                else {
+                    m_Spell_1_Charges.text = m_SpellComponent.GetSpell(0).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
+                    m_Spell_1_Charges.gameObject.SetActive(true);
+                }
+            }
+            else m_Spell_1_Icon.gameObject.SetActive(false); // hide spell if player dont have it
+
+            if (m_SpellComponent.GetSpell(1) != null) // If player does have Spell2 Set
+            {
+                m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_SpellImage; // Set UI Image
+                m_Spell_2_Border.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_BorderImage; // Set UI Border
+
+                if (m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
+                    m_Spell_2_Charges.gameObject.SetActive(false);
+                else
+                    m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
+            }
+            else m_Spell_2_Icon.gameObject.SetActive(false); // hide spell if player dont have it
+        }
     }
 
     public void UpdateSpellUI()
@@ -113,6 +114,11 @@ public class PlayerUIManager : MonoBehaviour
                 m_Spell_2_CDtext.text = m_SpellComponent.GetSpell(1).m_RemainingCD.ToString("0.0"); // update remaining CD txt
             }
         }
+    }
+
+    public void Update()
+    {
+        UpdateSpellUI();
     }
 
 }

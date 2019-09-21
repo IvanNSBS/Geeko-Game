@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+using UnityEngine.Events;
+
 [CreateAssetMenu (menuName = "Spells/Lightning Bolt")]
 public class LightningBolt : Spell
 {
     [SerializeField] private float m_Damage = 1350.0f;
     [SerializeField] private Material m_Material;
     [SerializeField] private int m_Iterations = 3;
+    public UnityEvent Event;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner)
