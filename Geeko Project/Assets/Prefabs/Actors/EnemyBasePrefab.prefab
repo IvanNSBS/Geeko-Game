@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 3474619972925407005}
   - component: {fileID: 1509573632261984598}
   - component: {fileID: 264851452588485953}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyBasePrefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,8 +60,8 @@ MonoBehaviour:
   m_OnTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []
@@ -115,15 +115,19 @@ MonoBehaviour:
   stopShootToReload: 0
   explodeWhenDie: 0
   moveWhileShoot: 0
+  enemyMeleeDash: 0
   zigZagWalkHorizontal: 0
   zigZagWalkVertical: 0
   horizontalWalk: 0
   verticalWalk: 0
   randomWalk: 0
   followWalk: 0
-  iddleTime: 0
+  idleTime: 0
   wanderingTime: 0
+  maxTimeFollowing: 0
   dashTime: 0
+  basicMeleeAttackTime: 0
+  cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
   timeToReload: 0
   timeAmmo: 0
