@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using TMPro;
 internal class Timer : MonoBehaviour
 {
     private UnityEvent m_OnTick;
@@ -91,6 +91,16 @@ public static class GameplayStatics
             if (call_after != null)
                 call_after.Invoke();
         }
+    }
+
+    public static bool SpawnDmgPopup(Vector3 position, float damage)
+    {
+        var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopUp"));
+        var rect = obj.GetComponent<RectTransform>();
+        rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
+        var text = obj.GetComponent<TextMeshPro>();
+        text.text = Mathf.FloorToInt(damage).ToString();
+        return true;
     }
 
     public static bool IsObjInList(GameObject obj, List<GameObject> list)
