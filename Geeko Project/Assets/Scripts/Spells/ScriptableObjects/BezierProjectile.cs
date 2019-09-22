@@ -8,7 +8,8 @@ public class BezierProjectile : Spell
 {
     public float m_Damage = 10.0f;
     public float m_SpeedMult = 1.0f;
-
+    [SerializeField] public OnHitBehavior m_OnHit;
+    [SerializeField] public BehaviorData data;
     Vector2 v3_to_v2(Vector3 v) { return new Vector2(v.x, v.y); }
 
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
@@ -24,6 +25,11 @@ public class BezierProjectile : Spell
 
             obj.GetComponent<SpellPrefabManager>().m_TargetInitialPos = target == null ? v3_to_v2(owner.transform.position + 8 * dir) : v3_to_v2(target.transform.position);
             obj2.GetComponent<SpellPrefabManager>().m_TargetInitialPos = target == null ? v3_to_v2(owner.transform.position + 8 * dir) : v3_to_v2(target.transform.position);
+
+            if (m_OnHit != null) {
+                obj2.GetComponent<SpellPrefabManager>().AddTriggerEnter(m_OnHit.OnHit);
+                obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(m_OnHit.OnHit);
+            }
 
             return obj;
         }

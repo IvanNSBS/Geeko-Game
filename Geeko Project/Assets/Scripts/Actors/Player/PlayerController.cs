@@ -53,8 +53,14 @@ public class PlayerController : MonoBehaviour
         
         m_WeaponComponent.SetTargetingFunction(() =>
         {
-            var vec3 =  m_FirePoint.position - m_PlayerHand.transform.position;
-            return new Vector2(vec3.x, vec3.y);
+            if (!target)
+            {
+                var vec3 = m_FirePoint.position - m_PlayerHand.transform.position;
+                return new Vector2(vec3.x, vec3.y);
+            }
+            else
+                return target.transform.position - m_FirePoint.position;
+
         });
 
         if (!m_EffectManager)
@@ -68,10 +74,11 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
     public void FlipHand()
     {
+        Debug.Log("Flippin Sprite");
         if (!m_MovementComponent.GetSprite().flipX)
         {
             m_PlayerHand.transform.localPosition = new Vector3(0.66f, -1.303f, 0.0f);
-            m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 90.0f);
+            m_PlayerHand.transform.rotation = Quaternion.Euler(0, 0, 180.0f);
         }
         else
         {
@@ -83,6 +90,8 @@ public class PlayerController : MonoBehaviour
     public void AutoAim()
     {
         Vector3 pos = this.gameObject.transform.position;
+        float thresh = 5.0f;
+
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 7.0f);
 
         float min_dist = Mathf.Infinity;
@@ -103,7 +112,8 @@ public class PlayerController : MonoBehaviour
 
         if(target != null)
         {
-            Vector2 dir = (target.transform.position - pos).normalized;
+            Vector3 target_center = target.GetComponent<Collider2D>().bounds.center;
+            Vector2 dir = (target_center - gameObject.transform.position).normalized;
             m_MovementComponent.FlipSprite(dir.x);
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
@@ -119,14 +129,14 @@ public class PlayerController : MonoBehaviour
         m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime * m_EffectManager.GetSpeedMult(), m_Joystick.Vertical * Time.deltaTime * m_EffectManager.GetSpeedMult());
 
 
-        if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)
+        if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f && false)
         {
             float angle = Mathf.Atan2(m_Joystick.Vertical, m_Joystick.Horizontal) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
-            m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+            // m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
         }
-
         AutoAim();
+
 
         if (Input.GetButton("Fire1"))
         {

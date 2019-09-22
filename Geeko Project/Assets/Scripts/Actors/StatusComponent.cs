@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class StatusComponent : MonoBehaviour
 {
 
+
+    [SerializeField] private GameObject m_DMGPopup;
     [SerializeField] private float m_MaxHealth = 100.0f;
     [SerializeField] private bool m_CanUseIFrames = false;
     [SerializeField] private float m_IFrameTime = 0.2f;
@@ -17,6 +19,7 @@ public class StatusComponent : MonoBehaviour
     [SerializeField] private UnityEvent m_OnSetMaxHealth;// Useful/used to update things like UI without Update method
     [HideInInspector] public bool m_IsInvincible = false;  // used for iFrames. Mobs won't use it ever
     private float m_CurrentHealth;
+
 
     public float GetCurrentHealth() { return m_CurrentHealth; }
     public float GetMaxHealth() { return m_MaxHealth; }
@@ -62,6 +65,7 @@ public class StatusComponent : MonoBehaviour
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
             if (m_CurrentHealth <= 0.0f && m_OnDeath != null) m_OnDeath.Invoke(); //if the actor is dead, call death event
             if (m_OnTakeDamage != null) m_OnTakeDamage.Invoke(amount); // call take damage event
+            GameplayStatics.SpawnDmgPopup(transform.position, amount);
 
             StartCoroutine(FlashSprite(m_HitFlashDuration)); // flash the sprite material if it can
             if (m_CanUseIFrames) // if the actor can use i frames

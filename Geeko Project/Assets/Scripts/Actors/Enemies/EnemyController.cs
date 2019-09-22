@@ -363,22 +363,22 @@ public class EnemyController : MonoBehaviour
            
             _waitingHold = true;
             
-           StartCoroutine(StopHolding());
+           StartCoroutine(StopHolding((holdingTime/3)*2,holdingTime/3));
         }
         
         flipStaticEnemy();
     }
 
-    public IEnumerator StopHolding()
+    public virtual IEnumerator StopHolding(float timeToGetEnemyPos, float timeAfterGotEnemyPos)
     {
-        yield return new WaitForSeconds((holdingTime/3)*2);
+        yield return new WaitForSeconds(timeToGetEnemyPos);
         
         _lastPlayerPosition = _player.position;
         _lastEnemyPosition = transform.position;
         Debug.Log("Saving player position: "+_lastPlayerPosition);
         Debug.Log("Saving enemy position: " + _lastEnemyPosition);
         
-        yield return new WaitForSeconds(holdingTime/3);
+        yield return new WaitForSeconds(timeAfterGotEnemyPos);
         
         StartDashing();
         _holding = false;
