@@ -9,6 +9,7 @@ public class LevelGeneration : MonoBehaviour
     List<Vector2> takenPositions = new List<Vector2>();
     int gridSizeX, gridSizeY;
     public int numberOfRooms = 20;
+    public bool floorHasBoss = false;
     public GameObject roomWhiteObj;
     public Transform mapRoot;
     bool finishedDrawingMap;
@@ -25,7 +26,7 @@ public class LevelGeneration : MonoBehaviour
         CreateRooms(); //lays out the actual map
         SetRoomDoors(); //assigns the doors where rooms would connect
         DrawMap(); //instantiates objects to make up a map
-        GetComponent<SheetAssigner>().Assign(rooms); //passes room info to another script which handles generatating the level geometry
+        GetComponent<SheetAssigner>().Assign(rooms, floorHasBoss); //passes room info to another script which handles generatating the level geometry
     }
 
     private void Update()
@@ -39,7 +40,6 @@ public class LevelGeneration : MonoBehaviour
             {
                 DungeonManager dungeonManager = FindObjectOfType<DungeonManager>();
                 dungeonManager.SpawnPlayer();
-                dungeonManager.SpawnEnemy();
                 dungeonManager.GetDoorsReferences();
                 dungeonManager.OpenAllDoors();
                 minimapCam.GetRoomsReferences();
@@ -79,8 +79,15 @@ public class LevelGeneration : MonoBehaviour
             //finalize position
             if(i == numberOfRooms - 2)
             {
-                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 3);
-                takenPositions.Insert(0, checkPos);
+                if (floorHasBoss)
+                {
+                    rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 3);
+                    takenPositions.Insert(0, checkPos);
+                } else
+                {
+                    rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 1);
+                    takenPositions.Insert(0, checkPos);
+                }
             } else if (i == numberOfRooms - 3)
             {
                 rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 2);
