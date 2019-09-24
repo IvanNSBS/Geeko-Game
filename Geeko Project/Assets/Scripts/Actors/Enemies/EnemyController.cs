@@ -144,6 +144,7 @@ public class EnemyController : MonoBehaviour
     private float _timeFollowing=0;
     private bool _followingTimeIsOver;
     private bool _saveLastPos;
+    private bool _stopShootToReload;
 
     /* TO-DO
     BOSS
@@ -162,9 +163,15 @@ public class EnemyController : MonoBehaviour
       //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
+        _stopShootToReload = stopShootToReload;
         this.gameObject.layer = GameplayStatics.idxLayerEnemy;
     }
 
+    public SpriteRenderer GetSprite()
+    {
+        return _sprite;
+    }
+    
     public virtual void Update()
     {
         StateMachine();
@@ -302,7 +309,7 @@ public class EnemyController : MonoBehaviour
             }
         }else if (!_waiting && _followingTimeIsOver)
         {
-            Debug.Log("idling after followed");
+            print("idling after followed");
             _waiting = true;
             StartCoroutine(WaitingIdleTimeAfterFollowing(idleTime));
         }
@@ -321,8 +328,10 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator WaitingIdleTimeAfterFollowing(float seconds)
     {
+        print("ENTROUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         yield return new WaitForSeconds(seconds);
         _idle = false;
+        print("_idle :"+_idle+ " waited following. "+currState);
         _followingTimeIsOver = false;
         _waiting = false;
     }
@@ -358,7 +367,7 @@ public class EnemyController : MonoBehaviour
         
         if (!_waitingHold)
         {
-            Debug.Log("Holding:");
+            print("Holding:");
             
            
             _waitingHold = true;
@@ -375,8 +384,8 @@ public class EnemyController : MonoBehaviour
         
         _lastPlayerPosition = _player.position;
         _lastEnemyPosition = transform.position;
-        Debug.Log("Saving player position: "+_lastPlayerPosition);
-        Debug.Log("Saving enemy position: " + _lastEnemyPosition);
+        print("Saving player position: "+_lastPlayerPosition);
+        print("Saving enemy position: " + _lastEnemyPosition);
         
         yield return new WaitForSeconds(timeAfterGotEnemyPos);
         
@@ -506,7 +515,7 @@ public class EnemyController : MonoBehaviour
         if (!IsEnemyOutOfAmmo())
         {
             Shooting(); //temporary
-            if (stopShootToReload)
+            if (_stopShootToReload)
             {
                 StartCoroutine(WasteBullets());
             }
@@ -519,9 +528,9 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator WasteBullets()
     {
-        stopShootToReload = false;
+        _stopShootToReload = false;
         yield return new WaitForSeconds(timeAmmo);
-        stopShootToReload = true;
+        _stopShootToReload = true;
         _outOfAmmo = true;
     }
     
@@ -530,7 +539,7 @@ public class EnemyController : MonoBehaviour
         return _outOfAmmo;
     }
     
-    public void Reload()
+    public virtual void Reload()
     {
         if (!_reloading)
         {
@@ -566,7 +575,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private Vector3 ChooseTypeOfWalk() // return a direction to walk
+    public Vector3 ChooseTypeOfWalk() // return a direction to walk
     {
         //to-do circle
         
@@ -707,7 +716,17 @@ public class EnemyController : MonoBehaviour
         MoveEnemy(_randomDir,speed);
     }
 
-    private IEnumerator timeWalkingOneDirectionWandering()
+    public bool GetWandering()
+    {
+        return _wandering;
+    }
+
+    public void SetWandering(bool aux)
+    {
+        _wandering = aux;
+    }
+    
+    public IEnumerator timeWalkingOneDirectionWandering()
     {
         yield return new WaitForSeconds(timeWalkingOneDirection);
         if (_wandering && EnemyState.Wander == currState)
@@ -744,7 +763,7 @@ public class EnemyController : MonoBehaviour
         GameObject aux = null;
         if(_timeBtwShots <= 0)
         {
-            Vector3 centerBox = GetComponent<BoxCollider2D>().offset;
+            Vector3 centerBox = GetComponent<Collider2D>().offset;
             aux = Instantiate(projectile,transform.TransformPoint(centerBox), transform.rotation);
             aux.GetComponent<Projectile>().SetInstantiator(this.gameObject);
             _timeBtwShots = timeBtwShots;
