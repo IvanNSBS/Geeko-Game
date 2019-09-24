@@ -788,6 +788,12 @@ public class EnemyController : MonoBehaviour
             _sprite.flipX = false;
         }
     }
+
+    public Vector3 PlayerDirection()
+    {
+        Vector3 dir = DirectionNormalized(transform.position, _player.position);
+        return dir;
+    }
     
     public Vector3 DirectionNormalized(Vector3 current, Vector3 target)
     {

@@ -15,6 +15,8 @@ public class WormController : EnemyController
     public float minRandomWalk;
     public float maxRandomWalk;
     public int numberOfBullets;
+    public float amplitudeDegrees;
+    public int timesToWave;
 
     private bool _attack=false;
     private WeaponComponent _weaponComponent;
@@ -79,7 +81,18 @@ public class WormController : EnemyController
             wormAnimator.SetBool("isAttacking",true);
             wormAnimator.SetBool("isIdle",false);
             _shooting = true;
-            _weaponComponent.Linear(-_randomDirection, numberOfBullets, _weaponComponent.cooldown, _weaponComponent.speed);
+            var playerDirection = PlayerDirection();
+            Vector3 dir;
+            if (playerDirection.x > 0)
+            {
+                dir = Vector2.right;
+            }
+            else
+            {
+                dir = Vector2.left;
+            }
+            
+            _weaponComponent.SineWave(dir, amplitudeDegrees, numberOfBullets, timesToWave, _weaponComponent.cooldown,_weaponComponent.speed );
         }
         return null;
     }

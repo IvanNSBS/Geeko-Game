@@ -303,7 +303,9 @@ MonoBehaviour:
   timeToDisappear: 3
   minRandomWalk: 1
   maxRandomWalk: 10
-  numberOfBullets: 10
+  numberOfBullets: 8
+  amplitudeDegrees: 20
+  timesToWave: 1
 --- !u!114 &414872158913384734
 MonoBehaviour:
   m_ObjectHideFlags: 0
