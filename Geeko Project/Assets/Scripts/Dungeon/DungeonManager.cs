@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class DungeonManager : MonoBehaviour
 {
     public GameObject player;
-    public GameObject enemy; //temporary, delete
     private List<Door> doors = new List<Door>();
     private MiniMapCamera miniMapCamera;
 
@@ -20,16 +19,6 @@ public class DungeonManager : MonoBehaviour
     {
         GameObject m_player = Instantiate(player, Vector3.zero, Quaternion.identity);
         miniMapCamera.SetMinimapImageRef(m_player.GetComponentInChildren<RawImage>());
-    }
-
-    public void SpawnEnemy() //temporary, delete
-    {
-        if (enemy)
-        {
-            //GameObject e = Instantiate(enemy, Vector3.one, Quaternion.identity);
-            //e.GetComponent<StatusComponent>().Die = new UnityEvent();
-            //e.GetComponent<StatusComponent>().Die.AddListener(OpenAllDoors);
-        }
     }
     
     public void GetDoorsReferences()
@@ -66,11 +55,6 @@ public class DungeonManager : MonoBehaviour
         {
             CloseAllDoors();
             miniMapCamera.HideMinimap();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SpawnEnemy();
         }
     }
 }

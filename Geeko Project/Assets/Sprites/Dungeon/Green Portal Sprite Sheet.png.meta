@@ -1,79 +1,73 @@
 fileFormatVersion: 2
-guid: 50dec37121ce8794e8c38e990f7fb2f1
+guid: ad408ea97f3dba548aa9ef342cb1847f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6567741335770491151
-    second: Heal Totem Sprite Sheet_25
+      213: -2719994208978545080
+    second: Green Portal Sprite Sheet_0
   - first:
-      213: -851195839235975809
-    second: Heal Totem Sprite Sheet_0
+      213: 4394573487689358311
+    second: Green Portal Sprite Sheet_1
   - first:
-      213: -6142972679758277152
-    second: Heal Totem Sprite Sheet_1
+      213: -2285153152877451226
+    second: Green Portal Sprite Sheet_2
   - first:
-      213: 5737911935634877364
-    second: Heal Totem Sprite Sheet_2
+      213: 8165007364133127476
+    second: Green Portal Sprite Sheet_3
   - first:
-      213: -5481697737932692061
-    second: Heal Totem Sprite Sheet_3
+      213: -6852767344712249715
+    second: Green Portal Sprite Sheet_4
   - first:
-      213: -2162683529295547635
-    second: Heal Totem Sprite Sheet_4
+      213: -4848553832261993613
+    second: Green Portal Sprite Sheet_5
   - first:
-      213: -5905371360524152767
-    second: Heal Totem Sprite Sheet_5
+      213: 1943393458402971858
+    second: Green Portal Sprite Sheet_6
   - first:
-      213: -5781621341478753758
-    second: Heal Totem Sprite Sheet_6
+      213: 2502851955874185411
+    second: Green Portal Sprite Sheet_7
   - first:
-      213: -7751730153935079146
-    second: Heal Totem Sprite Sheet_7
+      213: 824154499171795023
+    second: Green Portal Sprite Sheet_8
   - first:
-      213: -6272001939483734068
-    second: Heal Totem Sprite Sheet_8
+      213: -6141282753041911926
+    second: Green Portal Sprite Sheet_9
   - first:
-      213: -2884074593545203013
-    second: Heal Totem Sprite Sheet_9
+      213: -7114761891093729983
+    second: Green Portal Sprite Sheet_10
   - first:
-      213: 4756765669667585606
-    second: Heal Totem Sprite Sheet_10
+      213: -2036634387726229738
+    second: Green Portal Sprite Sheet_11
   - first:
-      213: -3810498799773785064
-    second: Heal Totem Sprite Sheet_11
+      213: -7546389005682541580
+    second: Green Portal Sprite Sheet_12
   - first:
-      213: -1290060498527196457
-    second: Heal Totem Sprite Sheet_12
+      213: -5536896186241417835
+    second: Green Portal Sprite Sheet_13
   - first:
-      213: -6216833462901399636
-    second: Heal Totem Sprite Sheet_13
+      213: -3343418601671857258
+    second: Green Portal Sprite Sheet_14
   - first:
-      213: -2170425164647598101
-    second: Heal Totem Sprite Sheet_14
+      213: 5996213593317683434
+    second: Green Portal Sprite Sheet_15
   - first:
-      213: 684152200970077154
-    second: Heal Totem Sprite Sheet_15
+      213: 6605544101886951558
+    second: Green Portal Sprite Sheet_16
   - first:
-      213: 1273519123814704712
-    second: Heal Totem Sprite Sheet_16
+      213: -1858535691341890566
+    second: Green Portal Sprite Sheet_17
   - first:
-      213: -7246261232706580285
-    second: Heal Totem Sprite Sheet_17
+      213: -5241366967574182643
+    second: Green Portal Sprite Sheet_18
   - first:
-      213: -4058350543882667170
-    second: Heal Totem Sprite Sheet_18
+      213: -212738081123052511
+    second: Green Portal Sprite Sheet_19
   - first:
-      213: 749444504494887602
-    second: Heal Totem Sprite Sheet_19
+      213: -7978539777218433475
+    second: Green Portal Sprite Sheet_20
   - first:
-      213: 3496109318526988508
-    second: Heal Totem Sprite Sheet_20
-  - first:
-      213: -3358441333829936922
-    second: Heal Totem Sprite Sheet_21
-  - first:
-      213: -8882339122931988219
-    second: Heal Totem Sprite Sheet_22
+      213: 6959049874771384867
+    second: Green Portal Sprite Sheet_21
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -170,484 +164,463 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_0
+      name: Green Portal Sprite Sheet_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 635cfe1cb7db1fe44a9fadc60e28dc93
-      internalID: -851195839235975809
+      spriteID: 44f1c2b7ee1887e4dba9073f36969c15
+      internalID: -2719994208978545080
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_1
+      name: Green Portal Sprite Sheet_1
       rect:
         serializedVersion: 2
-        x: 39
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0677e7e4729ca14f9c6adafdf685193
-      internalID: -6142972679758277152
+      spriteID: 961e78e2793b5884398839886c93953b
+      internalID: 4394573487689358311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_2
+      name: Green Portal Sprite Sheet_2
       rect:
         serializedVersion: 2
-        x: 79
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca3ec307b86b6e842900939feed5f889
-      internalID: 5737911935634877364
+      spriteID: dd6f7c67af6fbc8409f479b79c5eb272
+      internalID: -2285153152877451226
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_3
+      name: Green Portal Sprite Sheet_3
       rect:
         serializedVersion: 2
-        x: 117
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acf2ff8484b4dd94289a36d71d412fd5
-      internalID: -5481697737932692061
+      spriteID: b79855523868d844fb56315a8af73c3d
+      internalID: 8165007364133127476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_4
+      name: Green Portal Sprite Sheet_4
       rect:
         serializedVersion: 2
-        x: 150
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e63f5681a0ba98d41bc203a2c7fba32f
-      internalID: -2162683529295547635
+      spriteID: 64234a9e515088e42ac105f8f5b7a0d7
+      internalID: -6852767344712249715
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_5
+      name: Green Portal Sprite Sheet_5
       rect:
         serializedVersion: 2
-        x: 184
-        y: 139
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecba0a30f198aae4abde0564efabb4a8
-      internalID: -5905371360524152767
+      spriteID: 06014c32bbd146948bec9a7549da4ac7
+      internalID: -4848553832261993613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_6
+      name: Green Portal Sprite Sheet_6
       rect:
         serializedVersion: 2
-        x: 4
-        y: 99
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d4e483b61603d24a84b254d77bc2396
-      internalID: -5781621341478753758
+      spriteID: 6da014d7c3322f34d8350753e6319858
+      internalID: 1943393458402971858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_7
+      name: Green Portal Sprite Sheet_7
       rect:
         serializedVersion: 2
-        x: 40
-        y: 99
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 417bb9db2242f9942beadd79cffb15d9
-      internalID: -7751730153935079146
+      spriteID: e9960d253bd91b1469036f7facf1bfc9
+      internalID: 2502851955874185411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_8
+      name: Green Portal Sprite Sheet_8
       rect:
         serializedVersion: 2
-        x: 84
-        y: 99
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f58b074c4101f734fa625716a736904c
-      internalID: -6272001939483734068
+      spriteID: 03f19906b1862d646a086be09fba11e1
+      internalID: 824154499171795023
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_9
+      name: Green Portal Sprite Sheet_9
       rect:
         serializedVersion: 2
-        x: 129
-        y: 99
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed7fe9a8e21dd024a9090822e9c4663f
-      internalID: -2884074593545203013
+      spriteID: 459abf34056a85b4f98c445df63bf8ab
+      internalID: -6141282753041911926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_10
+      name: Green Portal Sprite Sheet_10
       rect:
         serializedVersion: 2
-        x: 173
-        y: 99
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd6ecbe0ee801574ea7dd8e24c6180aa
-      internalID: 4756765669667585606
+      spriteID: 65704c338105e624d995ddd7a36f9176
+      internalID: -7114761891093729983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_11
+      name: Green Portal Sprite Sheet_11
       rect:
         serializedVersion: 2
-        x: 6
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 731e82977df6c114b890a21f5b76df8d
-      internalID: -3810498799773785064
+      spriteID: 0f78c4239ba6a8847aa76970242ae040
+      internalID: -2036634387726229738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_12
+      name: Green Portal Sprite Sheet_12
       rect:
         serializedVersion: 2
-        x: 41
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8349d5cdd7e9f684e90237757da6b4f8
-      internalID: -1290060498527196457
+      spriteID: 21d529915bce3bc47a67db53cc9ed83b
+      internalID: -7546389005682541580
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_13
+      name: Green Portal Sprite Sheet_13
       rect:
         serializedVersion: 2
-        x: 85
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e713908fa90a607468f08c8484ce68fb
-      internalID: -6216833462901399636
+      spriteID: 6aca20cd9ba49a74bbcfb750089f2202
+      internalID: -5536896186241417835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_14
+      name: Green Portal Sprite Sheet_14
       rect:
         serializedVersion: 2
-        x: 126
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 970606a5b8f5e5944ac8d569491f4c1d
-      internalID: -2170425164647598101
+      spriteID: 28228664f94b8d74fa44ed122e82a053
+      internalID: -3343418601671857258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_15
+      name: Green Portal Sprite Sheet_15
       rect:
         serializedVersion: 2
-        x: 166
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10d3b0456dea3584b8b25a558b1a60b9
-      internalID: 684152200970077154
+      spriteID: edbb2ef7ce63f7847856e4faf88524f7
+      internalID: 5996213593317683434
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_16
+      name: Green Portal Sprite Sheet_16
       rect:
         serializedVersion: 2
-        x: 200
-        y: 51
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb6bd4da48be02d488b5f8df1712b4c9
-      internalID: 1273519123814704712
+      spriteID: bd7f65472106a0140b82100e8bb9f3cb
+      internalID: 6605544101886951558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_17
+      name: Green Portal Sprite Sheet_17
       rect:
         serializedVersion: 2
-        x: 5
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c554042973e64de4c82bc4e04d0239ab
-      internalID: -7246261232706580285
+      spriteID: 62940566e5952a94c8ce8f19bc916e37
+      internalID: -1858535691341890566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_18
+      name: Green Portal Sprite Sheet_18
       rect:
         serializedVersion: 2
-        x: 43
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16aa2725ea759d84d9ac19d4280090f4
-      internalID: -4058350543882667170
+      spriteID: e16239d90c7a11443972c1d72c52d03b
+      internalID: -5241366967574182643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_19
+      name: Green Portal Sprite Sheet_19
       rect:
         serializedVersion: 2
-        x: 87
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fa71eae5f1194446bf905ecf9ee3d39
-      internalID: 749444504494887602
+      spriteID: 7a9b36e744d9fdc429173964e07dcd96
+      internalID: -212738081123052511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_20
+      name: Green Portal Sprite Sheet_20
       rect:
         serializedVersion: 2
-        x: 127
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e23bb36bf4c90a34192b95070d6cc058
-      internalID: 3496109318526988508
+      spriteID: a89fbf6ca97826a429ec0e16b32b282f
+      internalID: -7978539777218433475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_21
+      name: Green Portal Sprite Sheet_21
       rect:
         serializedVersion: 2
-        x: 165
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 894f031125607f443891cca02526e2df
-      internalID: -3358441333829936922
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heal Totem Sprite Sheet_22
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 11
-        width: 24
-        height: 24
-      alignment: 9
-      pivot: {x: 0.5, y: 0.39}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 873fcd7eeae4c7445a4a5666f9bf4068
-      internalID: -8882339122931988219
+      spriteID: 5cf08f6f629a8b94ea3d9cab8ea62167
+      internalID: 6959049874771384867
       vertices: []
       indices: 
       edges: []

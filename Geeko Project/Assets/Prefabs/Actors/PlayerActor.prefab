@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 194.27751
-    y: 824.5707
-    width: 274.52847
-    height: 69.17999
+    x: 191.14508
+    y: 838.0834
+    width: 270.1021
+    height: 70.31366
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 177.96481
-    y: 51.532475
+    x: 187.26862
+    y: 65.8808
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -398,8 +398,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.05876
-    y: 34.628075
+    x: 105.956245
+    y: 35.526962
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
