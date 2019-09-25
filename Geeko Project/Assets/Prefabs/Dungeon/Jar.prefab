@@ -151,8 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootTable:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
-    dropRate: 100
-  dropChance: 10
+    dropRate: 10
+  - item: {fileID: 6230612350986342475, guid: b56c73ed705f1b346bb549adfc5b7a37, type: 3}
+    dropRate: 90
+  dropChance: 50
 --- !u!114 &6674505607288086007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 30
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
