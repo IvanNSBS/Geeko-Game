@@ -136,11 +136,11 @@ public class PlayerController : MonoBehaviour
         }
         AutoAim();
 
-
+        /*
         if (Input.GetButton("Fire1"))
         {
             m_WeaponComponent.AttemptToShoot();
         }
-
+        */
     }
 }
