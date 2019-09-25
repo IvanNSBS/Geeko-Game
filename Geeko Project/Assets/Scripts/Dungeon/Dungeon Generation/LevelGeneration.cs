@@ -39,7 +39,11 @@ public class LevelGeneration : MonoBehaviour
             if (GetComponent<SheetAssigner>().finished)
             {
                 DungeonManager dungeonManager = FindObjectOfType<DungeonManager>();
-                dungeonManager.SpawnPlayer();
+                if(numberOfRooms == 10)
+                {
+                    dungeonManager.SpawnPlayer();
+                }
+                dungeonManager.RepositionPlayer();
                 dungeonManager.GetDoorsReferences();
                 dungeonManager.OpenAllDoors();
                 minimapCam.GetRoomsReferences();

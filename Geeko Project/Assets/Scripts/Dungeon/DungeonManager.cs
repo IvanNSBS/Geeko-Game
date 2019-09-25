@@ -10,15 +10,32 @@ public class DungeonManager : MonoBehaviour
     private List<Door> doors = new List<Door>();
     private MiniMapCamera miniMapCamera;
 
-    private void Start()
+    void Start()
     {
-        miniMapCamera = FindObjectOfType<MiniMapCamera>();
+        GameObject.DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Vai tomar no cu Unity");
     }
 
     public void SpawnPlayer()
     {
+        miniMapCamera = FindObjectOfType<MiniMapCamera>();
         GameObject m_player = Instantiate(player, Vector3.zero, Quaternion.identity);
+        GameObject.DontDestroyOnLoad(m_player);
         miniMapCamera.SetMinimapImageRef(m_player.GetComponentInChildren<RawImage>());
+    }
+
+    public void RepositionPlayer()
+    {
+        player.transform.position = Vector3.zero;
+    }
+
+    public void UpdatePlayerReference()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     
     public void GetDoorsReferences()
