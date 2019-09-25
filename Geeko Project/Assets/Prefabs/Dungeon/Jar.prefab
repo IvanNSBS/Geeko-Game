@@ -151,9 +151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootTable:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
-    dropRate: 10
+    dropRate: 20
   - item: {fileID: 6230612350986342475, guid: b56c73ed705f1b346bb549adfc5b7a37, type: 3}
-    dropRate: 90
+    dropRate: 80
   dropChance: 50
 --- !u!114 &6674505607288086007
 MonoBehaviour:
