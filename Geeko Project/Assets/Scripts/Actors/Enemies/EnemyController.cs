@@ -328,10 +328,8 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator WaitingIdleTimeAfterFollowing(float seconds)
     {
-        print("ENTROUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         yield return new WaitForSeconds(seconds);
         _idle = false;
-        print("_idle :"+_idle+ " waited following. "+currState);
         _followingTimeIsOver = false;
         _waiting = false;
     }

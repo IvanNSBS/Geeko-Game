@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath() { Debug.Log("Player Has Died.."); }
     public void FlipHand()
     {
-        Debug.Log("Flippin Sprite");
         if (!m_MovementComponent.GetSprite().flipX)
         {
             m_PlayerHand.transform.localPosition = new Vector3(0.66f, -1.303f, 0.0f);
