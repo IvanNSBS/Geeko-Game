@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2676660101553497827}
   - component: {fileID: 2676660101553497853}
   - component: {fileID: 347237573189041442}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Minotaur
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 4000
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2

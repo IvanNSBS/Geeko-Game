@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6024624553713930177}
   - component: {fileID: 8345083909087059927}
   - component: {fileID: 6268389248828646239}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Imp
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 100
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
@@ -183,8 +184,8 @@ MonoBehaviour:
   m_OnTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []
@@ -250,10 +251,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.027222186, y: -0.086203575}
+  m_Offset: {x: -0.018047005, y: 0.053717494}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.35}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -261,5 +262,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9455556, y: 0.82759285}
+  m_Size: {x: 0.78040284, y: 0.7587793}
   m_EdgeRadius: 0
