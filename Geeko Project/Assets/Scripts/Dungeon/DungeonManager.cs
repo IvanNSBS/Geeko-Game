@@ -14,12 +14,7 @@ public class DungeonManager : MonoBehaviour
     {
         GameObject.DontDestroyOnLoad(this.gameObject);
     }
-
-    private void OnDestroy()
-    {
-        Debug.Log("Vai tomar no cu Unity");
-    }
-
+    
     public void SpawnPlayer()
     {
         miniMapCamera = FindObjectOfType<MiniMapCamera>();
