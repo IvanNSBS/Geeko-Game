@@ -48,7 +48,7 @@ public class DestructibleObject : MonoBehaviour
     {
         if (lootManager)
         {
-            lootManager.calculateLoot();
+            lootManager.CalculateLoot();
         }
     }
 }

@@ -6,6 +6,7 @@ public class Encounter : MonoBehaviour
 {
     public GameObject Enemies;
     public GameObject Enviroment;
+    public LootManager[] lootManagers;
 
     private void Start()
     {
@@ -21,6 +22,13 @@ public class Encounter : MonoBehaviour
     public void SpawnEnemies()
     {
         Enemies.SetActive(true);
+        if (lootManagers != null)
+        {
+            foreach(LootManager lootManager in lootManagers)
+            {
+                lootManager.CalculateLoot();
+            }
+        }
     }
 
     public void ActivateEnviroment()

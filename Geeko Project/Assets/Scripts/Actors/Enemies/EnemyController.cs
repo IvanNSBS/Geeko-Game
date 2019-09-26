@@ -178,6 +178,7 @@ public class EnemyController : MonoBehaviour
     
     public virtual void Update()
     {
+        print(currState);
         StateMachine();
 
         previousState = currState;
@@ -887,6 +888,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
+        print("Death function called");
         if (!_dead)
         {
             StopMovement();

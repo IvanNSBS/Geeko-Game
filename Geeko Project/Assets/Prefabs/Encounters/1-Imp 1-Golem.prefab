@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5334947429557580701}
   - component: {fileID: 4072245563677062441}
   m_Layer: 0
-  m_Name: 2-Imp 1-Golem Encounter
+  m_Name: 1-Imp 1-Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -557,15 +557,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2540252504282051862, guid: 9657d5bac299cac4dba87151fbad66c2,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 2888448353466815679, guid: 9657d5bac299cac4dba87151fbad66c2,
         type: 3}
       propertyPath: dropChance
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2540252504282051862, guid: 9657d5bac299cac4dba87151fbad66c2,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9657d5bac299cac4dba87151fbad66c2, type: 3}
