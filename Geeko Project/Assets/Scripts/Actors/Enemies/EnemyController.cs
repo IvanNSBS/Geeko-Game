@@ -913,7 +913,11 @@ public class EnemyController : MonoBehaviour
 
         StartCoroutine(FadingSequence());
 
-       //GetComponent<LootManager>().calculateLoot();
+        var loot = GetComponent<LootManager>();
+        if (loot)
+        {
+            loot.CalculateLoot();
+        }
     }
     
     public virtual IEnumerator FadingSequence()
