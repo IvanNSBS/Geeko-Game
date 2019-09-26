@@ -172,6 +172,7 @@ public class RoomInstance : MonoBehaviour
                     random -= EncounterRate[spawn];
                 }
                 encounter = Instantiate(Encounters[spawn], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter.transform.parent = this.gameObject.transform;
                 encounter.HideEnemies();
                 break;
             case 2:

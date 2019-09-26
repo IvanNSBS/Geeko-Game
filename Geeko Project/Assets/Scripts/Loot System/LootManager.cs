@@ -14,7 +14,7 @@ public class LootManager : MonoBehaviour
     public List<Loot> lootTable = new List<Loot>();
     public int dropChance;
     
-    public void calculateLoot()
+    public void CalculateLoot()
     {
         int m_dropChance = Random.Range(0, 101);
         if(m_dropChance > dropChance)
@@ -36,8 +36,8 @@ public class LootManager : MonoBehaviour
             {
                 if (randomValue <= lootTable[j].dropRate)
                 {
-                    Instantiate(lootTable[j].item, transform.position, Quaternion.identity);
-                    //Destroy(this.gameObject);
+                    GameObject go = Instantiate(lootTable[j].item, transform.position, Quaternion.identity);
+                    go.transform.parent = this.transform.parent;
                     return;
                 }
                 randomValue -= lootTable[j].dropRate;

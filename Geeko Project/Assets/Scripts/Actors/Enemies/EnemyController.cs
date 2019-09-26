@@ -174,6 +174,7 @@ public class EnemyController : MonoBehaviour
     
     public virtual void Update()
     {
+        print(currState);
         StateMachine();
 
         previousState = currState;
@@ -859,6 +860,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
+        print("Death function called");
         if (!_dead)
         {
             if (explodeWhenDie)
@@ -876,7 +878,11 @@ public class EnemyController : MonoBehaviour
             Tween tween = aux.DOColor(new Color(255,255,255,0),5);
             
             StartCoroutine(DestroyEnemy(2.5f,tween)); //default time
-            GetComponent<LootManager>().calculateLoot();
+            LootManager lootManager = GetComponent<LootManager>();
+            if (lootManager)
+            {
+                lootManager.CalculateLoot();
+            }
             Debug.Log("enemy killed");
             _dead = true;
         }

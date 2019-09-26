@@ -216,6 +216,108 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2150661034671738837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5867886734948271637}
+  - component: {fileID: 8595083102865854296}
+  m_Layer: 0
+  m_Name: Random Totem Spawn (1)
+  m_TagString: Enemy
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5867886734948271637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150661034671738837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.25, y: -2.74, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6182828399146527290}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8595083102865854296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150661034671738837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
+    dropRate: 33
+  - item: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
+    dropRate: 33
+  - item: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+    dropRate: 33
+  dropChance: 100
+--- !u!1 &2518046973651880161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8152127058212341051}
+  - component: {fileID: 3395232603581367826}
+  m_Layer: 0
+  m_Name: Random Totem Spawn
+  m_TagString: Enemy
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8152127058212341051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518046973651880161}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.25, y: -2.74, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6182828399146527290}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3395232603581367826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518046973651880161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
+    dropRate: 33
+  - item: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
+    dropRate: 33
+  - item: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+    dropRate: 33
+  dropChance: 100
 --- !u!1 &3339266924024502087
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +426,57 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &3968525627346749988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74909608436893448}
+  - component: {fileID: 5061170775131731593}
+  m_Layer: 0
+  m_Name: Random Totem Spawn (3)
+  m_TagString: Enemy
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &74909608436893448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968525627346749988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.25, y: 3.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6182828399146527290}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5061170775131731593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968525627346749988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
+    dropRate: 33
+  - item: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
+    dropRate: 33
+  - item: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+    dropRate: 33
+  dropChance: 100
 --- !u!1 &4273374893618884413
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +909,57 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &7465027601633277295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3160678067536827195}
+  - component: {fileID: 7595471136318271900}
+  m_Layer: 0
+  m_Name: Random Totem Spawn (2)
+  m_TagString: Enemy
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3160678067536827195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465027601633277295}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.25, y: 3.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6182828399146527290}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7595471136318271900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7465027601633277295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
+    dropRate: 33
+  - item: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
+    dropRate: 33
+  - item: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+    dropRate: 33
+  dropChance: 100
 --- !u!1 &7607331989753047933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,6 +1917,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies: {fileID: 8867524527411662552}
   Enviroment: {fileID: 7977021449208919664}
+  lootManagers:
+  - {fileID: 3395232603581367826}
+  - {fileID: 8595083102865854296}
+  - {fileID: 7595471136318271900}
+  - {fileID: 5061170775131731593}
 --- !u!1 &8867524527411662552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,10 +1949,14 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 570800764623395553}
-  - {fileID: 9182259751173216893}
-  - {fileID: 2105569932801754109}
-  - {fileID: 7746339571220588574}
+  - {fileID: 8152127058212341051}
+  - {fileID: 5867886734948271637}
+  - {fileID: 3160678067536827195}
+  - {fileID: 74909608436893448}
+  - {fileID: 3867375048957298142}
+  - {fileID: 5691920465390247010}
+  - {fileID: 5356728314822900021}
+  - {fileID: 8581156203307126049}
   m_Father: {fileID: 9105839921458477598}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1855,7 +2068,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1001 &1934278385321800044
+--- !u!1001 &2924989732066389587
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1865,22 +2078,22 @@ PrefabInstance:
     - target: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_Name
-      value: Fire Totem (2)
+      value: Fire Totem
       objectReference: {fileID: 0}
     - target: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.25
+      value: -6.387666
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.25
+      value: 3.013223
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
@@ -1890,17 +2103,17 @@ PrefabInstance:
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
@@ -1910,7 +2123,7 @@ PrefabInstance:
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
         type: 3}
@@ -1929,88 +2142,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
---- !u!4 &570800764623395553 stripped
+--- !u!4 &3867375048957298142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
     type: 3}
-  m_PrefabInstance: {fileID: 1934278385321800044}
+  m_PrefabInstance: {fileID: 2924989732066389587}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3003820248324183273
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6182828399146527290}
-    m_Modifications:
-    - target: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_Name
-      value: Purple Totem
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
---- !u!4 &2105569932801754109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
-    type: 3}
-  m_PrefabInstance: {fileID: 3003820248324183273}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6852029913965199114
+--- !u!1001 &4864360600099854901
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2022,15 +2160,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Purple Totem (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.25
+      value: -6.29
       objectReference: {fileID: 0}
     - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.74
+      value: -2.7
       objectReference: {fileID: 0}
     - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
         type: 3}
@@ -2060,7 +2203,7 @@ PrefabInstance:
     - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
         type: 3}
@@ -2079,89 +2222,169 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
---- !u!4 &7746339571220588574 stripped
+--- !u!4 &8581156203307126049 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
     type: 3}
-  m_PrefabInstance: {fileID: 6852029913965199114}
+  m_PrefabInstance: {fileID: 4864360600099854901}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7084719855382802928
+--- !u!1001 &7954493649280157840
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 6182828399146527290}
     m_Modifications:
-    - target: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_Name
-      value: Fire Totem (3)
+      value: Leaf Totem
       objectReference: {fileID: 0}
-    - target: {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.25
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.25
+      value: -2.66
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
---- !u!4 &9182259751173216893 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
+--- !u!4 &5691920465390247010 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 2106571593847434125, guid: 7049e29c95f6e9f47bbb41362ee3c7df,
+  m_CorrespondingSourceObject: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
     type: 3}
-  m_PrefabInstance: {fileID: 7084719855382802928}
+  m_PrefabInstance: {fileID: 7954493649280157840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &9133623498484411937
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6182828399146527290}
+    m_Modifications:
+    - target: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_Name
+      value: Purple Totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.379239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.0763266
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+--- !u!4 &5356728314822900021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3789719899100239636, guid: 0031d989c2b388347bc33b10c5944155,
+    type: 3}
+  m_PrefabInstance: {fileID: 9133623498484411937}
   m_PrefabAsset: {fileID: 0}
