@@ -1521,7 +1521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb63ef9f75968443a698c70fee6fecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRooms: 20
+  numberOfRooms: 10
   floorHasBoss: 0
   roomWhiteObj: {fileID: 1975706786332780, guid: c0ea3923a6b14834dacbb66c0befab29,
     type: 3}
@@ -1774,6 +1774,100 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4819a7212f9688a488d94486bc4ce5ba, type: 3}
+--- !u!1001 &3782861305379243045
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_Name
+      value: Leaf Totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304754, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304766, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304766, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349131150698304766, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884537589948025690, guid: 29fb77679d86844469bf4a1f76bfa994,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
 --- !u!1001 &3789719898799628558
 PrefabInstance:
   m_ObjectHideFlags: 0
