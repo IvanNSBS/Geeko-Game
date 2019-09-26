@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2676660101553497827}
   - component: {fileID: 2676660101553497853}
   - component: {fileID: 347237573189041442}
+  - component: {fileID: 197929780408758260}
   m_Layer: 10
   m_Name: Minotaur
   m_TagString: Enemy
@@ -322,6 +323,22 @@ MonoBehaviour:
   speed: 5
   cooldown: 0.2
   targetTag: Player
+--- !u!114 &197929780408758260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676660101553497850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
+    dropRate: 100
+  dropChance: 100
 --- !u!1 &3924634654898372090
 GameObject:
   m_ObjectHideFlags: 0

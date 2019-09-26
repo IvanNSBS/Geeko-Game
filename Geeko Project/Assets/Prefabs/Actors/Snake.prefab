@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6230612350986342471}
   - component: {fileID: 6230612350986342470}
   - component: {fileID: 6230612350986342473}
+  - component: {fileID: 5863878795443904566}
   m_Layer: 10
   m_Name: Snake
   m_TagString: Enemy
@@ -121,10 +122,9 @@ MonoBehaviour:
   currState: 7
   enemyType: 0
   projectile: {fileID: 0}
-  timeToStartActions: 2
-  sightRange: 7
-  attackRange: 4
-  speed: 1.8
+  sightRange: 8
+  attackRange: 6
+  speed: 2
   dashSpeed: 10
   stopShootToReload: 0
   explodeWhenDie: 0
@@ -136,13 +136,13 @@ MonoBehaviour:
   verticalWalk: 0
   randomWalk: 0
   followWalk: 0
-  idleTime: 3
+  idleTime: 1.5
   wanderingTime: 2
   maxTimeFollowing: 3
-  dashTime: 0.2
+  dashTime: 0.3
   basicMeleeAttackTime: 0
   cooldownBasicMeleeAttackTime: 0
-  holdingTime: 3
+  holdingTime: 1.5
   timeToReload: 0
   timeAmmo: 0
   timeBtwShots: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DMGPopup: {fileID: 0}
-  m_MaxHealth: 250
+  m_MaxHealth: 500
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -275,3 +275,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8511393, y: 0.7906738}
   m_EdgeRadius: 0
+--- !u!114 &5863878795443904566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230612350986342475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
+    dropRate: 100
+  dropChance: 2
