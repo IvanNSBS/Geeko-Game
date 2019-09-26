@@ -48,8 +48,9 @@ public class EnemyController : MonoBehaviour
     [Header("Bullet Prefab")]
     [Tooltip("If the enemy is ranged, choose the bullet prefab")]
     public GameObject projectile;
-    
-    [Header("Enemy Attributes")]
+
+    [Header("Enemy Attributes")] [Tooltip("How long the enemy will start his actions when it spawns")]
+    public float timeToStartActions;
     [Tooltip("The range that the enemy sees the opponent")]
     public float sightRange; 
     [Tooltip("The range of the attack of the enemy that triggers its attack")]
@@ -145,6 +146,7 @@ public class EnemyController : MonoBehaviour
     private bool _followingTimeIsOver;
     private bool _saveLastPos;
     private bool _stopShootToReload;
+    private bool _firstIdle;
 
     /* TO-DO
     BOSS
@@ -165,6 +167,8 @@ public class EnemyController : MonoBehaviour
         _timeBtwShots = timeBtwShots;
         _stopShootToReload = stopShootToReload;
         this.gameObject.layer = GameplayStatics.idxLayerEnemy;
+        ResetFollowingTime();
+        _firstIdle = true;
     }
 
     public SpriteRenderer GetSprite()
@@ -280,13 +284,27 @@ public class EnemyController : MonoBehaviour
     {
         _movementComponent.StopMovement();
     }
-    
+
+    public IEnumerator FirstIdle()
+    {
+        yield return new WaitForSeconds(timeToStartActions);
+        _firstIdle = false;
+        _waiting = false;
+        _idle = false;
+    }
     public virtual void Idle()
     {
         StopMovement();
        // Debug.Log("iddleling");
-        
-        if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
+
+       if (!_waiting && _firstIdle)
+       {
+           _waiting = true;
+           _idle = true;
+           StartCoroutine(FirstIdle());
+       }
+       
+        else if ( !_waiting && _dashed ) //_dashed == cooldown in concept for while, to give some time to wander again
         {
             _waiting = true;
            
