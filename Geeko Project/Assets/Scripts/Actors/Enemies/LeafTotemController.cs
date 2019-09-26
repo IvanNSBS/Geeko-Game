@@ -160,7 +160,6 @@ public class LeafTotemController : EnemyController
       {
          for (int i = 0; i < transform.childCount; i++)
          {
-            print("flipped");
             var child = transform.GetChild(i);
             child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
          }
