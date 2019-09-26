@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4247983406921343959}
   - component: {fileID: 8238340072252030824}
   - component: {fileID: 5167680307087513385}
+  - component: {fileID: 650257072878935505}
   m_Layer: 10
   m_Name: Fire Totem
   m_TagString: Enemy
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4035746850229498089, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+  m_Sprite: {fileID: 5494490866752732285, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -121,11 +122,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currState: 7
   enemyType: 1
-  projectile: {fileID: 7306324552287374457, guid: ef68a79f978e1af49afe280a45d653b8,
+  projectile: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
     type: 3}
   timeToStartActions: 2
   sightRange: 0
-  attackRange: 9
+  attackRange: 15
   speed: 0
   dashSpeed: 0
   stopShootToReload: 1
@@ -139,17 +140,19 @@ MonoBehaviour:
   randomWalk: 0
   followWalk: 0
   idleTime: 2
-  wanderingTime: 2
+  wanderingTime: 0
   maxTimeFollowing: 0
   dashTime: 0
   basicMeleeAttackTime: 0
   cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
-  timeToReload: 1
-  timeAmmo: 3
-  timeBtwShots: 0.3
+  timeToReload: 2
+  timeAmmo: 0
+  timeBtwShots: 0
   timeWalkingOneDirection: 0
   fireTotemAnimator: {fileID: 2306564074543050816}
+  howManyShotsBeforeIdle: 1
+  numberOfBullets: 10
 --- !u!61 &1928573517990464141
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -293,3 +296,22 @@ MonoBehaviour:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
     dropRate: 100
   dropChance: 5
+--- !u!114 &650257072878935505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725079296847367180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7b6c1529f2dd546a2157782ad24da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 2106571593847434125}
+  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+    type: 3}
+  owner: {fileID: 7725079296847367180}
+  speed: 4
+  cooldown: 0.2
+  targetTag: Player

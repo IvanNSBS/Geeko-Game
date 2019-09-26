@@ -792,8 +792,9 @@ public class EnemyController : MonoBehaviour
         return aux;
     }
 
-    public void flipStaticEnemy()
+    public virtual bool flipStaticEnemy()
     {
+        var aux = _sprite.flipX;
         Vector3 dir = DirectionNormalized(transform.position, _player.position);
         if (dir.x < 0)
         {
@@ -802,6 +803,15 @@ public class EnemyController : MonoBehaviour
         else
         {
             _sprite.flipX = false;
+        }
+
+        if (aux != _sprite.flipX)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
