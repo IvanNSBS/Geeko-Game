@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891815da0f63cf8439861bfa4d99cc4c, type: 3}
   m_Name: Black Hole
   m_EditorClassIdentifier: 
-  m_SpellName: New Spell
+  m_SpellName: Black Hole
   m_SpellCooldown: 8
+  m_CastType: 0
   m_SpellDuration: 5
   m_SpellCharges: 3
+  m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 21300000, guid: 262aaaa74d7d9c64f9cbfe27248ca263, type: 3}
   m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
   m_Prefab: {fileID: 6458069453319743111, guid: a3e74f2f40cd6c749ba6cc9ea20de48e,
     type: 3}
-  m_GameSprite: {fileID: 0}
   m_SpellSound: {fileID: 0}
   m_OnHitEffect: {fileID: 0}
   m_Invalid:

@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7009fca8f5911f24ab666a9888775d57, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3e2c120638e1bee4fb7e5cf319cb39f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90,7 +90,6 @@ GameObject:
   m_Component:
   - component: {fileID: 653331348323633497}
   - component: {fileID: 653331348323633496}
-  - component: {fileID: 2990707248433588041}
   - component: {fileID: 2936462306824934528}
   - component: {fileID: 1855053982}
   m_Layer: 0
@@ -129,26 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efea73a666b0b349a8dcbbbb180c99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpellObject: {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
---- !u!95 &2990707248433588041
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653331348323633498}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 790f4bc8a8b879346b8b21c480db7b0a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_SpellObject: {fileID: 11400000, guid: 37bb4e1a48018744caed20ac94291301, type: 2}
 --- !u!50 &2936462306824934528
 Rigidbody2D:
   serializedVersion: 4
@@ -389,7 +369,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Spell Name
+  m_text: Lightning Bolt
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cbf6848f83e79a4489619437f19af854, type: 2}
   m_sharedMaterial: {fileID: -3178023815849963678, guid: cbf6848f83e79a4489619437f19af854,
