@@ -62,6 +62,8 @@ public class SpellData
     [HideInInspector] public bool m_IsConcentrating = false;
     public void StartSpellData(GameObject owner, Transform pt, Transform pt_parent)
     {
+        if (!m_Spell)
+            return;
         m_Owner = owner;
         m_RemainingCD = 0.0f;
         m_IsSpellOnCD = false;
