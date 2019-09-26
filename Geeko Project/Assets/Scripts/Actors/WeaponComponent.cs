@@ -17,6 +17,10 @@ public class WeaponComponent : MonoBehaviour
     [NotNull] private List<Func<bool>> shootingFuncs = new List<Func<bool>>();
     [NotNull] private List<int> funcsToRemove = new List<int>();
 
+    private bool _homing;
+    private Transform _homingTarget;
+    private float _homingDegreesPerSecond;
+
     public void SetTargetingFunction(Func<Vector2> fun)
     {
         _determineTarget = fun;
@@ -59,6 +63,10 @@ public class WeaponComponent : MonoBehaviour
                 bullet.rb.velocity = dir * bulletSpeed;
                 bullet.targetTag = targetTag;
                 bullet.SetInstantiator(owner);
+                if (_homing)
+                {
+                    bullet.Home(_homingTarget, _homingDegreesPerSecond);
+                }
             }
 
             return shotsFired >= numberOfShots;
@@ -257,5 +265,19 @@ public class WeaponComponent : MonoBehaviour
         bullet.targetTag = this.targetTag;
         bullet.rb.velocity = vel;
         bullet.SetInstantiator(owner);
+        if (_homing)
+        {
+            bullet.Home(_homingTarget, _homingDegreesPerSecond);
+        }
+    }
+
+    public void SetHoming(
+        Transform target,
+        float rotationDegreesPerSecond
+    )
+    {
+        _homing = true;
+        _homingTarget = target;
+        _homingDegreesPerSecond = rotationDegreesPerSecond;
     }
 }
