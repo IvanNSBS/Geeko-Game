@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5334947429557580701}
   - component: {fileID: 4072245563677062441}
   m_Layer: 0
-  m_Name: 4-Bats 1-Totem Encounter
+  m_Name: 4-Bats 1-Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies: {fileID: 5334947429373697115}
   Enviroment: {fileID: 0}
+  lootManagers: []
 --- !u!1 &7857259330271534830
 GameObject:
   m_ObjectHideFlags: 0
