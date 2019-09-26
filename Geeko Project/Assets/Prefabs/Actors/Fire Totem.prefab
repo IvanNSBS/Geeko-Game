@@ -119,10 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e8a2ba56b50b343a1bcba769fcfc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currState: 1
+  currState: 7
   enemyType: 1
   projectile: {fileID: 7306324552287374457, guid: ef68a79f978e1af49afe280a45d653b8,
     type: 3}
+  timeToStartActions: 2
   sightRange: 0
   attackRange: 9
   speed: 0
