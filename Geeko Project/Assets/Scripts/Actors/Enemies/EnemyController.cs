@@ -876,6 +876,7 @@ public class EnemyController : MonoBehaviour
             Tween tween = aux.DOColor(new Color(255,255,255,0),5);
             
             StartCoroutine(DestroyEnemy(2.5f,tween)); //default time
+            GetComponent<LootManager>().calculateLoot();
             Debug.Log("enemy killed");
             _dead = true;
         }

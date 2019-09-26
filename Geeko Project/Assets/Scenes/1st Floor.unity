@@ -691,42 +691,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[0].Enemies
-      value: 
-      objectReference: {fileID: 5334947429557580690, guid: f04010307abb4954c9166585042cd7c0,
-        type: 3}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[0].gameObject
-      value: 
-      objectReference: {fileID: 5334947429557580690, guid: f04010307abb4954c9166585042cd7c0,
-        type: 3}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[1].gameObject
-      value: 
-      objectReference: {fileID: 6200281256783509917, guid: ea80c52d30e23624b9f6b2b4892e29dd,
-        type: 3}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[1].Enemies
-      value: 
-      objectReference: {fileID: 6200281256783509917, guid: ea80c52d30e23624b9f6b2b4892e29dd,
-        type: 3}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[0]
-      value: 
-      objectReference: {fileID: 4072245563677062441, guid: f04010307abb4954c9166585042cd7c0,
-        type: 3}
-    - target: {fileID: 1802759937364105969, guid: 83ea956457b6ec646b3305b259769064,
-        type: 3}
-      propertyPath: Encounters.Array.data[1]
-      value: 
-      objectReference: {fileID: 7558159995128276793, guid: 95619ae26f4223b4ca71c004579af789,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83ea956457b6ec646b3305b259769064, type: 3}
 --- !u!1 &1900515732

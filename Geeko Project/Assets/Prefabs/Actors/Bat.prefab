@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3359209560116584505}
   - component: {fileID: 3359209560116584506}
   - component: {fileID: 3359209560116584507}
+  - component: {fileID: -7902348100505549910}
   m_Layer: 10
   m_Name: Bat
   m_TagString: Enemy
@@ -225,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 50
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
@@ -261,3 +263,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsInvincible: 0
+--- !u!114 &-7902348100505549910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3359209560116585415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
+    dropRate: 100
+  dropChance: 5
