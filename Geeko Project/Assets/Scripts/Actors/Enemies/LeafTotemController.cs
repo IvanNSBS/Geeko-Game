@@ -19,7 +19,7 @@ public class LeafTotemController : EnemyController
    private bool _hidden;
    private Collider2D _collider;
 
-   [Header("shoot pattern")] 
+   [Header("Random Shoot pattern")] 
    public float amplitudeDegrees;
    public int numberOfShots;
    
