@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1623317735016259172}
   - component: {fileID: 1623317735016259175}
   - component: {fileID: 1623317735016259174}
-  - component: {fileID: 1623317735016259170}
+  - component: {fileID: 847540416729577820}
   - component: {fileID: 1623317735016259173}
   - component: {fileID: 6465737131628447464}
   m_Layer: 0
@@ -103,7 +103,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &1623317735016259170
+--- !u!61 &847540416729577820
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0019062757, y: -0.06290805}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -127,7 +127,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9901942, y: 0.6241839}
   m_EdgeRadius: 0
 --- !u!50 &1623317735016259173
 Rigidbody2D:
@@ -162,4 +162,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b12b6aa3ec3f6014aa04b0b141cda21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_OnDestruction:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_TimeToLive: 0
+  m_TimeAlive: 0
+  m_Target: {fileID: 0}
+  m_SpawnRot: {x: 0, y: 0, z: 0, w: 0}
+  m_Toggle: 0
+  m_TickDelay: 0

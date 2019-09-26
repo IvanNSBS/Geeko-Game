@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5367351095321215533}
   - component: {fileID: 4247983406921343959}
   - component: {fileID: 8238340072252030824}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fire Totem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -161,10 +161,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01991561, y: -0.32362866}
+  m_Offset: {x: -0.014978096, y: 0.07630849}
   m_SpriteTilingProperty:
-    border: {x: 0.5, y: 0.0625, z: 0.5625, w: 0.6875}
-    pivot: {x: 0.5, y: 0.5}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.3}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -172,7 +172,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9601688, y: 1.2887769}
+  m_Size: {x: 0.83179414, y: 1.2196517}
   m_EdgeRadius: 0
 --- !u!50 &5367351095321215533
 Rigidbody2D:
@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 100
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
@@ -241,8 +242,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []

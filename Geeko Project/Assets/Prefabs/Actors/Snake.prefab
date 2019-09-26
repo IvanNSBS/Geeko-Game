@@ -159,7 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 5000
+  m_DMGPopup: {fileID: 0}
+  m_MaxHealth: 250
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -260,10 +261,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.20429516, y: -0.5591259}
+  m_Offset: {x: -0.1268819, y: 0.04196492}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.45, y: 0.2}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -271,5 +272,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.86024666, y: 0.8817482}
+  m_Size: {x: 0.8511393, y: 0.7906738}
   m_EdgeRadius: 0

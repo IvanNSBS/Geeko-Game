@@ -16,7 +16,7 @@ public class RoomInstance : MonoBehaviour
     private MiniMapCamera minimapCam;
     private DungeonManager dungeonManager;
     private int enemysInThisRoom;
-    private bool hasEnemyInThisRoom;
+    private bool hasEnemyInThisRoom, floorHasBoss;
     private Encounter encounter;
     [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
     [SerializeField] private ColorToGameObject[] mappings;
@@ -31,7 +31,7 @@ public class RoomInstance : MonoBehaviour
         SetupEncounter();
     }
 
-    public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, MapSpriteSelector _minimapSprite)
+    public void Setup(Texture2D _tex, Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, bool _floorHasBoss, MapSpriteSelector _minimapSprite)
     {
         tex = _tex;
         gridPos = _gridPos;
@@ -40,6 +40,7 @@ public class RoomInstance : MonoBehaviour
         doorBot = _doorBot;
         doorLeft = _doorLeft;
         doorRight = _doorRight;
+        floorHasBoss = _floorHasBoss;
         minimapSprite = _minimapSprite;
         minimapCam = FindObjectOfType<MiniMapCamera>();
         enemysInThisRoom = 0;
@@ -190,6 +191,10 @@ public class RoomInstance : MonoBehaviour
             Destroy(encounter.Enemies);
             dungeonManager.OpenAllDoors();
             minimapCam.ShowMinimap();
+            if(type == 2 && !floorHasBoss)
+            {
+                encounter.ActivateEnviroment();
+            }
         }
     }
     
@@ -198,7 +203,8 @@ public class RoomInstance : MonoBehaviour
         if (encounter && hasEnemyInThisRoom)
         {
             encounter.SpawnEnemies();
-            encounter.ActivateEnviroment();
+            if(type != 2)
+                encounter.ActivateEnviroment();
             dungeonManager.CloseAllDoors();
         }
     }

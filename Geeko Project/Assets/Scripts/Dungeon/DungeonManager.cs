@@ -7,29 +7,35 @@ using UnityEngine.UI;
 public class DungeonManager : MonoBehaviour
 {
     public GameObject player;
-    public GameObject enemy; //temporary, delete
     private List<Door> doors = new List<Door>();
     private MiniMapCamera miniMapCamera;
 
-    private void Start()
+    void Start()
     {
-        miniMapCamera = FindObjectOfType<MiniMapCamera>();
+        GameObject.DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Vai tomar no cu Unity");
     }
 
     public void SpawnPlayer()
     {
+        miniMapCamera = FindObjectOfType<MiniMapCamera>();
         GameObject m_player = Instantiate(player, Vector3.zero, Quaternion.identity);
+        GameObject.DontDestroyOnLoad(m_player);
         miniMapCamera.SetMinimapImageRef(m_player.GetComponentInChildren<RawImage>());
     }
 
-    public void SpawnEnemy() //temporary, delete
+    public void RepositionPlayer()
     {
-        if (enemy)
-        {
-            //GameObject e = Instantiate(enemy, Vector3.one, Quaternion.identity);
-            //e.GetComponent<StatusComponent>().Die = new UnityEvent();
-            //e.GetComponent<StatusComponent>().Die.AddListener(OpenAllDoors);
-        }
+        player.transform.position = Vector3.zero;
+    }
+
+    public void UpdatePlayerReference()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     
     public void GetDoorsReferences()
@@ -66,11 +72,6 @@ public class DungeonManager : MonoBehaviour
         {
             CloseAllDoors();
             miniMapCamera.HideMinimap();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SpawnEnemy();
         }
     }
 }
