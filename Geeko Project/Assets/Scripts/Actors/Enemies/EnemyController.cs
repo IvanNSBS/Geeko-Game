@@ -353,7 +353,7 @@ public class EnemyController : MonoBehaviour
         _waiting = false;
     }
     
-    public IEnumerator RandomlyWanderingIn(float seconds)
+    public virtual IEnumerator RandomlyWanderingIn(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         if (currState == EnemyState.Idle)
