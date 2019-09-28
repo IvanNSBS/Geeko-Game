@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer m_PlayerHand;
     [SerializeField] private Joystick m_Joystick;
     [SerializeField] private Transform m_FirePoint;
-
+    [SerializeField] private GameObject GameOverPanel;
     [HideInInspector] public GameObject target;
 
     void Start()
@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
             m_StatusComponent = GetComponent<StatusComponent>();
             if (!m_StatusComponent)
                 Debug.LogWarning("Actor StatusComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
+            else
+                m_StatusComponent.AddOnDeath(PlayerDeath);
         }
 
         if (!m_SpellComponent)
@@ -71,7 +73,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayerDeath() { Debug.Log("Player Has Died.."); }
+    public void PlayerDeath()
+    {
+        Debug.Log("Player Has Died..");
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        foreach (SpriteRenderer sp  in this.gameObject.GetComponentsInChildren<SpriteRenderer>())
+        {
+            sp.enabled = false;
+        }
+        Time.timeScale = 0f;
+        GameOverPanel.SetActive(true);
+    }
     public void FlipHand()
     {
         if (!m_MovementComponent.GetSprite().flipX)

@@ -15,7 +15,7 @@ public class RoomInstance : MonoBehaviour
     private Vector2 roomSizeInTiles = new Vector2(9, 17);
     private MiniMapCamera minimapCam;
     private DungeonManager dungeonManager;
-    private int enemysInThisRoom;
+    private int enemiesInThisRoom;
     private bool hasEnemyInThisRoom, floorHasBoss;
     private Encounter encounter;
     [HideInInspector] public bool doorTop, doorBot, doorLeft, doorRight;
@@ -43,7 +43,7 @@ public class RoomInstance : MonoBehaviour
         floorHasBoss = _floorHasBoss;
         minimapSprite = _minimapSprite;
         minimapCam = FindObjectOfType<MiniMapCamera>();
-        enemysInThisRoom = 0;
+        enemiesInThisRoom = 0;
         MakeDoors();
         GenerateRoomTiles();
     }
@@ -141,12 +141,8 @@ public class RoomInstance : MonoBehaviour
                 minimapCam.HideMinimap();
             }
         }
-        if (collision.CompareTag("Enemy"))
-        {
-            enemysInThisRoom++;
-        }
     }
-
+     /*
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -154,7 +150,7 @@ public class RoomInstance : MonoBehaviour
             checkEnemies();
         }
     }
-
+    */
     private void SetupEncounter()
     {
         switch(type){
@@ -185,8 +181,8 @@ public class RoomInstance : MonoBehaviour
 
     private void checkEnemies()
     {
-        enemysInThisRoom--;
-        if (enemysInThisRoom <= 0 && encounter)
+        enemiesInThisRoom--;
+        if (enemiesInThisRoom <= 0 && encounter)
         {
             hasEnemyInThisRoom = false;
             Destroy(encounter.Enemies);
@@ -204,6 +200,11 @@ public class RoomInstance : MonoBehaviour
         if (encounter && hasEnemyInThisRoom)
         {
             encounter.SpawnEnemies();
+            enemiesInThisRoom = encounter.Enemies.GetComponentsInChildren<StatusComponent>().Length;
+            foreach (StatusComponent status in encounter.Enemies.GetComponentsInChildren<StatusComponent>())
+            {
+                status.AddOnDeath(checkEnemies);
+            }
             if(type != 2)
                 encounter.ActivateEnviroment();
             dungeonManager.CloseAllDoors();
