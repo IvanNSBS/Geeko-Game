@@ -44,8 +44,7 @@ public class CyclopsThrow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("collided with: "+other.name+", with tag: "+other.tag);
-       
+
         if (other.CompareTag("Door") ||
             other.CompareTag("Wall") || other.CompareTag("Player"))
         {

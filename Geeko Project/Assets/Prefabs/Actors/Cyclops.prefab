@@ -238,7 +238,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4400762545873030342, guid: dd01f587eb962254b9fa5111e361f2aa,
+  m_Sprite: {fileID: -7693060080712052686, guid: dd01f587eb962254b9fa5111e361f2aa,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -321,6 +321,7 @@ MonoBehaviour:
   amplitude7W: 45
   timeBtwShots7W: 0.2
   bulletSpeed7W: 2.5
+  stompRadius: 0.3
   durationStomp: 1
   strengthStomp: 1
   vibrationStomp: 10
@@ -329,7 +330,8 @@ MonoBehaviour:
   stones:
   - {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
   throwPosition: {fileID: 425668864491374761}
-  throwSpeed: 1.5
+  throwRadius: 1
+  throwSpeed: 5
   timeThrowAttack: 2
   numberOfShotsPerDiagonal4D: 7
   timeBtwShots4D: 0.2
@@ -530,10 +532,91 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.29, y: 1.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7758090684276816723}
   m_Father: {fileID: 2361220405482375201}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6505521805778738135
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 425668864491374761}
+    m_Modifications:
+    - target: {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_Name
+      value: CyclopsRedStone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
+--- !u!4 &7758090684276816723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3594443986098053252, guid: 662f65cec464ae84697e6e22e475dca7,
+    type: 3}
+  m_PrefabInstance: {fileID: 6505521805778738135}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6785320327243426203
 PrefabInstance:
   m_ObjectHideFlags: 0

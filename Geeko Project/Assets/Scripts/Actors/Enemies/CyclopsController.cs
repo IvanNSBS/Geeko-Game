@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public enum CyclopsAttack
@@ -30,6 +31,7 @@ public class CyclopsController : EnemyController
     public float amplitude7W;
     public float timeBtwShots7W;
     public float bulletSpeed7W;
+    public float stompRadius;
     
     [Header("Camera Shake Stomp")]
     public float durationStomp;
@@ -41,6 +43,7 @@ public class CyclopsController : EnemyController
     [Header("Throw Attack")]
     public GameObject[] stones;
     public Transform throwPosition;
+    public float throwRadius;
     public float throwSpeed;
     public float timeThrowAttack;
     public int numberOfShotsPerDiagonal4D;
@@ -71,6 +74,8 @@ public class CyclopsController : EnemyController
     private TypeOfStone _currStone;
     private bool _laserCharged;
     private bool _afterWander;
+    private bool _throwRangeAllowed;
+    private bool _stompRangeAllowed;
     
     /*to-do
     
@@ -245,6 +250,12 @@ public class CyclopsController : EnemyController
         var position = laserEyePosition.position;
         var center = new Vector2(position.x + (laserRange.x / 2), position.y);
         Gizmos.DrawWireCube(center, laserRange);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(throwPosition.position,throwRadius);
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(stompPosition.position,stompRadius);
     }
 
     private void Spread7WayPattern()
@@ -256,37 +267,62 @@ public class CyclopsController : EnemyController
         
     }
     
-    
-
-    private void Throw()
+    public override bool flipStaticEnemy()
     {
-        if (_timeThrowAttack <= 0)
+        var flipChildren = base.flipStaticEnemy();
+        if (flipChildren)
         {
-            if (!_attackingThrow)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                //animations things;
-               cyclopsAnimator.SetBool("isThrowing",true);
-               cyclopsAnimator.SetBool("isIdle",false);
-               // thrown in the cyclop's throw frame 
-                //hitbox??
-                
-                //ShootPattern();
+                var child = transform.GetChild(i);
+                child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+            }
 
-                _attackingThrow = true;
-                _timeThrowAttack = timeThrowAttack;
-            }
-            else
-            {
-              cyclopsAnimator.SetBool("isThrowing",false);
-              cyclopsAnimator.SetBool("isIdle",true);
-              _attackingThrow = false;
-                setIdle(true);
-            }
+            return true;
         }
         else
         {
-            //LoopSpiningAnimation();
-            _timeThrowAttack -= Time.deltaTime;
+            return false;
+        }
+    }
+
+    private void Throw()
+    {
+        if (!_throwRangeAllowed)
+        {
+            _throwRangeAllowed = DontColliderWithWall(throwPosition, throwRadius);
+        }
+        else
+        {
+            if (_timeThrowAttack <= 0)
+            {
+                if (!_attackingThrow)
+                {
+                    //animations things;
+                   cyclopsAnimator.SetBool("isThrowing",true);
+                   cyclopsAnimator.SetBool("isIdle",false);
+                   // thrown in the cyclop's throw frame 
+                    //hitbox??
+                    
+                    //ShootPattern();
+
+                    _attackingThrow = true;
+                    _timeThrowAttack = timeThrowAttack;
+                }
+                else
+                {
+                  cyclopsAnimator.SetBool("isThrowing",false);
+                  cyclopsAnimator.SetBool("isIdle",true);
+                  _attackingThrow = false;
+                  _throwRangeAllowed = false;
+                    setIdle(true);
+                }
+            }
+            else
+            {
+                //LoopSpiningAnimation();
+                _timeThrowAttack -= Time.deltaTime;
+            }
         }
     }
 
@@ -312,8 +348,16 @@ public class CyclopsController : EnemyController
     {
         var stone = Instantiate(ChooseStone(), throwPosition.position, Quaternion.identity);
         var stoneThrown = stone.GetComponent<CyclopsThrow>();
-        stoneThrown.ThrowStone(this,PlayerDirection(),throwSpeed);
-        EditorApplication.isPaused = true;
+        stoneThrown.ThrowStone(this,ThrowInPlayerDirection(),throwSpeed);
+    }
+    
+    public Vector3 ThrowInPlayerDirection()
+    {
+        var player = GetPlayer();
+        var colliderPlayer = player.GetComponent<Collider2D>().offset;
+        var playerCenter = player.TransformPoint(colliderPlayer);
+        Vector3 dir = DirectionNormalized(throwPosition.position, playerCenter);
+        return dir;
     }
 
     private GameObject ChooseStone()
@@ -345,32 +389,58 @@ public class CyclopsController : EnemyController
 
     private void Stomp()
     {
-        if (_timeStompAttack <= 0)
+        if (!_stompRangeAllowed)
         {
-            if (!_stompAttacking)
-            {
-                cyclopsAnimator.SetBool("isStomping",true);
-                cyclopsAnimator.SetBool("isIdle",false);
-                
-                //ShootPattern(); is now being called in the 4th frame of the hittingfloor animation
-                
-                _stompAttacking = true;
-                _timeStompAttack = timeStompAttack;
-            }
-            else
-            {
-                cyclopsAnimator.SetBool("isIdle",true);
-                cyclopsAnimator.SetBool("isStomping",false);
-                _stompAttacking = false;
-                setIdle(true);
-            }
+            _stompRangeAllowed = DontColliderWithWall(stompPosition, stompRadius);
         }
         else
         {
-            _timeStompAttack -= Time.deltaTime;
+            if (_timeStompAttack <= 0)
+            {
+                if (!_stompAttacking)
+                {
+                    cyclopsAnimator.SetBool("isStomping",true);
+                    cyclopsAnimator.SetBool("isIdle",false);
+                
+                    //ShootPattern(); is now being called in the 4th frame of the hittingfloor animation
+                
+                    _stompAttacking = true;
+                    _timeStompAttack = timeStompAttack;
+                }
+                else
+                {
+                    cyclopsAnimator.SetBool("isIdle",true);
+                    cyclopsAnimator.SetBool("isStomping",false);
+                    _stompAttacking = false;
+                    _stompRangeAllowed = false;
+                    setIdle(true);
+                }
+            }
+            else
+            {
+                _timeStompAttack -= Time.deltaTime;
+            }
         }
     }
-    
+
+    private bool DontColliderWithWall(Transform firepoint, float radius)
+    {
+        int layer = LayerMask.GetMask("Default");
+        Collider2D[] hit = Physics2D.OverlapCircleAll(firepoint.position, radius, layer);
+        if (hit.Length > 1)
+        {
+            print("Hit :" + hit[1].name + " going to the center of the room");
+            var dir = DirectionNormalized(firepoint.position, Vector3.zero);
+            MoveEnemy(dir, speed);
+            return false;
+        }
+        else
+        {
+            StopMovement();
+            return true;
+        }
+    }
+
     private void Laser()
     {
         if (_timeLaserAttack <= 0)
