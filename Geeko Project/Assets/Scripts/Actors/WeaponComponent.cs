@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponComponent : MonoBehaviour
 {
@@ -54,7 +55,8 @@ public class WeaponComponent : MonoBehaviour
         TargetingManager tm,
         int numberOfShots,
         float timeBetweenShots,
-        float bulletSpeed
+        Func<float> bulletSpeed,
+        Action<Bullet> callback = null
     )
     {
         var shotsFired = 0;
@@ -69,9 +71,10 @@ public class WeaponComponent : MonoBehaviour
                 var dir = tm.Target().normalized;
                 var obj = Instantiate(bulletPrefab, firePoint.position, GameplayStatics.GetRotationFromDir(dir));
                 var bullet = obj.GetComponent<Bullet>();
-                bullet.rb.velocity = dir * bulletSpeed;
+                var bs = bulletSpeed();
+                bullet.rb.velocity = dir * bs;
                 bullet.targetTag = targetTag;
-                bullet.maxSpeed = bulletSpeed;
+                bullet.maxSpeed = bs;
                 bullet.SetInstantiator(owner);
                 if (_homingRotational)
                 {
@@ -79,10 +82,9 @@ public class WeaponComponent : MonoBehaviour
                 } else if (_homingDirectional)
                 {
                     bullet.HomeDirectional(_homingTarget, _homingAcceleration);
-                } else if (_sine)
-                {
-                    bullet.Sine(_sineAmplitude, _sinePeriod, _sineFlip);
                 }
+
+                callback?.Invoke(bullet);
             }
 
             return shotsFired >= numberOfShots;
@@ -103,7 +105,7 @@ public class WeaponComponent : MonoBehaviour
         for (var i = 0; i < numberOfStreams; i++)
         {
             var localTM = tm.Clone().Offset(starter + step * i);
-            GenericStream(localTM, numberOfShotsPerStream, timeBetweenShots, bulletSpeed);
+            GenericStream(localTM, numberOfShotsPerStream, timeBetweenShots, () => bulletSpeed);
         }
     }
 
@@ -138,7 +140,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
 
     public void LinearLockOn(
@@ -148,21 +150,23 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(firePoint);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
 
     public void SineWave(
-        Vector2 startingDirection,
-        float amplitudeDegrees,
+        Vector2 principalDirection,
+        float amplitude,
         int numberOfShots,
-        int timesToWave,
+        float wavelength,
         float timeBetweenShots,
-        float bulletSpeed
+        float principalDirectionBulletSpeed,
+        bool flip = false
     )
     {
-        var shotsPerPeriod = numberOfShots / timesToWave;
-        var tm = new TargetingManager(startingDirection).Sine(amplitudeDegrees, shotsPerPeriod);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        var period = wavelength / principalDirectionBulletSpeed;
+        var tm = new TargetingManager(principalDirection);
+        void Callback(Bullet bullet) => bullet.Sine(amplitude, period, flip);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => principalDirectionBulletSpeed, Callback);
     }
 
     public void RandomUniform(
@@ -174,7 +178,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection).RandomizeUniform(amplitudeDegrees);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
     
     public void RandomGauss(
@@ -186,7 +190,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection).RandomizeGauss(amplitudeDegrees);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
     
     public void SpreadFiveWay(
@@ -246,7 +250,20 @@ public class WeaponComponent : MonoBehaviour
         var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
         var shootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
         var tm = new TargetingManager(startingDirection).Spiral(angle);
-        GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, bulletSpeed);
+        GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, () => bulletSpeed);
+    }
+
+    public void RandomSpeedAndSpread(
+        Vector2 principalDirection,
+        int numberOfShots,
+        float amplitudeDegrees,
+        float minimumSpeed,
+        float maximumSpeed
+    )
+    {
+        var tm = new TargetingManager(principalDirection).RandomizeUniform(amplitudeDegrees);
+        float RandomizeSpeed() => Random.Range(minimumSpeed, maximumSpeed);
+        GenericStream(tm, numberOfShots, 0, RandomizeSpeed);
     }
     
     private void RunShootingFuncs() {
@@ -312,17 +329,5 @@ public class WeaponComponent : MonoBehaviour
         _homingDirectional = true;
         _homingTarget = target;
         _homingAcceleration = speed / brakingTime;
-    }
-
-    public void SetSine(
-        float amplitude,
-        float period,
-        bool flip = false
-    )
-    {
-        _sine = true;
-        _sineAmplitude = amplitude;
-        _sinePeriod = period;
-        _sineFlip = flip;
     }
 }
