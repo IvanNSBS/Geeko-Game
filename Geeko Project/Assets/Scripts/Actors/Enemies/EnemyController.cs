@@ -178,7 +178,6 @@ public class EnemyController : MonoBehaviour
     
     public virtual void Update()
     {
-        print(currState);
         StateMachine();
 
         previousState = currState;
@@ -335,6 +334,11 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    public Transform GetPlayer()
+    {
+        return _player;
+    }
+    
     public bool GetWaiting()
     {
         return _waiting;
@@ -353,7 +357,7 @@ public class EnemyController : MonoBehaviour
         _waiting = false;
     }
     
-    public IEnumerator RandomlyWanderingIn(float seconds)
+    public virtual IEnumerator RandomlyWanderingIn(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         if (currState == EnemyState.Idle)
@@ -793,8 +797,9 @@ public class EnemyController : MonoBehaviour
         return aux;
     }
 
-    public void flipStaticEnemy()
+    public virtual bool flipStaticEnemy()
     {
+        var aux = _sprite.flipX;
         Vector3 dir = DirectionNormalized(transform.position, _player.position);
         if (dir.x < 0)
         {
@@ -804,11 +809,22 @@ public class EnemyController : MonoBehaviour
         {
             _sprite.flipX = false;
         }
+
+        if (aux != _sprite.flipX)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public Vector3 PlayerDirection()
     {
-        Vector3 dir = DirectionNormalized(transform.position, _player.position);
+        var collider = _player.GetComponent<Collider2D>().offset;
+        var playerCenter = _player.TransformPoint(collider);
+        Vector3 dir = DirectionNormalized(transform.position, playerCenter);
         return dir;
     }
     
@@ -878,32 +894,64 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
-        print("Death function called");
         if (!_dead)
         {
+            StopMovement();
+            
             if (explodeWhenDie)
             {
-               //projectile.transform.localScale = Vector3.one*2; //demonstration
-               //do something bigger
-               var foo = Instantiate(projectile, transform.position, transform.rotation);
-               foo.GetComponent<Projectile>().SetInstantiator(gameObject);
+                ExplodeWhenDie();
             }
-            StopMovement();
-            Destroy(this.GetComponent<Rigidbody2D>());
-            Destroy(GetComponent<Collider2D>());
-            
-            SpriteRenderer aux = this.GetComponent<SpriteRenderer>();
-            Tween tween = aux.DOColor(new Color(255,255,255,0),5);
-            
-            StartCoroutine(DestroyEnemy(2.5f,tween)); //default time
-            LootManager lootManager = GetComponent<LootManager>();
-            if (lootManager)
-            {
-                lootManager.CalculateLoot();
-            }
-            Debug.Log("enemy killed");
+
+            DeathRoutine();
+
+            print(this.gameObject.name+" killed");
             _dead = true;
         }
+    }
+
+    public virtual void DeathRoutine()
+    {
+        Destroy(this.GetComponent<Rigidbody2D>());
+        Destroy(GetComponent<Collider2D>());
+
+        var wc = GetComponent<WeaponComponent>();
+        if (wc)
+        {
+            wc.enabled = false;
+        }
+
+        StartCoroutine(FadingSequence());
+
+        var loot = GetComponent<LootManager>();
+        if (loot)
+        {
+            loot.CalculateLoot();
+        }
+    }
+    
+    public virtual IEnumerator FadingSequence()
+    {
+        Sequence fadingSequence = DOTween.Sequence();
+        fadingSequence.Append(_sprite.DOFade(1f, 1f));
+        fadingSequence.Append(_sprite.DOFade(0f, 2f));
+        fadingSequence.Play();
+        yield return fadingSequence.WaitForCompletion();
+        fadingSequence.Kill();
+        DestroyEnemy();
+    }
+
+    private void DestroyEnemy()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public virtual void ExplodeWhenDie() //override this function to make something better
+    {
+        //projectile.transform.localScale = Vector3.one*2; //demonstration
+        //do something bigger
+        var foo = Instantiate(projectile, transform.position, transform.rotation);
+        foo.GetComponent<Projectile>().SetInstantiator(gameObject);
     }
 
     public float getMaximumHealth()
@@ -916,13 +964,6 @@ public class EnemyController : MonoBehaviour
         return _dead;
     }
     
-    
-    public IEnumerator DestroyEnemy(float seconds, Tween tween)
-    {
-        yield return new WaitForSeconds(seconds);
-        tween.Kill();
-        Destroy(gameObject);
-    }
 
     public virtual void OnCollisionEnter2D(Collision2D other)
     {

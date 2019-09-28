@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fire Totem attack
+  m_Name: Cyclops Hit
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,21 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 6048437549117963303, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: 8939093673976582699, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.083333336
-      value: {fileID: 6004739868758258797, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: -2570648227109299365, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.16666667
-      value: {fileID: 5494490866752732285, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
-        type: 3}
-    - time: 0.25
-      value: {fileID: 2002545634065447108, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
-        type: 3}
-    - time: 0.33333334
-      value: {fileID: 68867727895908292, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - time: 0.41666666
-      value: {fileID: -3566301655613393329, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: 4213769683540163804, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -55,18 +47,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 6048437549117963303, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 6004739868758258797, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 5494490866752732285, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 2002545634065447108, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 68867727895908292, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: -3566301655613393329, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
+    - {fileID: 8939093673976582699, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: -2570648227109299365, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: 4213769683540163804, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

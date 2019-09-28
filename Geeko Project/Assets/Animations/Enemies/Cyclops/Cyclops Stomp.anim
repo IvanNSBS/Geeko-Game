@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fire Totem attack
+  m_Name: Cyclops Stomp
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,21 +20,25 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 6048437549117963303, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: -7308360004971200270, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.083333336
-      value: {fileID: 6004739868758258797, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: -8181015666355396560, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.16666667
-      value: {fileID: 5494490866752732285, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: 9105382924301139037, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.25
-      value: {fileID: 2002545634065447108, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: 8616345901819891767, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     - time: 0.33333334
-      value: {fileID: 68867727895908292, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
+      value: {fileID: -7693060080712052686, guid: dd01f587eb962254b9fa5111e361f2aa,
+        type: 3}
     - time: 0.41666666
-      value: {fileID: -3566301655613393329, guid: 5c763c2910bbb7b4fa20f8d9ba38508d,
+      value: {fileID: -3881155570580746569, guid: dd01f587eb962254b9fa5111e361f2aa,
+        type: 3}
+    - time: 0.5
+      value: {fileID: -3402158283359863122, guid: dd01f587eb962254b9fa5111e361f2aa,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -55,23 +59,24 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 6048437549117963303, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 6004739868758258797, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 5494490866752732285, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 2002545634065447108, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: 68867727895908292, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
-    - {fileID: -3566301655613393329, guid: 5c763c2910bbb7b4fa20f8d9ba38508d, type: 3}
+    - {fileID: -7308360004971200270, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: -8181015666355396560, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: 9105382924301139037, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: 8616345901819891767, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: -7693060080712052686, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: -3881155570580746569, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
+    - {fileID: -3402158283359863122, guid: dd01f587eb962254b9fa5111e361f2aa, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.5833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -85,4 +90,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.33333334
+    functionName: ShootPattern
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: IdlingAfterAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponComponent : MonoBehaviour
 {
@@ -17,6 +18,19 @@ public class WeaponComponent : MonoBehaviour
     [NotNull] private List<Func<bool>> shootingFuncs = new List<Func<bool>>();
     [NotNull] private List<int> funcsToRemove = new List<int>();
 
+    //homing vars
+    private Transform _homingTarget;
+    private bool _homingRotational = false;
+    private float _homingDegreesPerSecond;
+    private bool _homingDirectional = false;
+    private float _homingAcceleration;
+    
+    //sine vars
+    private bool _sine = false;
+    private bool _sineFlip;
+    private float _sineAmplitude;
+    private float _sinePeriod;
+    
     public void SetTargetingFunction(Func<Vector2> fun)
     {
         _determineTarget = fun;
@@ -41,7 +55,8 @@ public class WeaponComponent : MonoBehaviour
         TargetingManager tm,
         int numberOfShots,
         float timeBetweenShots,
-        float bulletSpeed
+        Func<float> bulletSpeed,
+        Action<Bullet> callback = null
     )
     {
         var shotsFired = 0;
@@ -56,9 +71,20 @@ public class WeaponComponent : MonoBehaviour
                 var dir = tm.Target().normalized;
                 var obj = Instantiate(bulletPrefab, firePoint.position, GameplayStatics.GetRotationFromDir(dir));
                 var bullet = obj.GetComponent<Bullet>();
-                bullet.rb.velocity = dir * bulletSpeed;
+                var bs = bulletSpeed();
+                bullet.rb.velocity = dir * bs;
                 bullet.targetTag = targetTag;
+                bullet.maxSpeed = bs;
                 bullet.SetInstantiator(owner);
+                if (_homingRotational)
+                {
+                    bullet.HomeRotational(_homingTarget, _homingDegreesPerSecond);
+                } else if (_homingDirectional)
+                {
+                    bullet.HomeDirectional(_homingTarget, _homingAcceleration);
+                }
+
+                callback?.Invoke(bullet);
             }
 
             return shotsFired >= numberOfShots;
@@ -79,7 +105,7 @@ public class WeaponComponent : MonoBehaviour
         for (var i = 0; i < numberOfStreams; i++)
         {
             var localTM = tm.Clone().Offset(starter + step * i);
-            GenericStream(localTM, numberOfShotsPerStream, timeBetweenShots, bulletSpeed);
+            GenericStream(localTM, numberOfShotsPerStream, timeBetweenShots, () => bulletSpeed);
         }
     }
 
@@ -114,7 +140,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
 
     public void LinearLockOn(
@@ -124,21 +150,23 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(firePoint);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
 
     public void SineWave(
-        Vector2 startingDirection,
-        float amplitudeDegrees,
+        Vector2 principalDirection,
+        float amplitude,
         int numberOfShots,
-        int timesToWave,
+        float wavelength,
         float timeBetweenShots,
-        float bulletSpeed
+        float principalDirectionBulletSpeed,
+        bool flip = false
     )
     {
-        var shotsPerPeriod = numberOfShots / timesToWave;
-        var tm = new TargetingManager(startingDirection).Sine(amplitudeDegrees, shotsPerPeriod);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        var period = wavelength / principalDirectionBulletSpeed;
+        var tm = new TargetingManager(principalDirection);
+        void Callback(Bullet bullet) => bullet.Sine(amplitude, period, flip);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => principalDirectionBulletSpeed, Callback);
     }
 
     public void RandomUniform(
@@ -150,7 +178,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection).RandomizeUniform(amplitudeDegrees);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
     
     public void RandomGauss(
@@ -162,7 +190,7 @@ public class WeaponComponent : MonoBehaviour
     )
     {
         var tm = new TargetingManager(startingDirection).RandomizeGauss(amplitudeDegrees);
-        GenericStream(tm, numberOfShots, timeBetweenShots, bulletSpeed);
+        GenericStream(tm, numberOfShots, timeBetweenShots, () => bulletSpeed);
     }
     
     public void SpreadFiveWay(
@@ -222,7 +250,20 @@ public class WeaponComponent : MonoBehaviour
         var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
         var shootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
         var tm = new TargetingManager(startingDirection).Spiral(angle);
-        GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, bulletSpeed);
+        GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, () => bulletSpeed);
+    }
+
+    public void RandomSpeedAndSpread(
+        Vector2 principalDirection,
+        int numberOfShots,
+        float amplitudeDegrees,
+        float minimumSpeed,
+        float maximumSpeed
+    )
+    {
+        var tm = new TargetingManager(principalDirection).RandomizeUniform(amplitudeDegrees);
+        float RandomizeSpeed() => Random.Range(minimumSpeed, maximumSpeed);
+        GenericStream(tm, numberOfShots, 0, RandomizeSpeed);
     }
     
     private void RunShootingFuncs() {
@@ -256,6 +297,37 @@ public class WeaponComponent : MonoBehaviour
         var bullet = obj.GetComponent<Bullet>();
         bullet.targetTag = this.targetTag;
         bullet.rb.velocity = vel;
+        bullet.maxSpeed = vel.magnitude;
         bullet.SetInstantiator(owner);
+        if (_homingRotational)
+        {
+            bullet.HomeRotational(_homingTarget, _homingDegreesPerSecond);
+        } else if (_homingDirectional)
+        {
+            bullet.HomeDirectional(_homingTarget, _homingAcceleration);
+        } else if (_sine)
+        {
+            bullet.Sine(_sineAmplitude, _sinePeriod, _sineFlip);
+        }
+    }
+
+    public void SetHomingRotational(
+        Transform target,
+        float rotationDegreesPerSecond
+    )
+    {
+        _homingRotational = true;
+        _homingTarget = target;
+        _homingDegreesPerSecond = rotationDegreesPerSecond;
+    }
+
+    public void SetHomingDirectional(
+        Transform target,
+        float brakingTime
+    )
+    {
+        _homingDirectional = true;
+        _homingTarget = target;
+        _homingAcceleration = speed / brakingTime;
     }
 }

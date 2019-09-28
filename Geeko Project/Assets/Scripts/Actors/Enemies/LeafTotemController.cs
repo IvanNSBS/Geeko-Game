@@ -61,7 +61,7 @@ public class LeafTotemController : EnemyController
          currState = EnemyState.Die;
       }
    }
-   
+
    public override void Wander()
    {
       base.Wander();
@@ -123,18 +123,13 @@ public class LeafTotemController : EnemyController
    
    public void FinishAppear()
    {
+      flipStaticEnemy();
       leafTotemAnimator.SetBool("isIdle",true);
       leafTotemAnimator.SetBool("GoingUp",false);
       _collider.enabled = true;
       _idleAnimation = true;
    }
-   
-   public override void Attack()
-   {
-      base.Attack();
-      flipStaticEnemy();
-   }
-   
+
    public override GameObject Shooting()
    {
       if (!_shooting) //shooting
@@ -145,6 +140,7 @@ public class LeafTotemController : EnemyController
             return null;
          }
          
+         flipStaticEnemy();
          _shooting = true;
          _shots += 1;
          _shootingDir = PlayerDirection();
@@ -156,7 +152,26 @@ public class LeafTotemController : EnemyController
         
       return null;
    }
-   
+
+   public override bool flipStaticEnemy()
+   {
+      var flipChildren = base.flipStaticEnemy();
+      if (flipChildren)
+      {
+         for (int i = 0; i < transform.childCount; i++)
+         {
+            var child = transform.GetChild(i);
+            child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+         }
+
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+
    public override void Reload()
    {
       base.Reload();

@@ -5,11 +5,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using DG.Tweening;
 using GameAnalyticsSDK.Setup;
+using UnityEngine.Serialization;
 
-public enum MinotaurState
+public enum BossState
 {
     Normal,
-    Stressed,
+    Enrage,
     Rage
 }
 
@@ -27,7 +28,7 @@ public class MinotaurController : EnemyController
     public Animator minotaurAnimator;
     public Transform axeAttackPosition;
     public Transform pokePosition;
-    public MinotaurState minotaurState = MinotaurState.Normal;
+    [FormerlySerializedAs("minotaurState")] public BossState bossState = BossState.Normal;
     public MinotaurAttack[] attacks;
 
     public LayerMask layerMask;
@@ -182,20 +183,11 @@ public class MinotaurController : EnemyController
         ResetFollowingTime();
     }
 
-    public override void Dash()
-    {
-        base.Dash();
-        if (IsEnemyDashing())
-        {
-            
-        }
-    }
-    
     public override void Follow()
     {
         base.Follow();
         
-        if (minotaurState == MinotaurState.Rage)
+        if (bossState == BossState.Rage)
         {
             if (allowToDashInSequence)
             {
@@ -573,15 +565,15 @@ public class MinotaurController : EnemyController
 
     private void ChooseHitFloorOrSpin()
     {
-        switch (minotaurState)
+        switch (bossState)
         {
-            case MinotaurState.Normal:
+            case BossState.Normal:
                 ChooseHitFloor();
                 break;
-            case MinotaurState.Stressed:
+            case BossState.Enrage:
                 ChooseSpin();
                 break;
-            case MinotaurState.Rage:
+            case BossState.Rage:
                 ChooseSpin();
                 break;
         }
@@ -631,14 +623,11 @@ public class MinotaurController : EnemyController
     
     public void IdlingAfterAttack()
     {
-       // Debug.Log("idling after attack: "+minotaurAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         minotaurAnimator.SetBool("isIdle",true);
     }
 
     public void OnFlip()
     {
-        Debug.Log("Flipped");
-
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
@@ -674,17 +663,17 @@ public class MinotaurController : EnemyController
     
     public void UpdateRage()
     {
-        var previousMinotaurState = minotaurState;
+        var previousMinotaurState = bossState;
         var aux = (GetCurrentHealth() / getMaximumHealth()) * 100;
         _rage = 100 - aux;
         
         if (_rage >= 70)
         {
-            minotaurState = MinotaurState.Rage;
+            bossState = BossState.Rage;
             
         }else if (_rage >= 35)
         {
-            minotaurState = MinotaurState.Stressed;
+            bossState = BossState.Enrage;
         }
         /*
         else
@@ -692,10 +681,10 @@ public class MinotaurController : EnemyController
             minotaurState = MinotaurState.Normal;
         }*/
 
-        if (previousMinotaurState != minotaurState)
+        if (previousMinotaurState != bossState)
         {
-            Debug.Log("Rage in ("+_rage+") Updated to: "+minotaurState+" mode, with life(%): "+aux);
-            if (minotaurState == MinotaurState.Rage)
+            Debug.Log("Rage in ("+_rage+") Updated to: "+bossState+" mode, with life(%): "+aux);
+            if (bossState == BossState.Rage)
             {
                 speed = speed + 0.25f;
                 
@@ -705,7 +694,7 @@ public class MinotaurController : EnemyController
                 weapon.speed = weapon.speed + 1f;
 
                 particle.SetActive(true);
-            }else if (minotaurState == MinotaurState.Stressed)
+            }else if (bossState == BossState.Enrage)
             {
                 speed = speed + 0.25f;
                 idleTime = idleTime - 0.25f;

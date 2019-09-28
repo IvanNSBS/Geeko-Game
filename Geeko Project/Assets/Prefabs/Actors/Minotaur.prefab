@@ -156,7 +156,7 @@ MonoBehaviour:
   minotaurAnimator: {fileID: 2676660101553497854}
   axeAttackPosition: {fileID: 3302264926455984632}
   pokePosition: {fileID: 2857720016983072778}
-  minotaurState: 0
+  bossState: 0
   attacks: 0000000001000000020000000300000004000000
   layerMask:
     serializedVersion: 2
