@@ -329,14 +329,14 @@ MonoBehaviour:
   stones:
   - {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
   throwPosition: {fileID: 425668864491374761}
-  throwSpeed: 0
+  throwSpeed: 3
   timeThrowAttack: 0.5
-  numberOfShotsPerDiagonal4D: 0
-  timeBtwShots4D: 0
-  bulletSpeed4D: 0
+  numberOfShotsPerDiagonal4D: 7
+  timeBtwShots4D: 0.2
+  bulletSpeed4D: 3
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   laserEyePosition: {fileID: 2361220405370856918}
   laserRange: {x: 20, y: 0.5}
   timeLaserAttack: 2
@@ -417,12 +417,12 @@ MonoBehaviour:
   m_OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 2361220405482375384}
+        m_MethodName: OnDeath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -433,12 +433,12 @@ MonoBehaviour:
   m_OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 2361220405482375384}
+        m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

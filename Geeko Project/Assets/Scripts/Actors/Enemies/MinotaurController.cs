@@ -623,7 +623,6 @@ public class MinotaurController : EnemyController
     
     public void IdlingAfterAttack()
     {
-       // Debug.Log("idling after attack: "+minotaurAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         minotaurAnimator.SetBool("isIdle",true);
     }
 

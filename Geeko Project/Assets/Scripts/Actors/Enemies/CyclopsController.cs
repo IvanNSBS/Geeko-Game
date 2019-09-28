@@ -112,6 +112,7 @@ public class CyclopsController : EnemyController
             SetWaiting(true);
             StartCoroutine(WaitingToAttack(idleTime));
         }
+        cyclopsAnimator.SetBool("isIdle",true);
     }
 
     public override IEnumerator RandomlyWanderingIn(float seconds)
@@ -234,7 +235,7 @@ public class CyclopsController : EnemyController
         switch (_curAttack)
         {
             case CyclopsAttack.Throw:
-                print("shooting pattern throw");
+                print("shooting pattern throw, the bugs on the table");
                 break;
             case CyclopsAttack.Stomp:
                 Spread7WayPattern();
@@ -245,10 +246,17 @@ public class CyclopsController : EnemyController
         }
     }
 
+    public void LaserAnimation()
+    {
+        cyclopsAnimator.SetBool("Laser",true);
+    }
+    
     public void TurnOffLaser()
     {
         _laserCharged = false;
         laserEyePosition.gameObject.SetActive(false);
+        cyclopsAnimator.SetBool("Laser",false);
+        cyclopsAnimator.SetBool("isIdle",true);
     }
     public void ChargeLaser()
     {
@@ -296,7 +304,8 @@ public class CyclopsController : EnemyController
             if (!_attackingThrow)
             {
                 //animations things;
-               //StartSpinningAnimation();
+               cyclopsAnimator.SetBool("isThrowing",true);
+               cyclopsAnimator.SetBool("isIdle",false);
                // thrown in the cyclop's throw frame 
                 //hitbox??
                 
@@ -307,8 +316,9 @@ public class CyclopsController : EnemyController
             }
             else
             {
-               // EndSpinningAnimation();
-                _attackingThrow = false;
+              cyclopsAnimator.SetBool("isThrowing",false);
+              cyclopsAnimator.SetBool("isIdle",true);
+              _attackingThrow = false;
                 setIdle(true);
             }
         }
@@ -372,7 +382,7 @@ public class CyclopsController : EnemyController
         {
             if (!_stompAttacking)
             {
-                cyclopsAnimator.SetBool("isHittingFloor",true);
+                cyclopsAnimator.SetBool("isStomping",true);
                 cyclopsAnimator.SetBool("isIdle",false);
                 
                 CameraShake();
@@ -384,6 +394,7 @@ public class CyclopsController : EnemyController
             else
             {
                 cyclopsAnimator.SetBool("isIdle",true);
+                cyclopsAnimator.SetBool("isStomping",false);
                 _stompAttacking = false;
                 setIdle(true);
             }
@@ -401,9 +412,7 @@ public class CyclopsController : EnemyController
             if (!_attackingLaser)
             {
                 //animations things;
-               // StartSpinningAnimation();
-                
-                //hitbox??
+                cyclopsAnimator.SetTrigger("GuardTheEye");
 
                 _attackingLaser = true;
                 _timeLaserAttack = timeLaserAttack;
@@ -411,6 +420,7 @@ public class CyclopsController : EnemyController
             else
             {
               //  EndSpinningAnimation();
+              TurnOffLaser();
                 _attackingLaser = false;
                 setIdle(true);
             }
@@ -434,6 +444,25 @@ public class CyclopsController : EnemyController
     {
         cyclopsAnimator.SetBool("isDead",true);
         particle.SetActive(false);
+    }
+    
+    public void IdlingAfterAttack()
+    {
+        cyclopsAnimator.SetBool("isIdle",true);
+    }
+    public override void MoveEnemy(Vector3 dir, float speed)
+    {
+        base.MoveEnemy(dir, speed);
+        cyclopsAnimator.SetBool("isMoving",true);
+        cyclopsAnimator.SetBool("isIdle", false);
+        
+    }
+    
+    public override void StopMovement()
+    {
+        base.StopMovement();
+        cyclopsAnimator.SetBool("isMoving",false);
+        cyclopsAnimator.SetBool("isIdle",true);
     }
     
     public void OnFlip()
