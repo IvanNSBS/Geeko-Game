@@ -296,9 +296,6 @@ public class CyclopsController : EnemyController
             var position = laserEyePosition.position;
             var positionTop = new Vector3(position.x,position.y+(laserRange.y/2),0);
             var positionBottom = new Vector3(position.x,position.y-(laserRange.y/2),0);
-            
-           // var center = new Vector2(position.x + (laserRange.x / 2) * _laserDirection, position.y);
-           // var laserRangebox = laserRange * _laserDirection;
            
             var target = new Vector3(position.x+(laserRange.x * _laserDirection), position.y+angleLine, 0f);
             var dir = DirectionNormalized(position, target);
@@ -317,12 +314,6 @@ public class CyclopsController : EnemyController
             {
                 bottomLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
             }
-            
-            //Collider2D hit = Physics2D.OverlapBox(center, laserRangebox , _angle, layerMask);
-            //if (hit)
-            //{
-              //  hit.gameObject.GetComponent<StatusComponent>().TakeDamage(laserDamage);
-            //}
 
             Vector3[] positions = new[] {new Vector3(0f, 0f, 0f),new Vector3(laserRange.x*_laserDirection, angleLine, 0f)};
             _lineRenderer.SetPositions(positions);
@@ -335,13 +326,8 @@ public class CyclopsController : EnemyController
     private void OnDrawGizmosSelected()
     {
         var _angleCte = 360/laserRange.x;
-        
-        Gizmos.color = Color.red;
         var position = laserEyePosition.position;
-        var center = new Vector2(position.x + (laserRange.x/ 2)  * _laserDirection, position.y);
-        Gizmos.DrawWireCube(center, laserRange*_laserDirection);
-
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.red;
         
         Gizmos.DrawLine(position, new Vector3(position.x+laserRange.x*_laserDirection, position.y+(_angle/_angleCte),0));
         Gizmos.DrawLine(new Vector3(position.x,position.y+laserRange.y/2, 0f), new Vector3(position.x+laserRange.x*_laserDirection, (position.y+(_angle/_angleCte))+(laserRange.y/2),0));
