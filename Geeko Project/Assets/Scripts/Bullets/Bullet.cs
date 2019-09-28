@@ -12,11 +12,25 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rb;
     public string targetTag;
 
+    public float maxSpeed;
+
     private GameObject _instantiator;
 
-    private float _maxDegrees;
     private Transform _homingTarget;
-    private bool _homing = false;
+    private bool _homingRotational = false;
+    private bool _homingDirectional = false;
+    
+    private float _rotationalHomingMaxDegrees;
+    
+    private float _directionalHomingMaxForce;
+
+    private bool _sine = false;
+    private float _sineStartingAngle;
+    private float _sineAmplitude;
+    private float _sineStartingTime;
+    private float _sinePeriod;
+    private Vector2 _sinePrincipalVelocity;
+    private Vector2 _sinePerpendicularUnit;
 
     public void SetInstantiator(GameObject instantiator)
     {
@@ -51,18 +65,30 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Home(Transform target, float degreesPerSecond)
+    public void HomeRotational(Transform target, float degreesPerSecond)
     {
         _homingTarget = target;
-        _maxDegrees = degreesPerSecond * Time.fixedDeltaTime;;
-        _homing = true;
+        _rotationalHomingMaxDegrees = degreesPerSecond * Time.fixedDeltaTime;;
+        _homingRotational = true;
     }
 
-    private float _lastUpdate;
-
-    private void Start()
+    public void HomeDirectional(Transform target, float acceleration)
     {
-        _lastUpdate = Time.time;
+        _homingDirectional = true;
+        _homingTarget = target;
+        _directionalHomingMaxForce = acceleration * Time.fixedDeltaTime;
+    }
+
+    public void Sine(float amplitude, float period, bool flip)
+    {
+        _sine = true;
+        _sineAmplitude = amplitude;
+        _sinePeriod = period;
+        _sineStartingAngle = flip? 270 * Mathf.Deg2Rad : 90 * Mathf.Deg2Rad;
+        _sinePrincipalVelocity = rb.velocity;
+        
+        _sineStartingTime = Time.time;
+        _sinePerpendicularUnit = rb.velocity.Rotate(90).normalized;
     }
     
     private Vector2 Vector2FromAngle(float a)
@@ -71,18 +97,51 @@ public class Bullet : MonoBehaviour
         return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
     }
 
+    private void HomeRotational()
+    {
+        if (!_homingRotational) return;
+        
+        var direction = (Vector2)_homingTarget.position - rb.position;
+        var angle = Vector2.SignedAngle(rb.velocity, direction);
+        if (Math.Abs(angle) > _rotationalHomingMaxDegrees)
+        {
+            angle = Math.Sign(angle) * _rotationalHomingMaxDegrees;
+        }
+        rb.velocity = rb.velocity.Rotate(angle);
+    }
+
+    private void HomeDirectional()
+    {
+        if (!_homingDirectional) return;
+        
+        var direction = (Vector2)_homingTarget.position - rb.position;
+        var desiredSpeed = direction.normalized * maxSpeed;
+        var desiredForce = desiredSpeed - rb.velocity;
+        
+        var actualForce = desiredForce;
+        if (desiredForce.magnitude > _directionalHomingMaxForce)
+        {
+            actualForce = desiredForce.normalized * _directionalHomingMaxForce;
+        }
+
+        rb.velocity += actualForce;
+    }
+
+    private void Sine()
+    {
+        if (!_sine) return;
+
+        var positionInCycle = ((Time.time - _sineStartingTime) % _sinePeriod) / _sinePeriod;
+        var angle = (positionInCycle) * 2 * Mathf.PI;
+        var multiplier = Mathf.Sin(_sineStartingAngle + angle) * _sineAmplitude;
+        rb.velocity = _sinePrincipalVelocity + _sinePerpendicularUnit * multiplier;
+    }
+
     private void FixedUpdate()
     {
-        if (_homing)
-        {
-            var direction = (Vector2)_homingTarget.position - rb.position;
-            var angle = Vector2.SignedAngle(rb.velocity, direction);
-            if (Math.Abs(angle) > _maxDegrees)
-            {
-                angle = Math.Sign(angle) * _maxDegrees;
-            }
-            rb.velocity = rb.velocity.Rotate(angle);
-        }
+        HomeRotational();
+        HomeDirectional();
+        Sine();
     }
 }
  

@@ -17,10 +17,19 @@ public class WeaponComponent : MonoBehaviour
     [NotNull] private List<Func<bool>> shootingFuncs = new List<Func<bool>>();
     [NotNull] private List<int> funcsToRemove = new List<int>();
 
-    private bool _homing;
+    //homing vars
     private Transform _homingTarget;
+    private bool _homingRotational = false;
     private float _homingDegreesPerSecond;
-
+    private bool _homingDirectional = false;
+    private float _homingAcceleration;
+    
+    //sine vars
+    private bool _sine = false;
+    private bool _sineFlip;
+    private float _sineAmplitude;
+    private float _sinePeriod;
+    
     public void SetTargetingFunction(Func<Vector2> fun)
     {
         _determineTarget = fun;
@@ -62,10 +71,17 @@ public class WeaponComponent : MonoBehaviour
                 var bullet = obj.GetComponent<Bullet>();
                 bullet.rb.velocity = dir * bulletSpeed;
                 bullet.targetTag = targetTag;
+                bullet.maxSpeed = bulletSpeed;
                 bullet.SetInstantiator(owner);
-                if (_homing)
+                if (_homingRotational)
                 {
-                    bullet.Home(_homingTarget, _homingDegreesPerSecond);
+                    bullet.HomeRotational(_homingTarget, _homingDegreesPerSecond);
+                } else if (_homingDirectional)
+                {
+                    bullet.HomeDirectional(_homingTarget, _homingAcceleration);
+                } else if (_sine)
+                {
+                    bullet.Sine(_sineAmplitude, _sinePeriod, _sineFlip);
                 }
             }
 
@@ -264,20 +280,49 @@ public class WeaponComponent : MonoBehaviour
         var bullet = obj.GetComponent<Bullet>();
         bullet.targetTag = this.targetTag;
         bullet.rb.velocity = vel;
+        bullet.maxSpeed = vel.magnitude;
         bullet.SetInstantiator(owner);
-        if (_homing)
+        if (_homingRotational)
         {
-            bullet.Home(_homingTarget, _homingDegreesPerSecond);
+            bullet.HomeRotational(_homingTarget, _homingDegreesPerSecond);
+        } else if (_homingDirectional)
+        {
+            bullet.HomeDirectional(_homingTarget, _homingAcceleration);
+        } else if (_sine)
+        {
+            bullet.Sine(_sineAmplitude, _sinePeriod, _sineFlip);
         }
     }
 
-    public void SetHoming(
+    public void SetHomingRotational(
         Transform target,
         float rotationDegreesPerSecond
     )
     {
-        _homing = true;
+        _homingRotational = true;
         _homingTarget = target;
         _homingDegreesPerSecond = rotationDegreesPerSecond;
+    }
+
+    public void SetHomingDirectional(
+        Transform target,
+        float brakingTime
+    )
+    {
+        _homingDirectional = true;
+        _homingTarget = target;
+        _homingAcceleration = speed / brakingTime;
+    }
+
+    public void SetSine(
+        float amplitude,
+        float period,
+        bool flip = false
+    )
+    {
+        _sine = true;
+        _sineAmplitude = amplitude;
+        _sinePeriod = period;
+        _sineFlip = flip;
     }
 }
