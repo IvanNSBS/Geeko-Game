@@ -90,9 +90,10 @@ public class CyclopsController : EnemyController
     
     /*to-do
     
-    Animations
-    
-    add in the animation frame throw the function throw stone and in the last frame of the laser charge, call chargeLaser()
+    Laser rotation adjust
+    parameters adjust
+    more stones prefabs to explode
+    adjust stomp pattern
     
     */
     public override void Start()

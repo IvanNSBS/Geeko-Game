@@ -915,6 +915,11 @@ public class EnemyController : MonoBehaviour
         Destroy(this.GetComponent<Rigidbody2D>());
         Destroy(GetComponent<Collider2D>());
 
+        var wc = GetComponent<WeaponComponent>();
+        if (wc)
+        {
+            wc.enabled = false;
+        }
 
         StartCoroutine(FadingSequence());
 
