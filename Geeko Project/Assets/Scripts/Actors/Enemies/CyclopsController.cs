@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -66,7 +67,7 @@ public class CyclopsController : EnemyController
     private float _timeThrowAttack;
     private float _timeLaserAttack;
     private bool _attackingLaser;
-    private Transform _explosionTransform;
+    private GameObject _explosionObject;
     private TypeOfStone _currStone;
     private bool _laserCharged;
     private bool _afterWander;
@@ -157,48 +158,7 @@ public class CyclopsController : EnemyController
 
     public CyclopsAttack ChooseAttack() //modified
     {
-        int lottery = 0;
-        int _throw = 0;
-        int _stomp = 0;
-        int _laser = 0;
-
-
-        switch (bossState)
-        {
-            case (BossState.Normal):
-                _throw = 50;
-                _stomp = 100;
-                _laser = 0;
-                break;
-            case (BossState.Enrage):
-                _throw = 25;
-                _stomp = 50;
-                _laser = 100;
-                break;
-            case (BossState.Rage):
-                _throw = 25;
-                _stomp = 50;
-                _laser = 100;
-                break;
-        }
-        
-        lottery = Random.Range(0, 100);
-
-                if (lottery < _throw)
-                {
-                    return attacks[0];
-                }
-                else if (lottery < _stomp)
-                {
-                    return attacks[1];
-                }
-                else if (lottery < _laser)
-                {
-                    return attacks[2];
-                }
-                
-                print("Bug in the lottery, number not in the range expected");
-                return attacks[lottery];
+        return CyclopsAttack.Throw;
     }
 
     public override void Attack()
@@ -292,6 +252,7 @@ public class CyclopsController : EnemyController
         var dir = PlayerDirection();
         _weaponComponent.firePoint = stompPosition;
         _weaponComponent.SpreadSevenWay(dir,numberOfShotsPerWay7W,amplitude7W,timeBtwShots7W,bulletSpeed7W);
+        CameraShake();
         
     }
     
@@ -334,10 +295,15 @@ public class CyclopsController : EnemyController
         Camera.main.DOShakePosition(durationStomp,strengthStomp,vibrationStomp,randomnessStomp,fadeOutStomp);
     }
 
-    public void StoneCollision(TypeOfStone stone,Transform transform)
+    public void StoneCollision(TypeOfStone stone,Vector3 position)
     {
         _currStone = stone;
-        _explosionTransform = transform;
+        if (_explosionObject)
+        {
+            Destroy(_explosionObject);
+        }
+        _explosionObject = new GameObject();
+        _explosionObject.transform.position = position;
         StoneExplosion();
         // ShootPattern();
     }
@@ -347,6 +313,7 @@ public class CyclopsController : EnemyController
         var stone = Instantiate(ChooseStone(), throwPosition.position, Quaternion.identity);
         var stoneThrown = stone.GetComponent<CyclopsThrow>();
         stoneThrown.ThrowStone(this,PlayerDirection(),throwSpeed);
+        EditorApplication.isPaused = true;
     }
 
     private GameObject ChooseStone()
@@ -371,8 +338,8 @@ public class CyclopsController : EnemyController
 
     private void FourDiagonalsPattern()
     {
-        var dir = transform.position - _explosionTransform.position;
-        _weaponComponent.firePoint = _explosionTransform;
+        var dir = transform.position - _explosionObject.transform.position;
+        _weaponComponent.firePoint = _explosionObject.transform;
         _weaponComponent.FourDiagonals(dir, numberOfShotsPerDiagonal4D, timeBtwShots4D, bulletSpeed4D);
     }
 
@@ -385,7 +352,6 @@ public class CyclopsController : EnemyController
                 cyclopsAnimator.SetBool("isStomping",true);
                 cyclopsAnimator.SetBool("isIdle",false);
                 
-                CameraShake();
                 //ShootPattern(); is now being called in the 4th frame of the hittingfloor animation
                 
                 _stompAttacking = true;
@@ -449,6 +415,8 @@ public class CyclopsController : EnemyController
     public void IdlingAfterAttack()
     {
         cyclopsAnimator.SetBool("isIdle",true);
+        cyclopsAnimator.SetBool("isStomping",false);
+        cyclopsAnimator.SetBool("isThrowing",false);
     }
     public override void MoveEnemy(Vector3 dir, float speed)
     {
@@ -463,6 +431,8 @@ public class CyclopsController : EnemyController
         base.StopMovement();
         cyclopsAnimator.SetBool("isMoving",false);
         cyclopsAnimator.SetBool("isIdle",true);
+        
+        flipStaticEnemy();
     }
     
     public void OnFlip()

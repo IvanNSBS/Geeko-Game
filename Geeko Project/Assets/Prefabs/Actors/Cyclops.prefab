@@ -238,7 +238,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6476762079464886434, guid: dd01f587eb962254b9fa5111e361f2aa,
+  m_Sprite: {fileID: -4400762545873030342, guid: dd01f587eb962254b9fa5111e361f2aa,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -316,21 +316,21 @@ MonoBehaviour:
   attacks: 000000000100000002000000
   particle: {fileID: 6396098498220829078}
   stompPosition: {fileID: 4910405115135301413}
-  timeStompAttack: 0.5
-  numberOfShotsPerWay7W: 21
+  timeStompAttack: 2
+  numberOfShotsPerWay7W: 10
   amplitude7W: 45
   timeBtwShots7W: 0.2
   bulletSpeed7W: 2.5
   durationStomp: 1
   strengthStomp: 1
-  vibrationStomp: 15
-  randomnessStomp: 60
+  vibrationStomp: 10
+  randomnessStomp: 40
   fadeOutStomp: 1
   stones:
   - {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
   throwPosition: {fileID: 425668864491374761}
-  throwSpeed: 3
-  timeThrowAttack: 0.5
+  throwSpeed: 1.5
+  timeThrowAttack: 2
   numberOfShotsPerDiagonal4D: 7
   timeBtwShots4D: 0.2
   bulletSpeed4D: 3
@@ -373,8 +373,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.027971745, y: 0.11318457}
-  m_Size: {x: 1.2319756, y: 2.083287}
+  m_Offset: {x: -0.027971745, y: -0.012288451}
+  m_Size: {x: 1.2319756, y: 2.334233}
   m_Direction: 0
 --- !u!50 &2361220405482375389
 Rigidbody2D:

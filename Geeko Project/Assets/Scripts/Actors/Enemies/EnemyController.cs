@@ -178,7 +178,6 @@ public class EnemyController : MonoBehaviour
     
     public virtual void Update()
     {
-        print(currState);
         StateMachine();
 
         previousState = currState;

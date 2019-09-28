@@ -19,42 +19,47 @@ public class CyclopsThrow : MonoBehaviour
     private MovementComponent _movementComponent;
     private float _speed;
     private CyclopsController _cyclops;
-    private Tween _tween;
+
     private void Start()
     {
         _movementComponent = GetComponent<MovementComponent>();
     }
 
-    public void ThrowStone(CyclopsController cyclops,Vector2 direction, float speed)
+    public void ThrowStone(CyclopsController cyclops, Vector2 direction, float speed)
     {
         _startThrow = true;
         _direction = direction;
         _speed = speed;
         _cyclops = cyclops;
     }
+
     void Update()
     {
         if (_startThrow)
         {
-            _movementComponent.Move(_direction.x*_speed*Time.deltaTime,_direction.y*_speed*Time.deltaTime);
-           transform.Rotate(0,0,1);
+            _movementComponent.Move(_direction.x * _speed * Time.deltaTime, _direction.y * _speed * Time.deltaTime);
+            //transform.Rotate(0,0,1);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.collider.CompareTag("Room") || other.collider.CompareTag("Door") || other.collider.CompareTag("Wall") || other.collider.CompareTag("Player"))
+        print("collided with: "+other.name+", with tag: "+other.tag);
+       
+        if (other.CompareTag("Door") ||
+            other.CompareTag("Wall") || other.CompareTag("Player"))
         {
-            if (other.collider.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(20);
                 print("Stone hitted the player");
             }
-            
-            _cyclops.StoneCollision(stone,transform);
+
+            _cyclops.StoneCollision(stone, transform.position);
             _cyclops.CameraShake();
-            
+
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+
     }
 }
