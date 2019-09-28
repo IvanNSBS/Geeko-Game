@@ -11,6 +11,7 @@ public abstract class Spell : ScriptableObject
      * Spell is the parent ScriptableObject that defines the shape of a Spell
      */
     public string m_SpellName = "New Spell";
+    public string m_SpellDescription = "This is a description";
     public float m_SpellCooldown = 0.0f;
     public SpellCastType m_CastType = SpellCastType.FireAndForget;
 

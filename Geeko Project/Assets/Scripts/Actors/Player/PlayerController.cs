@@ -128,11 +128,11 @@ public class PlayerController : MonoBehaviour
         m_MovementComponent.Move(m_Joystick.Horizontal * Time.deltaTime * m_EffectManager.GetSpeedMult(), m_Joystick.Vertical * Time.deltaTime * m_EffectManager.GetSpeedMult());
 
 
-        if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f && false)
+        if (m_Joystick.Horizontal != 0.0f && m_Joystick.Vertical != 0.0f)
         {
             float angle = Mathf.Atan2(m_Joystick.Vertical, m_Joystick.Horizontal) * Mathf.Rad2Deg;
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
-            // m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+            m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
         }
         AutoAim();
 

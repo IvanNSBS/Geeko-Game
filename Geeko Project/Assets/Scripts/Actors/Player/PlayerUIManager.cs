@@ -77,8 +77,10 @@ public class PlayerUIManager : MonoBehaviour
 
                 if (m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
                     m_Spell_2_Charges.gameObject.SetActive(false);
-                else
+                else {
                     m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
+                    m_Spell_2_Charges.gameObject.SetActive(true);
+                }
             }
             else m_Spell_2_Icon.gameObject.SetActive(false); // hide spell if player dont have it
         }

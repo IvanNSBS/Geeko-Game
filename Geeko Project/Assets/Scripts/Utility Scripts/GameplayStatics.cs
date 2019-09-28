@@ -99,7 +99,7 @@ public static class GameplayStatics
         var rect = obj.GetComponent<RectTransform>();
         rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
         var text = obj.GetComponent<TextMeshPro>();
-        text.text = Mathf.FloorToInt(damage).ToString();
+        text.text = "-" + Mathf.FloorToInt(damage).ToString();
         return true;
     }
 
