@@ -894,7 +894,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
-        print("Death function called");
         if (!_dead)
         {
             StopMovement();

@@ -39,6 +39,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2361220405370856918}
+  - component: {fileID: 6732450447790275720}
+  - component: {fileID: 3810329804707321397}
   - component: {fileID: 4110182007162592709}
   m_Layer: 0
   m_Name: FirePoint LaserEye
@@ -46,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2361220405370856918
 Transform:
   m_ObjectHideFlags: 0
@@ -55,12 +57,80 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2361220405370856917}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 0.44, z: 0}
+  m_LocalPosition: {x: 0.25, y: 0.473, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2361220405482375201}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6732450447790275720
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361220405370856917}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3cb1b42b18b48404380a93e379511ad8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &3810329804707321397
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361220405370856917}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!120 &4110182007162592709
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +138,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2361220405370856917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -100,8 +170,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Positions:
-  - {x: 0, y: 0.4, z: 0}
-  - {x: 20, y: 0.4, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 20, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -150,12 +220,12 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 3
     alignment: 0
-    textureMode: 1
+    textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &2361220405482375207
 GameObject:
@@ -238,7 +308,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7693060080712052686, guid: dd01f587eb962254b9fa5111e361f2aa,
+  m_Sprite: {fileID: 6476762079464886434, guid: dd01f587eb962254b9fa5111e361f2aa,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -310,7 +380,7 @@ MonoBehaviour:
   timeToReload: 0
   timeAmmo: 0
   timeBtwShots: 0
-  timeWalkingOneDirection: 1.5
+  timeWalkingOneDirection: 0.7
   cyclopsAnimator: {fileID: 2361220405482375385}
   bossState: 0
   attacks: 000000000100000002000000
@@ -318,9 +388,9 @@ MonoBehaviour:
   stompPosition: {fileID: 4910405115135301413}
   timeStompAttack: 2
   numberOfShotsPerWay7W: 10
-  amplitude7W: 45
+  amplitude7W: 75
   timeBtwShots7W: 0.2
-  bulletSpeed7W: 2.5
+  bulletSpeed7W: 4
   stompRadius: 0.3
   durationStomp: 1
   strengthStomp: 1
@@ -335,7 +405,12 @@ MonoBehaviour:
   timeThrowAttack: 2
   numberOfShotsPerDiagonal4D: 7
   timeBtwShots4D: 0.2
-  bulletSpeed4D: 3
+  bulletSpeed4D: 5
+  durationThrow: 1
+  strengthThrow: 1
+  vibrationThrow: 10
+  randomnessThrow: 40
+  fadeOutThrow: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 512
@@ -412,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DMGPopup: {fileID: 0}
-  m_MaxHealth: 50000
+  m_MaxHealth: 4000
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -632,7 +707,7 @@ PrefabInstance:
     - target: {fileID: 498154981682593805, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1197461876289732310, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
@@ -642,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 1197461876289732310, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8000001
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: 1197461876289732310, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
@@ -708,6 +783,21 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349108552936051198, guid: 71f69094c847f9c46a747411479144e2,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349108552936051198, guid: 71f69094c847f9c46a747411479144e2,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349108552936051198, guid: 71f69094c847f9c46a747411479144e2,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71f69094c847f9c46a747411479144e2, type: 3}

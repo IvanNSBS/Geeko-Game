@@ -50,6 +50,12 @@ public class CyclopsController : EnemyController
     public float timeBtwShots4D;
     public float bulletSpeed4D;
 
+    [Header("Camera Shake Throw")]
+    public float durationThrow;
+    public float strengthThrow;
+    public int vibrationThrow;
+    public float randomnessThrow;
+    public bool fadeOutThrow;
 
     [Header("Laser Attack")] 
     public LayerMask layerMask;
@@ -76,6 +82,9 @@ public class CyclopsController : EnemyController
     private bool _afterWander;
     private bool _throwRangeAllowed;
     private bool _stompRangeAllowed;
+    private LineRenderer _lineRenderer;
+    private int _laserDirection=1;
+    private Animator _chargeLaserAnimation;
     
     /*to-do
     
@@ -88,6 +97,8 @@ public class CyclopsController : EnemyController
     {
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
+        _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
+        _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
     }
 
     public override void CheckTransitions()
@@ -163,7 +174,34 @@ public class CyclopsController : EnemyController
 
     public CyclopsAttack ChooseAttack() //modified
     {
-        return CyclopsAttack.Throw;
+        var _throw = 0;
+        var _laser = 0;
+        var random = Random.Range(0, 100);
+        switch (bossState)
+        {
+            case BossState.Normal:
+                _throw = 90;
+                _laser = 100;
+                break;
+            case BossState.Enrage:
+                _throw = 70;
+                _laser = 100;
+                break;
+            case BossState.Rage:
+                _throw = 50;
+                _laser = 100;
+                break;
+        }
+
+        if (random < _throw)
+        {
+            return CyclopsAttack.Throw;
+        }
+        else
+        {
+            return CyclopsAttack.Laser;
+        }
+        
     }
 
     public override void Attack()
@@ -211,22 +249,36 @@ public class CyclopsController : EnemyController
         }
     }
 
+    public void LaserLoopAnimation()
+    {
+        cyclopsAnimator.SetBool("Laser", false);
+        cyclopsAnimator.SetBool("laserLoop",true);
+
+    }
+    
     public void LaserAnimation()
     {
         cyclopsAnimator.SetBool("Laser",true);
+    }
+
+    public void ChargeLaserAnimation()
+    {
+        _chargeLaserAnimation.SetBool("isChargingLaser",true);
     }
     
     public void TurnOffLaser()
     {
         _laserCharged = false;
-        laserEyePosition.gameObject.SetActive(false);
-        cyclopsAnimator.SetBool("Laser",false);
+        _lineRenderer.enabled = false;
+        cyclopsAnimator.SetBool("laserLoop",false);
         cyclopsAnimator.SetBool("isIdle",true);
+        _chargeLaserAnimation.SetBool("isChargingLaser",false);
     }
     public void ChargeLaser()
     {
         _laserCharged = true;
-        laserEyePosition.gameObject.SetActive(true);
+        flipStaticEnemy();
+        LaserLoopAnimation();
     }
 
     private void HitBoxLaser()
@@ -234,13 +286,16 @@ public class CyclopsController : EnemyController
         if (_laserCharged)
         {
             var position = laserEyePosition.position;
-            var center = new Vector2(position.x + (laserRange.x / 2), position.y);
-            Collider2D hit = Physics2D.OverlapBox(center, laserRange, 0, layerMask);
+            var center = new Vector2(position.x + (laserRange.x / 2) * _laserDirection, position.y);
+            var laserRangebox = laserRange * _laserDirection;
+            Collider2D hit = Physics2D.OverlapBox(center, laserRangebox , 0, layerMask);
             if (hit)
             {
                 hit.gameObject.GetComponent<StatusComponent>().TakeDamage(laserDamage);
-                print("damaged by laser");
             }
+            Vector3[] positions = new[] {new Vector3(0f, 0f, 0f),new Vector3(laserRange.x*_laserDirection, 0f, 0f)};
+            _lineRenderer.SetPositions(positions);
+            _lineRenderer.enabled = true;
         }
     }
 
@@ -248,8 +303,8 @@ public class CyclopsController : EnemyController
     {
         Gizmos.color = Color.red;
         var position = laserEyePosition.position;
-        var center = new Vector2(position.x + (laserRange.x / 2), position.y);
-        Gizmos.DrawWireCube(center, laserRange);
+        var center = new Vector2(position.x + (laserRange.x/ 2)  * _laserDirection, position.y);
+        Gizmos.DrawWireCube(center, laserRange*_laserDirection);
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(throwPosition.position,throwRadius);
@@ -261,7 +316,13 @@ public class CyclopsController : EnemyController
     private void Spread7WayPattern()
     {
         var dir = PlayerDirection();
-        _weaponComponent.firePoint = stompPosition;
+        if (_explosionObject)
+        {
+            Destroy(_explosionObject);
+        }
+        _explosionObject = new GameObject();
+        _explosionObject.transform.position = stompPosition.position;
+        _weaponComponent.firePoint = _explosionObject.transform;
         _weaponComponent.SpreadSevenWay(dir,numberOfShotsPerWay7W,amplitude7W,timeBtwShots7W,bulletSpeed7W);
         CameraShake();
         
@@ -277,7 +338,9 @@ public class CyclopsController : EnemyController
                 var child = transform.GetChild(i);
                 child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
             }
-
+            
+            _laserDirection = -_laserDirection;
+            print(_laserDirection);
             return true;
         }
         else
@@ -328,7 +391,22 @@ public class CyclopsController : EnemyController
 
     public void CameraShake()
     {
-        Camera.main.DOShakePosition(durationStomp,strengthStomp,vibrationStomp,randomnessStomp,fadeOutStomp);
+        switch (_curAttack)
+        {
+            case CyclopsAttack.Stomp:
+                Camera.main.DOShakePosition(durationStomp, strengthStomp, vibrationStomp, randomnessStomp,
+                fadeOutStomp);
+                break;
+            case CyclopsAttack.Throw:
+                Camera.main.DOShakePosition(durationThrow, strengthThrow, vibrationThrow, randomnessThrow,
+                    fadeOutThrow);
+                break;
+            case CyclopsAttack.Laser:
+                print("camera shake in laser state???");
+                break;
+        }
+        
+        print("camera shake :"+_curAttack);
     }
 
     public void StoneCollision(TypeOfStone stone,Vector3 position)
@@ -429,7 +507,6 @@ public class CyclopsController : EnemyController
         Collider2D[] hit = Physics2D.OverlapCircleAll(firepoint.position, radius, layer);
         if (hit.Length > 1)
         {
-            print("Hit :" + hit[1].name + " going to the center of the room");
             var dir = DirectionNormalized(firepoint.position, Vector3.zero);
             MoveEnemy(dir, speed);
             return false;
@@ -512,6 +589,8 @@ public class CyclopsController : EnemyController
             var child = transform.GetChild(i);
             child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
         }
+        _laserDirection = -_laserDirection;
+        print(_laserDirection);
     }
     
     public void UpdateRage()
@@ -532,15 +611,15 @@ public class CyclopsController : EnemyController
         if (previousMinotaurState != bossState)
         {
             Debug.Log("Rage in ("+_rage+") Updated to: "+bossState+" mode, with life(%): "+aux);
-           /*
+           
             if (bossState == BossState.Rage)
             {
                 speed = speed + 0.25f;
                 
                 idleTime = idleTime - 0.5f;
 
-                var weapon = GetComponent<WeaponComponent>();
-                weapon.speed = weapon.speed + 1f;
+               // var weapon = GetComponent<WeaponComponent>();
+               // weapon.speed = weapon.speed + 1f;
 
                 particle.SetActive(true);
             }else if (bossState == BossState.Enrage)
@@ -548,11 +627,11 @@ public class CyclopsController : EnemyController
                 speed = speed + 0.25f;
                 idleTime = idleTime - 0.25f;
                 
-                var weapon = GetComponent<WeaponComponent>();
-                weapon.speed = weapon.speed + 2f;
+               // var weapon = GetComponent<WeaponComponent>();
+              //  weapon.speed = weapon.speed + 2f;
                 
             }
-            */
+            
             
         }
         
