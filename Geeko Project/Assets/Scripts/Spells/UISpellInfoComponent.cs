@@ -16,6 +16,8 @@ public class UISpellInfoComponent : MonoBehaviour
 
     public void UpdateInfo(Spell spell)
     {
+        if (!spell)
+            return;
         m_SpellName.text = spell.m_SpellName;
         m_Type.text = "Type: " + spell.m_CastType.ToString();
         m_Chargeable.text = "Chargeable:" + "No";

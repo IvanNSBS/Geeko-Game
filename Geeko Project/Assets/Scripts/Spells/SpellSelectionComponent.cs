@@ -27,8 +27,7 @@ public class SpellSelectionComponent : MonoBehaviour
     private GameObject m_SpellItem;
     private bool m_MultipleSelection = false;
 
-    //private bool m_PickingMultiple = false;
-    //private GameObject m_SelectedNewSpell;
+    private int m_NumberOfPlayerSpells = 0;
 
     void Start()
     {
@@ -84,13 +83,22 @@ public class SpellSelectionComponent : MonoBehaviour
         m_NewSpellData = nspell;
 
         m_SelectedNewSpellIdx = nspell.Count > 1 ? -1 : 0;
-        foreach (Spell sp in nspell)
-            Debug.Log("spawned spell name = " + sp.m_SpellName);
 
         UpdateNewSelectedIdx(m_SelectedNewSpellIdx);
         gameObject.SetActive(true);
         m_SpellItem = sitem;
         UpdateSpells();
+
+        m_NumberOfPlayerSpells = 0;
+        m_NumberOfPlayerSpells = m_SpellCastingComponent.GetSpell(0).m_Spell == null ? m_NumberOfPlayerSpells : m_NumberOfPlayerSpells + 1;
+        m_NumberOfPlayerSpells = m_SpellCastingComponent.GetSpell(1).m_Spell == null ? m_NumberOfPlayerSpells : m_NumberOfPlayerSpells + 1;
+        Debug.Log("Number of player spells: " + m_NumberOfPlayerSpells);
+        if (m_NumberOfPlayerSpells == 0)
+            UpdateOldSelectedIdx(0);
+        else if (m_NumberOfPlayerSpells == 1)
+            UpdateOldSelectedIdx(1);
+
+        Time.timeScale = 0;
     }
     public void OnConfirm() {
         if (m_NewSpell && m_SelectedOldSpellIdx != -1)
@@ -114,6 +122,7 @@ public class SpellSelectionComponent : MonoBehaviour
         m_NewSpellData = null;
         UpdateOldSelectedIdx(-1);
         UpdateNewSelectedIdx(-1);
+        Time.timeScale = 1;
     }
     public void OnCancel() {
         UpdateOldSelectedIdx(-1);
@@ -121,11 +130,16 @@ public class SpellSelectionComponent : MonoBehaviour
         m_NewSpellData = null;
         m_SpellItem = null;
         this.gameObject.SetActive(false);
+        Time.timeScale = 1;
+
     }
     private void UpdateSpellInfo(GameObject spell, Spell spelldata)
     {
-        if (!spelldata)
+        if (!spelldata) {
+            spell.SetActive(false);
             return;
+        }
+        spell.SetActive(true);
         int count = 0;
         spell.GetComponent<Image>().sprite = spelldata.m_SpellImage;
         foreach (Transform child in spell.transform)
@@ -146,7 +160,9 @@ public class SpellSelectionComponent : MonoBehaviour
             UpdateSpellInfo(m_NewSpell1, m_NewSpellData[1]);
             UpdateSpellInfo(m_NewSpell2, m_NewSpellData[2]);
         }
-        UpdateSpellInfo(m_PlayerSpell1, m_SpellCastingComponent.GetSpell(0).m_Spell);
-        UpdateSpellInfo(m_PlayerSpell2, m_SpellCastingComponent.GetSpell(1).m_Spell);
+        if (m_NumberOfPlayerSpells == 2) {
+            UpdateSpellInfo(m_PlayerSpell1, m_SpellCastingComponent.GetSpell(0).m_Spell);
+            UpdateSpellInfo(m_PlayerSpell2, m_SpellCastingComponent.GetSpell(1).m_Spell);
+        }
     }
 }
