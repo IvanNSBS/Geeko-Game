@@ -178,7 +178,6 @@ public class EnemyController : MonoBehaviour
     
     public virtual void Update()
     {
-        print(currState);
         StateMachine();
 
         previousState = currState;
@@ -335,6 +334,11 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    public Transform GetPlayer()
+    {
+        return _player;
+    }
+    
     public bool GetWaiting()
     {
         return _waiting;
@@ -818,7 +822,9 @@ public class EnemyController : MonoBehaviour
 
     public Vector3 PlayerDirection()
     {
-        Vector3 dir = DirectionNormalized(transform.position, _player.position);
+        var collider = _player.GetComponent<Collider2D>().offset;
+        var playerCenter = _player.TransformPoint(collider);
+        Vector3 dir = DirectionNormalized(transform.position, playerCenter);
         return dir;
     }
     
