@@ -179,8 +179,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.3472214
+        time: 0.5000129
+        value: 0.50009274
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
     m_Bits: 512
   laserEyePosition: {fileID: 2361220405370856918}
   laserRange: {x: 20, y: 0.5}
-  timeLaserAttack: 2
+  timeLaserAttack: 5
   laserDamage: 20
 --- !u!114 &2361220405482375391
 MonoBehaviour:

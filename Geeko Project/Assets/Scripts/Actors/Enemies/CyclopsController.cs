@@ -85,6 +85,8 @@ public class CyclopsController : EnemyController
     private LineRenderer _lineRenderer;
     private int _laserDirection=1;
     private Animator _chargeLaserAnimation;
+    private float _angle;
+    private float _angleCte;
     
     /*to-do
     
@@ -99,6 +101,7 @@ public class CyclopsController : EnemyController
         _weaponComponent = GetComponent<WeaponComponent>();
         _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
+        _angleCte = 360 / laserRange.x;
     }
 
     public override void CheckTransitions()
@@ -180,7 +183,7 @@ public class CyclopsController : EnemyController
         switch (bossState)
         {
             case BossState.Normal:
-                _throw = 90;
+                _throw = 0;
                 _laser = 100;
                 break;
             case BossState.Enrage:
@@ -277,34 +280,72 @@ public class CyclopsController : EnemyController
     public void ChargeLaser()
     {
         _laserCharged = true;
+        _angle = 0;
         flipStaticEnemy();
         LaserLoopAnimation();
     }
 
     private void HitBoxLaser()
     {
+        // 1 coord y equivale a 18 angle.
+        // x ----- 9 angle 
         if (_laserCharged)
         {
+            var angleLine = _angle/_angleCte; 
+            
             var position = laserEyePosition.position;
-            var center = new Vector2(position.x + (laserRange.x / 2) * _laserDirection, position.y);
-            var laserRangebox = laserRange * _laserDirection;
-            Collider2D hit = Physics2D.OverlapBox(center, laserRangebox , 0, layerMask);
-            if (hit)
+            var positionTop = new Vector3(position.x,position.y+(laserRange.y/2),0);
+            var positionBottom = new Vector3(position.x,position.y-(laserRange.y/2),0);
+            
+           // var center = new Vector2(position.x + (laserRange.x / 2) * _laserDirection, position.y);
+           // var laserRangebox = laserRange * _laserDirection;
+           
+            var target = new Vector3(position.x+(laserRange.x * _laserDirection), position.y+angleLine, 0f);
+            var dir = DirectionNormalized(position, target);
+            
+            RaycastHit2D centerLineHit = Physics2D.Raycast(position, dir, laserRange.x, layerMask); 
+            RaycastHit2D topLineHit = Physics2D.Raycast(positionTop, dir, laserRange.x, layerMask); 
+            RaycastHit2D bottomLineHit = Physics2D.Raycast(positionBottom, dir, laserRange.x, layerMask);
+
+            if (centerLineHit)
             {
-                hit.gameObject.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+                centerLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            }else if (topLineHit)
+            {
+                topLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            }else if (bottomLineHit)
+            {
+                bottomLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
             }
-            Vector3[] positions = new[] {new Vector3(0f, 0f, 0f),new Vector3(laserRange.x*_laserDirection, 0f, 0f)};
+            
+            //Collider2D hit = Physics2D.OverlapBox(center, laserRangebox , _angle, layerMask);
+            //if (hit)
+            //{
+              //  hit.gameObject.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            //}
+
+            Vector3[] positions = new[] {new Vector3(0f, 0f, 0f),new Vector3(laserRange.x*_laserDirection, angleLine, 0f)};
             _lineRenderer.SetPositions(positions);
             _lineRenderer.enabled = true;
+            _angle += 0.5f;
+
         }
     }
 
     private void OnDrawGizmosSelected()
     {
+        var _angleCte = 360/laserRange.x;
+        
         Gizmos.color = Color.red;
         var position = laserEyePosition.position;
         var center = new Vector2(position.x + (laserRange.x/ 2)  * _laserDirection, position.y);
         Gizmos.DrawWireCube(center, laserRange*_laserDirection);
+
+        Gizmos.color = Color.black;
+        
+        Gizmos.DrawLine(position, new Vector3(position.x+laserRange.x*_laserDirection, position.y+(_angle/_angleCte),0));
+        Gizmos.DrawLine(new Vector3(position.x,position.y+laserRange.y/2, 0f), new Vector3(position.x+laserRange.x*_laserDirection, (position.y+(_angle/_angleCte))+(laserRange.y/2),0));
+        Gizmos.DrawLine(new Vector3(position.x,position.y-laserRange.y/2, 0f), new Vector3(position.x+laserRange.x*_laserDirection, (position.y+(_angle/_angleCte))-(laserRange.y/2),0));
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(throwPosition.position,throwRadius);
