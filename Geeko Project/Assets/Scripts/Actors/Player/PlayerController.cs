@@ -146,13 +146,16 @@ public class PlayerController : MonoBehaviour
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
         }
-        AutoAim();
+        else
+            m_MovementComponent.Move(Input.GetAxis("Horizontal")*Time.deltaTime * m_EffectManager.GetSpeedMult(), Input.GetAxis("Vertical")*Time.deltaTime * m_EffectManager.GetSpeedMult());
 
-        /*
-        if (Input.GetButton("Fire1"))
-        {
+        AutoAim();
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
             m_WeaponComponent.AttemptToShoot();
-        }
-        */
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            m_SpellComponent.CastSpell(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            m_SpellComponent.CastSpell(1);
     }
 }
