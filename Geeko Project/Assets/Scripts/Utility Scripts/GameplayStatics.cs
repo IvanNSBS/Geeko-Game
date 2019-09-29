@@ -115,8 +115,9 @@ public static class GameplayStatics
     public static bool ObjHasTag(GameObject obj, List<string> list, bool negate_ignore = false)
     {
         foreach (string tag in list)
-            if (obj.CompareTag(tag))
+            if (obj.CompareTag(tag)) {
                 return !negate_ignore;
+            }
 
         return negate_ignore;
     }
@@ -126,8 +127,7 @@ public static class GameplayStatics
     public static Vector3 GetTriggerContactPoint(GameObject src)
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(src.transform.position, src.transform.right, 1000.0f);
-        Debug.DrawLine(src.transform.position, src.transform.right, Color.green, 1.0f);
+        hit = Physics2D.Raycast(src.transform.position, src.transform.right, 1.5f);
         return hit.point;
     }
 

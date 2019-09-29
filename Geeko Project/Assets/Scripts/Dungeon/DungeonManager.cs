@@ -8,7 +8,6 @@ public class DungeonManager : MonoBehaviour
 {
     public GameObject player;
     private List<Door> doors = new List<Door>();
-    public RoomInstance ActualRoom;
     private MiniMapCamera miniMapCamera;
 
     void Start()
@@ -53,11 +52,6 @@ public class DungeonManager : MonoBehaviour
         {
             d.CloseDoor();
         }
-    }
-
-    public void GetActualRoom(RoomInstance room)
-    {
-        ActualRoom = room;
     }
 
     // Update is called once per frame

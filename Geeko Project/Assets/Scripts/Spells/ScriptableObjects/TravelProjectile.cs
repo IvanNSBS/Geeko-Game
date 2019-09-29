@@ -59,9 +59,16 @@ public class TravelProjectile : Spell
         Debug.Log("TriggerEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid);
-        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid2);
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        {
+            Debug.Log("target obj tag = " + target.tag);
             GameObject.Destroy(src);
+        }
+        Debug.Log("list = ");
+        foreach (string tg in SpellUtilities.invalid2)
+            Debug.Log(tg);
+        Debug.Log("Finished showing list");
     }
 
     public override void SpellTriggerTick(Collider2D target, GameObject src)
