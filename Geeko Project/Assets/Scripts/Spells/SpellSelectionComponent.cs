@@ -52,7 +52,7 @@ public class SpellSelectionComponent : MonoBehaviour
             m_ConfirmButton.interactable = false;
 
         m_SelectedOldSpellIdx = n_idx;
-        if (m_OldSpellInfo && n_idx != -1) {
+        if (m_OldSpellInfo && n_idx != -1 && m_NumberOfPlayerSpells >= 2) {
             m_OldSpellInfo.gameObject.SetActive(true);
             m_OldSpellInfo.UpdateInfo(m_SpellCastingComponent.GetSpell(n_idx).m_Spell);
         }

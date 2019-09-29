@@ -16,7 +16,7 @@ public class SpellPickupComponent : MonoBehaviour
         if (m_SpellObject)
         {
             int count = 0;
-            foreach (Transform child in transform)
+            foreach (Transform child in transform.GetChild(0))
             {
                 if (count < 2)
                 {
@@ -58,9 +58,4 @@ public class SpellPickupComponent : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        gameObject.transform.position = m_StartPos + new Vector3(0, Mathf.Sin(Time.time)*5.0f, 0) * Time.deltaTime;
-    }
 }

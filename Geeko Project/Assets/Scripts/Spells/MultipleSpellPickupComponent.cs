@@ -6,8 +6,9 @@ public class MultipleSpellPickupComponent : MonoBehaviour
 {
     // Start is called before the first frame update
     private BoxCollider2D m_PickupArea;
-    [SerializeField] private List<Spell> m_SpellObjects = new List<Spell>(3);
+    List<Spell> m_SpellObjects = new List<Spell>(3);
     [SerializeField] private List<GameObject> m_SpellIcons;
+    [SerializeField] private List<Spell> m_PossibleSpells;
     private Vector3 m_StartPos;
     public Spell GetSpellObjectAt(int idx) {
         if (idx < 0 && idx >= m_SpellObjects.Count)
@@ -35,13 +36,31 @@ public class MultipleSpellPickupComponent : MonoBehaviour
         }
     }
 
+    void GetThreeRandomSpells()
+    {
+        List<int> already_used = new List<int>();
+        for (int i = 0; i < m_PossibleSpells.Count; i++) {
+
+            int idx = Random.Range(0, m_PossibleSpells.Count);
+            while (already_used.Contains(idx))
+                idx = Random.Range(0, m_PossibleSpells.Count);
+
+            already_used.Add(idx);
+            m_SpellObjects.Add(m_PossibleSpells[idx]); 
+        }
+    }
+
     void Start()
     {
+        m_SpellObjects = new List<Spell>();
+        if (m_PossibleSpells.Count < 3)
+            return;
         m_PickupArea = GetComponent<BoxCollider2D>();
         if (!m_PickupArea)
             Debug.LogWarning("Couldn't get spell collider. You won't be able to pickup the item");
 
         m_StartPos = gameObject.transform.position;
+        GetThreeRandomSpells();
         SetMultipleSpellPickup(m_SpellObjects);
     }
 
@@ -54,11 +73,5 @@ public class MultipleSpellPickupComponent : MonoBehaviour
             var selection = collision.gameObject.GetComponentsInChildren<SpellSelectionComponent>(includeInactive: true);
             selection[0].SpawnSelection( m_SpellObjects, this.gameObject, multiple: true );
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        gameObject.transform.position = m_StartPos + new Vector3(0, Mathf.Sin(Time.time)*5.0f, 0) * Time.deltaTime;
     }
 }
