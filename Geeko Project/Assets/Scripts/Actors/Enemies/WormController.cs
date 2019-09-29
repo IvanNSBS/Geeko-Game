@@ -20,6 +20,8 @@ public class WormController : EnemyController
     public float amplitudeDegrees;
     public int waveLength;
     public bool flipWave;
+    public bool startFlipWaveValue;
+    public bool guaranteeSamePhase;
 
     private bool _attack=false;
     private WeaponComponent _weaponComponent;
@@ -34,6 +36,7 @@ public class WormController : EnemyController
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
         _collider2D = GetComponent<Collider2D>();
+        _flipWave = startFlipWaveValue;
     }
 
     public override void StateMachine()
@@ -96,9 +99,14 @@ public class WormController : EnemyController
                 dir = Vector2.left;
             }
 
+            if ((dir.x < 0) && guaranteeSamePhase) //to make the flip work in the same phase
+            {
+                _flipWave = !_flipWave;
+            }
+
             _weaponComponent.SineWave(dir, amplitudeDegrees, numberOfBullets, waveLength, _weaponComponent.cooldown,_weaponComponent.speed,_flipWave);
-            
-            if (flipWave)
+
+            if (flipWave && (!((dir.x < 0) && guaranteeSamePhase)) )
             {
                 _flipWave = !_flipWave;
             }

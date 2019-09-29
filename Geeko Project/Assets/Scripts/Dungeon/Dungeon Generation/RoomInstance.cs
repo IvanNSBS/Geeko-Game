@@ -24,6 +24,7 @@ public class RoomInstance : MonoBehaviour
     [SerializeField] private List<Encounter> Encounters = new List<Encounter>();
     [SerializeField] private List<int> EncounterRate = new List<int>();
     [SerializeField] private List<Encounter> SpecialEncounters = new List<Encounter>();
+    [SerializeField] private List<int> SpecialEncounterRate = new List<int>();
 
     private void Start()
     {
@@ -173,7 +174,15 @@ public class RoomInstance : MonoBehaviour
                 break;
             case 2:
                 hasEnemyInThisRoom = true;
-                encounter = Instantiate(SpecialEncounters[0], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                int specialRandom = Random.Range(1, 100);
+                int specialSpawn = -1;
+                while (specialRandom >= 0)
+                {
+                    specialSpawn++;
+                    specialRandom -= SpecialEncounterRate[specialSpawn];
+                }
+                encounter = Instantiate(SpecialEncounters[specialSpawn], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter.transform.parent = this.gameObject.transform;
                 encounter.HideEnemies();
                 break;
         }
