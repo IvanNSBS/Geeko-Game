@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Joystick m_Joystick;
     [SerializeField] private Transform m_FirePoint;
     [SerializeField] private GameObject GameOverPanel;
+    [SerializeField] private float AutoAimRange = 12f;
     [HideInInspector] public GameObject target;
 
     void Start()
@@ -36,7 +37,10 @@ public class PlayerController : MonoBehaviour
             if (!m_StatusComponent)
                 Debug.LogWarning("Actor StatusComponent wasn't successfully set or found. Actor won't be able to benefit from this component");
             else
+            {
                 m_StatusComponent.AddOnDeath(PlayerDeath);
+                m_StatusComponent.AddOnTakeDamage(MakePlayerInvulnerable);
+            }
         }
 
         if (!m_SpellComponent)
@@ -99,12 +103,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void MakePlayerInvulnerable(float useless)
+    {
+        Debug.Log("Dale");
+        StartCoroutine(GameplayStatics.Delay(m_StatusComponent.m_IFrameTime, () => this.gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable"), () => this.gameObject.layer = LayerMask.NameToLayer("Player")));
+    }
+
     public void AutoAim()
     {
         Vector3 pos = this.gameObject.transform.position;
         float thresh = 5.0f;
 
-        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 7.0f);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, AutoAimRange);
 
         float min_dist = Mathf.Infinity;
         target = null;
