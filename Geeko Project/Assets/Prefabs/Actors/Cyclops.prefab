@@ -416,8 +416,9 @@ MonoBehaviour:
     m_Bits: 512
   laserEyePosition: {fileID: 2361220405370856918}
   laserRange: {x: 20, y: 0.5}
-  timeLaserAttack: 5
+  timeLaserAttack: 10
   laserDamage: 20
+  anglePerFrame: 0.5
 --- !u!114 &2361220405482375391
 MonoBehaviour:
   m_ObjectHideFlags: 0

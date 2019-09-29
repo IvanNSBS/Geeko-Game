@@ -185,7 +185,7 @@ public class RoomInstance : MonoBehaviour
         if (enemiesInThisRoom <= 0 && encounter)
         {
             hasEnemyInThisRoom = false;
-            Destroy(encounter.Enemies);
+            //Destroy(encounter.Enemies);
             dungeonManager.OpenAllDoors();
             minimapCam.ShowMinimap();
             if(type == 2 && !floorHasBoss)

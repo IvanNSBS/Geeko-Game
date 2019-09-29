@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0f;
         GameOverPanel.SetActive(true);
     }
+
     public void FlipHand()
     {
         if (!m_MovementComponent.GetSprite().flipX)
