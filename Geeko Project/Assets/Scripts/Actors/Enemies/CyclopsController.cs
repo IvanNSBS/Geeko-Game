@@ -104,7 +104,17 @@ public class CyclopsController : EnemyController
         _weaponComponent = GetComponent<WeaponComponent>();
         _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
-        _roomCenter = FindObjectOfType<DungeonManager>().ActualRoom.transform.position;
+        try
+        {
+            _roomCenter = FindObjectOfType<DungeonManager>().ActualRoom.transform.position;
+            print("[try] rooms position in the cyclop: "+_roomCenter);
+        }
+        catch
+        {
+            _roomCenter = Vector3.zero;
+            print("[catch] rooms position in the cyclops: "+_roomCenter);
+        }
+        
     }
 
     public override void CheckTransitions()
