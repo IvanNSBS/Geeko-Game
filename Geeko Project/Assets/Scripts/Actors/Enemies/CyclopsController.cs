@@ -89,6 +89,7 @@ public class CyclopsController : EnemyController
     private float _angle;
     private int _timeCte=0;
     private Vector2 _dir;
+    private Vector3 _roomCenter;
     
     /*to-do
     
@@ -103,6 +104,7 @@ public class CyclopsController : EnemyController
         _weaponComponent = GetComponent<WeaponComponent>();
         _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
+        //_roomCenter = FindObjectOfType<DungeonManager>().
     }
 
     public override void CheckTransitions()
@@ -557,7 +559,7 @@ public class CyclopsController : EnemyController
         Collider2D[] hit = Physics2D.OverlapCircleAll(firepoint.position, radius, layer);
         if (hit.Length > 1)
         {
-            var dir = DirectionNormalized(firepoint.position, Vector3.zero);
+            var dir = DirectionNormalized(firepoint.position, _roomCenter);
             MoveEnemy(dir, speed);
             return false;
         }

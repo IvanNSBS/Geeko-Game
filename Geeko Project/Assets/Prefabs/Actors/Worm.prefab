@@ -305,9 +305,11 @@ MonoBehaviour:
   timeToDisappear: 3
   minRandomWalk: 1
   maxRandomWalk: 10
-  numberOfBullets: 8
-  amplitudeDegrees: 20
-  timesToWave: 1
+  wallOffSet: 1
+  numberOfBullets: 10
+  amplitudeDegrees: 2
+  waveLength: 5
+  flipWave: 0
 --- !u!114 &414872158913384734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +326,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
     type: 3}
   owner: {fileID: 7642116471908049706}
-  speed: 5
+  speed: 2.5
   cooldown: 0.2
   targetTag: Player
 --- !u!114 &2997464381259191275
