@@ -368,7 +368,7 @@ MonoBehaviour:
   zigZagWalkVertical: 0
   horizontalWalk: 0
   verticalWalk: 0
-  randomWalk: 0
+  randomWalk: 1
   followWalk: 0
   idleTime: 3
   wanderingTime: 3

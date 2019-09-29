@@ -184,15 +184,15 @@ public class CyclopsController : EnemyController
         switch (bossState)
         {
             case BossState.Normal:
-                _throw = 0;
+                _throw = 80;
                 _laser = 100;
                 break;
             case BossState.Enrage:
-                _throw = 70;
+                _throw = 60;
                 _laser = 100;
                 break;
             case BossState.Rage:
-                _throw = 50;
+                _throw = 40;
                 _laser = 100;
                 break;
         }
@@ -607,6 +607,7 @@ public class CyclopsController : EnemyController
     {
         cyclopsAnimator.SetBool("isDead",true);
         particle.SetActive(false);
+        laserEyePosition.gameObject.SetActive(false);
     }
     
     public void IdlingAfterAttack()
