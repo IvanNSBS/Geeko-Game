@@ -88,7 +88,7 @@ public class CyclopsController : EnemyController
     private Animator _chargeLaserAnimation;
     private float _angle;
     private int _timeCte=0;
-    private Vector2 _dir;
+    private Vector2 _dir=Vector2.right;
     private Vector3 _roomCenter;
     
     /*to-do
@@ -357,13 +357,6 @@ public class CyclopsController : EnemyController
 
     private void OnDrawGizmosSelected()
     {
-        var position = laserEyePosition.position;
-        Gizmos.color = Color.red;
-        
-        //Gizmos.DrawLine(position, new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, _lastPlayerPos.y+(_angle/_angleCte),0));
-        //Gizmos.DrawLine(new Vector3(position.x,position.y+laserRange.y/2, 0f), new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, (_lastPlayerPos.y+(_angle/_angleCte))+(laserRange.y/2),0));
-        //Gizmos.DrawLine(new Vector3(position.x,position.y-laserRange.y/2, 0f), new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, (_lastPlayerPos.y+(_angle/_angleCte))-(laserRange.y/2),0));
-
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(throwPosition.position,throwRadius);
         
