@@ -126,7 +126,8 @@ public static class GameplayStatics
     public static Vector3 GetTriggerContactPoint(GameObject src)
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(src.transform.position, src.transform.forward);
+        hit = Physics2D.Raycast(src.transform.position, src.transform.right, 1000.0f);
+        Debug.DrawLine(src.transform.position, src.transform.right, Color.green, 1.0f);
         return hit.point;
     }
 
