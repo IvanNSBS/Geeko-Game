@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, AutoAimRange);
 
         float min_dist = Mathf.Infinity;
+        GameObject old_target = target;
         target = null;
         foreach(Collider2D overlap in overlaps)
         {
@@ -141,6 +142,10 @@ public class PlayerController : MonoBehaviour
             m_MovementComponent.FlipSprite(dir.x);
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+            target.GetComponentInChildren<TargetHighlightComponent>().ToggleHighlight(true);
+            if (old_target)
+                if(old_target != target)
+                    old_target.GetComponentInChildren<TargetHighlightComponent>().ToggleHighlight(false);
         }
 
         m_SpellComponent.SetTarget(target);
