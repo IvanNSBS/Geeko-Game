@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 2349131150698304765}
   - component: {fileID: 2349131150698304764}
   - component: {fileID: 3505980356527601705}
+  - component: {fileID: 5567789869403282994}
   m_Layer: 10
   m_Name: Leaf Totem
   m_TagString: Enemy
@@ -395,3 +396,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &5567789869403282994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349131150698304763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
+    dropRate: 100
+  dropChance: 5

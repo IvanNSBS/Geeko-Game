@@ -50,6 +50,12 @@ public class CyclopsController : EnemyController
     public float timeBtwShots4D;
     public float bulletSpeed4D;
 
+    [Header("Camera Shake Throw")]
+    public float durationThrow;
+    public float strengthThrow;
+    public int vibrationThrow;
+    public float randomnessThrow;
+    public bool fadeOutThrow;
 
     [Header("Laser Attack")] 
     public LayerMask layerMask;
@@ -57,6 +63,7 @@ public class CyclopsController : EnemyController
     public Vector2 laserRange;
     public float timeLaserAttack;
     public int laserDamage;
+    public float anglePerFrame;
     
     
     private CyclopsAttack _curAttack;
@@ -76,18 +83,26 @@ public class CyclopsController : EnemyController
     private bool _afterWander;
     private bool _throwRangeAllowed;
     private bool _stompRangeAllowed;
+    private LineRenderer _lineRenderer;
+    private int _laserDirectionX=1;
+    private Animator _chargeLaserAnimation;
+    private float _angle;
+    private int _timeCte=0;
+    private Vector2 _dir;
     
     /*to-do
     
-    Animations
-    
-    add in the animation frame throw the function throw stone and in the last frame of the laser charge, call chargeLaser()
+    parameters adjust
+    more stones prefabs to explode
+    adjust stomp pattern
     
     */
     public override void Start()
     {
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
+        _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
+        _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
     }
 
     public override void CheckTransitions()
@@ -163,7 +178,34 @@ public class CyclopsController : EnemyController
 
     public CyclopsAttack ChooseAttack() //modified
     {
-        return CyclopsAttack.Throw;
+        var _throw = 0;
+        var _laser = 0;
+        var random = Random.Range(0, 100);
+        switch (bossState)
+        {
+            case BossState.Normal:
+                _throw = 80;
+                _laser = 100;
+                break;
+            case BossState.Enrage:
+                _throw = 60;
+                _laser = 100;
+                break;
+            case BossState.Rage:
+                _throw = 40;
+                _laser = 100;
+                break;
+        }
+
+        if (random < _throw)
+        {
+            return CyclopsAttack.Throw;
+        }
+        else
+        {
+            return CyclopsAttack.Laser;
+        }
+        
     }
 
     public override void Attack()
@@ -211,45 +253,104 @@ public class CyclopsController : EnemyController
         }
     }
 
+    public void LaserLoopAnimation()
+    {
+        cyclopsAnimator.SetBool("Laser", false);
+        cyclopsAnimator.SetBool("laserLoop",true);
+
+    }
+    
     public void LaserAnimation()
     {
         cyclopsAnimator.SetBool("Laser",true);
+        _dir = PlayerDirection(laserEyePosition.position);
+    }
+
+    public void ChargeLaserAnimation()
+    {
+        _chargeLaserAnimation.SetBool("isChargingLaser",true);
     }
     
     public void TurnOffLaser()
     {
         _laserCharged = false;
-        laserEyePosition.gameObject.SetActive(false);
-        cyclopsAnimator.SetBool("Laser",false);
+        _lineRenderer.enabled = false;
+        _timeCte = 0;
+        cyclopsAnimator.SetBool("laserLoop",false);
         cyclopsAnimator.SetBool("isIdle",true);
+        _chargeLaserAnimation.SetBool("isChargingLaser",false);
     }
     public void ChargeLaser()
     {
         _laserCharged = true;
-        laserEyePosition.gameObject.SetActive(true);
+        _angle = 0;
+        flipStaticEnemy();
+        LaserLoopAnimation();
     }
 
     private void HitBoxLaser()
     {
+        // 1 coord y equivale a 18 angle.
+        // x ----- 9 angle 
         if (_laserCharged)
         {
+            //var angleLine = _angle/_angleCte; 
+            
             var position = laserEyePosition.position;
-            var center = new Vector2(position.x + (laserRange.x / 2), position.y);
-            Collider2D hit = Physics2D.OverlapBox(center, laserRange, 0, layerMask);
-            if (hit)
+            var positionTop = new Vector3(position.x,position.y+(laserRange.y/2),0);
+            var positionBottom = new Vector3(position.x,position.y-(laserRange.y/2),0);
+            
+            _dir = _dir.Rotate(_angle);
+
+            RaycastHit2D centerLineHit = Physics2D.Raycast(position, _dir, laserRange.x, layerMask); 
+            RaycastHit2D topLineHit = Physics2D.Raycast(positionTop, _dir, laserRange.x, layerMask); 
+            RaycastHit2D bottomLineHit = Physics2D.Raycast(positionBottom, _dir, laserRange.x, layerMask);
+
+            if (centerLineHit)
             {
-                hit.gameObject.GetComponent<StatusComponent>().TakeDamage(laserDamage);
-                print("damaged by laser");
+                centerLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            }else if (topLineHit)
+            {
+                topLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            }else if (bottomLineHit)
+            {
+                bottomLineHit.collider.GetComponent<StatusComponent>().TakeDamage(laserDamage);
+            }
+            
+            Vector3[] positions = new[] {new Vector3(0,0,0), new Vector3((laserRange.x*_dir.x), (_dir.y)*laserRange.x, 0f)};
+            _lineRenderer.SetPositions(positions);
+            _lineRenderer.enabled = true;
+            
+            if (((_timeLaserAttack-timeLaserAttack)*-1)/0.2f > _timeCte )
+            {
+                _timeCte++;
+                
+                var playerDir = PlayerDirection(position);
+                var angle = Vector2.SignedAngle(new Vector2(playerDir.x,playerDir.y), _dir);
+                var actualAngle = Mathf.Min(Mathf.Abs(angle),anglePerFrame);
+                
+                if ((angle < 0))
+                {
+                    _angle = actualAngle;
+                }else if ((angle > 0))
+                {
+                    _angle = -actualAngle;
+                }
+
+                flipStaticEnemy(_dir);
+
             }
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
         var position = laserEyePosition.position;
-        var center = new Vector2(position.x + (laserRange.x / 2), position.y);
-        Gizmos.DrawWireCube(center, laserRange);
+        Gizmos.color = Color.red;
+        
+        //Gizmos.DrawLine(position, new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, _lastPlayerPos.y+(_angle/_angleCte),0));
+        //Gizmos.DrawLine(new Vector3(position.x,position.y+laserRange.y/2, 0f), new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, (_lastPlayerPos.y+(_angle/_angleCte))+(laserRange.y/2),0));
+        //Gizmos.DrawLine(new Vector3(position.x,position.y-laserRange.y/2, 0f), new Vector3(_lastPlayerPos.x+laserRange.x*_laserDirectionX, (_lastPlayerPos.y+(_angle/_angleCte))-(laserRange.y/2),0));
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(throwPosition.position,throwRadius);
@@ -261,7 +362,13 @@ public class CyclopsController : EnemyController
     private void Spread7WayPattern()
     {
         var dir = PlayerDirection();
-        _weaponComponent.firePoint = stompPosition;
+        if (_explosionObject)
+        {
+            Destroy(_explosionObject);
+        }
+        _explosionObject = new GameObject();
+        _explosionObject.transform.position = stompPosition.position;
+        _weaponComponent.firePoint = _explosionObject.transform;
         _weaponComponent.SpreadSevenWay(dir,numberOfShotsPerWay7W,amplitude7W,timeBtwShots7W,bulletSpeed7W);
         CameraShake();
         
@@ -270,20 +377,26 @@ public class CyclopsController : EnemyController
     public override bool flipStaticEnemy()
     {
         var flipChildren = base.flipStaticEnemy();
+        return FlipChildrenIf(flipChildren);
+    }
+
+    private bool FlipChildrenIf(bool flipChildren)
+    {
         if (flipChildren)
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                var child = transform.GetChild(i);
-                child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
-            }
-
+            FlipChildren();
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    public override bool flipStaticEnemy(Vector3 dir)
+    {
+        var flipChildren = base.flipStaticEnemy(dir);
+        return FlipChildrenIf(flipChildren);
     }
 
     private void Throw()
@@ -328,7 +441,22 @@ public class CyclopsController : EnemyController
 
     public void CameraShake()
     {
-        Camera.main.DOShakePosition(durationStomp,strengthStomp,vibrationStomp,randomnessStomp,fadeOutStomp);
+        switch (_curAttack)
+        {
+            case CyclopsAttack.Stomp:
+                Camera.main.DOShakePosition(durationStomp, strengthStomp, vibrationStomp, randomnessStomp,
+                fadeOutStomp);
+                break;
+            case CyclopsAttack.Throw:
+                Camera.main.DOShakePosition(durationThrow, strengthThrow, vibrationThrow, randomnessThrow,
+                    fadeOutThrow);
+                break;
+            case CyclopsAttack.Laser:
+                print("camera shake in laser state???");
+                break;
+        }
+        
+        print("camera shake :"+_curAttack);
     }
 
     public void StoneCollision(TypeOfStone stone,Vector3 position)
@@ -429,7 +557,6 @@ public class CyclopsController : EnemyController
         Collider2D[] hit = Physics2D.OverlapCircleAll(firepoint.position, radius, layer);
         if (hit.Length > 1)
         {
-            print("Hit :" + hit[1].name + " going to the center of the room");
             var dir = DirectionNormalized(firepoint.position, Vector3.zero);
             MoveEnemy(dir, speed);
             return false;
@@ -480,6 +607,7 @@ public class CyclopsController : EnemyController
     {
         cyclopsAnimator.SetBool("isDead",true);
         particle.SetActive(false);
+        laserEyePosition.gameObject.SetActive(false);
     }
     
     public void IdlingAfterAttack()
@@ -507,13 +635,20 @@ public class CyclopsController : EnemyController
     
     public void OnFlip()
     {
+        FlipChildren();
+    }
+
+    private void FlipChildren()
+    {
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
-            child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
         }
+
+        _laserDirectionX = -_laserDirectionX;
     }
-    
+
     public void UpdateRage()
     {
         var previousMinotaurState = bossState;
@@ -532,15 +667,15 @@ public class CyclopsController : EnemyController
         if (previousMinotaurState != bossState)
         {
             Debug.Log("Rage in ("+_rage+") Updated to: "+bossState+" mode, with life(%): "+aux);
-           /*
+           
             if (bossState == BossState.Rage)
             {
                 speed = speed + 0.25f;
                 
                 idleTime = idleTime - 0.5f;
 
-                var weapon = GetComponent<WeaponComponent>();
-                weapon.speed = weapon.speed + 1f;
+               // var weapon = GetComponent<WeaponComponent>();
+               // weapon.speed = weapon.speed + 1f;
 
                 particle.SetActive(true);
             }else if (bossState == BossState.Enrage)
@@ -548,11 +683,11 @@ public class CyclopsController : EnemyController
                 speed = speed + 0.25f;
                 idleTime = idleTime - 0.25f;
                 
-                var weapon = GetComponent<WeaponComponent>();
-                weapon.speed = weapon.speed + 2f;
+               // var weapon = GetComponent<WeaponComponent>();
+              //  weapon.speed = weapon.speed + 2f;
                 
             }
-            */
+            
             
         }
         

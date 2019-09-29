@@ -1084,7 +1084,7 @@ Animator:
   m_GameObject: {fileID: 7738064999595045694}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 790f4bc8a8b879346b8b21c480db7b0a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 76a42523103afbb4894fd9efe0c3b57b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1127,7 +1127,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.014626265, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1138,7 +1138,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 3.2}
+  m_Size: {x: 15.461578, y: 3.3170552}
   m_EdgeRadius: 0
 --- !u!114 &-4406790632000751860
 MonoBehaviour:
@@ -1152,14 +1152,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01b2d6a6580736419bffbf9e4822f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpellObjects:
-  - {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
-  - {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
-  - {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
   m_SpellIcons:
   - {fileID: 3209367400494635795}
   - {fileID: 4043101561497511430}
   - {fileID: 1457328342854731315}
+  m_PossibleSpells:
+  - {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
+  - {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
+  - {fileID: 11400000, guid: 37bb4e1a48018744caed20ac94291301, type: 2}
+  - {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
+  - {fileID: 11400000, guid: e3785cd09d1de06498a825c2e980c34f, type: 2}
 --- !u!1 &8407136619991829624
 GameObject:
   m_ObjectHideFlags: 0

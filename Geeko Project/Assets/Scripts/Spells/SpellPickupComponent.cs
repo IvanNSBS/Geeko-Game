@@ -6,16 +6,17 @@ public class SpellPickupComponent : MonoBehaviour
 {
     // Start is called before the first frame update
     private BoxCollider2D m_PickupArea;
-    [SerializeField] private Spell m_SpellObject;
+    private Spell m_SpellObject;
     private Vector3 m_StartPos;
     public Spell GetSpellObject() { return m_SpellObject; }
     public void SetSpellPickup(Spell spell)
     {
         m_SpellObject = spell;
+        Debug.Log("Setting spell to: " + m_SpellObject.m_SpellName);
         if (m_SpellObject)
         {
             int count = 0;
-            foreach (Transform child in transform)
+            foreach (Transform child in transform.GetChild(0))
             {
                 if (count < 2)
                 {
@@ -41,7 +42,7 @@ public class SpellPickupComponent : MonoBehaviour
         if (!m_PickupArea)
             Debug.LogWarning("Couldn't get spell collider. You won't be able to pickup the item");
 
-        SetSpellPickup(m_SpellObject);
+        // SetSpellPickup(m_SpellObject);
         m_StartPos = gameObject.transform.position;
     }
 
@@ -52,13 +53,9 @@ public class SpellPickupComponent : MonoBehaviour
         {
             var player_spellcomponent = collision.gameObject.GetComponent<SpellCastingComponent>();
             var selection = collision.gameObject.GetComponentsInChildren<SpellSelectionComponent>(includeInactive: true);
+            Debug.Log("trying to spawn spell list as: " + m_SpellObject.m_SpellName);
             selection[0].SpawnSelection( new List<Spell>() { m_SpellObject }, this.gameObject );
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        gameObject.transform.position = m_StartPos + new Vector3(0, Mathf.Sin(Time.time)*5.0f, 0) * Time.deltaTime;
-    }
 }

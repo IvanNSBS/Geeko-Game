@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Room
   - DestructibleObject
+  - Rock
   layers:
   - Default
   - TransparentFX

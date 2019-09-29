@@ -18,9 +18,23 @@ public class Portal : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            dungeonManager.UpdatePlayerReference();
-            LoadTargetScene loadTargetScene = this.gameObject.AddComponent<LoadTargetScene>();
-            loadTargetScene.LoadSceneNum(targetSceneIndex);
+            collision.gameObject.GetComponentInChildren<ActionButton>().ChangeAction(EnterPortal);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponentInChildren<ActionButton>().SwitchToCrossHair();
+        }
+    }
+
+    public void EnterPortal()
+    {
+        dungeonManager.UpdatePlayerReference();
+        FindObjectOfType<ActionButton>().SwitchToCrossHair();
+        LoadTargetScene loadTargetScene = this.gameObject.AddComponent<LoadTargetScene>();
+        loadTargetScene.LoadSceneNum(targetSceneIndex);
     }
 }

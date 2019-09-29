@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ActionButton : MonoBehaviour
 {
-
+    [SerializeField] private GameObject crosshair, pointer;
+    [SerializeField] private Button button;
+    private bool shoot = true;
     private bool isActionButtonPressed = false;
     [SerializeField] private WeaponComponent playerWeaponComponent;
 
@@ -13,7 +17,8 @@ public class ActionButton : MonoBehaviour
     {
         if (isActionButtonPressed)
         {
-            playerWeaponComponent.AttemptToShoot();
+            if (shoot)
+                playerWeaponComponent.AttemptToShoot();
         }
     }
 
@@ -25,5 +30,28 @@ public class ActionButton : MonoBehaviour
     public void onPointerUpActionButton()
     {
         isActionButtonPressed = false;
+    }
+
+    private void SwitchToPointer()
+    {
+        shoot = false;
+        crosshair.SetActive(false);
+        pointer.SetActive(true);
+    }
+
+    public void SwitchToCrossHair()
+    {
+        button.onClick.RemoveAllListeners();
+        shoot = true;
+        pointer.SetActive(false);
+        crosshair.SetActive(true);
+    }
+
+    public void ChangeAction(UnityAction action)
+    {
+        isActionButtonPressed = false;
+        SwitchToPointer();
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(action);
     }
 }

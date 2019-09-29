@@ -819,7 +819,38 @@ public class EnemyController : MonoBehaviour
             return false;
         }
     }
+    
+    public virtual bool flipStaticEnemy(Vector3 dir)
+    {
+        var aux = _sprite.flipX;
+       
+        if (dir.x < 0)
+        {
+            _sprite.flipX = true;
+        }
+        else
+        {
+            _sprite.flipX = false;
+        }
 
+        if (aux != _sprite.flipX)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Vector3 PlayerDirection(Vector3 current)
+    {
+        var collider = _player.GetComponent<Collider2D>().offset;
+        var playerCenter = _player.TransformPoint(collider);
+        Vector3 dir = DirectionNormalized(current, playerCenter);
+        return dir;
+    }
+    
     public Vector3 PlayerDirection()
     {
         var collider = _player.GetComponent<Collider2D>().offset;
@@ -894,7 +925,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Death()
     {
-        print("Death function called");
         if (!_dead)
         {
             StopMovement();
@@ -916,6 +946,11 @@ public class EnemyController : MonoBehaviour
         Destroy(this.GetComponent<Rigidbody2D>());
         Destroy(GetComponent<Collider2D>());
 
+        var wc = GetComponent<WeaponComponent>();
+        if (wc)
+        {
+            wc.enabled = false;
+        }
 
         StartCoroutine(FadingSequence());
 

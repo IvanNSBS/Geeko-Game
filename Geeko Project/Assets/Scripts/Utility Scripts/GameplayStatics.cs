@@ -99,7 +99,7 @@ public static class GameplayStatics
         var rect = obj.GetComponent<RectTransform>();
         rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
         var text = obj.GetComponent<TextMeshPro>();
-        text.text = Mathf.FloorToInt(damage).ToString();
+        text.text = "-" + Mathf.FloorToInt(damage).ToString();
         return true;
     }
 
@@ -126,7 +126,8 @@ public static class GameplayStatics
     public static Vector3 GetTriggerContactPoint(GameObject src)
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(src.transform.position, src.transform.forward);
+        hit = Physics2D.Raycast(src.transform.position, src.transform.right, 1000.0f);
+        Debug.DrawLine(src.transform.position, src.transform.right, Color.green, 1.0f);
         return hit.point;
     }
 

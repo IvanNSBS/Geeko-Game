@@ -50,12 +50,12 @@ public class Bullet : MonoBehaviour
             {
                 other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
                 Destroy(gameObject);
-            } else if (other.CompareTag("Wall") || other.CompareTag("Door"))
+            } else if (other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("Rock"))
             {
                 Destroy(gameObject);
             }
 
-        } else if (other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("DestructibleObject"))
+        } else if (other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("DestructibleObject") || other.CompareTag("Rock"))
         {
             if (other.CompareTag(targetTag) || other.CompareTag("DestructibleObject")) 
             {

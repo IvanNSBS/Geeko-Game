@@ -15,6 +15,8 @@ public class SpellSelectionComponent : MonoBehaviour
     [SerializeField] private GameObject m_PlayerSpell2;
     [SerializeField] private GameObject m_Player;
     [SerializeField] private Button m_ConfirmButton;
+    [SerializeField] private UISpellInfoComponent m_NewSpellInfo;
+    [SerializeField] private UISpellInfoComponent m_OldSpellInfo;
     private SpellCastingComponent m_SpellCastingComponent;
 
     private int m_SelectedOldSpellIdx = -1;
@@ -25,8 +27,7 @@ public class SpellSelectionComponent : MonoBehaviour
     private GameObject m_SpellItem;
     private bool m_MultipleSelection = false;
 
-    //private bool m_PickingMultiple = false;
-    //private GameObject m_SelectedNewSpell;
+    private int m_NumberOfPlayerSpells = 0;
 
     void Start()
     {
@@ -38,6 +39,11 @@ public class SpellSelectionComponent : MonoBehaviour
             Debug.Log("Button Set");
             m_ConfirmButton.interactable = false;
         }
+        if (m_NewSpellInfo)
+            m_NewSpellInfo.gameObject.SetActive(false);
+        if (m_OldSpellInfo)
+            m_OldSpellInfo.gameObject.SetActive(false);
+
     }
     public void UpdateOldSelectedIdx(int n_idx) {
         if (n_idx != -1 && m_SelectedNewSpellIdx != -1) 
@@ -46,6 +52,13 @@ public class SpellSelectionComponent : MonoBehaviour
             m_ConfirmButton.interactable = false;
 
         m_SelectedOldSpellIdx = n_idx;
+        if (m_OldSpellInfo && n_idx != -1 && m_NumberOfPlayerSpells >= 2) {
+            m_OldSpellInfo.gameObject.SetActive(true);
+            m_OldSpellInfo.UpdateInfo(m_SpellCastingComponent.GetSpell(n_idx).m_Spell);
+        }
+        else
+            m_OldSpellInfo.gameObject.SetActive(false);
+
     }
     public void UpdateNewSelectedIdx(int n_idx)
     {
@@ -55,17 +68,37 @@ public class SpellSelectionComponent : MonoBehaviour
             m_ConfirmButton.interactable = false;
 
         m_SelectedNewSpellIdx = n_idx;
+        if (m_NewSpellInfo && n_idx != -1) {
+            m_NewSpellInfo.gameObject.SetActive(true);
+            m_NewSpellInfo.UpdateInfo(m_NewSpellData[n_idx]);
+        }
+        else
+            m_NewSpellInfo.gameObject.SetActive(false);
+
     }
     public void SpawnSelection( List<Spell> nspell, GameObject sitem, bool multiple = false ) {
         m_MultipleSelection = multiple;
         m_NewSpell1.SetActive(multiple);
         m_NewSpell2.SetActive(multiple);
+        m_NewSpellData = nspell;
 
         m_SelectedNewSpellIdx = nspell.Count > 1 ? -1 : 0;
-        m_NewSpellData = nspell;
+
+        UpdateNewSelectedIdx(m_SelectedNewSpellIdx);
         gameObject.SetActive(true);
         m_SpellItem = sitem;
         UpdateSpells();
+
+        m_NumberOfPlayerSpells = 0;
+        m_NumberOfPlayerSpells = m_SpellCastingComponent.GetSpell(0).m_Spell == null ? m_NumberOfPlayerSpells : m_NumberOfPlayerSpells + 1;
+        m_NumberOfPlayerSpells = m_SpellCastingComponent.GetSpell(1).m_Spell == null ? m_NumberOfPlayerSpells : m_NumberOfPlayerSpells + 1;
+        Debug.Log("Number of player spells: " + m_NumberOfPlayerSpells);
+        if (m_NumberOfPlayerSpells == 0)
+            UpdateOldSelectedIdx(0);
+        else if (m_NumberOfPlayerSpells == 1)
+            UpdateOldSelectedIdx(1);
+
+        Time.timeScale = 0;
     }
     public void OnConfirm() {
         if (m_NewSpell && m_SelectedOldSpellIdx != -1)
@@ -75,13 +108,21 @@ public class SpellSelectionComponent : MonoBehaviour
             m_Player.GetComponent<PlayerUIManager>().UpdateSpellIconAndBorders();
             gameObject.SetActive(false);
             Destroy(m_SpellItem);
-            Instantiate(m_SingleSpellPickup);
             if (m_OldSpell)
             {
-                var pickup = m_SingleSpellPickup.GetComponent<SpellPickupComponent>();
+                var pickup_prefab = Instantiate(m_SingleSpellPickup);
+                var mv = m_SpellCastingComponent.gameObject.GetComponent<MovementComponent>();
+                float dir = mv.GetSprite().flipX ? 1 : -1;
+                pickup_prefab.transform.position = m_SpellCastingComponent.gameObject.transform.position + new Vector3(0.9f * dir, 0, 0);
+                var pickup = pickup_prefab.GetComponent<SpellPickupComponent>();
                 pickup.SetSpellPickup(m_OldSpell);
             }
         }
+        m_OldSpell = null;
+        m_NewSpellData = null;
+        UpdateOldSelectedIdx(-1);
+        UpdateNewSelectedIdx(-1);
+        Time.timeScale = 1;
     }
     public void OnCancel() {
         UpdateOldSelectedIdx(-1);
@@ -89,11 +130,16 @@ public class SpellSelectionComponent : MonoBehaviour
         m_NewSpellData = null;
         m_SpellItem = null;
         this.gameObject.SetActive(false);
+        Time.timeScale = 1;
+
     }
     private void UpdateSpellInfo(GameObject spell, Spell spelldata)
     {
-        if (!spelldata)
+        if (!spelldata) {
+            spell.SetActive(false);
             return;
+        }
+        spell.SetActive(true);
         int count = 0;
         spell.GetComponent<Image>().sprite = spelldata.m_SpellImage;
         foreach (Transform child in spell.transform)
@@ -114,7 +160,9 @@ public class SpellSelectionComponent : MonoBehaviour
             UpdateSpellInfo(m_NewSpell1, m_NewSpellData[1]);
             UpdateSpellInfo(m_NewSpell2, m_NewSpellData[2]);
         }
-        UpdateSpellInfo(m_PlayerSpell1, m_SpellCastingComponent.GetSpell(0).m_Spell);
-        UpdateSpellInfo(m_PlayerSpell2, m_SpellCastingComponent.GetSpell(1).m_Spell);
+        if (m_NumberOfPlayerSpells == 2) {
+            UpdateSpellInfo(m_PlayerSpell1, m_SpellCastingComponent.GetSpell(0).m_Spell);
+            UpdateSpellInfo(m_PlayerSpell2, m_SpellCastingComponent.GetSpell(1).m_Spell);
+        }
     }
 }

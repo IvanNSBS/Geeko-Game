@@ -42,6 +42,12 @@ public class TravelProjectile : Spell
 
     public override void SpellCollisionEnter(Collision2D target, GameObject src)
     {
+        Debug.Log("CollisionEnter");
+        GameObject target_obj = target.gameObject;
+        SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
+        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, spawn_pos: GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid);
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+            GameObject.Destroy(src);
     }
 
     public override void SpellCollisionTick(Collision2D target, GameObject src)
@@ -50,6 +56,7 @@ public class TravelProjectile : Spell
 
     public override void SpellTriggerEnter(Collider2D target, GameObject src)
     {
+        Debug.Log("TriggerEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
         SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid);
