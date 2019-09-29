@@ -132,12 +132,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainItem
       objectReference: {fileID: 0}
-    - target: {fileID: 1259689804109138825, guid: c8195fce55480e5428fbbf1b8330801a,
-        type: 3}
-      propertyPath: m_ItemData
-      value: 
-      objectReference: {fileID: 11400000, guid: 8e4c2049c9962f94888a3b6915720f51,
-        type: 2}
     - target: {fileID: 2633685713149154549, guid: c8195fce55480e5428fbbf1b8330801a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -213,6 +207,12 @@ PrefabInstance:
       propertyPath: m_UseAutoMass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1259689804109138825, guid: c8195fce55480e5428fbbf1b8330801a,
+        type: 3}
+      propertyPath: m_ItemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e4c2049c9962f94888a3b6915720f51,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
 --- !u!1 &559576094
@@ -375,16 +375,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_Name
-      value: DefaultActor
-      objectReference: {fileID: 0}
-    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 258808940029362228, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -439,6 +429,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_Name
+      value: DefaultActor
+      objectReference: {fileID: 0}
+    - target: {fileID: 258808940029362238, guid: 3c3c96037e8b263448a49a499b1e549c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 258808940029362233, guid: 3c3c96037e8b263448a49a499b1e549c,
         type: 3}
@@ -725,6 +725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5880589383016503992, guid: 5e27081bae8573f47a78f844feecd026, type: 3}
+  ActualRoom: {fileID: 0}
 --- !u!1 &1788296576
 GameObject:
   m_ObjectHideFlags: 0
