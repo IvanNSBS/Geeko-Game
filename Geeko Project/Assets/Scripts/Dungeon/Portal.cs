@@ -33,6 +33,7 @@ public class Portal : MonoBehaviour
     public void EnterPortal()
     {
         dungeonManager.UpdatePlayerReference();
+        FindObjectOfType<ActionButton>().SwitchToCrossHair();
         LoadTargetScene loadTargetScene = this.gameObject.AddComponent<LoadTargetScene>();
         loadTargetScene.LoadSceneNum(targetSceneIndex);
     }
