@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     public void AutoAim()
     {
         Vector3 pos = this.gameObject.transform.position;
-        float thresh = 5.0f;
+        float thresh = 0.7f;
 
         Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, 7.0f);
 
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 hit_pos = new Vector2(overlap.gameObject.transform.position.x, overlap.gameObject.transform.position.y);
                 Vector2 sub = new Vector2(pos.x - hit_pos.x, pos.y - hit_pos.y);
-                if (min_dist > sub.magnitude)
+                if (min_dist > sub.magnitude + thresh)
                 {
                     target = overlap.gameObject;
                     min_dist = sub.magnitude;
@@ -124,8 +124,10 @@ public class PlayerController : MonoBehaviour
 
         if(target != null)
         {
-            Vector3 target_center = target.GetComponent<Collider2D>().bounds.center;
+            // Vector3 target_center = target.GetComponent<Collider2D>().bounds.center;
+            Vector3 target_center = target.transform.position;
             Vector2 dir = (target_center - gameObject.transform.position).normalized;
+            //Vector2 dir = (target_center - m_FirePoint.transform.position).normalized;
             m_MovementComponent.FlipSprite(dir.x);
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
