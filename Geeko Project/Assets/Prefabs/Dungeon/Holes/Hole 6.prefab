@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7258281494567467486}
   - component: {fileID: 6555210862312778793}
   - component: {fileID: 2113878083319938167}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hole 6
   m_TagString: Room
   m_Icon: {fileID: 0}

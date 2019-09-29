@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8039171942319527123}
   - component: {fileID: -7495324051261723641}
   - component: {fileID: 8461238943173755662}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Box
   m_TagString: DestructibleObject
   m_Icon: {fileID: 0}
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0f0ca9fba1c534fa61e1342000ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DMGPopup: {fileID: 0}
   m_MaxHealth: 30
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
