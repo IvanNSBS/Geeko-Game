@@ -106,7 +106,7 @@ public class CyclopsController : EnemyController
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
         try
         {
-            _roomCenter = FindObjectOfType<DungeonManager>().ActualRoom.transform.position;
+            _roomCenter = FindObjectOfType<DungeonManager>().GetActualRoom().transform.position;
             print("[try] rooms position in the cyclop: "+_roomCenter);
         }
         catch
