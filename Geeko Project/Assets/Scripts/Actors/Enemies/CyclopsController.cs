@@ -104,7 +104,7 @@ public class CyclopsController : EnemyController
         _weaponComponent = GetComponent<WeaponComponent>();
         _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
-        //_roomCenter = FindObjectOfType<DungeonManager>().
+        _roomCenter = FindObjectOfType<DungeonManager>().ActualRoom.transform.position;
     }
 
     public override void CheckTransitions()

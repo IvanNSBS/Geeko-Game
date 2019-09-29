@@ -587,6 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5880589383016503992, guid: 5e27081bae8573f47a78f844feecd026, type: 3}
+  ActualRoom: {fileID: 0}
 --- !u!1 &438998555
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +725,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642116471908049707, guid: a918e7aa34136f24ca0a5c12c40f88cf,
+        type: 3}
+      propertyPath: flipWave
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642116471908049707, guid: a918e7aa34136f24ca0a5c12c40f88cf,
+        type: 3}
+      propertyPath: startFlipWaveValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642116471908049707, guid: a918e7aa34136f24ca0a5c12c40f88cf,
+        type: 3}
+      propertyPath: guaranteeSamePhase
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a918e7aa34136f24ca0a5c12c40f88cf, type: 3}
@@ -1015,6 +1031,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642116471908049707, guid: a918e7aa34136f24ca0a5c12c40f88cf,
+        type: 3}
+      propertyPath: flipWave
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642116471908049707, guid: a918e7aa34136f24ca0a5c12c40f88cf,
+        type: 3}
+      propertyPath: guaranteeSamePhase
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a918e7aa34136f24ca0a5c12c40f88cf, type: 3}
