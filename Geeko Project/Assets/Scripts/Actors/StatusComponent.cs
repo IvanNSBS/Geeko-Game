@@ -10,8 +10,8 @@ public class StatusComponent : MonoBehaviour
 
     [SerializeField] private GameObject m_DMGPopup;
     [SerializeField] private float m_MaxHealth = 100.0f;
-    [SerializeField] private bool m_CanUseIFrames = false;
-    [SerializeField] private float m_IFrameTime = 0.2f;
+    [SerializeField] public bool m_CanUseIFrames = false;
+    [SerializeField] public float m_IFrameTime = 0.2f;
     [SerializeField] private float m_HitFlashDuration = 0.2f;
     [SerializeField] private UnityEvent m_OnDeath;
     [SerializeField] private GameplayStatics.DamageEvent m_OnTakeDamage;  // Useful/used to update things like UI without Update method

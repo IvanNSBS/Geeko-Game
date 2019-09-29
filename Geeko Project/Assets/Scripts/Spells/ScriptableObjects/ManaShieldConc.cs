@@ -47,9 +47,11 @@ public class ManaShieldConc : Spell
             StatusComponent status = obj.AddComponent<StatusComponent>() as StatusComponent;
             status.SetMaxHealth(m_ShieldHP);
             status.Heal(m_ShieldHP);
+            status.m_CanUseIFrames = true;
+            status.m_IFrameTime = 1.1f;
             // TODO: Set can use iframe
-            status.AddOnTakeDamage( x => { if ( status.GetCurrentHealth() <= 0.0f) owner.GetComponent<StatusComponent>().TakeDamage(x * m_DmgMitigation); } );
-            //status.AddOnDeath( status.Killed );
+            //status.AddOnTakeDamage( x => { if ( status.GetCurrentHealth() <= 0.0f) owner.GetComponent<StatusComponent>().TakeDamage(x * m_DmgMitigation); } );
+            status.AddOnDeath( () => Destroy(obj) );
 
             return obj;
 
