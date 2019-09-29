@@ -27,6 +27,7 @@ public class Encounter : MonoBehaviour
             foreach(LootManager lootManager in lootManagers)
             {
                 lootManager.CalculateLoot();
+                Destroy(lootManager.gameObject);
             }
         }
     }

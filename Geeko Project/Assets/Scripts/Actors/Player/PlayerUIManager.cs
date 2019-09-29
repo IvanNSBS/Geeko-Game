@@ -52,12 +52,19 @@ public class PlayerUIManager : MonoBehaviour
             m_HealthText.text = ((int)m_StatusComponent.GetCurrentHealth()).ToString() + " / " + ((int)m_StatusComponent.GetMaxHealth()).ToString(); // update txt
     }
 
+    public void ToggleImageChildren(Image img, bool show = true) {
+        for( int i = 1; i < img.transform.childCount; i++)
+            img.transform.GetChild(i).gameObject.SetActive(show);
+        img.color = show ? Color.white : Color.black;
+    }
+
     public void UpdateSpellIconAndBorders()
     {
         if(m_SpellComponent)
         {
-            if (m_SpellComponent.GetSpell(0) != null)
+            if (m_SpellComponent.GetSpell(0).m_Spell != null)
             { // If player does have Spell1 Set
+                ToggleImageChildren(m_Spell_1_Icon, true);
                 m_Spell_1_Icon.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_SpellImage; // set UI Image
                 m_Spell_1_Border.sprite = m_SpellComponent.GetSpell(0).m_Spell.m_BorderImage; // Set UI border
 
@@ -68,25 +75,28 @@ public class PlayerUIManager : MonoBehaviour
                     m_Spell_1_Charges.gameObject.SetActive(true);
                 }
             }
-            else m_Spell_1_Icon.gameObject.SetActive(false); // hide spell if player dont have it
+            else ToggleImageChildren(m_Spell_1_Icon, false); ; // hide spell if player dont have it
 
-            if (m_SpellComponent.GetSpell(1) != null) // If player does have Spell2 Set
+            if (m_SpellComponent.GetSpell(1).m_Spell != null) // If player does have Spell2 Set
             {
+                ToggleImageChildren(m_Spell_2_Icon, true); //m_Spell_2_Icon.gameObject.SetActive(true);
                 m_Spell_2_Icon.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_SpellImage; // Set UI Image
                 m_Spell_2_Border.sprite = m_SpellComponent.GetSpell(1).m_Spell.m_BorderImage; // Set UI Border
 
                 if (m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges == 1) // if the spell only has 1 charge, do not display it
                     m_Spell_2_Charges.gameObject.SetActive(false);
-                else
+                else {
                     m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_Spell.m_SpellCharges.ToString(); // show and update it otherwise
+                    m_Spell_2_Charges.gameObject.SetActive(true);
+                }
             }
-            else m_Spell_2_Icon.gameObject.SetActive(false); // hide spell if player dont have it
+            else ToggleImageChildren(m_Spell_2_Icon, false); ; // hide spell if player dont have it
         }
     }
 
     public void UpdateSpellUI()
     {
-        if (m_SpellComponent.GetSpell(0) != null)
+        if (m_SpellComponent.GetSpell(0).m_Spell != null)
         {
             m_Spell_1_Charges.text = m_SpellComponent.GetSpell(0).m_RemainingCharges.ToString();// update charges text
 
@@ -100,7 +110,7 @@ public class PlayerUIManager : MonoBehaviour
             }
         }
 
-        if (m_SpellComponent.GetSpell(1) != null)
+        if (m_SpellComponent.GetSpell(1).m_Spell != null)
         {
             m_Spell_2_Charges.text = m_SpellComponent.GetSpell(1).m_RemainingCharges.ToString(); // update charges text
 

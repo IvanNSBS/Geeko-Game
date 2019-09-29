@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: MultiStrike
   m_EditorClassIdentifier: 
   m_SpellName: MultiStrike
+  m_SpellDescription: Shoot a nuke projectile that will spawn several explosion in
+    it's path
   m_SpellCooldown: 10
   m_CastType: 0
   m_SpellDuration: 0
   m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
-  m_SpellImage: {fileID: 21300000, guid: 86c1eca555aba6c4c99df664248bca77, type: 3}
+  m_SpellImage: {fileID: 21300000, guid: baa7bcc60719b67488567bf6b1bec20f, type: 3}
   m_BorderImage: {fileID: 21300000, guid: e6b372ce9b621be47b2b2b0feb4c8f2e, type: 3}
   m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
     type: 3}

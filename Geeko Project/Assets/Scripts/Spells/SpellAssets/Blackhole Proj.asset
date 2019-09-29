@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Blackhole Proj
   m_EditorClassIdentifier: Assembly-CSharp::TravellingSpell
   m_SpellName: BlackHole
+  m_SpellDescription: Shoots a projectile that summons a blackhole when it hits something.
+    The blackhole will pull enemies towards it.
   m_SpellCooldown: 5
   m_CastType: 0
   m_SpellDuration: 0
   m_SpellCharges: 5
   m_UseAllAvailableCharges: 0
-  m_SpellImage: {fileID: 21300000, guid: 7009fca8f5911f24ab666a9888775d57, type: 3}
-  m_BorderImage: {fileID: 21300000, guid: aa5ba4395c3f9a9409d286ea87566301, type: 3}
+  m_SpellImage: {fileID: 21300000, guid: ee34195976181ef4b83f98f5034ab668, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
   m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
     type: 3}
   m_SpellSound: {fileID: 0}

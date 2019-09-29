@@ -11,6 +11,7 @@ public abstract class Spell : ScriptableObject
      * Spell is the parent ScriptableObject that defines the shape of a Spell
      */
     public string m_SpellName = "New Spell";
+    public string m_SpellDescription = "This is a description";
     public float m_SpellCooldown = 0.0f;
     public SpellCastType m_CastType = SpellCastType.FireAndForget;
 
@@ -48,7 +49,7 @@ public abstract class Spell : ScriptableObject
 public class SpellData
 {
     // TODO: make those booleans a spell cast state enum
-    public Spell m_Spell;
+    public Spell m_Spell = null;
     [HideInInspector] public float m_RemainingCD;
     [HideInInspector] public bool m_IsSpellOnCD;
     [HideInInspector] public bool m_UsingCharges;
@@ -62,8 +63,10 @@ public class SpellData
     [HideInInspector] public bool m_IsConcentrating = false;
     public void StartSpellData(GameObject owner, Transform pt, Transform pt_parent)
     {
-        if (!m_Spell)
+        if (!m_Spell) {
+            Debug.Log("spell was null!!!");
             return;
+        }
         m_Owner = owner;
         m_RemainingCD = 0.0f;
         m_IsSpellOnCD = false;
@@ -76,6 +79,8 @@ public class SpellData
     public float GetTotalCD() { return m_Spell.m_SpellCooldown; }
     public bool CastSpell(GameObject target = null)
     {
+        if (!m_Spell)
+            return false;
         GameObject actual_target = m_Spell.m_CastType == SpellCastType.FireAndForget ? target : m_Owner;
         //if the spell is not on CD or it has charges
         if ((!m_IsSpellOnCD || m_RemainingCharges > 0) && !m_IsConcentrating && !m_Spell.m_UseAllAvailableCharges)
