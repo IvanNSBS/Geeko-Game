@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7327942678170861691}
   - component: {fileID: 2888448353466815679}
   - component: {fileID: 6674505607288086007}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Jar
   m_TagString: DestructibleObject
   m_Icon: {fileID: 0}

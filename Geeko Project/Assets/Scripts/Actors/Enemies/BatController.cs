@@ -6,7 +6,13 @@ public class BatController : EnemyController
 {
     [Header("Bat properties")]
     public Animator batAnimator;
-    
+
+    public override void Start()
+    {
+        base.Start();
+        print("Bat enemy layer set to> FlyingEnemy: "+LayerMask.NameToLayer("FlyingEnemy"));
+        gameObject.layer = LayerMask.NameToLayer("FlyingEnemy");
+    }
 
     public override void CheckTransitions()
     {
