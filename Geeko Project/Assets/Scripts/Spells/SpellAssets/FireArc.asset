@@ -20,8 +20,8 @@ MonoBehaviour:
   m_SpellDuration: 0
   m_SpellCharges: 8
   m_UseAllAvailableCharges: 1
-  m_SpellImage: {fileID: 21300000, guid: baa7bcc60719b67488567bf6b1bec20f, type: 3}
-  m_BorderImage: {fileID: 21300000, guid: e6b372ce9b621be47b2b2b0feb4c8f2e, type: 3}
+  m_SpellImage: {fileID: 21300000, guid: 5411c3c0c974aba4e959c9dd930f7b73, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
   m_Prefab: {fileID: 1623317735016259177, guid: 9efa96a0f6c112043ab6fab421286ab2,
     type: 3}
   m_SpellSound: {fileID: 0}
