@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 168.05551
-    y: 31.173046
+    x: 157.5388
+    y: 20.02638
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
