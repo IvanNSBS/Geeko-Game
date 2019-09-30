@@ -148,7 +148,8 @@ public static class GameplayStatics
     {
         RaycastHit2D hit;
         Vector3 dir = target.transform.position - src.transform.position;
-        hit = Physics2D.Raycast(src.transform.position, dir, 0.5f);
+        float length = dir.magnitude;
+        hit = Physics2D.Raycast(src.transform.position, dir.normalized, length);
         if(debug)
             Debug.DrawLine(src.transform.position, target.transform.position, Color.green, debug_duration);
         return hit.point;
