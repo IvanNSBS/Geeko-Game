@@ -5,6 +5,7 @@ using UnityEngine.Events;
 // This script is used to manage the Main Spell Prefab
 // collision and other useful spell behavior
 
+public enum FollowWho { Null, Player, Target };
 public class SpellPrefabManager : MonoBehaviour
 {
     [SerializeField] private GameplayStatics.CollisionEvent m_OnCollideEnter;   // called when a collision happens and the
@@ -27,6 +28,8 @@ public class SpellPrefabManager : MonoBehaviour
     [HideInInspector] public Vector3? m_TargetInitialPos;
     [HideInInspector] public float m_TickDelay = 0.0f;
 
+    private FollowWho m_FollowTarget = FollowWho.Null;
+    public void SetFollowerOwner(FollowWho value) { m_FollowTarget = value; }
     public void ResetTickLock()
     {
         m_RemainingTickTime = m_TickDelay;
@@ -72,11 +75,20 @@ public class SpellPrefabManager : MonoBehaviour
 
     public void Update()
     {
+        if (m_FollowTarget == FollowWho.Player)
+            gameObject.transform.position = GetOwner().transform.position;
+        if (m_FollowTarget == FollowWho.Target && m_Target)
+            gameObject.transform.position = m_Target.transform.position;
+
+        if (m_TimeToLive != 0.0f && m_TimeAlive > m_TimeToLive)
+            Destroy(gameObject);
+
         if (m_OnUpdate != null && m_RemainingTickTime == m_TickDelay)
             m_OnUpdate.Invoke(this.gameObject);
-        m_TimeAlive += Time.deltaTime;
 
+        m_TimeAlive += Time.deltaTime;
         m_RemainingTickTime -= Time.deltaTime;
+
         if (m_RemainingTickTime <= 0.0f) ResetTickLock();
     }
 

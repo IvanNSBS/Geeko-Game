@@ -75,7 +75,10 @@ public static class SpellUtilities
         obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(spell.SpellTriggerEnter);
         obj.GetComponent<SpellPrefabManager>().AddTriggerTick(spell.SpellTriggerTick);
         obj.GetComponent<SpellPrefabManager>().AddOnUpdate(spell.OnTick);
-        obj.GetComponent<Rigidbody2D>().velocity = spell_velocity;
+
+        var rb = obj.GetComponent<Rigidbody2D>();
+        if(rb)
+            rb.velocity = spell_velocity;
         obj.transform.position = position;
         obj.transform.rotation = rotation;
 
@@ -146,7 +149,7 @@ public static class SpellUtilities
 
         if (src)
             if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
-                spell.CastSpell(src.GetOwner(), null, spawn_pos);
+                spell.CastSpell(src.GetOwner(), target, spawn_pos);
                 return true;
             }
 

@@ -9,6 +9,8 @@ public class TravelProjectile : Spell
     public Spell m_SpellToCast;
     public float m_TravelDistance = 10.0f;
     public float m_ProjectileSpeed = 1.0f;
+    public bool m_EnemyOnly = false;
+    public float m_Damage = 0.0f;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
@@ -59,16 +61,18 @@ public class TravelProjectile : Spell
         Debug.Log("TriggerEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid2);
+        if(!m_EnemyOnly)
+            SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid2);
+        else if(target.gameObject.CompareTag("Enemy"))
+            SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src));
+        if (m_Damage > 0.0f)
+            SpellUtilities.DamageOnCollide(target.gameObject, s_manager, m_Damage, SpellUtilities.invalid2);
+
+
         if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
         {
-            Debug.Log("target obj tag = " + target.tag);
             GameObject.Destroy(src);
         }
-        Debug.Log("list = ");
-        foreach (string tg in SpellUtilities.invalid2)
-            Debug.Log(tg);
-        Debug.Log("Finished showing list");
     }
 
     public override void SpellTriggerTick(Collider2D target, GameObject src)

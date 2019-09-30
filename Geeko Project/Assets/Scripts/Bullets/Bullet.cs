@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     public string targetTag;
 
     public float maxSpeed;
-
+    private string _instantiatorTag;
     private GameObject _instantiator;
 
     private Transform _homingTarget;
@@ -38,6 +38,8 @@ public class Bullet : MonoBehaviour
     public void SetInstantiator(GameObject instantiator)
     {
         _instantiator = instantiator;
+        _instantiatorTag = instantiator.tag;
+
     }
 
     public GameObject GetInstantiator()
@@ -53,7 +55,7 @@ public class Bullet : MonoBehaviour
             if (owner == GetInstantiator())
                 return;
         }
-        if (GameplayStatics.ObjHasTag(other.gameObject, tags_to_ignore, true) && !GetInstantiator().CompareTag(other.gameObject.tag))
+        if (GameplayStatics.ObjHasTag(other.gameObject, tags_to_ignore, true) && !other.gameObject.CompareTag(_instantiatorTag))
         {
             GameplayStatics.ApplyDamage(other.gameObject, 10);
             Destroy(gameObject);
