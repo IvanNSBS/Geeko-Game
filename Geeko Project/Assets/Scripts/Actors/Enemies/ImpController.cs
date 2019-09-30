@@ -10,10 +10,53 @@ public class ImpController : EnemyController
     [Tooltip("Animation of the enemy")]
     public Animator impAnimator;
 
+    public int howManyPatternsBeforeIdle;
+    public int numberOfBullets;
+    public float amplitudeDegrees;
+    public float minimumSpeed;
+    public float maximumSpeed;
+    public float breakingTime;
+    public float timeDisappear;
+    public float degreesPerSecond;
+
+    private WeaponComponent _weaponComponent;
+    private int _shots;
+    private bool _shooting;
+    private bool _attackEnded;
+    
+    
+    public override void CheckTransitions()
+    {
+        currState = EnemyState.Attack;
+      
+        if ( getIdle() || _attackEnded)
+        {
+            currState = EnemyState.Idle;
+        }
+        else if (IsPlayerInAttackRange(attackRange))
+        {
+            currState = EnemyState.Attack;
+        }
+      
+        if (GetCurrentHealth() <= 0)
+        {
+            currState = EnemyState.Die;
+        }
+    }
+
+
     public override void Idle()
     {
         base.Idle();
-        impAnimator.SetBool("isIdle",true);
+        
+        if (!GetWaiting() && _attackEnded)
+        {
+            SetWaiting(true);
+            StartCoroutine(WaitingToAttack(idleTime));
+          //  fireTotemAnimator.SetBool("isIdle",true);
+          //  fireTotemAnimator.SetBool("isAttacking",false);
+            impAnimator.SetBool("isIdle",true);
+        }
     }
 
     public override void Attack()
@@ -27,17 +70,46 @@ public class ImpController : EnemyController
         base.Attack();
 
     }
-         
+    
+    private IEnumerator WaitingToAttack(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SetWaiting(false);
+        _attackEnded = false;
+        _shots = 0;
+        _shooting = false;
+    }
+    
+    public override void Reload()
+    {
+        base.Reload();
+        if(_shooting)
+        {
+            _shooting = false;
+        }
+    }
+    
     public override GameObject Shooting()
     {
-        GameObject aux = base.Shooting();
-        if (aux != null) //shooting
+        if (!_shooting)
         {
-            impAnimator.SetTrigger("isAttacking");
-            impAnimator.SetBool("isIdle",false);
+            if (_shots >= howManyPatternsBeforeIdle)
+            {
+                _attackEnded = true;
+                return null;
+            }
+
+            _shots += 1;
+            _shooting = true;
+            var pd = PlayerDirection();
+            _weaponComponent.Linear(pd,numberOfBullets,_weaponComponent.cooldown,_weaponComponent.speed);
+            _weaponComponent.SetHomingRotational(GetPlayer(),degreesPerSecond).SetDisappearAfter(timeDisappear);
+           // _weaponComponent.Linear(PlayerDirection(),numberOfBullets,_weaponComponent.cooldown,_weaponComponent.speed);
+            //fireTotemAnimator.SetTrigger("isAttacking");
+            // fireTotemAnimator.SetBool("isIdle",false);
         }
         
-        return aux;
+        return null;
     }
 
     public void IdlingAfterAttack()
@@ -57,6 +129,18 @@ public class ImpController : EnemyController
         impAnimator.SetBool("isMoving",true);
         impAnimator.SetBool("isIdle",false);
        // impAnimator.SetBool("isAttacking",false);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+       
+        if (howManyPatternsBeforeIdle <= 0)
+        {
+            howManyPatternsBeforeIdle = 1;
+        }
+        _weaponComponent = GetComponent<WeaponComponent>();
+
     }
 
     public void onHit()
