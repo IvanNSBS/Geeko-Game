@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db666f31645db41408a776d2feb7fe88, type: 3}
+  m_Name: PrayerOfHealing
+  m_EditorClassIdentifier: 
+  m_SpellName: Prayer of Healing
+  m_SpellDescription: Heals the player over time...
+  m_SpellCooldown: 10
+  m_CastType: 0
+  m_SpellDuration: 15
+  m_SpellCharges: 1
+  m_UseAllAvailableCharges: 0
+  m_SpellImage: {fileID: 21300000, guid: 958235a4c5d6f0344a3ea23a172af240, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
+  m_Prefab: {fileID: 6380168145501466451, guid: 5fe55ff80a5571b42817a84dae6e2311,
+    type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 0}
+  m_Invalid:
+  - Item
+  - SpellUninteractive
+  - Room
+  m_HealAmount: 1
+  m_TickDealay: 0.3

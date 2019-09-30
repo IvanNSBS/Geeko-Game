@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5164416681892274967}
   - component: {fileID: 5164416681892274964}
   - component: {fileID: 2568472791915263770}
-  - component: {fileID: 2516977319664529462}
   - component: {fileID: -4574671564226133469}
+  - component: {fileID: 4282373476760222633}
   m_Layer: 0
   m_Name: ParticleSpell
   m_TagString: Untagged
@@ -4777,22 +4777,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &2516977319664529462
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5164416681892274965}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
 --- !u!114 &-4574671564226133469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4816,3 +4800,19 @@ MonoBehaviour:
   m_SpawnRot: {x: 0, y: 0, z: 0, w: 0}
   m_Toggle: 0
   m_TickDelay: 0
+--- !u!70 &4282373476760222633
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5164416681892274965}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.62}
+  m_Direction: 0

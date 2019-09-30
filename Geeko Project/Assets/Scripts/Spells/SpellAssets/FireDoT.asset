@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dbb31b406f7734280e7c02a453e3ca, type: 3}
+  m_Name: FireDoT
+  m_EditorClassIdentifier: 
+  m_SpellName: New Spell
+  m_SpellDescription: This is a description
+  m_SpellCooldown: 0
+  m_CastType: 0
+  m_SpellDuration: 5
+  m_SpellCharges: 1
+  m_UseAllAvailableCharges: 0
+  m_SpellImage: {fileID: 0}
+  m_BorderImage: {fileID: 0}
+  m_Prefab: {fileID: 6380168145501466451, guid: c279f4144b9265b4f81e311c2527957d,
+    type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 0}
+  m_Invalid:
+  - Item
+  - SpellUninteractive
+  - Room
+  m_Damage: 1
+  m_TickDealay: 0.3

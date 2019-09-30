@@ -98,6 +98,7 @@ public class StatusComponent : MonoBehaviour
     public void Heal(float amount, GameplayStatics.DamageType type = GameplayStatics.DamageType.Heal) {
         m_CurrentHealth += amount;
         m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
+        GameplayStatics.SpawnDmgPopup(transform.position, amount, type, false);
         if(m_OnReceiveHeal != null)
             m_OnReceiveHeal.Invoke(amount, type);
     }

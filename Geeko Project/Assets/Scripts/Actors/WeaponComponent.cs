@@ -25,11 +25,9 @@ public class WeaponComponent : MonoBehaviour
     private bool _homingDirectional = false;
     private float _homingAcceleration;
     
-    //sine vars
-    private bool _sine = false;
-    private bool _sineFlip;
-    private float _sineAmplitude;
-    private float _sinePeriod;
+    //disappearance vars
+    private bool _willDisappear = false;
+    private float _disappearIn;
     
     public void SetTargetingFunction(Func<Vector2> fun)
     {
@@ -84,6 +82,9 @@ public class WeaponComponent : MonoBehaviour
                     bullet.HomeDirectional(_homingTarget, _homingAcceleration);
                 }
 
+                if (_willDisappear)
+                    bullet.DisappearIn = _disappearIn;
+                
                 callback?.Invoke(bullet);
             }
 
@@ -309,13 +310,13 @@ public class WeaponComponent : MonoBehaviour
         } else if (_homingDirectional)
         {
             bullet.HomeDirectional(_homingTarget, _homingAcceleration);
-        } else if (_sine)
-        {
-            bullet.Sine(_sineAmplitude, _sinePeriod, _sineFlip);
         }
+
+        if (_willDisappear)
+            bullet.DisappearIn = _disappearIn;
     }
 
-    public void SetHomingRotational(
+    public WeaponComponent SetHomingRotational(
         Transform target,
         float rotationDegreesPerSecond
     )
@@ -323,9 +324,10 @@ public class WeaponComponent : MonoBehaviour
         _homingRotational = true;
         _homingTarget = target;
         _homingDegreesPerSecond = rotationDegreesPerSecond;
+        return this;
     }
 
-    public void SetHomingDirectional(
+    public WeaponComponent SetHomingDirectional(
         Transform target,
         float brakingTime
     )
@@ -333,5 +335,15 @@ public class WeaponComponent : MonoBehaviour
         _homingDirectional = true;
         _homingTarget = target;
         _homingAcceleration = speed / brakingTime;
+        return this;
+    }
+
+    public WeaponComponent SetDisappearAfter(
+        float seconds
+    )
+    {
+        _willDisappear = true;
+        _disappearIn = seconds;
+        return this;
     }
 }
