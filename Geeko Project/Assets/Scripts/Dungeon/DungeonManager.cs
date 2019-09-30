@@ -25,6 +25,7 @@ public class DungeonManager : MonoBehaviour
 
     public void RepositionPlayer()
     {
+        miniMapCamera = FindObjectOfType<MiniMapCamera>();
         player.transform.position = Vector3.zero;
     }
 
