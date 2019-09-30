@@ -8,8 +8,7 @@ public class ManaShieldConc : Spell
 {
     [SerializeField] private float m_ShieldHP = 20.0f;
     [SerializeField] private float m_Radius = 3.0f;
-    [SerializeField] private float m_DmgMitigation = 0.7f;
-    [SerializeField] private float m_SlowAmount = 1.0f;
+    [SerializeField] private float m_IFrameTime = 1.0f;
     [SerializeField] private Material m_Material;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
@@ -33,24 +32,15 @@ public class ManaShieldConc : Spell
             if (m_Material)
                 obj.GetComponent<MeshRenderer>().material = m_Material;
 
-            if (owner.GetComponent<EffectManagerComponent>())
-            {
-                Debug.Log("Setting it");
-                owner.GetComponent<EffectManagerComponent>().AddToSpeedMult(-m_SlowAmount);
-            }
-
             obj.GetComponent<SpellPrefabManager>().m_TimeToLive = m_SpellDuration;
             obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.SpellTriggerTick);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
-            obj.GetComponent<SpellPrefabManager>().AddOnDestruction( () => { owner.GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SlowAmount); });
 
             StatusComponent status = obj.AddComponent<StatusComponent>() as StatusComponent;
             status.SetMaxHealth(m_ShieldHP);
             status.Heal(m_ShieldHP);
             status.m_CanUseIFrames = true;
-            status.m_IFrameTime = 1.1f;
-            // TODO: Set can use iframe
-            //status.AddOnTakeDamage( x => { if ( status.GetCurrentHealth() <= 0.0f) owner.GetComponent<StatusComponent>().TakeDamage(x * m_DmgMitigation); } );
+            status.m_IFrameTime = m_IFrameTime;
             status.AddOnDeath( () => Destroy(obj) );
 
             return obj;
@@ -60,9 +50,7 @@ public class ManaShieldConc : Spell
     }
     public override void StopConcentration(GameObject spell = null)
     {
-        if (spell) {
-            GameObject.Destroy(spell);
-        }
+
     }
 
     public override void OnTick(GameObject obj)

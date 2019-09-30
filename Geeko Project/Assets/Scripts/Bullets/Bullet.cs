@@ -44,25 +44,38 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (targetTag.Equals("All"))
+        List<string> tags_to_ignore = new List<string>() { "Untagged", "Room", "SpellUninteractive", "Item" };
+        if (other.CompareTag("SpellInteractive")) {
+            GameObject owner = other.gameObject.GetComponent<SpellPrefabManager>().GetOwner();
+            if (owner == GetInstantiator())
+                return;
+        }
+        if (GameplayStatics.ObjHasTag(other.gameObject, tags_to_ignore, true) && !GetInstantiator().CompareTag(other.gameObject.tag))
         {
-            if (other.CompareTag("Player")|| other.CompareTag("Enemy") || other.CompareTag("DestructibleObject"))
-            {
-                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
-                Destroy(gameObject);
-            } else if (other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("Rock"))
-            {
-                Destroy(gameObject);
-            }
-
-        } else if (other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("DestructibleObject") || other.CompareTag("Rock"))
-        {
-            if (other.CompareTag(targetTag) || other.CompareTag("DestructibleObject")) 
-            {
-                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
-            } 
+            GameplayStatics.ApplyDamage(other.gameObject, 10);
             Destroy(gameObject);
         }
+
+        //if (targetTag.Equals("All"))
+        //{
+        //if (other.CompareTag("Player")|| other.CompareTag("Enemy") || other.CompareTag("DestructibleObject") || (other.CompareTag("SpellInteractive") && !GetInstantiator().CompareTag("Player")))
+        //{
+        //    other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+        //    Destroy(gameObject);
+        //} else if (other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("Rock"))
+        //{
+        //    Destroy(gameObject);
+        //}
+        //} 
+        //else // if (other.CompareTag("SpellInteractive")  || other.CompareTag(targetTag) || other.CompareTag("Wall") || other.CompareTag("Door") || other.CompareTag("DestructibleObject") || other.CompareTag("Rock"))
+        //{
+        //    List<string> tags_to_ignore = new List<string>() { "Untagged", "Room", "" };
+        //    if (other.CompareTag(targetTag) || other.CompareTag("DestructibleObject") || (other.CompareTag("SpellInteractive") && !GetInstantiator().CompareTag("Player"))) 
+        //    {
+        //        other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+        //    } 
+        //    Destroy(gameObject);
+        //}
     }
 
     public void HomeRotational(Transform target, float degreesPerSecond)
