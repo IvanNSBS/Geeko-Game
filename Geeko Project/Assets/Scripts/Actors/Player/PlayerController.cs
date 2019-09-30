@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private float AutoAimRange = 12f;
     [HideInInspector] public GameObject target;
+    public Progress ProgressPanel;
 
     void Start()
     {
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
         }
         Time.timeScale = 0f;
         GameOverPanel.SetActive(true);
+        ProgressPanel.gameObject.SetActive(true);
     }
 
     public void FlipHand()
@@ -105,7 +107,6 @@ public class PlayerController : MonoBehaviour
 
     public void MakePlayerInvulnerable(float useless)
     {
-        Debug.Log("Dale");
         StartCoroutine(GameplayStatics.Delay(m_StatusComponent.m_IFrameTime, () => this.gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable"), () => this.gameObject.layer = LayerMask.NameToLayer("Player")));
     }
 

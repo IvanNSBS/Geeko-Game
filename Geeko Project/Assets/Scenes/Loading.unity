@@ -467,10 +467,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 1479.9984
-    y: 360.7684
-    width: 989.2563
-    height: 94.463135
+    x: 1459.8613
+    y: 365.74472
+    width: 975.7963
+    height: 95.76614
   anchorVector: {x: 0, y: 0}
 --- !u!1 &1098655390
 GameObject:
@@ -511,7 +511,7 @@ MonoBehaviour:
   waitOnLoadEnd: 0.25
   fadeDuration: 0.25
   loadSceneMode: 0
-  loadThreadPriority: 0
+  loadThreadPriority: 4
   audioListener: {fileID: 0}
 --- !u!114 &1098655392
 MonoBehaviour:
