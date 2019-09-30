@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void MakePlayerInvulnerable(float useless)
+    public void MakePlayerInvulnerable(float useless, GameplayStatics.DamageType type)
     {
         StartCoroutine(GameplayStatics.Delay(m_StatusComponent.m_IFrameTime, () => this.gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable"), () => this.gameObject.layer = LayerMask.NameToLayer("Player")));
     }
