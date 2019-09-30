@@ -126,8 +126,8 @@ MonoBehaviour:
     type: 3}
   timeToStartActions: 2
   sightRange: 6
-  attackRange: 1.5
-  speed: 1
+  attackRange: 2
+  speed: 1.2
   dashSpeed: 0
   stopShootToReload: 0
   explodeWhenDie: 0
@@ -141,9 +141,10 @@ MonoBehaviour:
   followWalk: 0
   idleTime: 2
   wanderingTime: 2
-  maxTimeFollowing: 3
+  maxTimeFollowing: 5
   dashTime: 0
-  basicMeleeAttackTime: 0.05
+  basicMeleeAttackTime: 0.5
+  basicMeleeAttackSpeed: 80
   cooldownBasicMeleeAttackTime: 2
   holdingTime: 0
   timeToReload: 0
@@ -365,6 +366,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.925
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869166, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624434732395885, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be7366acf197c5841a13bed870dc3d40, type: 3}

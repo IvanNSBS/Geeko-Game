@@ -89,6 +89,8 @@ public class EnemyController : MonoBehaviour
     public float dashTime;
     [Tooltip("Time that the enemy will be basic Attacking")]
     public float basicMeleeAttackTime;
+    [Tooltip("Similar to dashTime but for the basic attack")]
+    public float basicMeleeAttackSpeed;
     [Tooltip("Time of the cd of the basic attack melee")]
     public float cooldownBasicMeleeAttackTime;
     [Tooltip("Time that the enemy will be holding to dash")]
@@ -166,6 +168,7 @@ public class EnemyController : MonoBehaviour
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
         _stopShootToReload = stopShootToReload;
+        _basicMeleeAttackTime = basicMeleeAttackTime;
         this.gameObject.layer = GameplayStatics.idxLayerEnemy;
         ResetFollowingTime();
         _firstIdle = true;
@@ -507,22 +510,37 @@ public class EnemyController : MonoBehaviour
             if (!_saveLastPos)
             {
                 _saveLastPos = true;
-                _randomDir = DirectionNormalized(transform.position, _player.position);
+                _randomDir = PlayerDirection();
+                print("saved direction player");
             }
             
             if(_basicMeleeAttackTime <= 0)
             {
-                _basicMeleeAttackTime = basicMeleeAttackTime;
-                _saveLastPos = false;
-                StartCoroutine(BasicAttackCooldown());
+                ResetBasicAttack();
             }
             else
             {
-                MoveEnemy(_randomDir,speed*70*Time.deltaTime);
+                print("time basic attack: "+_basicMeleeAttackTime);
+                MoveEnemy(_randomDir,basicMeleeAttackSpeed*Time.deltaTime);
                 _basicMeleeAttackTime -= Time.deltaTime;
             }
         }
     }
+
+    public bool BasicAttacking()
+    {
+        return _saveLastPos;
+    }
+
+    public virtual void ResetBasicAttack()
+    {
+        print("reset basic attack");
+        _basicMeleeAttackTime = basicMeleeAttackTime;
+        _saveLastPos = false;
+        StopMovement();
+        StartCoroutine(BasicAttackCooldown());
+    }
+
 
     public IEnumerator BasicAttackCooldown()
     {
