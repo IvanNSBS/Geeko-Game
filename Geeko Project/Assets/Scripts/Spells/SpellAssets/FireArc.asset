@@ -24,7 +24,7 @@ MonoBehaviour:
   m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
   m_Prefab: {fileID: 5164416681892274965, guid: 7bf5ea0dbd288e640b36a9219cff7f72,
     type: 3}
-  m_SpellSound: {fileID: 0}
+  m_SpellSound: {fileID: 8300000, guid: 6bdeef66462164b47bee66c2a486caf7, type: 3}
   m_OnHitEffect: {fileID: 0}
   m_Invalid:
   - Item
