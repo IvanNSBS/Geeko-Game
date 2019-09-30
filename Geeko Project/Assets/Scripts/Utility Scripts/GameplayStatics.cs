@@ -124,10 +124,13 @@ public static class GameplayStatics
 
     //TODO: Make more tests to be sure if when it enters trigger it'll
     //      really get the contact point correctly
-    public static Vector3 GetTriggerContactPoint(GameObject src)
+    public static Vector3 GetTriggerContactPoint(GameObject target, GameObject src, bool debug = false, float debug_duration = 1.0f)
     {
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(src.transform.position, src.transform.right, 1.5f);
+        Vector3 dir = target.transform.position - src.transform.position;
+        hit = Physics2D.Raycast(src.transform.position, dir, 0.5f);
+        if(debug)
+            Debug.DrawLine(src.transform.position, target.transform.position, Color.green, debug_duration);
         return hit.point;
     }
 

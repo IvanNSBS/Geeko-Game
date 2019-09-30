@@ -45,7 +45,7 @@ public class TravelProjectile : Spell
         Debug.Log("CollisionEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, spawn_pos: GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid);
+        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, spawn_pos: GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid);
         if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
             GameObject.Destroy(src);
     }
@@ -59,7 +59,7 @@ public class TravelProjectile : Spell
         Debug.Log("TriggerEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(src), SpellUtilities.invalid2);
+        SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid2);
         if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
         {
             Debug.Log("target obj tag = " + target.tag);
