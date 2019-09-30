@@ -344,5 +344,6 @@ public class WeaponComponent : MonoBehaviour
     {
         _willDisappear = true;
         _disappearIn = seconds;
+        return this;
     }
 }
