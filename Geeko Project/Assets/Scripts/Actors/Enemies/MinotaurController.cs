@@ -315,6 +315,25 @@ public class MinotaurController : EnemyController
             }
         }
     }
+
+    public override bool flipStaticEnemy()
+    {
+        var flipChildren = base.flipStaticEnemy();
+        return FlipChildrenIf(flipChildren);
+    }
+
+    private bool FlipChildrenIf(bool flipChildren)
+    {
+        if (flipChildren)
+        {
+            FlipChildren();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void AxeAttack()
     {
         if (_timeBtwAxeAttack <= 0)
@@ -628,10 +647,15 @@ public class MinotaurController : EnemyController
 
     public void OnFlip()
     {
+        FlipChildren();
+    }
+
+    private void FlipChildren()
+    {
         for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
-            child.localPosition = new Vector3(-child.localPosition.x,child.localPosition.y,child.localPosition.z);
+            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
         }
     }
 
