@@ -143,7 +143,7 @@ public class LeafTotemController : EnemyController
          _shooting = true;
          _shots += 1;
          _shootingDir = PlayerDirection();
-         _weaponComponent.RandomGauss(_shootingDir,amplitudeDegrees,numberOfShots,_weaponComponent.cooldown,_weaponComponent.speed );
+         _weaponComponent.RandomUniform(_shootingDir,amplitudeDegrees,numberOfShots,_weaponComponent.cooldown,_weaponComponent.speed );
          leafTotemAnimator.SetBool("isAttacking",true);
          leafTotemAnimator.SetBool("isIdle",false);
          
