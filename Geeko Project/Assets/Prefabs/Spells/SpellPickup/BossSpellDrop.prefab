@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653331347382014043}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.78480995, y: 0.33064556, z: 0.48285568}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 7912920037045471697}
@@ -92,8 +92,9 @@ GameObject:
   - component: {fileID: 653331348323633496}
   - component: {fileID: 2936462306824934528}
   - component: {fileID: 1855053982}
+  - component: {fileID: -2770561580710189749}
   m_Layer: 0
-  m_Name: SpellPickup
+  m_Name: BossSpellDrop
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653331348323633498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.39, y: -0.02281785, z: -1.0671923}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 7912920037045471697}
@@ -126,6 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efea73a666b0b349a8dcbbbb180c99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_UseRandomDrop: 1
+  m_PossibleSpells:
+  - {fileID: 11400000, guid: 9ac57d99a7b66ce429a1c1447792e89b, type: 2}
+  - {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
+  - {fileID: 11400000, guid: 37bb4e1a48018744caed20ac94291301, type: 2}
+  - {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
+  - {fileID: 11400000, guid: e3785cd09d1de06498a825c2e980c34f, type: 2}
 --- !u!50 &2936462306824934528
 Rigidbody2D:
   serializedVersion: 4
@@ -173,6 +181,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2, y: 3.2}
   m_EdgeRadius: 0
+--- !u!95 &-2770561580710189749
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653331348323633498}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a121a7e0df316004fb223443b70aa511, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &653331348890000849
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653331348890000849}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.78480995, y: 0.33064556, z: 0.46535563}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 7912920037045471697}
@@ -281,7 +308,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653331348919250304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.46535563}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.075, y: 0.075, z: 0.075}
   m_Children: []
   m_Father: {fileID: 7912920037045471697}
@@ -289,7 +316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.1123104, y: 0.67314553}
+  m_AnchoredPosition: {x: -1.271, y: 0.352}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &653331348919250315
@@ -483,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6472207805507486848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1392398, y: -1.3225822, z: -1.8614225}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 653331347382014042}
