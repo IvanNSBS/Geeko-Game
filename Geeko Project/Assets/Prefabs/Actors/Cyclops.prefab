@@ -382,7 +382,7 @@ MonoBehaviour:
   timeBtwShots: 0
   timeWalkingOneDirection: 0.7
   cyclopsAnimator: {fileID: 2361220405482375385}
-  bossState: 0
+  bossState: 2
   attacks: 000000000100000002000000
   particle: {fileID: 6396098498220829078}
   stompPosition: {fileID: 4910405115135301413}
@@ -415,10 +415,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   laserEyePosition: {fileID: 2361220405370856918}
-  laserRange: {x: 20, y: 0.5}
-  timeLaserAttack: 10
-  laserDamage: 20
-  anglePerFrame: 0.5
+  laserRange: {x: 15, y: 0.5}
+  timeLaserAttack: 5
+  laserDamage: 1
+  timeFrame: 0.2
+  anglePerFrame: 0.6
+  angleAfterHitted: 0.1
+  howManyFramesSlowedAfterHit: 10
 --- !u!114 &2361220405482375391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,8 +551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementSpeed: 10
-  m_AccelerationTime: 0
-  m_DeaccelerationTime: 0
+  m_AccelerationTime: 0.48
+  m_DeaccelerationTime: 0.26
   m_OnFlip:
     m_PersistentCalls:
       m_Calls:
