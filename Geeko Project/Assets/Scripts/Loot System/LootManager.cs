@@ -11,6 +11,8 @@ public class LootManager : MonoBehaviour
         public int dropRate;
     }
 
+    public bool shouldDropSpell = false;
+    public GameObject SpellDropPrefab;
     public List<Loot> lootTable = new List<Loot>();
     public int dropChance;
     
@@ -21,6 +23,14 @@ public class LootManager : MonoBehaviour
         {
             //Debug.Log("No Loot for me");
             //Destroy(this.gameObject);
+            if (shouldDropSpell)
+            {
+                if (SpellDropPrefab)
+                {
+                    GameObject spell = Instantiate(SpellDropPrefab, transform.position, Quaternion.identity);
+                    spell.transform.parent = this.transform.parent;
+                }
+            }
             return;
         }
         else
@@ -38,6 +48,14 @@ public class LootManager : MonoBehaviour
                 {
                     GameObject go = Instantiate(lootTable[j].item, transform.position, Quaternion.identity);
                     go.transform.parent = this.transform.parent;
+                    if (shouldDropSpell)
+                    {
+                        if (SpellDropPrefab)
+                        {
+                            GameObject spell = Instantiate(SpellDropPrefab, transform.position, Quaternion.identity);
+                            spell.transform.parent = this.transform.parent;
+                        }
+                    }
                     return;
                 }
                 randomValue -= lootTable[j].dropRate;
