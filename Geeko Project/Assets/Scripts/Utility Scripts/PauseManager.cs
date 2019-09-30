@@ -24,6 +24,19 @@ public class PauseManager : MonoBehaviour
         Progress.SetActive(false);
     }
 
+    public void BackToMainMenu()
+    {
+        FindObjectOfType<LoadTargetScene>().LoadSceneNum(0);
+        Time.timeScale = 1f;
+        DestroyPlayerAndDungeonManager();
+    }
+
+    private void DestroyPlayerAndDungeonManager()
+    {
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
+        Destroy(FindObjectOfType<DungeonManager>().gameObject);
+    }
+
     public void OnApplicationPause(bool pause)
     {
         if (pause)
