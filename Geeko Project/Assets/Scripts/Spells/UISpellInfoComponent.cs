@@ -19,7 +19,6 @@ public class UISpellInfoComponent : MonoBehaviour
         if (!spell)
             return;
         m_SpellName.text = spell.m_SpellName;
-        m_Type.text = "Type: " + spell.m_CastType.ToString();
         m_Chargeable.text = "Chargeable:" + "No";
         m_Uses.text = "Uses: " + spell.m_SpellCharges.ToString();
         m_Cooldown.text = "Cooldown: "+ spell.m_SpellCooldown.ToString();

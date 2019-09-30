@@ -139,14 +139,7 @@ public class FireTotemController : EnemyController
 
     public override void ExplodeWhenDie()
     {
-        var gambiarra = gameObject.AddComponent<WeaponComponent>();
-        gambiarra.cooldown = cooldownBullets5W;
-        gambiarra.firePoint = transform;
-        gambiarra.owner = gameObject;
-        gambiarra.speed = speedBullets5W;
-        gambiarra.targetTag = "Player";
-        gambiarra.bulletPrefab = projectile;
-        gambiarra.SpreadFiveWay(PlayerDirection(),numberOfBullets5W,amplitude,_weaponComponent.cooldown,_weaponComponent.speed);
+        _weaponComponent.SpreadFiveWay(PlayerDirection(),numberOfBullets5W,amplitude,_weaponComponent.cooldown,_weaponComponent.speed);
     }
 
     public void OnDeath()

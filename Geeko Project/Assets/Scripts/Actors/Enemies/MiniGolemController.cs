@@ -15,7 +15,14 @@ public class MiniGolemController : EnemyController
     public float cooldownBullets;
     public float amplitude;
     public float waveLength;
-    
+
+    private WeaponComponent _weaponComponent;
+    public override void Start()
+    {
+        base.Start();
+        _weaponComponent = GetComponent<WeaponComponent>();
+    }
+
     public override void CheckTransitions()
     {
         if (IsPlayerInRange(sightRange))
@@ -76,19 +83,11 @@ public class MiniGolemController : EnemyController
 
     public override void ExplodeWhenDie()
     {
-        var gambiarra = gameObject.AddComponent<WeaponComponent>();
-        gambiarra.cooldown = cooldownBullets;
-        gambiarra.firePoint = transform;
-        gambiarra.owner = gameObject;
-        gambiarra.speed = speedBullets;
-        gambiarra.targetTag = "Player";
-        gambiarra.bulletPrefab = projectile;
-
         Vector2 _dir = PlayerDirection();
         var angleCte = 360 / howManySinWaves;
         for (int i = 0; i < howManySinWaves; i++)
         {
-            gambiarra.SineWave(_dir.Rotate(angleCte*i),amplitude,numberOfBullets,waveLength,cooldownBullets,speedBullets);
+            _weaponComponent.SineWave(_dir.Rotate(angleCte*i),amplitude,numberOfBullets,waveLength,cooldownBullets,speedBullets);
         }
 
     }

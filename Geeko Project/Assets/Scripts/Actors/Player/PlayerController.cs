@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void MakePlayerInvulnerable(float useless)
+    public void MakePlayerInvulnerable(float useless, GameplayStatics.DamageType type)
     {
         StartCoroutine(GameplayStatics.Delay(m_StatusComponent.m_IFrameTime, () => this.gameObject.layer = LayerMask.NameToLayer("PlayerInvulnerable"), () => this.gameObject.layer = LayerMask.NameToLayer("Player")));
     }
@@ -170,8 +170,8 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
         
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            m_WeaponComponent.AttemptToShoot();
+        //if (Input.GetKeyDown(KeyCode.Mouse0))
+        //    m_WeaponComponent.AttemptToShoot();
         if (Input.GetKeyDown(KeyCode.Alpha1))
             m_SpellComponent.CastSpell(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))

@@ -20,7 +20,7 @@ public class DestructibleObject : MonoBehaviour
         objectStatusComponent.AddOnTakeDamage(HitObject);
     }
 
-    private void HitObject(float damage)
+    private void HitObject(float damage, GameplayStatics.DamageType type)
     {
         ObjectAnimator.SetTrigger("Hit");
     }

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: MultiStrike
   m_EditorClassIdentifier: 
   m_SpellName: MultiStrike
-  m_SpellDescription: Shoot a nuke projectile that will spawn several explosion in
-    it's path
+  m_SpellDescription: Shoots a projectile that spawns several explosions in its path.
   m_SpellCooldown: 10
   m_CastType: 0
   m_SpellDuration: 0

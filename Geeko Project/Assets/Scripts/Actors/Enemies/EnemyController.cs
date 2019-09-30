@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
-using TreeEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -150,6 +149,8 @@ public class EnemyController : MonoBehaviour
     private bool _saveLastPos;
     private bool _stopShootToReload;
     private bool _firstIdle;
+    private Collider2D _playerCollider;
+    
     [NonSerialized]
     public GameObject shadow;
    
@@ -172,6 +173,7 @@ public class EnemyController : MonoBehaviour
         ResetFollowingTime();
         _firstIdle = true;
         shadow = GetShadow();
+        _playerCollider = _player.GetComponent<Collider2D>();
     }
 
     public SpriteRenderer GetSprite()
@@ -725,7 +727,8 @@ public class EnemyController : MonoBehaviour
     
     public bool IsPlayerInAttackRange(float attackRange)
     {
-        return Vector3.Distance(transform.position, _player.position) <= attackRange;
+        var point = _player.TransformPoint(_playerCollider.offset);
+        return Vector3.Distance(transform.position, point) <= attackRange;
     }
 
     /* Deprecated
@@ -860,16 +863,14 @@ public class EnemyController : MonoBehaviour
 
     public Vector3 PlayerDirection(Vector3 current)
     {
-        var collider = _player.GetComponent<Collider2D>().offset;
-        var playerCenter = _player.TransformPoint(collider);
+        var playerCenter = _player.TransformPoint(_playerCollider.offset);
         Vector3 dir = DirectionNormalized(current, playerCenter);
         return dir;
     }
     
     public Vector3 PlayerDirection()
     {
-        var collider = _player.GetComponent<Collider2D>().offset;
-        var playerCenter = _player.TransformPoint(collider);
+        var playerCenter = _player.TransformPoint(_playerCollider.offset);
         Vector3 dir = DirectionNormalized(transform.position, playerCenter);
         return dir;
     }
@@ -956,16 +957,13 @@ public class EnemyController : MonoBehaviour
         Destroy(this.GetComponent<Rigidbody2D>());
         Destroy(GetComponent<Collider2D>());
 
-        var wc = GetComponent<WeaponComponent>();
-        if (wc)
-        {
-            wc.enabled = false;
-        }
+        StopWeaponComponent();
+
         if (explodeWhenDie)
         {
             ExplodeWhenDie();
         }
-
+        
         //_shadow.SetActive(false);
         
         StartCoroutine(FadingSequence());
@@ -975,6 +973,17 @@ public class EnemyController : MonoBehaviour
         {
             loot.CalculateLoot();
         }
+    }
+
+    public virtual void StopWeaponComponent()
+    {
+        var wc = GetComponent<WeaponComponent>();
+
+        if (wc)
+        {
+            wc.StopShooting();
+        }
+
     }
 
     public GameObject GetShadow()

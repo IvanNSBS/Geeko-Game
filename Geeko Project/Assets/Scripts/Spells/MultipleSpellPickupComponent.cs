@@ -40,13 +40,15 @@ public class MultipleSpellPickupComponent : MonoBehaviour
     {
         List<int> already_used = new List<int>();
         for (int i = 0; i < m_PossibleSpells.Count; i++) {
-
             int idx = Random.Range(0, m_PossibleSpells.Count);
             while (already_used.Contains(idx))
                 idx = Random.Range(0, m_PossibleSpells.Count);
 
             already_used.Add(idx);
             m_SpellObjects.Add(m_PossibleSpells[idx]); 
+
+            if (m_SpellObjects.Count == 3)
+                return;
         }
     }
 

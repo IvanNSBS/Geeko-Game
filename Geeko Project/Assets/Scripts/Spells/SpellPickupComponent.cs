@@ -7,7 +7,8 @@ public class SpellPickupComponent : MonoBehaviour
     // Start is called before the first frame update
     private BoxCollider2D m_PickupArea;
     private Spell m_SpellObject;
-    private Vector3 m_StartPos;
+    [SerializeField] private bool m_UseRandomDrop = false;
+    [SerializeField] private List<Spell> m_PossibleSpells;
     public Spell GetSpellObject() { return m_SpellObject; }
     public void SetSpellPickup(Spell spell)
     {
@@ -35,15 +36,22 @@ public class SpellPickupComponent : MonoBehaviour
             }
         }
     }
+    void GetOneRandomSpell()
+    {
+        int idx = Random.Range(0, m_PossibleSpells.Count);
+        m_SpellObject = m_PossibleSpells[idx];
+    }
 
     void Start()
     {
+        if (m_UseRandomDrop)
+            GetOneRandomSpell();
         m_PickupArea = GetComponent<BoxCollider2D>();
         if (!m_PickupArea)
             Debug.LogWarning("Couldn't get spell collider. You won't be able to pickup the item");
 
-        // SetSpellPickup(m_SpellObject);
-        m_StartPos = gameObject.transform.position;
+        SetSpellPickup(m_SpellObject);
+        // m_StartPos = gameObject.transform.position;
     }
 
 
