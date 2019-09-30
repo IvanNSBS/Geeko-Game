@@ -956,16 +956,13 @@ public class EnemyController : MonoBehaviour
         Destroy(this.GetComponent<Rigidbody2D>());
         Destroy(GetComponent<Collider2D>());
 
-        var wc = GetComponent<WeaponComponent>();
-        if (wc)
-        {
-            wc.enabled = false;
-        }
+        StopWeaponComponent();
+
         if (explodeWhenDie)
         {
             ExplodeWhenDie();
         }
-
+        
         //_shadow.SetActive(false);
         
         StartCoroutine(FadingSequence());
@@ -975,6 +972,17 @@ public class EnemyController : MonoBehaviour
         {
             loot.CalculateLoot();
         }
+    }
+
+    public virtual void StopWeaponComponent()
+    {
+        var wc = GetComponent<WeaponComponent>();
+
+        if (wc)
+        {
+            wc.StopShooting();
+        }
+
     }
 
     public GameObject GetShadow()
