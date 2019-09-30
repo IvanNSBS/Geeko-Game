@@ -88,13 +88,13 @@ public class MovementComponent : MonoBehaviour
             if (newspeed.magnitude >= GetVelocity().magnitude)
             {
                 //interp current speed based on acceleration time
-                //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_AccelerationTime);
-                m_ActorRigidBody.velocity = newspeed;
+                m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_AccelerationTime);
+                //m_ActorRigidBody.velocity = newspeed;
             }
             else {
                 //interp current speed to idle based on deacceleration time
-                //m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_DeaccelerationTime);
-                m_ActorRigidBody.velocity = newspeed;
+                m_ActorRigidBody.velocity = Vector2.SmoothDamp(m_ActorRigidBody.velocity, newspeed, ref m_RefSpeed, m_DeaccelerationTime);
+                //m_ActorRigidBody.velocity = newspeed;
             }
 
         }

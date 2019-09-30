@@ -24,14 +24,13 @@ public class LightningBolt : Spell
             Vector3 spawn_position = spawn_pos != null ? (Vector3)spawn_pos : owner.transform.position;
             float distance = (spawn_position - target_pos).magnitude;
 
-            RaycastHit2D[] hit = Physics2D.RaycastAll(spawn_position, dir, distance*1.2f, layerMask: GameplayStatics.LayerEnemy) ;
-            Debug.DrawLine(spawn_position, target_pos, Color.green, 2.0f);
-
+            Debug.DrawRay(spawn_position, dir*distance, Color.green, 1.0f);
+            RaycastHit2D[] hit = Physics2D.CircleCastAll(spawn_position, 2.0f, dir, distance, layerMask: GameplayStatics.LayerEnemy);
             foreach(RaycastHit2D enemy in hit)
-            {
-                Debug.Log("hITTED");
                 GameplayStatics.ApplyDamage(enemy.collider.gameObject, m_Damage);
-            } 
+            hit = Physics2D.CircleCastAll(spawn_position, 2.0f, dir, distance, layerMask: LayerMask.GetMask("FlyingEnemy")); ;
+            foreach (RaycastHit2D enemy in hit)
+                GameplayStatics.ApplyDamage(enemy.collider.gameObject, m_Damage);
 
             GameObject obj = Instantiate(m_Prefab);
             obj.GetComponent<SpellPrefabManager>().SetOwner(owner);
