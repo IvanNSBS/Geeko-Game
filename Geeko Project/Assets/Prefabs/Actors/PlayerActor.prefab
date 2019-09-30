@@ -5106,7 +5106,7 @@ MonoBehaviour:
   m_Joystick: {fileID: 355273086938723280}
   m_FirePoint: {fileID: 8668919136357152478}
   GameOverPanel: {fileID: 4737041888151457377}
-  AutoAimRange: 12
+  AutoAimRange: 15
   target: {fileID: 0}
   ProgressPanel: {fileID: 5524339806019483447}
 --- !u!114 &5292853927084466578
