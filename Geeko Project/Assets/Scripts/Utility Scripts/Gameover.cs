@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Gameover : MonoBehaviour
 {
+    public GameObject Progress;
+
     private void DestroyPlayerAndDungeonManager()
     {
         Destroy(GameObject.FindGameObjectWithTag("Player"));

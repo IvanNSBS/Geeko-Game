@@ -32,9 +32,11 @@ public class Portal : MonoBehaviour
 
     public void EnterPortal()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ProgressPanel.MoveSlime();
         dungeonManager.UpdatePlayerReference();
         FindObjectOfType<ActionButton>().SwitchToCrossHair();
         LoadTargetScene loadTargetScene = this.gameObject.AddComponent<LoadTargetScene>();
         loadTargetScene.LoadSceneNum(targetSceneIndex);
+        
     }
 }
