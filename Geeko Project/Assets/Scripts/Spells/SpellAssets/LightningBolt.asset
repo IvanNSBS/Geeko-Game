@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: LightningBolt
   m_EditorClassIdentifier: 
   m_SpellName: Lightning Bolt
-  m_SpellDescription: Shoots a lightning bolt from your staff that damages everything
-    it hits
+  m_SpellDescription: Shoots a lightning bolt that damages everything it hits.
   m_SpellCooldown: 0
   m_CastType: 0
   m_SpellDuration: 0.8

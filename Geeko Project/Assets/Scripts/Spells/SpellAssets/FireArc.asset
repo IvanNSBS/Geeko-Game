@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: FireArc
   m_EditorClassIdentifier: 
   m_SpellName: Fire Arc
-  m_SpellDescription: Discharge all your charged Fire Balls towards your enemy in
-    an arc path
+  m_SpellDescription: Discharges all your fireballs in an arc towards your enemies.
   m_SpellCooldown: 3
   m_CastType: 0
   m_SpellDuration: 0
