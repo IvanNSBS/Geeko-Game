@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using TreeEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -149,11 +150,10 @@ public class EnemyController : MonoBehaviour
     private bool _saveLastPos;
     private bool _stopShootToReload;
     private bool _firstIdle;
-
-    /* TO-DO
-    BOSS
-    Walks and shootings
-    */
+    [NonSerialized]
+    public GameObject shadow;
+   
+    
     private void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
@@ -164,7 +164,6 @@ public class EnemyController : MonoBehaviour
     {
         _sprite = GetComponent<SpriteRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-      //  projectile.transform.localScale = Vector3.one / 2;
         _dashTime = dashTime;
         _timeBtwShots = timeBtwShots;
         _stopShootToReload = stopShootToReload;
@@ -172,6 +171,7 @@ public class EnemyController : MonoBehaviour
         this.gameObject.layer = GameplayStatics.idxLayerEnemy;
         ResetFollowingTime();
         _firstIdle = true;
+        shadow = GetShadow();
     }
 
     public SpriteRenderer GetSprite()
@@ -511,7 +511,6 @@ public class EnemyController : MonoBehaviour
             {
                 _saveLastPos = true;
                 _randomDir = PlayerDirection();
-                print("saved direction player");
             }
             
             if(_basicMeleeAttackTime <= 0)
@@ -520,7 +519,6 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                print("time basic attack: "+_basicMeleeAttackTime);
                 MoveEnemy(_randomDir,basicMeleeAttackSpeed*Time.deltaTime);
                 _basicMeleeAttackTime -= Time.deltaTime;
             }
@@ -534,7 +532,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void ResetBasicAttack()
     {
-        print("reset basic attack");
         _basicMeleeAttackTime = basicMeleeAttackTime;
         _saveLastPos = false;
         StopMovement();
@@ -969,6 +966,8 @@ public class EnemyController : MonoBehaviour
             ExplodeWhenDie();
         }
 
+        //_shadow.SetActive(false);
+        
         StartCoroutine(FadingSequence());
 
         var loot = GetComponent<LootManager>();
@@ -977,7 +976,21 @@ public class EnemyController : MonoBehaviour
             loot.CalculateLoot();
         }
     }
-    
+
+    public GameObject GetShadow()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            if (child.name == "Shadow")
+            {
+                return child.gameObject;
+            }
+        }
+
+        return null;
+    }
+
     public virtual IEnumerator FadingSequence()
     {
         Sequence fadingSequence = DOTween.Sequence();

@@ -265,6 +265,10 @@ public class WeaponComponent : MonoBehaviour
         float RandomizeSpeed() => Random.Range(minimumSpeed, maximumSpeed);
         GenericStream(tm, numberOfShots, 0, RandomizeSpeed);
     }
+
+    public void StopShooting() {
+        shootingFuncs.Clear();
+    }
     
     private void RunShootingFuncs() {
         var i = 0;
