@@ -203,15 +203,15 @@ public class CyclopsController : EnemyController
         switch (bossState)
         {
             case BossState.Normal:
-                _throw = 50;
+                _throw = 100;
                 _laser = 100;
                 break;
             case BossState.Enrage:
-                _throw = 30;
+                _throw = 40;
                 _laser = 100;
                 break;
             case BossState.Rage:
-                _throw = 5;
+                _throw = 10;
                 _laser = 100;
                 break;
         }
@@ -405,7 +405,6 @@ public class CyclopsController : EnemyController
                 {
                     _hitted = false;
                     print("finish it");
-                    EditorApplication.isPaused = true;
                 }
 
                 
