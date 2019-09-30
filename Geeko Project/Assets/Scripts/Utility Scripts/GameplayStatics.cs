@@ -112,13 +112,17 @@ public static class GameplayStatics
         }
     }
 
-    public static bool SpawnDmgPopup(Vector3 position, float damage, DamageType type = DamageType.Normal)
+    public static bool SpawnDmgPopup(Vector3 position, float damage, DamageType type = DamageType.Normal, bool add_minus = true)
     {
         var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopUp"));
         var rect = obj.GetComponent<RectTransform>();
         rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
         var text = obj.GetComponent<TextMeshPro>();
-        text.text = "-" + Mathf.FloorToInt(damage).ToString();
+        string txt = "";
+        if (add_minus)
+            txt = "-";
+        txt += Mathf.FloorToInt(damage).ToString();
+        text.text = txt;
         text.color = GetDamageColor(type);
         return true;
     }
