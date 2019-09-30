@@ -97,7 +97,7 @@ public class SpellData
 
             return true;
         }
-        else if (m_Spell.m_UseAllAvailableCharges && !m_UsingCharges )
+        else if (m_Spell.m_UseAllAvailableCharges && !m_UsingCharges && m_RemainingCharges > 0)
         {
             m_IsConcentrating = m_Spell.m_CastType == SpellCastType.Concentration;
             m_RemainingCD = m_Spell.m_SpellCooldown;

@@ -21,8 +21,8 @@ MonoBehaviour:
   m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 21300000, guid: baa7bcc60719b67488567bf6b1bec20f, type: 3}
-  m_BorderImage: {fileID: 21300000, guid: e6b372ce9b621be47b2b2b0feb4c8f2e, type: 3}
-  m_Prefab: {fileID: 1623317735016259177, guid: 0e9fb2ad5d5968249812ffe49386f665,
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
+  m_Prefab: {fileID: 1623317735016259177, guid: 9efa96a0f6c112043ab6fab421286ab2,
     type: 3}
   m_SpellSound: {fileID: 0}
   m_OnHitEffect: {fileID: 205511384356532666, guid: b02230cb30b606c498392fe4d882e780,

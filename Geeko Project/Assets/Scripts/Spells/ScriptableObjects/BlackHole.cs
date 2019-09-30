@@ -43,7 +43,7 @@ public class BlackHole : Spell
         throw new System.NotImplementedException();
     }
 
-    public override void OnTick(GameObject obj)
+public override void OnTick(GameObject obj)
     {
         SpellUtilities.UpdateSpellTTL(obj, this);
     }

@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FireTotemController : EnemyController
 {
     [Header("Animation")]
     [Tooltip("Animation of the enemy")]
     public Animator fireTotemAnimator;
-    public int howManyShotsBeforeIdle;
+    
+    [Header("Linear Pattern")]
+    [FormerlySerializedAs("howManyShotsBeforeIdle")]
+    public int howManyLinearShotsBeforeIdle;
     public int numberOfBullets;
+
+    [Header("Death 5-way Pattern")] 
+    
+    public int numberOfBullets5W;
+    public float speedBullets5W;
+    public float cooldownBullets5W;
+    public float amplitude;
     
     private bool _idleAnimation = false;
     private WeaponComponent _weaponComponent;
@@ -22,9 +33,9 @@ public class FireTotemController : EnemyController
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
         
-        if (howManyShotsBeforeIdle <= 0)
+        if (howManyLinearShotsBeforeIdle <= 0)
         {
-            howManyShotsBeforeIdle = 1;
+            howManyLinearShotsBeforeIdle = 1;
         }
         
     }
@@ -96,7 +107,7 @@ public class FireTotemController : EnemyController
     {
         if (!_shooting)
         {
-            if (_shots >= howManyShotsBeforeIdle)
+            if (_shots >= howManyLinearShotsBeforeIdle)
             {
                 _attackEnded = true;
                 return null;
@@ -125,7 +136,19 @@ public class FireTotemController : EnemyController
     {
         fireTotemAnimator.SetTrigger("isTakingDamage");
     }
-    
+
+    public override void ExplodeWhenDie()
+    {
+        var gambiarra = gameObject.AddComponent<WeaponComponent>();
+        gambiarra.cooldown = cooldownBullets5W;
+        gambiarra.firePoint = transform;
+        gambiarra.owner = gameObject;
+        gambiarra.speed = speedBullets5W;
+        gambiarra.targetTag = "Player";
+        gambiarra.bulletPrefab = projectile;
+        gambiarra.SpreadFiveWay(PlayerDirection(),numberOfBullets5W,amplitude,_weaponComponent.cooldown,_weaponComponent.speed);
+    }
+
     public void OnDeath()
     {
         fireTotemAnimator.SetBool("isDead",true);

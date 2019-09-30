@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 6141176397258706530}
   - component: {fileID: 2306564074543050816}
   - component: {fileID: 92761950664736149}
+  - component: {fileID: 650257072878935505}
   - component: {fileID: 1928573517990464141}
   - component: {fileID: 5367351095321215533}
   - component: {fileID: 4247983406921343959}
   - component: {fileID: 8238340072252030824}
   - component: {fileID: 5167680307087513385}
-  - component: {fileID: 650257072878935505}
   m_Layer: 10
   m_Name: Fire Totem
   m_TagString: Enemy
@@ -35,7 +35,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 886207298496517277}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,7 +131,7 @@ MonoBehaviour:
   speed: 0
   dashSpeed: 0
   stopShootToReload: 1
-  explodeWhenDie: 0
+  explodeWhenDie: 1
   moveWhileShoot: 0
   enemyMeleeDash: 0
   zigZagWalkHorizontal: 0
@@ -144,6 +145,7 @@ MonoBehaviour:
   maxTimeFollowing: 0
   dashTime: 0
   basicMeleeAttackTime: 0
+  basicMeleeAttackSpeed: 0
   cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
   timeToReload: 2
@@ -151,8 +153,31 @@ MonoBehaviour:
   timeBtwShots: 0
   timeWalkingOneDirection: 0
   fireTotemAnimator: {fileID: 2306564074543050816}
-  howManyShotsBeforeIdle: 1
+  howManyLinearShotsBeforeIdle: 1
   numberOfBullets: 10
+  numberOfBullets5W: 1
+  speedBullets5W: 5
+  cooldownBullets5W: 0.1
+  amplitude: 25
+--- !u!114 &650257072878935505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725079296847367180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7b6c1529f2dd546a2157782ad24da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 2106571593847434125}
+  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+    type: 3}
+  owner: {fileID: 7725079296847367180}
+  speed: 4
+  cooldown: 0.2
+  targetTag: Player
 --- !u!61 &1928573517990464141
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -296,22 +321,88 @@ MonoBehaviour:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
     dropRate: 100
   dropChance: 5
---- !u!114 &650257072878935505
-MonoBehaviour:
+--- !u!1001 &2617153562118692916
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725079296847367180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7b6c1529f2dd546a2157782ad24da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 2106571593847434125}
-  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2106571593847434125}
+    m_Modifications:
+    - target: {fileID: 2890624435222869160, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.245
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8166667
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be7366acf197c5841a13bed870dc3d40, type: 3}
+--- !u!4 &886207298496517277 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2890624435222869161, guid: be7366acf197c5841a13bed870dc3d40,
     type: 3}
-  owner: {fileID: 7725079296847367180}
-  speed: 4
-  cooldown: 0.2
-  targetTag: Player
+  m_PrefabInstance: {fileID: 2617153562118692916}
+  m_PrefabAsset: {fileID: 0}

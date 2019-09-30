@@ -107,6 +107,7 @@ public class LeafTotemController : EnemyController
       if (currState != EnemyState.Die)
       {
          _collider.enabled = false;
+         //shadow.SetActive(false);
       }
    }
    
@@ -127,6 +128,7 @@ public class LeafTotemController : EnemyController
       leafTotemAnimator.SetBool("GoingUp",false);
       _collider.enabled = true;
       _idleAnimation = true;
+      //shadow.SetActive(true);
    }
 
    public override GameObject Shooting()
@@ -143,7 +145,7 @@ public class LeafTotemController : EnemyController
          _shooting = true;
          _shots += 1;
          _shootingDir = PlayerDirection();
-         _weaponComponent.RandomGauss(_shootingDir,amplitudeDegrees,numberOfShots,_weaponComponent.cooldown,_weaponComponent.speed );
+         _weaponComponent.RandomUniform(_shootingDir,amplitudeDegrees,numberOfShots,_weaponComponent.cooldown,_weaponComponent.speed );
          leafTotemAnimator.SetBool("isAttacking",true);
          leafTotemAnimator.SetBool("isIdle",false);
          

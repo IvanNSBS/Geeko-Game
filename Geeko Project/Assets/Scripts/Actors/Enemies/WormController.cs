@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WormController : EnemyController
@@ -9,13 +8,20 @@ public class WormController : EnemyController
     public Animator dirtFront;
     public Animator dirtBehind;
 
+    [Header("Worm Hiding")]
     public float timeToAppear;
     public float timeToDisappear;
+    [Header("Worm Distance Walk")]
     public float minRandomWalk;
     public float maxRandomWalk;
+    public float wallOffSet;
+    [Header("Worm Attack")]
     public int numberOfBullets;
     public float amplitudeDegrees;
-    public int timesToWave;
+    public float waveLength;
+    public bool flipWave;
+    public bool startFlipWaveValue;
+    public bool guaranteeSamePhase;
 
     private bool _attack=false;
     private WeaponComponent _weaponComponent;
@@ -23,17 +29,13 @@ public class WormController : EnemyController
     private float _timeToDisappear=0;
     private Collider2D _collider2D;
     private bool _shooting;
-
+    private bool _flipWave;
     public override void Start()
     {
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
         _collider2D = GetComponent<Collider2D>();
-    }
-
-    public override void StateMachine()
-    {
-        base.StateMachine();
+        _flipWave = startFlipWaveValue;
     }
 
     public override void CheckTransitions()
@@ -90,8 +92,18 @@ public class WormController : EnemyController
             {
                 dir = Vector2.left;
             }
-            
-            _weaponComponent.SineWave(dir, amplitudeDegrees, numberOfBullets, timesToWave, _weaponComponent.cooldown,_weaponComponent.speed );
+
+            if ((dir.x < 0) && guaranteeSamePhase) //to make the flip work in the same phase
+            {
+                _flipWave = !_flipWave;
+            }
+
+            _weaponComponent.SineWave(dir, amplitudeDegrees, numberOfBullets, waveLength, _weaponComponent.cooldown,_weaponComponent.speed,_flipWave);
+
+            if (flipWave && (!((dir.x < 0) && guaranteeSamePhase)) )
+            {
+                _flipWave = !_flipWave;
+            }
         }
         return null;
     }
@@ -163,6 +175,7 @@ public class WormController : EnemyController
         dirtBehind.GetComponent<SpriteRenderer>().enabled = false;
         dirtFront.SetBool("dirtIdle",false);
         dirtFront.SetTrigger("dirtDestroy");
+        //shadow.SetActive(false);
     }
 
     public void DisableDirtFrontAfterDestroyed()
@@ -178,6 +191,7 @@ public class WormController : EnemyController
         dirtBehind.SetBool("dirtIdle",true);
         GetSprite().enabled = true;
         _collider2D.enabled = true;
+        //shadow.SetActive(true);
         wormAnimator.SetTrigger("isGoingUp"); // in the animation last frame will enable idle animation;
     }
     
@@ -185,11 +199,11 @@ public class WormController : EnemyController
     {
         var aux = Random.Range(minRandomWalk, maxRandomWalk);
         var clearDirection = false;
-        var layerMask = ~LayerMask.GetMask("Player");
+        var layerMask = ~LayerMask.GetMask("Player","PlayerInvulnerable");
         var interactions = 0;
         while (!clearDirection)
         {
-            RaycastHit2D ray = Physics2D.Raycast(transform.position, _randomDirection, aux+0.5f,layerMask);
+            RaycastHit2D ray = Physics2D.Raycast(transform.position, _randomDirection, aux+wallOffSet,layerMask);
             if (!ray)
             {
                 clearDirection = true;
@@ -203,17 +217,11 @@ public class WormController : EnemyController
             {
                 print("[Recalculating] Collided in: "+ray.collider.name+", distance collider = "+ray.distance+", distance ray: "+aux);
                 _randomDirection = ChooseTypeOfWalk();
-                if (interactions < 5)
-                {
-                    aux = Random.Range(minRandomWalk, maxRandomWalk);
-                }
-                else
-                {
-                    aux = minRandomWalk;
-                }
+                
+                aux = Random.Range(minRandomWalk, Mathf.Max(minRandomWalk,maxRandomWalk-interactions));
             }
-
-            interactions++;
+            
+            
         }
         transform.position += aux * _randomDirection;
     }

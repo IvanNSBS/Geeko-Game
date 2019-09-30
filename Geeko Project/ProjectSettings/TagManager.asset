@@ -25,9 +25,9 @@ TagManager:
   - Map
   - Player
   - Enemy
-  - 
-  - 
-  - 
+  - Obstacle
+  - FlyingEnemy
+  - PlayerInvulnerable
   - 
   - 
   - 
