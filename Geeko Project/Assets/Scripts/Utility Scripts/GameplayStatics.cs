@@ -163,7 +163,7 @@ public static class GameplayStatics
         }
         else
         {
-            Debug.LogWarning("Source GameObj has no Status Component. Can't apply damage to him");
+            // Debug.LogWarning("Source GameObj has no Status Component. Can't apply damage to him");
             return false;
         }
     }
