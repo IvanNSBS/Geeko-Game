@@ -30,18 +30,12 @@ public class WormController : EnemyController
     private Collider2D _collider2D;
     private bool _shooting;
     private bool _flipWave;
-
     public override void Start()
     {
         base.Start();
         _weaponComponent = GetComponent<WeaponComponent>();
         _collider2D = GetComponent<Collider2D>();
         _flipWave = startFlipWaveValue;
-    }
-
-    public override void StateMachine()
-    {
-        base.StateMachine();
     }
 
     public override void CheckTransitions()
@@ -181,6 +175,7 @@ public class WormController : EnemyController
         dirtBehind.GetComponent<SpriteRenderer>().enabled = false;
         dirtFront.SetBool("dirtIdle",false);
         dirtFront.SetTrigger("dirtDestroy");
+        //shadow.SetActive(false);
     }
 
     public void DisableDirtFrontAfterDestroyed()
@@ -196,6 +191,7 @@ public class WormController : EnemyController
         dirtBehind.SetBool("dirtIdle",true);
         GetSprite().enabled = true;
         _collider2D.enabled = true;
+        //shadow.SetActive(true);
         wormAnimator.SetTrigger("isGoingUp"); // in the animation last frame will enable idle animation;
     }
     
@@ -203,7 +199,7 @@ public class WormController : EnemyController
     {
         var aux = Random.Range(minRandomWalk, maxRandomWalk);
         var clearDirection = false;
-        var layerMask = ~LayerMask.GetMask("Player");
+        var layerMask = ~LayerMask.GetMask("Player","PlayerInvulnerable");
         var interactions = 0;
         while (!clearDirection)
         {
