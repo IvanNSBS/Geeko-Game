@@ -5,8 +5,17 @@ using UnityEngine;
 
 public class MiniGolemController : EnemyController
 {
+    [Header("MiniGoleam Properties")]
     public Animator miniGolemController;
 
+    [Header("Death Pattern")] 
+    public int howManySinWaves;
+    public int numberOfBullets;
+    public float speedBullets;
+    public float cooldownBullets;
+    public float amplitude;
+    public float waveLength;
+    
     public override void CheckTransitions()
     {
         if (IsPlayerInRange(sightRange))
@@ -64,7 +73,26 @@ public class MiniGolemController : EnemyController
     {
         miniGolemController.SetBool("isDead",true);
     }
-    
+
+    public override void ExplodeWhenDie()
+    {
+        var gambiarra = gameObject.AddComponent<WeaponComponent>();
+        gambiarra.cooldown = cooldownBullets;
+        gambiarra.firePoint = transform;
+        gambiarra.owner = gameObject;
+        gambiarra.speed = speedBullets;
+        gambiarra.targetTag = "Player";
+        gambiarra.bulletPrefab = projectile;
+
+        Vector2 _dir = PlayerDirection();
+        var angleCte = 360 / howManySinWaves;
+        for (int i = 0; i < howManySinWaves; i++)
+        {
+            gambiarra.SineWave(_dir.Rotate(angleCte*i),amplitude,numberOfBullets,waveLength,cooldownBullets,speedBullets);
+        }
+
+    }
+
     public override void MoveEnemy(Vector3 dir, float speed)
     {
         base.MoveEnemy(dir,speed);
@@ -85,35 +113,6 @@ public class MiniGolemController : EnemyController
         miniGolemController.SetBool("isMoving",false);
         miniGolemController.SetBool("isIdle",true);
     }
-
-    /*
-    public void lastHitFrame()
-    {
-        if ((!miniGolemController.GetBool("isMoving"))&&  (getBasicMeleeAttack()))
-        {
-            miniGolemController.SetBool("isIdle",true);
-        }
-    }
-
-    /*
-    public void notDamaging()
-    {
-        _damaging = false;
-    }
-
-    /*
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.collider.CompareTag("Player"))
-        {
-            if (!_damaging)
-            {
-                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
-                _damaging = true;
-                Invoke("notDamaging",1);
-            }
-        }
-    }*/
 
     public override void OnCollisionEnter2D(Collision2D other)
     {

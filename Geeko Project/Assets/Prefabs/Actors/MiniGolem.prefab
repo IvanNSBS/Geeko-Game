@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currState: 7
   enemyType: 0
-  projectile: {fileID: 7306324552287374457, guid: ef68a79f978e1af49afe280a45d653b8,
+  projectile: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
     type: 3}
   timeToStartActions: 2
   sightRange: 6
@@ -130,7 +130,7 @@ MonoBehaviour:
   speed: 1.2
   dashSpeed: 0
   stopShootToReload: 0
-  explodeWhenDie: 0
+  explodeWhenDie: 1
   moveWhileShoot: 0
   enemyMeleeDash: 0
   zigZagWalkHorizontal: 0
@@ -152,6 +152,12 @@ MonoBehaviour:
   timeBtwShots: 0
   timeWalkingOneDirection: 0.5
   miniGolemController: {fileID: 2566562006485419470}
+  howManySinWaves: 5
+  numberOfBullets: 1
+  speedBullets: 4
+  cooldownBullets: 0.1
+  amplitude: 2
+  waveLength: 5
 --- !u!61 &2566562006485419468
 BoxCollider2D:
   m_ObjectHideFlags: 0
