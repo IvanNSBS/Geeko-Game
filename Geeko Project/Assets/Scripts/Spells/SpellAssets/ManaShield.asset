@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436516ba02951954f8ba38d06aa26a8c, type: 3}
   m_Name: ManaShield
   m_EditorClassIdentifier: 
-  m_SpellName: Mana Shield
+  m_SpellName: Magic Shield
   m_SpellDescription: Summons a mana shield while concentrating that have 60 HP and
     it will tank enemy hits for your, but you'll be slowed during concentration. Tap
     again to stop concentrating
