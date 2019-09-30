@@ -125,7 +125,7 @@ public static class SpellUtilities
         if (src)
             if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) {
                 GameObject fx = MonoBehaviour.Instantiate(effect);
-                fx.transform.position = GameplayStatics.GetTriggerContactPoint(src.gameObject);
+                fx.transform.position = GameplayStatics.GetTriggerContactPoint(target, src.gameObject);
                 return true;
             }
 
