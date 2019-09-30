@@ -32,6 +32,9 @@ public class Bullet : MonoBehaviour
     private Vector2 _sinePrincipalVelocity;
     private Vector2 _sinePerpendicularUnit;
 
+    private bool _willDisappear = false;
+    private float _disappearIn;
+
     public void SetInstantiator(GameObject instantiator)
     {
         _instantiator = instantiator;
@@ -90,7 +93,17 @@ public class Bullet : MonoBehaviour
         _sineStartingTime = Time.time;
         _sinePerpendicularUnit = rb.velocity.Rotate(90).normalized;
     }
-    
+
+    public float DisappearIn
+    {
+        get => _disappearIn;
+        set
+        {
+            _willDisappear = true;
+            _disappearIn = value;
+        }
+    }
+
     private Vector2 Vector2FromAngle(float a)
     {
         a *= Mathf.Deg2Rad;
@@ -137,11 +150,25 @@ public class Bullet : MonoBehaviour
         rb.velocity = _sinePrincipalVelocity + _sinePerpendicularUnit * multiplier;
     }
 
+    private void Disappear()
+    {
+        if (!_willDisappear) return;
+
+        if (_disappearIn <= 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        _disappearIn -= Time.deltaTime;
+    }
+
     private void FixedUpdate()
     {
         HomeRotational();
         HomeDirectional();
         Sine();
+        Disappear();
     }
 }
  
