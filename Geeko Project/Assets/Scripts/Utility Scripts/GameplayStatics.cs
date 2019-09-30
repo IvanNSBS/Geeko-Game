@@ -60,8 +60,9 @@ public static class GameplayStatics
     public static int idxLayerEnemy = 10;
 
     public enum DefaultColliders { Box, Circle, Capsulse, Polygon };
+    public enum DamageType { Null, Normal, Fire, Heal, MagicShield }; // null shoulde be used as if it was nullptr
     [System.Serializable]
-    public class DamageEvent : UnityEvent<float> { }   // Damage Event layout
+    public class DamageEvent : UnityEvent<float, DamageType> { }   // Damage Event layout
     public class CollisionEvent : UnityEvent<Collision2D, GameObject> { }   // Collision Event layout
     public class TriggerEvent : UnityEvent<Collider2D, GameObject> { }      // Trigger Event layout
     public class SpellEvent : UnityEvent<GameObject> { }    // SpellEvent Layout. 
@@ -76,6 +77,24 @@ public static class GameplayStatics
         }
         else
             Debug.LogWarning("Invalid GameObject to attach timer to");
+    }
+
+    public static Color GetDamageColor(DamageType type)
+    {
+        switch (type)
+        {
+            case DamageType.Fire:
+                return new Color(1.0f, 0.6f, 0.0f, 1.0f);
+            case DamageType.Heal:
+                return Color.green;
+            case DamageType.Normal:
+                return Color.red;
+            case DamageType.MagicShield:
+                return new Color(0, 0.403f, 0.941f, 1.0f);
+            case DamageType.Null:
+                return new Color(0,0,0,0);
+        }
+        return new Color(0, 0, 0, 0);
     }
 
     public static IEnumerator Delay(
@@ -93,13 +112,14 @@ public static class GameplayStatics
         }
     }
 
-    public static bool SpawnDmgPopup(Vector3 position, float damage)
+    public static bool SpawnDmgPopup(Vector3 position, float damage, DamageType type = DamageType.Normal)
     {
         var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopUp"));
         var rect = obj.GetComponent<RectTransform>();
         rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
         var text = obj.GetComponent<TextMeshPro>();
         text.text = "-" + Mathf.FloorToInt(damage).ToString();
+        text.color = GetDamageColor(type);
         return true;
     }
 
@@ -134,11 +154,11 @@ public static class GameplayStatics
         return hit.point;
     }
 
-    public static bool ApplyDamage(GameObject src, float amount)
+    public static bool ApplyDamage(GameObject src, float amount, DamageType type = DamageType.Normal)
     {
         StatusComponent status = src.GetComponent<StatusComponent>();
         if (status) {
-            status.TakeDamage(amount);
+            status.TakeDamage(amount, type);
             return true;
         }
         else

@@ -41,6 +41,7 @@ public class ManaShieldConc : Spell
             status.Heal(m_ShieldHP);
             status.m_CanUseIFrames = true;
             status.m_IFrameTime = m_IFrameTime;
+            status.m_DamagePopupOverride = GameplayStatics.DamageType.MagicShield;
             status.AddOnDeath( () => Destroy(obj) );
 
             return obj;

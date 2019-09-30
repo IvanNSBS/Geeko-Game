@@ -16,7 +16,7 @@ public class BossHealthUIComponent : MonoBehaviour
             m_StatusComponent.AddOnTakeDamage(UpdateHealth);
     }
 
-    void UpdateHealth(float f)
+    void UpdateHealth(float f, GameplayStatics.DamageType type)
     {
         if (m_HealthSlider && m_StatusComponent)
             m_HealthSlider.fillAmount = m_StatusComponent.GetCurrentHealth() / m_StatusComponent.GetMaxHealth();
