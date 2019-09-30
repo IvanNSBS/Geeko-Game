@@ -42,13 +42,17 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.CompareTag("Player")) || (other.CompareTag("Door")) || (other.CompareTag("Wall")) || other.CompareTag("SpellInteractive") || other.CompareTag("Rock"))
+        List<string> tags_to_ignore = new List<string>() { "Untagged", "Room", "SpellUninteractive", "Item" };
+        if (other.CompareTag("SpellInteractive"))
         {
-            if(other.CompareTag("Player") || other.CompareTag("SpellInteractive") || other.CompareTag("DestructibleObject"))
-            {
-                other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
-            }
-            DestroyProjectile();
+            GameObject owner = other.gameObject.GetComponent<SpellPrefabManager>().GetOwner();
+            if (owner == GetInstantiator())
+                return;
+        }
+        if (GameplayStatics.ObjHasTag(other.gameObject, tags_to_ignore, true) && !GetInstantiator().CompareTag(other.gameObject.tag))
+        {
+            GameplayStatics.ApplyDamage(other.gameObject, 10);
+            Destroy(gameObject);
         }
     }
 

@@ -421,7 +421,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   laserEyePosition: {fileID: 2361220405370856918}
-  laserRange: {x: 15, y: 0.5}
+  laserRange: {x: 18, y: 0.5}
   timeLaserAttack: 3.5
   laserDamage: 20
   timeFrame: 0.2

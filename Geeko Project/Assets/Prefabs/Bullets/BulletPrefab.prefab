@@ -134,3 +134,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2475138701028881808}
   targetTag: Enemy
+  maxSpeed: 0
