@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
-using TreeEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
