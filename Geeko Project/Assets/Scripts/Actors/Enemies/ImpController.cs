@@ -12,10 +12,6 @@ public class ImpController : EnemyController
 
     public int howManyPatternsBeforeIdle;
     public int numberOfBullets;
-    public float amplitudeDegrees;
-    public float minimumSpeed;
-    public float maximumSpeed;
-    public float breakingTime;
     public float timeDisappear;
     public float degreesPerSecond;
 
@@ -23,8 +19,11 @@ public class ImpController : EnemyController
     private int _shots;
     private bool _shooting;
     private bool _attackEnded;
-    
-    
+    private bool _shotAnimation;
+
+    private bool _moving;
+
+
     public override void CheckTransitions()
     {
         currState = EnemyState.Attack;
@@ -52,9 +51,8 @@ public class ImpController : EnemyController
         if (!GetWaiting() && _attackEnded)
         {
             SetWaiting(true);
+            _shots = 0;
             StartCoroutine(WaitingToAttack(idleTime));
-          //  fireTotemAnimator.SetBool("isIdle",true);
-          //  fireTotemAnimator.SetBool("isAttacking",false);
             impAnimator.SetBool("isIdle",true);
         }
     }
@@ -64,7 +62,6 @@ public class ImpController : EnemyController
         if (stateHasChanged)
         {
             StopMovement();  // so the player cant be in moving animation, without shooting when enemystate = atack
-            impAnimator.SetBool("isIdle",true);
         }
 
         base.Attack();
@@ -78,6 +75,7 @@ public class ImpController : EnemyController
         _attackEnded = false;
         _shots = 0;
         _shooting = false;
+        _moving = true;
     }
     
     public override void Reload()
@@ -101,12 +99,13 @@ public class ImpController : EnemyController
 
             _shots += 1;
             _shooting = true;
+            _shotAnimation = true;
             var pd = PlayerDirection();
             _weaponComponent.Linear(pd,numberOfBullets,_weaponComponent.cooldown,_weaponComponent.speed);
             _weaponComponent.SetHomingRotational(GetPlayer(),degreesPerSecond).SetDisappearAfter(timeDisappear);
-           // _weaponComponent.Linear(PlayerDirection(),numberOfBullets,_weaponComponent.cooldown,_weaponComponent.speed);
-            //fireTotemAnimator.SetTrigger("isAttacking");
-            // fireTotemAnimator.SetBool("isIdle",false);
+            impAnimator.SetTrigger("isAttacking");
+            impAnimator.SetBool("isMoving",false);
+            impAnimator.SetBool("isIdle",false);
         }
         
         return null;
@@ -114,7 +113,15 @@ public class ImpController : EnemyController
 
     public void IdlingAfterAttack()
     {
-        impAnimator.SetBool("isIdle",true);
+        _shotAnimation = false;
+        if (_moving)
+        {
+            impAnimator.SetBool("isMoving",true);
+        }
+        else
+        {
+            impAnimator.SetBool("isIdle", true);
+        }
     }
     
 
@@ -126,9 +133,13 @@ public class ImpController : EnemyController
     public override void MoveEnemy(Vector3 dir, float speed)
     {
         base.MoveEnemy(dir,speed);
-        impAnimator.SetBool("isMoving",true);
-        impAnimator.SetBool("isIdle",false);
-       // impAnimator.SetBool("isAttacking",false);
+        _moving = true;
+        if (!_shotAnimation)
+        {
+            impAnimator.SetBool("isMoving",true);
+            impAnimator.SetBool("isIdle", false);
+        }
+        
     }
 
     public override void Start()
@@ -151,6 +162,8 @@ public class ImpController : EnemyController
     public override void StopMovement()
     {
         base.StopMovement();
+        _moving = false;
         impAnimator.SetBool("isMoving",false);
+        impAnimator.SetBool("isIdle",true);
     }
 }
