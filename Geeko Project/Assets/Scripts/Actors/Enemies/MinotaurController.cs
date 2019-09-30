@@ -334,6 +334,7 @@ public class MinotaurController : EnemyController
             return false;
         }
     }
+    
     private void AxeAttack()
     {
         if (_timeBtwAxeAttack <= 0)
@@ -344,7 +345,7 @@ public class MinotaurController : EnemyController
                 minotaurAnimator.SetTrigger("isAttackingAxe");
                 minotaurAnimator.SetBool("isIdle",false);
                 
-                HitBoxAxe();
+                
                 _attackingAxe = true;
                 _timeBtwAxeAttack = timeBtwAxeAttack;
             }
@@ -400,7 +401,6 @@ public class MinotaurController : EnemyController
                 minotaurAnimator.SetTrigger("isAttackingPoke");
                 minotaurAnimator.SetBool("isIdle",false);
                 
-                HitBoxPoke();
                 
                 _attackingPoke = true;
                 _timeBtwPokeAttack = timeBtwPokeAttack;
