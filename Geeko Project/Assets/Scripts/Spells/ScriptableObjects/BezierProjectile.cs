@@ -31,6 +31,8 @@ public class BezierProjectile : Spell
                 obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(m_OnHit.OnHit);
             }
 
+            AudioSource.PlayClipAtPoint(m_SpellSound, owner.transform.position);
+
             return obj;
         }
         return null;

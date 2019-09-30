@@ -438,6 +438,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2676660101553497824}
     m_Modifications:
+    - target: {fileID: 498154981682593805, guid: 71f69094c847f9c46a747411479144e2,
+        type: 3}
+      propertyPath: m_Name
+      value: Enrage
+      objectReference: {fileID: 0}
+    - target: {fileID: 498154981682593805, guid: 71f69094c847f9c46a747411479144e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1197461876289732310, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -491,16 +501,6 @@ PrefabInstance:
     - target: {fileID: 1197461876289732310, guid: 71f69094c847f9c46a747411479144e2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 498154981682593805, guid: 71f69094c847f9c46a747411479144e2,
-        type: 3}
-      propertyPath: m_Name
-      value: Enrage
-      objectReference: {fileID: 0}
-    - target: {fileID: 498154981682593805, guid: 71f69094c847f9c46a747411479144e2,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2349108552936051198, guid: 71f69094c847f9c46a747411479144e2,
@@ -693,6 +693,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5166668
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624435222869166, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2890624434732395885, guid: be7366acf197c5841a13bed870dc3d40,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be7366acf197c5841a13bed870dc3d40, type: 3}

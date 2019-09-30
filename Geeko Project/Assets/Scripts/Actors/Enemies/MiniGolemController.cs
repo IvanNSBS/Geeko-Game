@@ -6,11 +6,39 @@ using UnityEngine;
 public class MiniGolemController : EnemyController
 {
     public Animator miniGolemController;
-    private bool _damaging;
+
+    public override void CheckTransitions()
+    {
+        if (IsPlayerInRange(sightRange))
+        {
+            currState = EnemyState.Follow;
+        }
+        
+        else if (!IsPlayerInRange(sightRange))
+        {
+            currState = EnemyState.Wander;
+        }
+
+        if (getIdle())
+        {
+            currState = EnemyState.Idle;
+        }
+        else if (IsPlayerInAttackRange(attackRange) || BasicAttacking() ) //something here
+        {
+            currState = EnemyState.Attack;
+        }
+
+        if (GetCurrentHealth() <= 0)
+        {
+            currState = EnemyState.Die;
+        }
+    }
+    
     public override void Idle()
     {
         base.Idle();
         miniGolemController.SetBool("isIdle",true);
+        miniGolemController.SetBool("isMoving",false);
     }
     public override void Attack()
     {
@@ -20,8 +48,8 @@ public class MiniGolemController : EnemyController
         }
         if (!getBasicMeleeAttack())
         {
-            miniGolemController.SetTrigger("isAttacking");
             miniGolemController.SetBool("isIdle",false);
+            miniGolemController.SetTrigger("isAttacking");
         }
         
         base.Attack();
@@ -40,7 +68,7 @@ public class MiniGolemController : EnemyController
     public override void MoveEnemy(Vector3 dir, float speed)
     {
         base.MoveEnemy(dir,speed);
-        if (getBasicMeleeAttack()) { //if basic attack was used then ...
+        if (!BasicAttacking()) { //if basic attack was used then ...
             miniGolemController.SetBool("isMoving",true);
             miniGolemController.SetBool("isIdle",false); 
         }
@@ -55,8 +83,10 @@ public class MiniGolemController : EnemyController
     {
         base.StopMovement();
         miniGolemController.SetBool("isMoving",false);
+        miniGolemController.SetBool("isIdle",true);
     }
 
+    /*
     public void lastHitFrame()
     {
         if ((!miniGolemController.GetBool("isMoving"))&&  (getBasicMeleeAttack()))
@@ -65,11 +95,13 @@ public class MiniGolemController : EnemyController
         }
     }
 
+    /*
     public void notDamaging()
     {
         _damaging = false;
     }
 
+    /*
     private void OnCollisionStay2D(Collision2D other)
     {
         if (other.collider.CompareTag("Player"))
@@ -80,6 +112,15 @@ public class MiniGolemController : EnemyController
                 _damaging = true;
                 Invoke("notDamaging",1);
             }
+        }
+    }*/
+
+    public override void OnCollisionEnter2D(Collision2D other)
+    {
+        base.OnCollisionEnter2D(other);
+        if (!getBasicMeleeAttack() && other.collider.CompareTag("Player"))
+        {
+            ResetBasicAttack();
         }
     }
 }
