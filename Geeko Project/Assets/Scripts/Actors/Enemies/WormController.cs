@@ -18,7 +18,7 @@ public class WormController : EnemyController
     [Header("Worm Attack")]
     public int numberOfBullets;
     public float amplitudeDegrees;
-    public int waveLength;
+    public float waveLength;
     public bool flipWave;
     public bool startFlipWaveValue;
     public bool guaranteeSamePhase;

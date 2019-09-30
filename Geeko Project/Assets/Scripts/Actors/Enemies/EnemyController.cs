@@ -946,11 +946,6 @@ public class EnemyController : MonoBehaviour
         if (!_dead)
         {
             StopMovement();
-            
-            if (explodeWhenDie)
-            {
-                ExplodeWhenDie();
-            }
 
             DeathRoutine();
 
@@ -968,6 +963,10 @@ public class EnemyController : MonoBehaviour
         if (wc)
         {
             wc.enabled = false;
+        }
+        if (explodeWhenDie)
+        {
+            ExplodeWhenDie();
         }
 
         StartCoroutine(FadingSequence());
