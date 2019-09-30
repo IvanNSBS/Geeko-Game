@@ -170,8 +170,8 @@ public class PlayerController : MonoBehaviour
 
         AutoAim();
         
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            m_WeaponComponent.AttemptToShoot();
+        //if (Input.GetKeyDown(KeyCode.Mouse0))
+        //    m_WeaponComponent.AttemptToShoot();
         if (Input.GetKeyDown(KeyCode.Alpha1))
             m_SpellComponent.CastSpell(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))
