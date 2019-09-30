@@ -387,6 +387,9 @@ MonoBehaviour:
   bossState: 0
   attacks: 000000000100000002000000
   particle: {fileID: 6396098498220829078}
+  chanceToThrowNormalState: 80
+  chanceToThrowEnrageState: 40
+  chanceToThrowRageState: 10
   stompPosition: {fileID: 4910405115135301413}
   timeStompAttack: 2
   numberOfShotsPerWay7W: 10

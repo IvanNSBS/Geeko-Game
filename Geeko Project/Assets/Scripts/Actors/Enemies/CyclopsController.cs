@@ -23,6 +23,13 @@ public class CyclopsController : EnemyController
     public BossState bossState;
     public CyclopsAttack[] attacks;
     public GameObject particle;
+    
+    [Range(1,100)]
+    public float chanceToThrowNormalState;
+    [Range(1,100)]
+    public float chanceToThrowEnrageState;
+    [Range(1,100)]
+    public float chanceToThrowRageState;
 
     [Header("Stomp Attack")]
     public Transform stompPosition;
@@ -197,22 +204,19 @@ public class CyclopsController : EnemyController
 
     public CyclopsAttack ChooseAttack() //modified
     {
-        var _throw = 0;
-        var _laser = 0;
+        float _throw = 0;
+        //var _laser = 0;
         var random = Random.Range(0, 100);
         switch (bossState)
         {
             case BossState.Normal:
-                _throw = 100;
-                _laser = 100;
+                _throw = chanceToThrowNormalState-1;
                 break;
             case BossState.Enrage:
-                _throw = 40;
-                _laser = 100;
+                _throw = chanceToThrowEnrageState-1;
                 break;
             case BossState.Rage:
-                _throw = 10;
-                _laser = 100;
+                _throw = chanceToThrowRageState-1;
                 break;
         }
 
