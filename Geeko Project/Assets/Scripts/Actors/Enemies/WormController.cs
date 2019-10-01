@@ -171,6 +171,7 @@ public class WormController : EnemyController
     public void DisableComponentsWorm()
     {
         _collider2D.enabled = false;
+        GetComponent<Rigidbody2D>().isKinematic = true;
         GetSprite().enabled = false;
         dirtBehind.GetComponent<SpriteRenderer>().enabled = false;
         dirtFront.SetBool("dirtIdle",false);
@@ -191,6 +192,7 @@ public class WormController : EnemyController
         dirtBehind.SetBool("dirtIdle",true);
         GetSprite().enabled = true;
         _collider2D.enabled = true;
+        GetComponent<Rigidbody2D>().isKinematic = false;
         shadow.SetActive(true);
         wormAnimator.SetTrigger("isGoingUp"); // in the animation last frame will enable idle animation;
     }

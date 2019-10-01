@@ -108,6 +108,7 @@ public class LeafTotemController : EnemyController
       {
          _collider.enabled = false;
          shadow.SetActive(false);
+         GetComponent<Rigidbody2D>().isKinematic = true;
       }
    }
    
@@ -128,6 +129,7 @@ public class LeafTotemController : EnemyController
       leafTotemAnimator.SetBool("GoingUp",false);
       _collider.enabled = true;
       _idleAnimation = true;
+      GetComponent<Rigidbody2D>().isKinematic = false;
       shadow.SetActive(true);
    }
 
