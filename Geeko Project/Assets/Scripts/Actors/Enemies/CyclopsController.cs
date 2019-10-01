@@ -179,7 +179,7 @@ public class CyclopsController : EnemyController
     {
         yield return new WaitForSeconds(sec);
         
-        print("waited: "+sec+", minourState: "+currState);
+        print("waited: "+sec+", cyclopsState: "+currState);
 
         StompOrNot();
 
@@ -698,7 +698,7 @@ public class CyclopsController : EnemyController
     public void OnHit()
     {
         UpdateRage();
-        cyclopsAnimator.SetTrigger("isTakingDamage");
+        //cyclopsAnimator.SetTrigger("isTakingDamage");
     }
     
     public void OnDeath()

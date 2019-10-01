@@ -420,6 +420,11 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    public StatusComponent GetStatusComponent()
+    {
+        return _statusComponent;
+    }
+
     private void StartDashing()
     {
         _dashing = true;
