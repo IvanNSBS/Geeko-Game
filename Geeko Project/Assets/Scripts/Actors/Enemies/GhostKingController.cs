@@ -21,6 +21,7 @@ public class GhostKingController : EnemyController
     public BossState bossState;
     public GameObject particle;
     public GameObject healParticle;
+    public float roomCenterOffSet;
     
     [Header("Camera Shake")]
     public float duration;
@@ -46,7 +47,6 @@ public class GhostKingController : EnemyController
 
     [Header("Sword Attack in Rage")] 
     public float timeDisappeared;
-
     public float delayTime;
     
 
@@ -66,6 +66,7 @@ public class GhostKingController : EnemyController
     public float timeBetweenShotsBA;
     public float bulletSpeedBA;
     public float brakingTime;
+    public float destroyTime;
 
     [Header("Heal")] 
     public float timeHeal;
@@ -73,6 +74,7 @@ public class GhostKingController : EnemyController
     public float healValue;
 
 
+    private bool _afterWander;
     private Collider2D _collider2D;
     private GameObject _explosionObject;
     private float _rage;
@@ -118,7 +120,27 @@ public class GhostKingController : EnemyController
         _weaponHoming = wcs[1];
         _collider2D = GetComponent<Collider2D>();
     }
+    
+    
+    public override void CheckTransitions()
+    {
+        currState = EnemyState.Wander;
 
+        if (getIdle())
+        {
+            currState = EnemyState.Idle;
+        }else if (_afterWander || _attacking || _recoverLife)
+        {
+            currState = EnemyState.Attack;
+        }
+        
+        if (GetCurrentHealth() <= 0)
+        {
+            currState = EnemyState.Die;
+        }
+    }
+    
+    
     public override void Idle()
     {
         base.Idle();
@@ -139,8 +161,22 @@ public class GhostKingController : EnemyController
 
         JumpOrNot();
 
+        _afterWander = false;
         SetWaiting(false);
         setIdle(false);
+    }
+    
+    public override IEnumerator RandomlyWanderingIn(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        
+        if (currState == EnemyState.Idle)
+        {
+            setIdle(false);
+        }
+        SetWandering(false);
+        SetWaiting(false);
+        _afterWander = true;
     }
     
     private void JumpOrNot()
@@ -162,29 +198,25 @@ public class GhostKingController : EnemyController
         float _sword = 0;
         float _hand = 0;
         float _breath = 0;
-        float _heal = 0;
         
         var random = Random.Range(0, 100);
         
         switch (bossState)
         {
             case BossState.Normal:
-                _sword = 0;
-                _hand = 0;
-                _breath = 0;
-                _heal = 0;
+                _sword = 100;
+                _hand = 60;
+                _breath = 100;
                 break;
             case BossState.Enrage:
-                _sword = 0;
-                _hand = 0;
-                _breath = 0;
-                _heal = 0;
+                _sword = 30;
+                _hand = 65;
+                _breath = 100;
                 break;
             case BossState.Rage:
-                 _sword = 0;
-                 _hand = 0;
-                 _breath = 0;
-                _heal = 0;
+                 _sword = 50;
+                 _hand = 80;
+                 _breath = 100;
                 break;
         }
 
@@ -291,7 +323,7 @@ public class GhostKingController : EnemyController
         _explosionObject.transform.position = breathPosition.position;
         _weaponHoming.firePoint = _explosionObject.transform;
         _weaponHoming.FourDiagonals(dir,numberOfShotsBA,timeBetweenShotsBA,bulletSpeedBA);
-        _weaponHoming.SetHomingDirectional(GetPlayer(), brakingTime);
+        _weaponHoming.SetHomingDirectional(GetPlayer(), brakingTime).SetDisappearAfter(destroyTime);
 
     }
 
@@ -332,7 +364,7 @@ public class GhostKingController : EnemyController
     {
         if (!_invokeAllowed)
         {
-            _invokeAllowed = MoveToCenterRoom(transform);
+            _invokeAllowed = MoveToCenterRoom(transform, roomCenterOffSet);
         }
         else
         {
@@ -341,7 +373,7 @@ public class GhostKingController : EnemyController
                 if (!_attackingHand)
                 {
                     //animations things;
-                    ghostKingAnimator.SetBool("isThrowing", true);
+                    ghostKingAnimator.SetBool("isInvoking", true);
                     ghostKingAnimator.SetBool("isIdle", false);
                     
                     // thrown in the cyclop's throw frame 
@@ -353,7 +385,7 @@ public class GhostKingController : EnemyController
                 }
                 else
                 {
-                    ghostKingAnimator.SetBool("isThrowing", false);
+                    ghostKingAnimator.SetBool("isInvoking", false);
                     ghostKingAnimator.SetBool("isIdle", true);
                     _attackingHand = false;
                     _invokeAllowed = false;
@@ -444,12 +476,17 @@ public class GhostKingController : EnemyController
     {
         print("disappering");
         //Disappear animation things here;
+        ghostKingAnimator.SetBool("isIdle",false);
+        ghostKingAnimator.SetBool("Disappear",true);
 
         yield return new WaitForSeconds(timeDisappeared);
 
         MoveToBehindPlayer();
         
         //appear animation things
+        GetSprite().enabled = true;
+        ghostKingAnimator.SetBool("Disappear",false);
+        ghostKingAnimator.SetBool("Appear",true);
         
     }
 
@@ -457,6 +494,7 @@ public class GhostKingController : EnemyController
     {
         _collider2D.enabled = false;
         GetSprite().enabled = false;
+        particle.SetActive(false);
         
         //shadow.SetActive(false);
     }
@@ -464,8 +502,9 @@ public class GhostKingController : EnemyController
     public void Appear()
     {
         _collider2D.enabled = true;
-        GetSprite().enabled = true;
-
+        ghostKingAnimator.SetBool("isIdle",true);
+        ghostKingAnimator.SetBool("Appear", false);
+        particle.SetActive(true);
         //shadow.SetActive(true);
     }
     
@@ -482,11 +521,9 @@ public class GhostKingController : EnemyController
         {
             if (!_attackingSword)
             {
-                ghostKingAnimator.SetBool("isStomping", true);
+                ghostKingAnimator.SetBool("isSwordAttacking", true);
                 ghostKingAnimator.SetBool("isIdle", false);
 
-                ShootPattern(); // call in the right frame later;
-                
                 _runningSword = true;
                 _attackingSword = true;
                 _timeSwordAttack = timeSwordAttack;
@@ -494,7 +531,7 @@ public class GhostKingController : EnemyController
             else
             {
                 ghostKingAnimator.SetBool("isIdle", true);
-                ghostKingAnimator.SetBool("isStomping", false);
+                ghostKingAnimator.SetBool("isSwordAttacking", false);
                 _attackingSword = false;
                 _runningSword = false;
                 _teleportAttack = false;
@@ -513,9 +550,9 @@ public class GhostKingController : EnemyController
         {
             if (!_healing)
             {
-                ghostKingAnimator.SetBool("isStomping",true);
                 ghostKingAnimator.SetBool("isIdle",false);
-                
+                ghostKingAnimator.SetTrigger("isHealInit");
+
                 healParticle.SetActive(true);
                 
                 _healing = true;
@@ -523,13 +560,13 @@ public class GhostKingController : EnemyController
             }
             else
             {
-                ghostKingAnimator.SetBool("isIdle",true);
-                ghostKingAnimator.SetBool("isStomping",false);
+                ghostKingAnimator.SetBool("isHealLoop",false);
+                ghostKingAnimator.SetBool("isHealEnded",true);
                 _healing = false;
-                //_stompRangeAllowed = false;
                 setIdle(true);
                 _recoverLife = false;
-                healParticle.SetActive(true);
+                _healCte = 0;
+                healParticle.SetActive(false);
             }
         }
         else
@@ -539,6 +576,17 @@ public class GhostKingController : EnemyController
         }
     }
 
+    public void HealLoopAnimation()
+    {
+        ghostKingAnimator.SetBool("isHealLoop",true);
+    }
+
+    public void HealFinishAnimation()
+    {
+        ghostKingAnimator.SetBool("isHealEnded",false);
+        ghostKingAnimator.SetBool("isIdle",true);
+    }
+    
     private void HealPerSecond()
     {
         if(((timeHeal-_timeHeal)/healFrame) > _healCte)
@@ -555,7 +603,7 @@ public class GhostKingController : EnemyController
         
         if (!_jumpAllowed)
         {
-            _jumpAllowed = MoveToCenterRoom(jumpPosition);
+            _jumpAllowed = MoveToCenterRoom(jumpPosition, roomCenterOffSet);
         }
         else
         {
@@ -563,10 +611,10 @@ public class GhostKingController : EnemyController
             {
                 if (!_attackingJump)
                 {
-                    ghostKingAnimator.SetBool("isStomping",true);
+                    ghostKingAnimator.SetBool("isJumping",true);
                     ghostKingAnimator.SetBool("isIdle",false);
                 
-                    ShootPattern(); // is now being called in the frame of the hittingfloor animation
+                    //ShootPattern(); // is now being called in the frame of the jump animation
                 
                     _attackingJump = true;
                     _timeJumpAttack = timeJumpAttack;
@@ -593,7 +641,7 @@ public class GhostKingController : EnemyController
         if (_howManyJumps >= howManyJumps)
         {
             print("ended jumping");
-            
+            StopJump();
         }
     }
 
@@ -608,26 +656,34 @@ public class GhostKingController : EnemyController
         _attackingJump = false;
         _jumpAllowed = false;
         ghostKingAnimator.SetBool("isIdle",true);
-        ghostKingAnimator.SetBool("isStomping",false);
+        ghostKingAnimator.SetBool("isJumping",false);
     }
 
 
-    private bool MoveToCenterRoom(Transform transform)
+    private bool MoveToCenterRoom(Transform transform, float offSet)
     {
         //int layer = LayerMask.GetMask("Default");
         //Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius, layer);
+
+        var positiveXbound = _roomCenter.x + offSet;
+        var negativeXbound = _roomCenter.x - offSet;
+        var positiveYbound = _roomCenter.y + offSet;
+        var negativeYbound = _roomCenter.y - offSet;
+
+        var current = transform.position;
+
+        if (current.x <= positiveXbound && current.x >= negativeXbound)
+        {
+            if (current.y <= positiveYbound && current.y >= negativeYbound)
+            {
+                StopMovement();
+                return true;
+            }
+        }
         
-        if (transform.position != _roomCenter)
-        {
-            var dir = DirectionNormalized(transform.position, _roomCenter);
-            MoveEnemy(dir, speed);
-            return false;
-        }
-        else
-        {
-            StopMovement();
-            return true;
-        }
+        var dir = DirectionNormalized(transform.position, _roomCenter);
+        MoveEnemy(dir, speed);
+        return false;
     }
     
     private void BreathAttack() //maybe looping breathing 
@@ -637,7 +693,8 @@ public class GhostKingController : EnemyController
             if (!_attackingBreath)
             {
                 //animations things;
-                ghostKingAnimator.SetTrigger("GuardTheEye");
+                ghostKingAnimator.SetBool("Breath",true);
+                ghostKingAnimator.SetBool("isIdle",false);
 
                 ShootPattern(); //call in the right frame later!
                 
@@ -646,6 +703,8 @@ public class GhostKingController : EnemyController
             }
             else
             {
+                ghostKingAnimator.SetBool("isIdle",true);
+                ghostKingAnimator.SetBool("Breath",false);
                 _attackingBreath = false;
                 setIdle(true);
             }
@@ -660,13 +719,28 @@ public class GhostKingController : EnemyController
     {
         FlipChildren();
     }
-    
-    public void IdlingAfterAttack()
+
+    private void FlipChildren()
     {
-        ghostKingAnimator.SetBool("isIdle",true);
-        ghostKingAnimator.SetBool("isStomping",false);
-        ghostKingAnimator.SetBool("isThrowing",false);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
+        }
+
     }
+    
+    public void OnHit()
+    {
+        UpdateRage();
+    }
+    public void OnDeath()
+    {
+        ghostKingAnimator.SetBool("isDead",true);
+        particle.SetActive(false);
+        healParticle.SetActive(false);
+    }
+    
     public override void MoveEnemy(Vector3 dir, float speed)
     {
         base.MoveEnemy(dir, speed);
@@ -684,16 +758,16 @@ public class GhostKingController : EnemyController
         flipStaticEnemy();
     }
     
-    private void FlipChildren()
+    public void IdlingAfterAttack()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            var child = transform.GetChild(i);
-            child.localPosition = new Vector3(-child.localPosition.x, child.localPosition.y, child.localPosition.z);
-        }
-
+        ghostKingAnimator.SetBool("isIdle",true);
+        ghostKingAnimator.SetBool("isSwordAttacking",false);
+        ghostKingAnimator.SetBool("Breath",false);
+        ghostKingAnimator.SetBool("isInvoking",false);
+        ghostKingAnimator.SetBool("isJumping",false);
     }
-    
+
+
     public void UpdateRage()
     {
         var previousMinotaurState = bossState;
