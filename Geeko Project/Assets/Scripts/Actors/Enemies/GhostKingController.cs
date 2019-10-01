@@ -95,6 +95,7 @@ public class GhostKingController : EnemyController
     private bool _teleportAttack;
     private bool _delay;
     private float _delayTime;
+    private bool _appeared;
 
     private float _timeJumpAttack;
     private bool _attackingJump;
@@ -204,18 +205,18 @@ public class GhostKingController : EnemyController
         switch (bossState)
         {
             case BossState.Normal:
-                _sword = 100;
+                _sword = 40;
                 _hand = 60;
                 _breath = 100;
                 break;
             case BossState.Enrage:
                 _sword = 30;
-                _hand = 65;
+                _hand = 60;
                 _breath = 100;
                 break;
             case BossState.Rage:
                  _sword = 50;
-                 _hand = 80;
+                 _hand = 70;
                  _breath = 100;
                 break;
         }
@@ -368,6 +369,7 @@ public class GhostKingController : EnemyController
         }
         else
         {
+            print("entered");
             if (_timeHandAttack <= 0)
             {
                 if (!_attackingHand)
@@ -391,7 +393,6 @@ public class GhostKingController : EnemyController
                     _invokeAllowed = false;
                     _recoverLife = true;
                     _currMove = GhostKingMoves.Heal;
-                    setIdle(true);
                 }
             }
             else
@@ -449,16 +450,18 @@ public class GhostKingController : EnemyController
         {
             DelayToAttack();
         }
-
+        
+        
         if (_teleportAttack)
         {
+            print("ue "+_teleportAttack);
             SimpleSwordAttack();
         }
     }
 
     private void DelayToAttack()
     {
-        if (!_delay && !_teleportAttack)
+        if (!_delay && !_teleportAttack && _appeared)
         {
             _delay = true;
             StartCoroutine(WaitDelay(delayTime));
@@ -470,11 +473,12 @@ public class GhostKingController : EnemyController
         yield return new WaitForSeconds(delay);
         _delay = false;
         _teleportAttack = true;
+        _appeared = false;
     }
 
     private IEnumerator WaitingToAppearBehindPlayer(float timeDisappeared)
     {
-        print("disappering");
+        print("disappering"+_teleportAttack);
         //Disappear animation things here;
         ghostKingAnimator.SetBool("isIdle",false);
         ghostKingAnimator.SetBool("Disappear",true);
@@ -505,6 +509,7 @@ public class GhostKingController : EnemyController
         ghostKingAnimator.SetBool("isIdle",true);
         ghostKingAnimator.SetBool("Appear", false);
         particle.SetActive(true);
+        _appeared= true;
         //shadow.SetActive(true);
     }
     
@@ -523,8 +528,10 @@ public class GhostKingController : EnemyController
             {
                 ghostKingAnimator.SetBool("isSwordAttacking", true);
                 ghostKingAnimator.SetBool("isIdle", false);
-
-                _runningSword = true;
+                if (bossState != BossState.Rage)
+                {
+                    _runningSword = true;
+                }
                 _attackingSword = true;
                 _timeSwordAttack = timeSwordAttack;
             }
@@ -535,6 +542,7 @@ public class GhostKingController : EnemyController
                 _attackingSword = false;
                 _runningSword = false;
                 _teleportAttack = false;
+                _disappeared = false;
                 setIdle(true);
             }
         }
@@ -592,8 +600,9 @@ public class GhostKingController : EnemyController
         if(((timeHeal-_timeHeal)/healFrame) > _healCte)
         {
             _healCte++;
-            
-            GetStatusComponent().Heal(healValue);
+            print(_healCte);
+
+            GetStatusComponent().TakeDamage(-healValue,GameplayStatics.DamageType.Heal);
 
         }
     }
@@ -706,6 +715,7 @@ public class GhostKingController : EnemyController
                 ghostKingAnimator.SetBool("isIdle",true);
                 ghostKingAnimator.SetBool("Breath",false);
                 _attackingBreath = false;
+                
                 setIdle(true);
             }
         }
