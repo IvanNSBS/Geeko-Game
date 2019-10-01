@@ -228,6 +228,18 @@ public class WeaponComponent : MonoBehaviour
         var tm = new TargetingManager(mainDirection);
         NwaySpread(tm, 7, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
     }
+    
+    public void SpreadNineWay(
+        Vector2 mainDirection,
+        int numberOfShotsPerWay,
+        float amplitude,
+        float timeBetweenShots,
+        float bulletSpeed
+    )
+    {
+        var tm = new TargetingManager(mainDirection);
+        NwaySpread(tm, 9, numberOfShotsPerWay, amplitude, timeBetweenShots, bulletSpeed);
+    }
 
     public void SpreadSevenWayLockOn(
         int numberOfShotsPerWay,
