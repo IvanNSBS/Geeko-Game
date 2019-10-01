@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8288310280778503636}
   - component: {fileID: 8288310280778503635}
-  - component: {fileID: 8288310280778503634}
+  - component: {fileID: 3116027156820528712}
   - component: {fileID: 4086615412072187901}
   - component: {fileID: 6974626698608738646}
   - component: {fileID: 607273770894137512}
@@ -124,7 +124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8288310280778503633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08503708, y: 0.088895746, z: -14.8671875}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7021303448512164303}
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &8288310280778503634
+--- !u!95 &3116027156820528712
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   timeAmmo: 0
   timeBtwShots: 0
   timeWalkingOneDirection: 0.5
-  ghostKingAnimator: {fileID: 8288310280778503634}
+  ghostKingAnimator: {fileID: 0}
   bossState: 0
   particle: {fileID: 2669986912707157135}
   healParticle: {fileID: 4710761457424684573}
