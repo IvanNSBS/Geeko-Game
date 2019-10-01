@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dbb31b406f7734280e7c02a453e3ca, type: 3}
-  m_Name: FireDoT
+  m_Script: {fileID: 11500000, guid: 2738e0e377eba514aab9cc5c99bfaf5f, type: 3}
+  m_Name: FamiliarProjectile
   m_EditorClassIdentifier: 
   m_SpellName: New Spell
   m_SpellDescription: This is a description
   m_SpellCooldown: 0
   m_CastType: 0
-  m_SpellDuration: 5
+  m_SpellDuration: 0
   m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 0}
   m_BorderImage: {fileID: 0}
-  m_Prefab: {fileID: 6380168145501466451, guid: c279f4144b9265b4f81e311c2527957d,
+  m_Prefab: {fileID: 1623317735016259177, guid: ec584095498bf5f4c86af58cfabc50dd,
     type: 3}
   m_SpellSound: {fileID: 0}
   m_OnHitEffect: {fileID: 0}
@@ -29,5 +29,5 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_Damage: 1
-  m_TickDealay: 0.5
+  m_Damage: 5
+  m_ProjectileSpeed: 15

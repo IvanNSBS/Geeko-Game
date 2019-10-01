@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu (menuName = "Spells/DamageOverTime")]
-public class DamageOverTime : Spell
+[CreateAssetMenu (menuName = "Spells/SpriteFamiliar")]
+public class SpriteFamiliar : Spell
 {
-    public float m_Damage = 1.0f;
-    public float m_TickDealay = 0.3f;
-
+    [SerializeField] float m_TickDelay = 0.7f;
+    [SerializeField] Spell m_SpellToCast = null;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
@@ -16,13 +15,15 @@ public class DamageOverTime : Spell
             Quaternion rot = Quaternion.identity;
             Vector2 speed = new Vector2(0, 0);
 
-            GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, target, this, (Vector3)spawn_pos, rot, spell_velocity:speed, tick_delay:m_TickDealay ,tag:"SpellUninteractive");
+            GameObject obj = SpellUtilities.InstantiateSpell(m_Prefab, owner, target, this, (Vector3)spawn_pos, rot, spell_velocity:speed, tick_delay:m_TickDelay ,tag:"SpellUninteractive");
 
             var sprite = obj.GetComponent<SpriteRenderer>();
             if (sprite)
                 sprite.enabled = false;
-            obj.GetComponent<SpellPrefabManager>().SetFollowerOwner(FollowWho.Target);
 
+            obj.GetComponent<SpellPrefabManager>().SetUseAimedTarget(true);
+            obj.GetComponent<SpellPrefabManager>().SetFollowerOwner(FollowWho.Player);
+            obj.GetComponent<SpellPrefabManager>().m_FollowOffset = new Vector3(-0.6f, 0.35f, 0);
             return obj;
         }
         return null;
@@ -34,11 +35,8 @@ public class DamageOverTime : Spell
     public override void OnTick(GameObject obj)
     {
         var manager = obj.GetComponent<SpellPrefabManager>();
-        if (!manager.m_Target) {
-            Destroy(obj);
-            return;
-        }
-        GameplayStatics.ApplyDamage(manager.m_Target, m_Damage, GameplayStatics.DamageType.Fire);
+        if (m_SpellToCast && manager.m_Target)
+            m_SpellToCast.CastSpell(manager.GetOwner(), manager.m_Target, obj.transform.position);
 
     }
     public override void SpellCollisionEnter(Collision2D target, GameObject src)

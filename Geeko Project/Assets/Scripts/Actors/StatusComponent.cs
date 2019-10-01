@@ -54,6 +54,10 @@ public class StatusComponent : MonoBehaviour
         m_OnDeath.AddListener(action);
     }
 
+    public void RemoveOnTakeDamage(UnityAction<float, GameplayStatics.DamageType> action)
+    {
+        m_OnTakeDamage.RemoveListener(action);
+    }
 
     public void TakeDamage(float amount, GameplayStatics.DamageType type = GameplayStatics.DamageType.Normal)
     {

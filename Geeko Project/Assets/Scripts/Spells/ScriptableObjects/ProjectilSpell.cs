@@ -42,11 +42,9 @@ public class ProjectilSpell : Spell
     {
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        if (m_OnHitEffect)
-            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
-        // SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
 
-        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
+        SpellUtilities.DamageOnCollide(target.gameObject, s_manager, m_Damage, SpellUtilities.invalid2);
+        if (target_obj != s_manager.GetOwner() && GameplayStatics.ObjHasTag(target_obj, SpellUtilities.entities))
             GameObject.Destroy(src);
     }
 

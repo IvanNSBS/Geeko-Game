@@ -143,10 +143,14 @@ public class PlayerController : MonoBehaviour
             m_MovementComponent.FlipSprite(dir.x);
             Quaternion rot = GameplayStatics.GetRotationFromDir(dir);
             m_PlayerHand.GetComponent<SpriteRenderer>().transform.rotation = rot;
+
             target.GetComponentInChildren<TargetHighlightComponent>().ToggleHighlight(true);
             if (old_target)
-                if(old_target != target)
-                    old_target.GetComponentInChildren<TargetHighlightComponent>().ToggleHighlight(false);
+                if (old_target != target) {
+                    var shadow = old_target.GetComponentInChildren<TargetHighlightComponent>();
+                    if(shadow)
+                        shadow.ToggleHighlight(false);
+                }
         }
 
         m_SpellComponent.SetTarget(target);

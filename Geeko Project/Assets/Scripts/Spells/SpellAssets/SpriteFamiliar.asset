@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278018533a410ee429a24f2c4aec8acb, type: 3}
+  m_Name: SpriteFamiliar
+  m_EditorClassIdentifier: 
+  m_SpellName: Eerie Familiar
+  m_SpellDescription: Summons an Eerie Familiar to fight with you for 20 seconds.
+    The familiar will shoot projectiles at your current target, each one dealing 5
+    points of damage.
+  m_SpellCooldown: 45
+  m_CastType: 0
+  m_SpellDuration: 20
+  m_SpellCharges: 1
+  m_UseAllAvailableCharges: 0
+  m_SpellImage: {fileID: 21300000, guid: d3266f59cb80e924d963332569424565, type: 3}
+  m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
+  m_Prefab: {fileID: 7231213173902283081, guid: c6c1db3a40fe5e541afc9b5735debeed,
+    type: 3}
+  m_SpellSound: {fileID: 0}
+  m_OnHitEffect: {fileID: 0}
+  m_Invalid:
+  - Item
+  - SpellUninteractive
+  - Room
+  m_TickDelay: 1
+  m_SpellToCast: {fileID: 11400000, guid: d7a763c03027a394a804d6a13c56b20b, type: 2}
