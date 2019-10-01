@@ -63,8 +63,11 @@ public class TriggerProjectile : Spell
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
 
-        if (target_obj != s_manager.GetOwner() && GameplayStatics.ObjHasTag(target_obj, SpellUtilities.entities))
+
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        {
             GameObject.Destroy(src);
+        }
     }
 
     public override void SpellTriggerTick(Collider2D target, GameObject src)

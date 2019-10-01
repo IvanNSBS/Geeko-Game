@@ -88,10 +88,16 @@ public class BezierProjectile : Spell
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
         if (m_OnHitEffect)
-            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
-        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
+            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid2);
+        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid2);
 
-        SpellUtilities.DestroyOnCollide(target_obj, s_manager, SpellUtilities.invalid);
+
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        {
+            GameObject.Destroy(src);
+        }
+
+        // SpellUtilities.DestroyOnCollide(target_obj, s_manager, SpellUtilities.invalid2, true);
         //if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
         //    GameObject.Destroy(src);
     }

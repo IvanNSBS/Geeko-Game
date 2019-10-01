@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 197.02179
-    y: 813.08527
-    width: 278.40634
-    height: 68.21643
+    x: 196.86757
+    y: 813.7223
+    width: 278.18842
+    height: 68.26984
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 181.687
-    y: 53.484074
+    x: 181.80807
+    y: 53.763187
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -403,8 +403,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.148575
-    y: 33.864063
+    x: 106.143524
+    y: 33.90641
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -5066,7 +5066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spells:
-  - m_Spell: {fileID: 0}
+  - m_Spell: {fileID: 11400000, guid: 41c9624fef15f804b8f7c770900f2ae0, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_UsingCharges: 0
@@ -5077,7 +5077,7 @@ MonoBehaviour:
     m_SpawnParent: {fileID: 0}
     m_InstantiatedSpell: {fileID: 0}
     m_IsConcentrating: 0
-  - m_Spell: {fileID: 0}
+  - m_Spell: {fileID: 11400000, guid: e3785cd09d1de06498a825c2e980c34f, type: 2}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_UsingCharges: 0
