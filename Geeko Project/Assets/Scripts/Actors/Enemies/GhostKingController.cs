@@ -498,6 +498,7 @@ public class GhostKingController : EnemyController
     {
         _collider2D.enabled = false;
         GetSprite().enabled = false;
+        GetComponent<Rigidbody2D>().isKinematic = true;
         particle.SetActive(false);
         
         //shadow.SetActive(false);
@@ -506,6 +507,7 @@ public class GhostKingController : EnemyController
     public void Appear()
     {
         _collider2D.enabled = true;
+        GetComponent<Rigidbody2D>().isKinematic = false;
         ghostKingAnimator.SetBool("isIdle",true);
         ghostKingAnimator.SetBool("Appear", false);
         particle.SetActive(true);
