@@ -152,7 +152,7 @@ public static class GameplayStatics
     {
         RaycastHit2D hit;
         Vector3 dir = target.transform.position - src.transform.position;
-        float length = dir.magnitude * 2;
+        float length = dir.magnitude+ 20; //tamanho um pouco maior que a sala
         hit = Physics2D.Raycast(src.transform.position, dir.normalized, length);
         if(debug)
             Debug.DrawLine(src.transform.position, target.transform.position, Color.green, debug_duration);
