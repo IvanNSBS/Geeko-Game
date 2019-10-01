@@ -34,15 +34,15 @@ public class SpellSelectionComponent : MonoBehaviour
         m_SpellCastingComponent = m_Player.GetComponent<SpellCastingComponent>();
         //UpdateSpellInfo(m_PlayerSpell1, m_SpellCastingComponent.GetSpell(0).m_Spell);
         //UpdateSpellInfo(m_PlayerSpell2, m_SpellCastingComponent.GetSpell(1).m_Spell);
-        if (m_ConfirmButton)
-        {
-            Debug.Log("Button Set");
-            m_ConfirmButton.interactable = false;
-        }
-        if (m_NewSpellInfo)
-            m_NewSpellInfo.gameObject.SetActive(false);
-        if (m_OldSpellInfo)
-            m_OldSpellInfo.gameObject.SetActive(false);
+        //if (m_ConfirmButton)
+        //{
+        //    Debug.Log("Button Set");
+        //    m_ConfirmButton.interactable = false;
+        //}
+        //if (m_NewSpellInfo)
+        //    m_NewSpellInfo.gameObject.SetActive(false);
+        //if (m_OldSpellInfo)
+        //    m_OldSpellInfo.gameObject.SetActive(false);
 
     }
     public void UpdateOldSelectedIdx(int n_idx) {
