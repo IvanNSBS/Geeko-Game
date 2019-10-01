@@ -207,6 +207,10 @@ public class RoomInstance : MonoBehaviour
             {
                 encounter.ActivateEnviroment();
             }
+            if(type == 3)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GameCompletePanel.SetGameCompleteActive(true);
+            }
         }
     }
     

@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private float AutoAimRange = 12f;
     [HideInInspector] public GameObject target;
+    public GameComplete GameCompletePanel;
     public Progress ProgressPanel;
 
     void Start()
