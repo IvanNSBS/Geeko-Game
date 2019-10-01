@@ -529,6 +529,7 @@ public class GhostKingController : EnemyController
                 //_stompRangeAllowed = false;
                 setIdle(true);
                 _recoverLife = false;
+                _healCte = 0;
                 healParticle.SetActive(true);
             }
         }
