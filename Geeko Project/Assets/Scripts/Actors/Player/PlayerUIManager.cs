@@ -55,7 +55,7 @@ public class PlayerUIManager : MonoBehaviour
     public void ToggleImageChildren(Image img, bool show = true) {
         for( int i = 1; i < img.transform.childCount; i++)
             img.transform.GetChild(i).gameObject.SetActive(show);
-        img.color = show ? Color.white : Color.black;
+        img.color = show ? new Color(1, 1, 1, 0.47f) : new Color(0, 0, 0, 0.47f);
     }
 
     public void UpdateSpellIconAndBorders()
