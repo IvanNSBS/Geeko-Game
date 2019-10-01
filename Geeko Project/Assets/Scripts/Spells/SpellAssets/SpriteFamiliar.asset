@@ -15,9 +15,9 @@ MonoBehaviour:
   m_SpellName: Eerie Familiar
   m_SpellDescription: Summons an Eerie Familiar to fight with you for some time. The
     familiar will shoot projectiles in your targets
-  m_SpellCooldown: 10
+  m_SpellCooldown: 45
   m_CastType: 0
-  m_SpellDuration: 60
+  m_SpellDuration: 20
   m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 21300000, guid: d3266f59cb80e924d963332569424565, type: 3}
@@ -30,5 +30,5 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_TickDelay: 0.7
+  m_TickDelay: 1
   m_SpellToCast: {fileID: 11400000, guid: d7a763c03027a394a804d6a13c56b20b, type: 2}

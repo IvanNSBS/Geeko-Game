@@ -29,5 +29,5 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_Damage: 10
-  m_ProjectileSpeed: 18
+  m_Damage: 5
+  m_ProjectileSpeed: 15

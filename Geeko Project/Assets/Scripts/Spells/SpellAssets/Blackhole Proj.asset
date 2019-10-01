@@ -15,10 +15,10 @@ MonoBehaviour:
   m_SpellName: BlackHole
   m_SpellDescription: Shoots a projectile that summons a blackhole on impact. The
     blackhole pulls enemies towards it.
-  m_SpellCooldown: 5
+  m_SpellCooldown: 40
   m_CastType: 0
   m_SpellDuration: 0
-  m_SpellCharges: 5
+  m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 21300000, guid: ee34195976181ef4b83f98f5034ab668, type: 3}
   m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
@@ -31,5 +31,7 @@ MonoBehaviour:
   - SpellUninteractive
   - Room
   m_SpellToCast: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
-  m_TravelDistance: 15
-  m_ProjectileSpeed: 20
+  m_TravelDistance: 12
+  m_ProjectileSpeed: 15
+  m_EnemyOnly: 0
+  m_Damage: 0
