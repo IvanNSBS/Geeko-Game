@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 9105839921458477598}
   - component: {fileID: 7558159995128276793}
   m_Layer: 0
-  m_Name: 4- Totens
+  m_Name: 2- Totens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -950,8 +950,6 @@ MonoBehaviour:
   lootManagers:
   - {fileID: 3395232603581367826}
   - {fileID: 8595083102865854296}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &8867524527411662552
 GameObject:
   m_ObjectHideFlags: 0
