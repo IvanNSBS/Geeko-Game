@@ -185,6 +185,12 @@ public class RoomInstance : MonoBehaviour
                 encounter.transform.parent = this.gameObject.transform;
                 encounter.HideEnemies();
                 break;
+            case 3:
+                hasEnemyInThisRoom = true;
+                encounter = Instantiate(SpecialEncounters[2], this.transform.position, Quaternion.identity).GetComponent<Encounter>();
+                encounter.transform.parent = this.gameObject.transform;
+                encounter.HideEnemies();
+                break;
         }
     }
 
