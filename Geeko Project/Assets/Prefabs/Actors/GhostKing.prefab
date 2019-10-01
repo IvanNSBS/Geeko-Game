@@ -267,7 +267,7 @@ MonoBehaviour:
   swordPosition: {fileID: 7021303448512164303}
   timeSwordAttack: 2
   numberOfShotsSA: 5
-  amplitudeSA: 35
+  amplitudeSA: 45
   timeBetweenShotsSA: 0.1
   bulletSpeedSA: 4.5
   timeDisappeared: 3
@@ -275,7 +275,7 @@ MonoBehaviour:
   jumpPosition: {fileID: 7790852977169670171}
   howManyJumps: 3
   timeJumpAttack: 0.5
-  numberOfShotsRS: 20
+  numberOfShotsRS: 30
   amplitudeDegressRS: 360
   minimumSpeedRS: 1
   maximumSpeedRS: 6
