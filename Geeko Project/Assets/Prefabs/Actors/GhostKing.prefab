@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8288310280778503636}
   - component: {fileID: 8288310280778503635}
-  - component: {fileID: 3116027156820528712}
+  - component: {fileID: 3479096065485496045}
   - component: {fileID: 4086615412072187901}
   - component: {fileID: 6974626698608738646}
   - component: {fileID: 607273770894137512}
@@ -125,7 +125,7 @@ Transform:
   m_GameObject: {fileID: 8288310280778503633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 7021303448512164303}
   - {fileID: 5110176251502129674}
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &3116027156820528712
+--- !u!95 &3479096065485496045
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   timeToStartActions: 3
   sightRange: 0
   attackRange: 0
-  speed: 2
+  speed: 2.5
   dashSpeed: 0
   stopShootToReload: 0
   explodeWhenDie: 0
@@ -248,10 +248,11 @@ MonoBehaviour:
   timeAmmo: 0
   timeBtwShots: 0
   timeWalkingOneDirection: 0.5
-  ghostKingAnimator: {fileID: 0}
+  ghostKingAnimator: {fileID: 3479096065485496045}
   bossState: 0
   particle: {fileID: 2669986912707157135}
   healParticle: {fileID: 4710761457424684573}
+  roomCenterOffSet: 2
   duration: 0.5
   strength: 0.5
   vibration: 8
@@ -260,15 +261,15 @@ MonoBehaviour:
   timeHandAttack: 1
   distanceInvokeFromtheCenter: 5
   prefabs:
-  - {fileID: 7725079296847367180, guid: 7049e29c95f6e9f47bbb41362ee3c7df, type: 3}
-  - {fileID: 2349131150698304763, guid: 29fb77679d86844469bf4a1f76bfa994, type: 3}
-  - {fileID: 3789719899100239645, guid: 0031d989c2b388347bc33b10c5944155, type: 3}
+  - {fileID: 7441911413383385319, guid: c1083a90eb94b224eae8c6cc93574963, type: 3}
+  - {fileID: 2399235721156724726, guid: 4384b91c751735a45a46e8c87239c442, type: 3}
+  - {fileID: 4158057148057696057, guid: 8a8ef30865d669e4dbcbd68e56ba06cd, type: 3}
   swordPosition: {fileID: 7021303448512164303}
   timeSwordAttack: 2
   numberOfShotsSA: 5
   amplitudeSA: 35
   timeBetweenShotsSA: 0.1
-  bulletSpeedSA: 4
+  bulletSpeedSA: 4.5
   timeDisappeared: 3
   delayTime: 0.3
   jumpPosition: {fileID: 7790852977169670171}
@@ -282,8 +283,9 @@ MonoBehaviour:
   timeBreathAttack: 4
   numberOfShotsBA: 3
   timeBetweenShotsBA: 1
-  bulletSpeedBA: 3
-  brakingTime: 0.8
+  bulletSpeedBA: 2.8
+  brakingTime: 0.9
+  destroyTime: 5
   timeHeal: 4
   healFrame: 0.5
   healValue: 25
@@ -375,18 +377,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DMGPopup: {fileID: 0}
-  m_MaxHealth: 4000
+  m_MaxHealth: 4500
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
   m_OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4086615412072187901}
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4086615412072187901}
+        m_MethodName: OnHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   m_OnReceiveHeal:
@@ -418,7 +442,18 @@ MonoBehaviour:
   m_DeaccelerationTime: 0
   m_OnFlip:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4086615412072187901}
+        m_MethodName: OnFlip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &-8751808841175364951
@@ -822,6 +857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991547717774362787, guid: 5664860781921cc45923f74eead852ec,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5664860781921cc45923f74eead852ec, type: 3}

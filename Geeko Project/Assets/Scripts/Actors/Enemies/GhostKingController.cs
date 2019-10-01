@@ -21,6 +21,7 @@ public class GhostKingController : EnemyController
     public BossState bossState;
     public GameObject particle;
     public GameObject healParticle;
+    public float roomCenterOffSet;
     
     [Header("Camera Shake")]
     public float duration;
@@ -46,7 +47,6 @@ public class GhostKingController : EnemyController
 
     [Header("Sword Attack in Rage")] 
     public float timeDisappeared;
-
     public float delayTime;
     
 
@@ -66,6 +66,7 @@ public class GhostKingController : EnemyController
     public float timeBetweenShotsBA;
     public float bulletSpeedBA;
     public float brakingTime;
+    public float destroyTime;
 
     [Header("Heal")] 
     public float timeHeal;
@@ -160,6 +161,7 @@ public class GhostKingController : EnemyController
 
         JumpOrNot();
 
+        _afterWander = false;
         SetWaiting(false);
         setIdle(false);
     }
@@ -202,7 +204,7 @@ public class GhostKingController : EnemyController
         switch (bossState)
         {
             case BossState.Normal:
-                _sword = 40;
+                _sword = 100;
                 _hand = 60;
                 _breath = 100;
                 break;
@@ -321,7 +323,7 @@ public class GhostKingController : EnemyController
         _explosionObject.transform.position = breathPosition.position;
         _weaponHoming.firePoint = _explosionObject.transform;
         _weaponHoming.FourDiagonals(dir,numberOfShotsBA,timeBetweenShotsBA,bulletSpeedBA);
-        _weaponHoming.SetHomingDirectional(GetPlayer(), brakingTime);
+        _weaponHoming.SetHomingDirectional(GetPlayer(), brakingTime).SetDisappearAfter(destroyTime);
 
     }
 
@@ -362,7 +364,7 @@ public class GhostKingController : EnemyController
     {
         if (!_invokeAllowed)
         {
-            _invokeAllowed = MoveToCenterRoom(transform);
+            _invokeAllowed = MoveToCenterRoom(transform, roomCenterOffSet);
         }
         else
         {
@@ -492,6 +494,7 @@ public class GhostKingController : EnemyController
     {
         _collider2D.enabled = false;
         GetSprite().enabled = false;
+        particle.SetActive(false);
         
         //shadow.SetActive(false);
     }
@@ -501,6 +504,7 @@ public class GhostKingController : EnemyController
         _collider2D.enabled = true;
         ghostKingAnimator.SetBool("isIdle",true);
         ghostKingAnimator.SetBool("Appear", false);
+        particle.SetActive(true);
         //shadow.SetActive(true);
     }
     
@@ -520,8 +524,6 @@ public class GhostKingController : EnemyController
                 ghostKingAnimator.SetBool("isSwordAttacking", true);
                 ghostKingAnimator.SetBool("isIdle", false);
 
-                ShootPattern(); // call in the right frame later;
-                
                 _runningSword = true;
                 _attackingSword = true;
                 _timeSwordAttack = timeSwordAttack;
@@ -601,7 +603,7 @@ public class GhostKingController : EnemyController
         
         if (!_jumpAllowed)
         {
-            _jumpAllowed = MoveToCenterRoom(jumpPosition);
+            _jumpAllowed = MoveToCenterRoom(jumpPosition, roomCenterOffSet);
         }
         else
         {
@@ -612,7 +614,7 @@ public class GhostKingController : EnemyController
                     ghostKingAnimator.SetBool("isJumping",true);
                     ghostKingAnimator.SetBool("isIdle",false);
                 
-                    ShootPattern(); // is now being called in the frame of the hittingfloor animation
+                    //ShootPattern(); // is now being called in the frame of the jump animation
                 
                     _attackingJump = true;
                     _timeJumpAttack = timeJumpAttack;
@@ -658,22 +660,30 @@ public class GhostKingController : EnemyController
     }
 
 
-    private bool MoveToCenterRoom(Transform transform)
+    private bool MoveToCenterRoom(Transform transform, float offSet)
     {
         //int layer = LayerMask.GetMask("Default");
         //Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius, layer);
+
+        var positiveXbound = _roomCenter.x + offSet;
+        var negativeXbound = _roomCenter.x - offSet;
+        var positiveYbound = _roomCenter.y + offSet;
+        var negativeYbound = _roomCenter.y - offSet;
+
+        var current = transform.position;
+
+        if (current.x <= positiveXbound && current.x >= negativeXbound)
+        {
+            if (current.y <= positiveYbound && current.y >= negativeYbound)
+            {
+                StopMovement();
+                return true;
+            }
+        }
         
-        if (transform.position != _roomCenter)
-        {
-            var dir = DirectionNormalized(transform.position, _roomCenter);
-            MoveEnemy(dir, speed);
-            return false;
-        }
-        else
-        {
-            StopMovement();
-            return true;
-        }
+        var dir = DirectionNormalized(transform.position, _roomCenter);
+        MoveEnemy(dir, speed);
+        return false;
     }
     
     private void BreathAttack() //maybe looping breathing 
