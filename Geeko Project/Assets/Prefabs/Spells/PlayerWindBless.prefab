@@ -4708,7 +4708,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 764ece235283dc146b512da8de44038b, type: 2}
+  - {fileID: 2100000, guid: c30da37746a8c4341b75e29b1f27a39f, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4808,3 +4808,4 @@ MonoBehaviour:
   m_SpawnRot: {x: 0, y: 0, z: 0, w: 0}
   m_Toggle: 0
   m_TickDelay: 0
+  m_FollowOffset: {x: 0, y: 0, z: 0}

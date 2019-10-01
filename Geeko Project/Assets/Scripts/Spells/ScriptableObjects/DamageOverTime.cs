@@ -34,6 +34,10 @@ public class DamageOverTime : Spell
     public override void OnTick(GameObject obj)
     {
         var manager = obj.GetComponent<SpellPrefabManager>();
+        if (!manager.m_Target) {
+            Destroy(obj);
+            return;
+        }
         GameplayStatics.ApplyDamage(manager.m_Target, m_Damage, GameplayStatics.DamageType.Fire);
 
     }

@@ -30,4 +30,4 @@ MonoBehaviour:
   - SpellUninteractive
   - Room
   m_Damage: 1
-  m_TickDealay: 0.3
+  m_TickDealay: 0.5

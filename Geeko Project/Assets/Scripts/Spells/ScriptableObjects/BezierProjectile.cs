@@ -8,8 +8,6 @@ public class BezierProjectile : Spell
 {
     public float m_Damage = 10.0f;
     public float m_SpeedMult = 1.0f;
-    [SerializeField] public OnHitBehavior m_OnHit;
-    [SerializeField] public BehaviorData data;
     Vector2 v3_to_v2(Vector3 v) { return new Vector2(v.x, v.y); }
 
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
@@ -25,11 +23,6 @@ public class BezierProjectile : Spell
 
             obj.GetComponent<SpellPrefabManager>().m_TargetInitialPos = target == null ? v3_to_v2(owner.transform.position + 8 * dir) : v3_to_v2(target.transform.position);
             obj2.GetComponent<SpellPrefabManager>().m_TargetInitialPos = target == null ? v3_to_v2(owner.transform.position + 8 * dir) : v3_to_v2(target.transform.position);
-
-            if (m_OnHit != null) {
-                obj2.GetComponent<SpellPrefabManager>().AddTriggerEnter(m_OnHit.OnHit);
-                obj.GetComponent<SpellPrefabManager>().AddTriggerEnter(m_OnHit.OnHit);
-            }
 
             AudioSource.PlayClipAtPoint(m_SpellSound, owner.transform.position);
 
@@ -88,10 +81,16 @@ public class BezierProjectile : Spell
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
         if (m_OnHitEffect)
-            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid);
-        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid);
+            SpellUtilities.SpawnEffectOnCollide(target_obj, s_manager, m_OnHitEffect, SpellUtilities.invalid2);
+        SpellUtilities.DamageOnCollide(target_obj, s_manager, m_Damage, SpellUtilities.invalid2);
 
-        SpellUtilities.DestroyOnCollide(target_obj, s_manager, SpellUtilities.invalid);
+
+        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        {
+            GameObject.Destroy(src);
+        }
+
+        // SpellUtilities.DestroyOnCollide(target_obj, s_manager, SpellUtilities.invalid2, true);
         //if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid))
         //    GameObject.Destroy(src);
     }

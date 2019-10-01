@@ -29,7 +29,10 @@ public class SpellPrefabManager : MonoBehaviour
     [HideInInspector] public float m_TickDelay = 0.0f;
 
     private FollowWho m_FollowTarget = FollowWho.Null;
+    public Vector3 m_FollowOffset = new Vector3(0, 0, 0);
+    private bool m_UseAimedTarget = false;
     public void SetFollowerOwner(FollowWho value) { m_FollowTarget = value; }
+    public void SetUseAimedTarget(bool value) { m_UseAimedTarget = value; }
     public void ResetTickLock()
     {
         m_RemainingTickTime = m_TickDelay;
@@ -75,10 +78,12 @@ public class SpellPrefabManager : MonoBehaviour
 
     public void Update()
     {
+        if (m_UseAimedTarget)
+            m_Target = GetOwner().GetComponent<PlayerController>().target;
         if (m_FollowTarget == FollowWho.Player)
-            gameObject.transform.position = GetOwner().transform.position;
+            gameObject.transform.position = GetOwner().transform.position + m_FollowOffset;
         if (m_FollowTarget == FollowWho.Target && m_Target)
-            gameObject.transform.position = m_Target.transform.position;
+            gameObject.transform.position = m_Target.transform.position + m_FollowOffset;
 
         if (m_TimeToLive != 0.0f && m_TimeAlive > m_TimeToLive)
             Destroy(gameObject);

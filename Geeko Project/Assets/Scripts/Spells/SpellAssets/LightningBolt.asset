@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpellName: Lightning Bolt
   m_SpellDescription: Shoots a lightning bolt that damages everything it hits.
-  m_SpellCooldown: 0
+  m_SpellCooldown: 15
   m_CastType: 0
   m_SpellDuration: 0.8
   m_SpellCharges: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_Damage: 50
+  m_Damage: 60
   m_Material: {fileID: 2100000, guid: a16d7ef79595d43448203ebe04696d2b, type: 2}
   m_Iterations: 3
   Event:

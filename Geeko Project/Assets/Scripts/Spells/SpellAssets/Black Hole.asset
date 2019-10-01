@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Black Hole
   m_EditorClassIdentifier: 
   m_SpellName: Black Hole
-  m_SpellCooldown: 8
+  m_SpellDescription: This is a description
+  m_SpellCooldown: 40
   m_CastType: 0
-  m_SpellDuration: 5
-  m_SpellCharges: 3
+  m_SpellDuration: 6
+  m_SpellCharges: 1
   m_UseAllAvailableCharges: 0
   m_SpellImage: {fileID: 21300000, guid: 262aaaa74d7d9c64f9cbfe27248ca263, type: 3}
   m_BorderImage: {fileID: 21300000, guid: 370168542fb41cc4881bfcf1e004f496, type: 3}
@@ -28,6 +29,6 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_PullStrength: 150
+  m_PullStrength: 200
   m_Radius: 2.5
   m_Material: {fileID: 2100000, guid: eaed6c082f835fd44aa4e1c86f72a1df, type: 2}

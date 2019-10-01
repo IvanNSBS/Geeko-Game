@@ -15,7 +15,7 @@ MonoBehaviour:
   m_SpellName: Wind's Bless
   m_SpellDescription: Receive a bless that makes you ignore collision with enemies
     and move faster for a short period of time.
-  m_SpellCooldown: 5
+  m_SpellCooldown: 25
   m_CastType: 0
   m_SpellDuration: 10
   m_SpellCharges: 1

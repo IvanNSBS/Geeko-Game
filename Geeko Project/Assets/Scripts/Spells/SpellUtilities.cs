@@ -8,7 +8,8 @@ public static class SpellUtilities
 {
     public static List<string> invalid  = new List<string> {"SpellUninteractive", "Room", "Untagged", "Item"};
     public static List<string> invalid2 = new List<string> { "SpellUninteractive", "Room", "Untagged", "Item" };
-    public static List<string> entities = new List<string> { "Wall", "Door" };
+    public static List<string> entities = new List<string> { "Wall", "Door", "Enemy" };
+    public static List<string> room = new List<string> { "Wall", "Door" };
     public static void PullTargetToSrc(
         GameObject target, 
         GameObject src, 

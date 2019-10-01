@@ -30,9 +30,9 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_Damage: 10
-  m_ProjectileSpeed: 30
-  m_Delay: 0.12
+  m_Damage: 15
+  m_ProjectileSpeed: 15
+  m_Delay: 0.1
   DMG:
     m_PersistentCalls:
       m_Calls:
