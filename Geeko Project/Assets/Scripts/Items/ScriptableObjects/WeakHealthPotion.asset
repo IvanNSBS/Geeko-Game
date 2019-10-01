@@ -16,9 +16,4 @@ MonoBehaviour:
   m_GameSprite: {fileID: 0}
   m_Animation: {fileID: 0}
   m_PickupSound: {fileID: 0}
-  m_OnPickup:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: CollisionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  m_HealAmount: 80
+  m_HealAmount: 40

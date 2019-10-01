@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   m_SpellName: Fireball
-  m_SpellDescription: Throw a fireball that deals damage and sets the enemy it hit's
-    on fire.
-  m_SpellCooldown: 5
+  m_SpellDescription: Throw a fireball that deals 15 points of damage and sets the
+    target it hit's on fire. The fire deals 10 points of damage over 5 seconds.
+  m_SpellCooldown: 20
   m_CastType: 0
   m_SpellDuration: 0
   m_SpellCharges: 2
@@ -32,6 +32,6 @@ MonoBehaviour:
   - Room
   m_SpellToCast: {fileID: 11400000, guid: eeee24de09851ea4aac79d631b2044c6, type: 2}
   m_TravelDistance: 50
-  m_ProjectileSpeed: 12
+  m_ProjectileSpeed: 10
   m_EnemyOnly: 1
-  m_Damage: 30
+  m_Damage: 15

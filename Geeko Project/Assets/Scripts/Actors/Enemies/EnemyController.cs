@@ -1039,7 +1039,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.collider.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+            other.gameObject.GetComponent<StatusComponent>().TakeDamage(5);
             Debug.Log("collision hit, player taking damage.");
         }
         
