@@ -155,10 +155,6 @@ MonoBehaviour:
   impAnimator: {fileID: 4691489343516902085}
   howManyPatternsBeforeIdle: 4
   numberOfBullets: 1
-  amplitudeDegrees: 0
-  minimumSpeed: 0
-  maximumSpeed: 0
-  breakingTime: 0
   timeDisappear: 6
   degreesPerSecond: 230
 --- !u!114 &3732007113272402807
@@ -174,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DMGPopup: {fileID: 0}
-  m_MaxHealth: 100
+  m_MaxHealth: 200
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -290,10 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDropSpell: 0
+  SpellDropPrefab: {fileID: 0}
   lootTable:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
     dropRate: 100
-  dropChance: 1
+  dropChance: 5
 --- !u!114 &4236060716901337689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +308,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 38914844527191222, guid: 52f1e1ef4de932f4092fc06750a9b316,
     type: 3}
   owner: {fileID: 4691489343516902084}
-  speed: 3.5
+  speed: 2.75
   cooldown: 0.2
   targetTag: Player
 --- !u!1001 &2890624435995217224

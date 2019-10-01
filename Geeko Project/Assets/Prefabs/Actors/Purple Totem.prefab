@@ -145,6 +145,7 @@ MonoBehaviour:
   maxTimeFollowing: 0
   dashTime: 0
   basicMeleeAttackTime: 0
+  basicMeleeAttackSpeed: 0
   cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
   timeToReload: 2
@@ -232,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DMGPopup: {fileID: 0}
-  m_MaxHealth: 500
+  m_MaxHealth: 350
   m_CanUseIFrames: 0
   m_IFrameTime: 0.2
   m_HitFlashDuration: 0.2
@@ -260,14 +261,15 @@ MonoBehaviour:
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnSetMaxHealth:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsInvincible: 0
+  m_DamagePopupOverride: 0
 --- !u!114 &3789719899100239642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDropSpell: 0
+  SpellDropPrefab: {fileID: 0}
   lootTable:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
     dropRate: 100
