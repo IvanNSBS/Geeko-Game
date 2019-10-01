@@ -964,7 +964,7 @@ public class EnemyController : MonoBehaviour
             ExplodeWhenDie();
         }
         
-        //_shadow.SetActive(false);
+        shadow.SetActive(false);
         
         StartCoroutine(FadingSequence());
 

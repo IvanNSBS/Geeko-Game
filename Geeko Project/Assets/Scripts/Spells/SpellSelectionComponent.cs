@@ -108,7 +108,7 @@ public class SpellSelectionComponent : MonoBehaviour
 
         UpdateSpells();
 
-        // Time.timeScale = 0;
+        Time.timeScale = 0;
     }
     public void OnConfirm() {
         if (m_NewSpell && m_SelectedOldSpellIdx != -1)

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SpriteFamiliar
   m_EditorClassIdentifier: 
   m_SpellName: Eerie Familiar
-  m_SpellDescription: Summons an Eerie Familiar to fight with you for some time. The
-    familiar will shoot projectiles in your targets
+  m_SpellDescription: Summons an Eerie Familiar to fight with you for 20 seconds.
+    The familiar will shoot projectiles at your current target, each one dealing 5
+    points of damage.
   m_SpellCooldown: 45
   m_CastType: 0
   m_SpellDuration: 20
