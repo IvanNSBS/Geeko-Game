@@ -29,8 +29,5 @@ MonoBehaviour:
   - Item
   - SpellUninteractive
   - Room
-  m_Damage: 40
+  m_Damage: 5
   m_SpeedMult: 1.5
-  m_OnHit: {fileID: 0}
-  data:
-    m_Strength: 10

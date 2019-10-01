@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: PrayerOfHealing
   m_EditorClassIdentifier: 
   m_SpellName: Prayer of Healing
-  m_SpellDescription: Heals the player over time...
+  m_SpellDescription: Heals the player over time, but you stop healing if you take
+    damage.
   m_SpellCooldown: 10
   m_CastType: 0
   m_SpellDuration: 15

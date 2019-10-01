@@ -64,7 +64,7 @@ public class TriggerProjectile : Spell
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
 
 
-        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        if (target_obj != s_manager.GetOwner() && GameplayStatics.ObjHasTag(target_obj, SpellUtilities.room))
         {
             GameObject.Destroy(src);
         }
