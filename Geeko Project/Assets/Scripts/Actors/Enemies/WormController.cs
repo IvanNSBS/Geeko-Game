@@ -175,7 +175,7 @@ public class WormController : EnemyController
         dirtBehind.GetComponent<SpriteRenderer>().enabled = false;
         dirtFront.SetBool("dirtIdle",false);
         dirtFront.SetTrigger("dirtDestroy");
-        //shadow.SetActive(false);
+        shadow.SetActive(false);
     }
 
     public void DisableDirtFrontAfterDestroyed()
@@ -191,7 +191,7 @@ public class WormController : EnemyController
         dirtBehind.SetBool("dirtIdle",true);
         GetSprite().enabled = true;
         _collider2D.enabled = true;
-        //shadow.SetActive(true);
+        shadow.SetActive(true);
         wormAnimator.SetTrigger("isGoingUp"); // in the animation last frame will enable idle animation;
     }
     

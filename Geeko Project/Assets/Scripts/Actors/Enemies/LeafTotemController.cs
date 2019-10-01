@@ -107,7 +107,7 @@ public class LeafTotemController : EnemyController
       if (currState != EnemyState.Die)
       {
          _collider.enabled = false;
-         //shadow.SetActive(false);
+         shadow.SetActive(false);
       }
    }
    
@@ -128,7 +128,7 @@ public class LeafTotemController : EnemyController
       leafTotemAnimator.SetBool("GoingUp",false);
       _collider.enabled = true;
       _idleAnimation = true;
-      //shadow.SetActive(true);
+      shadow.SetActive(true);
    }
 
    public override GameObject Shooting()
