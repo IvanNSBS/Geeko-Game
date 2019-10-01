@@ -10,7 +10,7 @@ public class Progress : MonoBehaviour
     private int currentPlayerPosition;
     void Start()
     {
-        currentPlayerPosition = 0;
+        //currentPlayerPosition = 0;
         Slime.transform.position = playerPositions[currentPlayerPosition].transform.position;
     }
 
