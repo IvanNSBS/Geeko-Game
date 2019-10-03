@@ -32,11 +32,7 @@ MonoBehaviour:
   m_Damage: 5
   m_ProjectileSpeed: 15
   m_OnCollision:
-  - m_Damage: 10
-    m_DamageType: 2
-    m_SpellToCast: {fileID: 0}
-    m_HitBehavior: {fileID: 11400000, guid: e88b02512d94e0a458176b7b19cea9bb, type: 2}
-  - m_Damage: 15
+  - m_Damage: 8
     m_DamageType: 4
     m_SpellToCast: {fileID: 0}
     m_HitBehavior: {fileID: 11400000, guid: e88b02512d94e0a458176b7b19cea9bb, type: 2}

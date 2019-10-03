@@ -9,8 +9,6 @@ public class TriggerProjectile : Spell
     public float m_Damage = 10.0f;
     public float m_ProjectileSpeed = 15.0f;
     public float m_Delay = 0.1f;
-    [SerializeField] public GameplayStatics.DamageEvent DMG;
-
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {

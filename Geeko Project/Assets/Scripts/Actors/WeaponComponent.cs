@@ -28,7 +28,9 @@ public class WeaponComponent : MonoBehaviour
     //disappearance vars
     private bool _willDisappear = false;
     private float _disappearIn;
-    
+
+    [SerializeField] private AudioClip m_ShootSound;
+
     public void SetTargetingFunction(Func<Vector2> fun)
     {
         _determineTarget = fun;
@@ -40,6 +42,8 @@ public class WeaponComponent : MonoBehaviour
         {
             _lastShot = Time.time;
             Shoot();
+            if (m_ShootSound)
+                AudioSource.PlayClipAtPoint(m_ShootSound, firePoint.position);
         }
     }
 

@@ -23,7 +23,7 @@ public class SpriteFamiliar : Spell
 
             obj.GetComponent<SpellPrefabManager>().SetUseAimedTarget(true);
             obj.GetComponent<SpellPrefabManager>().SetFollowerOwner(FollowWho.Player);
-            obj.GetComponent<SpellPrefabManager>().m_FollowOffset = new Vector3(-0.6f, 0.35f, 0);
+            obj.GetComponent<SpellPrefabManager>().m_FollowOffset = new Vector3(-0.6f, 0.35f, -5);
             return obj;
         }
         return null;
