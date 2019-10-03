@@ -100,8 +100,9 @@ public static class SpellUtilities
     public static bool DamageOnCollide(
         GameObject target, 
         SpellPrefabManager src, 
-        float damage, 
-        List<string> ignore = null)
+        float damage,
+        List<string> ignore = null,
+        GameplayStatics.DamageType type = GameplayStatics.DamageType.Normal)
     {
         if (ignore != null)
             if (GameplayStatics.ObjHasTag(target, ignore))
@@ -109,7 +110,7 @@ public static class SpellUtilities
 
         if (src)
             if (target != src.GetOwner() && !SpellVerifySameOwnership(target, src.GetOwner())) { 
-                GameplayStatics.ApplyDamage(target, damage);
+                GameplayStatics.ApplyDamage(target, damage, type);
                 return true;
             }
         return false;

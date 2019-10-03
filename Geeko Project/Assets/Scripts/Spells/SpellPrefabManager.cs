@@ -80,19 +80,24 @@ public class SpellPrefabManager : MonoBehaviour
     {
         if (m_UseAimedTarget)
             m_Target = GetOwner().GetComponent<PlayerController>().target;
-        if (m_FollowTarget == FollowWho.Player)
-            gameObject.transform.position = GetOwner().transform.position + m_FollowOffset;
+        if (m_FollowTarget == FollowWho.Player) {
+
+            Vector3 z = Vector3.zero;
+            gameObject.transform.position = Vector3.SmoothDamp(
+                gameObject.transform.position, GetOwner().transform.position + m_FollowOffset, ref z, 0.1f);
+
+        }
         if (m_FollowTarget == FollowWho.Target && m_Target)
             gameObject.transform.position = m_Target.transform.position + m_FollowOffset;
-
-        if (m_TimeToLive != 0.0f && m_TimeAlive > m_TimeToLive)
-            Destroy(gameObject);
 
         if (m_OnUpdate != null && m_RemainingTickTime == m_TickDelay)
             m_OnUpdate.Invoke(this.gameObject);
 
         m_TimeAlive += Time.deltaTime;
         m_RemainingTickTime -= Time.deltaTime;
+
+        if (m_TimeToLive != 0.0f && m_TimeAlive > m_TimeToLive)
+            Destroy(gameObject);
 
         if (m_RemainingTickTime <= 0.0f) ResetTickLock();
     }

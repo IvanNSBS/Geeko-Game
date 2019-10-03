@@ -62,18 +62,14 @@ public class SpellSelectionComponent : MonoBehaviour
     }
     public void UpdateNewSelectedIdx(int n_idx)
     {
-        Debug.Log("old selected idx = " + m_SelectedOldSpellIdx);
-        Debug.Log("nidx = " + m_SelectedOldSpellIdx);
         m_SelectedNewSpellIdx = n_idx;
         if (n_idx != -1 && m_SelectedOldSpellIdx != -1) {
-            Debug.Log("Button is interactanble");
             m_ConfirmButton.interactable = true;
         }
         else
             m_ConfirmButton.interactable = false;
 
         if (m_NewSpellInfo && n_idx != -1) {
-            Debug.Log("Here i am");
             m_NewSpellInfo.gameObject.SetActive(true);
             m_NewSpellInfo.UpdateInfo(m_NewSpellData[n_idx]);
         }
