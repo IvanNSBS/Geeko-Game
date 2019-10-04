@@ -35,6 +35,22 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 64109fa4944de4148b922313e9a31a66, type: 2}
   m_OnStartEvents:
   - m_StartBehavior: {fileID: 11400000, guid: 9b79579ad1447514991a4c71318c773d, type: 2}
+    m_StatusComponentData:
+      m_Health: 20
+      m_IFrameTime: 1
+      m_OverrideDmgType: 0
+    m_FollowRuleData:
+      m_FollowRule: 1
+      m_FollowOffset: {x: 0, y: 0, z: -5}
+      m_FollowSmoothDamp: 0
+      m_CenterAroundCaster: 1
+      m_UseAimedTarget: 0
+      m_MoveImmediately: 1
+  - m_StartBehavior: {fileID: 11400000, guid: 6b0e7e1e88346d44d978ba7d7d411924, type: 2}
+    m_StatusComponentData:
+      m_Health: 50
+      m_IFrameTime: 0.8
+      m_OverrideDmgType: 4
     m_FollowRuleData:
       m_FollowRule: 1
       m_FollowOffset: {x: 0, y: 0, z: -5}

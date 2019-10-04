@@ -35,7 +35,8 @@ public class ManaShieldConc : Spell
             //obj.GetComponent<SpellPrefabManager>().m_FollowSmoothDamp = 0.0f;
 
             foreach (var startevent in m_OnStartEvents)
-                startevent.m_StartBehavior.OnStartEvent(obj, startevent);
+                if(startevent.m_StartBehavior)
+                    startevent.m_StartBehavior.OnStartEvent(obj, startevent);
 
             if (m_Material)
                 obj.GetComponent<MeshRenderer>().material = m_Material;
@@ -44,13 +45,13 @@ public class ManaShieldConc : Spell
             obj.GetComponent<SpellPrefabManager>().AddTriggerTick(this.SpellTriggerTick);
             obj.GetComponent<SpellPrefabManager>().AddOnUpdate(this.OnTick);
 
-            StatusComponent status = obj.AddComponent<StatusComponent>() as StatusComponent;
-            status.SetMaxHealth(m_ShieldHP);
-            status.Heal(m_ShieldHP);
-            status.m_CanUseIFrames = true;
-            status.m_IFrameTime = m_IFrameTime;
-            status.m_DamagePopupOverride = GameplayStatics.DamageType.MagicShield;
-            status.AddOnDeath( () => Destroy(obj) );
+            //StatusComponent status = obj.AddComponent<StatusComponent>() as StatusComponent;
+            //status.SetMaxHealth(m_ShieldHP);
+            //status.Heal(m_ShieldHP);
+            //status.m_CanUseIFrames = true;
+            //status.m_IFrameTime = m_IFrameTime;
+            //status.m_DamagePopupOverride = GameplayStatics.DamageType.MagicShield;
+            //status.AddOnDeath( () => Destroy(obj) );
 
             return obj;
 
