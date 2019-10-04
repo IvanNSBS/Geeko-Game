@@ -30,6 +30,7 @@ public class SpellPrefabManager : MonoBehaviour
 
     private FollowWho m_FollowTarget = FollowWho.Null;
     public Vector3 m_FollowOffset = new Vector3(0, 0, 0);
+    public float m_FollowSmoothDamp = 0.0f;
     private bool m_UseAimedTarget = false;
     public void SetFollowerOwner(FollowWho value) { m_FollowTarget = value; }
     public void SetUseAimedTarget(bool value) { m_UseAimedTarget = value; }
@@ -84,7 +85,7 @@ public class SpellPrefabManager : MonoBehaviour
 
             Vector3 z = Vector3.zero;
             gameObject.transform.position = Vector3.SmoothDamp(
-                gameObject.transform.position, GetOwner().transform.position + m_FollowOffset, ref z, 0.1f);
+                gameObject.transform.position, GetOwner().transform.position + m_FollowOffset, ref z, m_FollowSmoothDamp);
 
         }
         if (m_FollowTarget == FollowWho.Target && m_Target)

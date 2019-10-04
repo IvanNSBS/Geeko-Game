@@ -41,7 +41,7 @@ public class ProjectilSpell : Spell
     public override void SpellTriggerEnter(Collider2D target, GameObject src)
     {
         foreach(var oncol in m_OnCollision)
-            oncol.m_HitBehavior.OnTriggerHit(target, src, oncol);
+            oncol.m_HitBehavior.OnTriggerHitEvent(target, src, oncol);
         //GameObject target_obj = target.gameObject;
         //SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
 
