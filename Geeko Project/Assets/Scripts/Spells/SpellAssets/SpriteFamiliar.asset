@@ -34,8 +34,9 @@ MonoBehaviour:
   m_TickDelay: 0.5
   m_SpellToCast: {fileID: 11400000, guid: d7a763c03027a394a804d6a13c56b20b, type: 2}
   m_StartBehaviors:
-  - m_FollowRule: 1
-    m_FollowOffset: {x: -0.6, y: 0.35, z: -5}
-    m_FollowSmoothDamp: 0.1
-    m_UseAimedTarget: 1
+  - m_FollowRuleData:
+      m_FollowRule: 1
+      m_FollowOffset: {x: -0.65, y: 0.35, z: -5}
+      m_FollowSmoothDamp: 0.1
+      m_UseAimedTarget: 1
     m_StartBehavior: {fileID: 11400000, guid: 9b79579ad1447514991a4c71318c773d, type: 2}
