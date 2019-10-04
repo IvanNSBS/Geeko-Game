@@ -10,6 +10,7 @@ public class ManaShieldConc : Spell
     [SerializeField] private float m_Radius = 3.0f;
     [SerializeField] private float m_IFrameTime = 1.0f;
     [SerializeField] private Material m_Material;
+    [SerializeField] private List<OnStartData> m_OnStartEvents;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner)
@@ -24,10 +25,17 @@ public class ManaShieldConc : Spell
             obj.GetComponent<CircleCollider2D>().radius = 0.5f;
             obj.GetComponent<CircleCollider2D>().isTrigger = true;
             obj.transform.localScale *= (2*m_Radius);
-            CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
+            Collider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<Collider2D>();
             Vector3 pos = circle.bounds.center + new Vector3(0, 0, -15);
-            obj.transform.position = pos;
+            //obj.transform.position = pos;
             // GameplayStatics.AddQuad(obj, m_Material);
+
+            //obj.GetComponent<SpellPrefabManager>().SetFollowerOwner(FollowWho.Player);
+            //obj.GetComponent<SpellPrefabManager>().m_FollowOffset = new Vector3(0, 0, -15) + circle.bounds.center - obj.GetComponent<SpellPrefabManager>().GetOwner().transform.position;
+            //obj.GetComponent<SpellPrefabManager>().m_FollowSmoothDamp = 0.0f;
+
+            foreach (var startevent in m_OnStartEvents)
+                startevent.m_StartBehavior.OnStartEvent(obj, startevent);
 
             if (m_Material)
                 obj.GetComponent<MeshRenderer>().material = m_Material;
@@ -56,9 +64,9 @@ public class ManaShieldConc : Spell
 
     public override void OnTick(GameObject obj)
     {
-        CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
-        Vector3 pos = circle.bounds.center + new Vector3(0,0,-15);
-        obj.transform.position = pos;
+        //CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
+        //Vector3 pos = circle.bounds.center + new Vector3(0,0,-15);
+        //obj.transform.position = pos;
         SpellUtilities.UpdateSpellTTL(obj, this);
     }
 

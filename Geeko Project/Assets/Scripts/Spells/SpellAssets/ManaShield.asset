@@ -33,3 +33,12 @@ MonoBehaviour:
   m_Radius: 1.5
   m_IFrameTime: 0.8
   m_Material: {fileID: 2100000, guid: 64109fa4944de4148b922313e9a31a66, type: 2}
+  m_OnStartEvents:
+  - m_StartBehavior: {fileID: 11400000, guid: 9b79579ad1447514991a4c71318c773d, type: 2}
+    m_FollowRuleData:
+      m_FollowRule: 1
+      m_FollowOffset: {x: 0, y: 0, z: -5}
+      m_FollowSmoothDamp: 0
+      m_CenterAroundCaster: 1
+      m_UseAimedTarget: 0
+      m_MoveImmediately: 1
