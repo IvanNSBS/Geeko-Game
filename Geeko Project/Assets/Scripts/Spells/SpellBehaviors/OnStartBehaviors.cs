@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public class OnStartData
 {
-    public FollowRuleData m_FollowRuleData;
     public OnStartBehavior m_StartBehavior;
+    public FollowRuleData m_FollowRuleData;
 }
 
 [Serializable]
@@ -23,7 +23,7 @@ public abstract class OnStartBehavior : ScriptableObject
     public abstract void OnStartEvent(GameObject src, OnStartData data);
 }
 
-[CreateAssetMenu(menuName = "SpellBehavior/Set Follow Rule")]
+[CreateAssetMenu(menuName = "SpellBehavior/On Start/Set Follow Rule")]
 public class SetFollowRule : OnStartBehavior
 {
     public override void OnStartEvent(GameObject src, OnStartData data)
