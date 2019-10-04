@@ -5082,7 +5082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Spells:
-  - m_Spell: {fileID: 11400000, guid: c95d9f7612ad03b43b865b12d270cf8b, type: 2}
+  - m_Spell: {fileID: 0}
     m_RemainingCD: 0
     m_IsSpellOnCD: 0
     m_UsingCharges: 0
