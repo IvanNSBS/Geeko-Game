@@ -31,3 +31,32 @@ MonoBehaviour:
   - Room
   m_Damage: 5
   m_ProjectileSpeed: 15
+  m_OnCollision:
+  - m_HitBehavior: {fileID: 11400000, guid: 4d9817c2691c9ac4e8bd821642e3eb6b, type: 2}
+    m_ApplyDamage:
+      m_Damage: 8
+      m_DamageType: 4
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Room
+      - Untagged
+      - Item
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - Wall
+      - Door
+      - Enemy
+  - m_HitBehavior: {fileID: 11400000, guid: b2259b383ed76254ea0e6e1f1667cb59, type: 2}
+    m_ApplyDamage:
+      m_Damage: 8
+      m_DamageType: 1
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Room
+      - Untagged
+      - Item
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - Wall
+      - Door
+      - Enemy

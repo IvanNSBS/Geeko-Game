@@ -8,6 +8,7 @@ public class SpriteFamiliar : Spell
 {
     [SerializeField] float m_TickDelay = 0.7f;
     [SerializeField] Spell m_SpellToCast = null;
+    [SerializeField] List<OnStartData> m_StartBehaviors = new List<OnStartData>();
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
@@ -21,9 +22,11 @@ public class SpriteFamiliar : Spell
             if (sprite)
                 sprite.enabled = false;
 
-            obj.GetComponent<SpellPrefabManager>().SetUseAimedTarget(true);
-            obj.GetComponent<SpellPrefabManager>().SetFollowerOwner(FollowWho.Player);
-            obj.GetComponent<SpellPrefabManager>().m_FollowOffset = new Vector3(-0.6f, 0.35f, 0);
+            foreach(var behavior in m_StartBehaviors)
+            {
+                behavior.m_StartBehavior.OnStartEvent(obj, behavior);
+            }
+
             return obj;
         }
         return null;

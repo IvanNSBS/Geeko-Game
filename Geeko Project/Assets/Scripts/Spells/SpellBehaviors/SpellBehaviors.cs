@@ -5,33 +5,31 @@ using UnityEngine;
 using UnityEditor;
 
 [Serializable]
-public class BehaviorData
+public class OnTickData
 {
-    public float m_Strength = 10;
+    public float m_stuff;
+}
+
+[Serializable]
+public class OnDestructionData
+{
 }
 
 [System.Serializable]
-public abstract class SpellBehavior : ScriptableObject
+public abstract class OnStayBehavior : ScriptableObject
 {
-    public abstract void Invoke(GameObject target, GameObject source);
+    public abstract void OnTriggerStayEvent(Collider2D collision, GameObject src, OnCollisionData data);
+    public abstract void OnCollisionStayEvent(Collision2D collision, GameObject src, OnCollisionData data);
 }
 
 [System.Serializable]
-public abstract class OnHitBehavior : SpellBehavior
+public abstract class OnTickBehavior : ScriptableObject
 {
-    public abstract void OnHit(Collider2D target, GameObject source);
+    public abstract void OnTickEvent(GameObject src, OnTickData data);
 }
+
 [System.Serializable]
-public class ApplyDamage : OnHitBehavior
+public abstract class OnDestructionBehavior : ScriptableObject
 {
-    public override void Invoke(GameObject target, GameObject source)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnHit(Collider2D target, GameObject source)
-    {
-        GameplayStatics.ApplyDamage(target.gameObject, 1000.0f);
-    }
+    public abstract void OnDestructionEvent(OnDestructionData data);
 }
-

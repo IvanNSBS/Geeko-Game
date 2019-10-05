@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 209.30817
-    y: 765.35724
-    width: 295.7679
-    height: 64.2121
+    x: 196.81377
+    y: 813.94464
+    width: 278.1124
+    height: 68.28851
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 251.99553
-    y: 115.96135
+    x: 182.16798
+    y: 54.231205
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -401,8 +401,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.55066
-    y: 30.689013
+    x: 106.14176
+    y: 33.92122
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -1093,6 +1093,7 @@ MonoBehaviour:
   pointer: {fileID: 1046082702810632005}
   button: {fileID: 3315802974383460117}
   playerWeaponComponent: {fileID: -8223184592019134740}
+  m_ShootSound: {fileID: 8300000, guid: 681c9ae93e022df43bd18399f4ec1b6f, type: 3}
 --- !u!1 &807739871261589289
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,6 +5068,7 @@ MonoBehaviour:
   speed: 20
   cooldown: 0.2
   targetTag: Enemy
+  m_ShootSound: {fileID: 8300000, guid: 641daa99cbd61b94fae0295ac9c858b4, type: 3}
 --- !u!114 &289259035690399785
 MonoBehaviour:
   m_ObjectHideFlags: 0

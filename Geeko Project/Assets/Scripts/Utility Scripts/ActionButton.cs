@@ -11,13 +11,14 @@ public class ActionButton : MonoBehaviour
     private bool shoot = true;
     private bool isActionButtonPressed = false;
     [SerializeField] private WeaponComponent playerWeaponComponent;
+    [SerializeField] private AudioClip m_ShootSound;
 
     // Update is called once per frame
     void Update()
     {
         if (isActionButtonPressed)
         {
-            if (shoot)
+            if (shoot) 
                 playerWeaponComponent.AttemptToShoot();
         }
     }
