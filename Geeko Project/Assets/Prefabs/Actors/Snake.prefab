@@ -123,7 +123,7 @@ MonoBehaviour:
   currState: 7
   enemyType: 0
   projectile: {fileID: 0}
-  timeToStartActions: 0
+  timeToStartActions: 0.5
   sightRange: 8
   attackRange: 6
   speed: 2
