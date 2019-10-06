@@ -50,6 +50,7 @@ public class CyclopsController : EnemyController
     [Header("Throw Attack")]
     public GameObject[] stones;
     public Transform throwPosition;
+    public float wallOffSetExplosion;
     public float throwRadius;
     public float throwSpeed;
     public float timeThrowAttack;
@@ -578,7 +579,9 @@ public class CyclopsController : EnemyController
 
     private void FourDiagonalsPattern()
     {
-        var dir = PlayerDirection(_explosionObject.transform.position);
+        var point = Vector2.MoveTowards(_explosionObject.transform.position, _roomCenter, wallOffSetExplosion);
+        _explosionObject.transform.position = point;
+        var dir = PlayerDirection(point);
         _weaponComponent.firePoint = _explosionObject.transform;
         _weaponComponent.FourDiagonals(dir, numberOfShotsPerDiagonal4D, timeBtwShots4D, bulletSpeed4D);
     }
