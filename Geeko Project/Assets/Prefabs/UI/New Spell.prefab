@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3510689368138621148}
   - component: {fileID: 275585242581603172}
   m_Layer: 5
-  m_Name: NewSpell1
+  m_Name: New Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,8 +276,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: New Spell Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbf6848f83e79a4489619437f19af854, type: 2}
-  m_sharedMaterial: {fileID: -3178023815849963678, guid: cbf6848f83e79a4489619437f19af854,
+  m_fontAsset: {fileID: 11400000, guid: 1659dc2a013d9c740ab88b51e9f26bf7, type: 2}
+  m_sharedMaterial: {fileID: -3178023815849963678, guid: 1659dc2a013d9c740ab88b51e9f26bf7,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
