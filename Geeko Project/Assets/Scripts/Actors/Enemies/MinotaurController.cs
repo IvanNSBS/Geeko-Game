@@ -44,8 +44,9 @@ public class MinotaurController : EnemyController
     public Vector2 pokeAttackRange;
     public float timeBtwPokeAttack;
     public int pokeDamage;
-    
-    [Header("Floor Hit Attack")]
+
+    [Header("Floor Hit Attack")] 
+    public int howManyHitsBeforeIdle;
     public Transform floorHitPosition;
     public float timeBtwFloorHitAttack;
     public int numberOfBulletsFH;
@@ -77,7 +78,8 @@ public class MinotaurController : EnemyController
     public int vibration;
     public float randomness;
     public bool fadeOut;
-    
+
+    private int _hits=0;
     private float _rage = 0;
     private bool _attacking=false;
     private MinotaurAttack _curAttack;
@@ -98,6 +100,7 @@ public class MinotaurController : EnemyController
     private Coroutine _coroutine;
     private float _timeToCallDashChanceLottery;
     private bool _waitingDashCooldown;
+    private Vector2 _circleDir=new Vector2(1,1);
     
 
     public override void Start()
@@ -516,9 +519,9 @@ public class MinotaurController : EnemyController
             }
             else
             {
-                minotaurAnimator.SetBool("isIdle",true);
-                _attackingFloorHit = false;
-                setIdle(true);
+                _hits++;
+                ResetHitFloor();
+                RepeatOrNotHitFloor();
             }
         }
         else
@@ -527,12 +530,33 @@ public class MinotaurController : EnemyController
         }
     }
 
+    private void RepeatOrNotHitFloor()
+    {
+        if (_hits >= howManyHitsBeforeIdle)
+        {
+            print("end hit floor");
+            StopHitFloor();
+        }
+    }
+
+    private void StopHitFloor()
+    {
+        _hits = 0;
+        setIdle(true);
+    }
+
+    private void ResetHitFloor()
+    {
+        minotaurAnimator.SetBool("isIdle",true);
+        _attackingFloorHit = false;
+    }
+
     private void ShootPattern()
     {
         switch (_curAttack)
         {
             case MinotaurAttack.FloorHit:
-                CirclePattern(floorHitPosition.position,GetPlayer().position,numberOfBulletsFH,loopsFH, bulletSpeedFH);
+                CirclePattern(floorHitPosition.position,transform.position,numberOfBulletsFH,loopsFH, bulletSpeedFH);
                 break;
             case MinotaurAttack.Spin:
                 SpiralPattern(transform.position,GetPlayer().position,numberOfBulletsSpin,timeSpinning,loopsSpin,bulletSpeedSpin);
@@ -548,8 +572,12 @@ public class MinotaurController : EnemyController
     {
         var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
         weaponComponent.firePoint.position = origin;
-        Vector2 vec2 = - DirectionNormalized(origin, target);
-        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,0,loops, speed);
+        if (_curAttack == MinotaurAttack.FloorHit)
+        {
+            var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
+            _circleDir = Quaternion.Euler(0, 0, angle / 2) * _circleDir;
+        }
+        weaponComponent.Spiral(_circleDir,numberOfShotsPerLoop,0,loops, speed);
         Debug.Log("Circle pattern");
         
     }

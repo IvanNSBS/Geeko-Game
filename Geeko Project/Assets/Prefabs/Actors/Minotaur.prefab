@@ -172,8 +172,9 @@ MonoBehaviour:
   pokeAttackRange: {x: 2, y: 1}
   timeBtwPokeAttack: 0.5
   pokeDamage: 15
+  howManyHitsBeforeIdle: 3
   floorHitPosition: {fileID: 4201139653007346573}
-  timeBtwFloorHitAttack: 0.5
+  timeBtwFloorHitAttack: 0.7
   numberOfBulletsFH: 24
   loopsFH: 1
   bulletSpeedFH: 5
