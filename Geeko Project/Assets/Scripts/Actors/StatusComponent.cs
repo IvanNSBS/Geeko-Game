@@ -67,10 +67,15 @@ public class StatusComponent : MonoBehaviour
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0.0f, m_MaxHealth);
             if (m_CurrentHealth <= 0.0f && m_OnDeath != null) m_OnDeath.Invoke(); //if the actor is dead, call death event
             if (m_OnTakeDamage != null) m_OnTakeDamage.Invoke(amount, type); // call take damage event
+
+            var col = gameObject.GetComponent<Collider2D>();
+            var pos = col.bounds.center + col.bounds.extents;
+
+            // pos = transform.position;
             if (m_DamagePopupOverride == GameplayStatics.DamageType.Null)
-                GameplayStatics.SpawnDmgPopup(transform.position, amount, type);
+                GameplayStatics.SpawnDmgPopup(pos + new Vector3(0, 0, -5), amount, type);
             else
-                GameplayStatics.SpawnDmgPopup(transform.position, amount, m_DamagePopupOverride);
+                GameplayStatics.SpawnDmgPopup(pos + new Vector3(0, 0, -5), amount, m_DamagePopupOverride);
 
             StartCoroutine(FlashSprite(m_HitFlashDuration)); // flash the sprite material if it can
             if (m_CanUseIFrames) // if the actor can use i frames
