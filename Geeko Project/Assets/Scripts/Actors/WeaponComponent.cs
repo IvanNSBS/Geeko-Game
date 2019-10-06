@@ -261,10 +261,16 @@ public class WeaponComponent : MonoBehaviour
         int numberOfShotsPerLoop,
         float timeToSpiralOnce,
         int loops,
-        float bulletSpeed
+        float bulletSpeed, bool inverted = false
     )
     {
-        var angle = 360.0f / ((float) numberOfShotsPerLoop / loops);
+        var angleCte = 360.0f;
+        if (inverted)
+        {
+            angleCte = -angleCte;
+        }
+        
+        var angle = angleCte / ((float) numberOfShotsPerLoop / loops);
         var shootInterval = timeToSpiralOnce / numberOfShotsPerLoop;
         var tm = new TargetingManager(startingDirection).Spiral(angle);
         GenericStream(tm, numberOfShotsPerLoop * loops, shootInterval, () => bulletSpeed);

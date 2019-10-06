@@ -166,7 +166,7 @@ public class MinotaurController : EnemyController
             {
                 var contact = other.GetContact(0);
                 var point = Vector2.MoveTowards(contact.point, gameObject.transform.position,0.2f);
-                SpiralPattern(point, GetPlayer().position,numberOfBulletsDashExplosion,0,loopsDashExplosion,bulletSpeedDashExplosion);
+                CirclePattern(point, GetPlayer().position,numberOfBulletsDashExplosion,loopsDashExplosion,bulletSpeedDashExplosion);
                 Invoke("DeactivateWeapon",0+0.1f);
             } 
             
@@ -532,7 +532,7 @@ public class MinotaurController : EnemyController
         switch (_curAttack)
         {
             case MinotaurAttack.FloorHit:
-                SpiralPattern(floorHitPosition.position,GetPlayer().position,numberOfBulletsFH,0,loopsFH, bulletSpeedFH);
+                CirclePattern(floorHitPosition.position,GetPlayer().position,numberOfBulletsFH,loopsFH, bulletSpeedFH);
                 break;
             case MinotaurAttack.Spin:
                 SpiralPattern(transform.position,GetPlayer().position,numberOfBulletsSpin,timeSpinning,loopsSpin,bulletSpeedSpin);
@@ -544,12 +544,26 @@ public class MinotaurController : EnemyController
         
     }
 
-    private void SpiralPattern(Vector3 origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops, float speed)
+    private void CirclePattern(Vector3 origin, Vector3 target, int numberOfShotsPerLoop, int loops, float speed)
     {
         var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
         weaponComponent.firePoint.position = origin;
         Vector2 vec2 = - DirectionNormalized(origin, target);
-        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, speed);
+        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,0,loops, speed);
+        Debug.Log("Circle pattern");
+        
+    }
+    
+    private void SpiralPattern(Vector3 origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops, float speed)
+    {
+        var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
+        weaponComponent.firePoint.position = origin;
+        var playerDir = DirectionNormalized(origin, target);
+        
+        Vector2 vec2 = new Vector2(playerDir.x,1);
+        bool inverted = vec2.x > 0;
+        print(vec2);
+        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, speed,inverted);
         Debug.Log("Spiral");
     }
 
