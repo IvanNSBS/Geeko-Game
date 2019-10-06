@@ -146,7 +146,7 @@ MonoBehaviour:
   followWalk: 0
   idleTime: 2
   wanderingTime: 0
-  maxTimeFollowing: 3
+  maxTimeFollowing: 5
   dashTime: 2
   basicMeleeAttackTime: 0.05
   basicMeleeAttackSpeed: 0
@@ -327,6 +327,7 @@ MonoBehaviour:
   speed: 5
   cooldown: 0.2
   targetTag: Player
+  m_ShootSound: {fileID: 0}
 --- !u!114 &197929780408758260
 MonoBehaviour:
   m_ObjectHideFlags: 0
