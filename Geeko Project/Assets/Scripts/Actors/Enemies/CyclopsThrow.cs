@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿
+using UnityEditor;
 using UnityEngine;
 
 public enum TypeOfStone{
@@ -38,7 +36,7 @@ public class CyclopsThrow : MonoBehaviour
         if (_startThrow)
         {
             _movementComponent.Move(_direction.x * _speed * Time.deltaTime, _direction.y * _speed * Time.deltaTime);
-            transform.Rotate(0,0,1);
+            transform.Rotate(0,0,10);
         }
     }
 
@@ -57,9 +55,9 @@ public class CyclopsThrow : MonoBehaviour
                     print("Stone hitted the player");
                 }
 
-                _cyclops.StoneCollision(stone, transform.position);
+                _cyclops.StoneCollision(stone, other.ClosestPoint(transform.position));
                 _cyclops.CameraShake();
-
+                EditorApplication.isPaused = true;
                 Destroy(gameObject);
             }
         }
