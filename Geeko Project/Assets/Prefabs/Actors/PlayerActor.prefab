@@ -92,10 +92,10 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 196.81377
-    y: 813.94464
-    width: 278.1124
-    height: 68.28851
+    x: 202.07124
+    y: 792.76746
+    width: 285.5416
+    height: 66.51178
   anchorVector: {x: 0, y: 0}
 --- !u!1 &889210226
 GameObject:
@@ -189,8 +189,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 182.16798
-    y: 54.231205
+    x: 200.65337
+    y: 70.125916
     width: 212.14148
     height: 69.04999
   anchorVector: {x: 0, y: 0}
@@ -401,8 +401,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.14176
-    y: 33.92122
+    x: 106.31383
+    y: 32.51244
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -5068,7 +5068,11 @@ MonoBehaviour:
   speed: 20
   cooldown: 0.2
   targetTag: Enemy
-  m_ShootSound: {fileID: 8300000, guid: 641daa99cbd61b94fae0295ac9c858b4, type: 3}
+  m_ShootFX: {fileID: 864205604084340549, guid: 595c58470fd786649956682c937b2ce0,
+    type: 3}
+  m_ShootSound: {fileID: 0}
+  m_Volume: 0.25
+  m_Pitch: 2.16
 --- !u!114 &289259035690399785
 MonoBehaviour:
   m_ObjectHideFlags: 0
