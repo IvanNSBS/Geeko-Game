@@ -14,6 +14,7 @@ public class SnakeController : EnemyController
     {
         base.Holding();
         snakeAnimator.SetBool("isHolding",true);
+        snakeAnimator.SetBool("isIdle",false);
     }
 
     public override IEnumerator StopHolding(float timeToGetEnemyPos, float timeAfterGotEnemyPos)

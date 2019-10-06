@@ -406,6 +406,7 @@ MonoBehaviour:
   stones:
   - {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
   throwPosition: {fileID: 425668864491374761}
+  wallOffSetExplosion: 0.4
   throwRadius: 1
   throwSpeed: 12
   timeThrowAttack: 2
@@ -447,6 +448,7 @@ MonoBehaviour:
   speed: 5
   cooldown: 0.2
   targetTag: Player
+  m_ShootSound: {fileID: 0}
 --- !u!70 &2361220405482375390
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -698,6 +700,11 @@ PrefabInstance:
       propertyPath: m_StatusComponent
       value: 
       objectReference: {fileID: 2361220405482375388}
+    - target: {fileID: 6644772632136117719, guid: 2f571b6601b59fe4cbc76d6f4d0c03bb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -30.099976
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f571b6601b59fe4cbc76d6f4d0c03bb, type: 3}
 --- !u!4 &7893756315617215201 stripped

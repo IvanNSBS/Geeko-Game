@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 2676660101553497825}
   - component: {fileID: 2676660101553497854}
   - component: {fileID: 2676660101553497855}
+  - component: {fileID: 347237573189041442}
   - component: {fileID: 2676660101553497852}
   - component: {fileID: 2676660101553497826}
   - component: {fileID: 2676660101553497827}
   - component: {fileID: 2676660101553497853}
-  - component: {fileID: 347237573189041442}
   - component: {fileID: 197929780408758260}
   m_Layer: 10
   m_Name: Minotaur
@@ -128,7 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currState: 7
   enemyType: 0
-  projectile: {fileID: 6143250817977481309}
+  projectile: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+    type: 3}
   timeToStartActions: 2
   sightRange: 15
   attackRange: 2
@@ -146,7 +147,7 @@ MonoBehaviour:
   followWalk: 0
   idleTime: 2
   wanderingTime: 0
-  maxTimeFollowing: 3
+  maxTimeFollowing: 5
   dashTime: 2
   basicMeleeAttackTime: 0.05
   basicMeleeAttackSpeed: 0
@@ -157,28 +158,61 @@ MonoBehaviour:
   timeBtwShots: 0
   timeWalkingOneDirection: 0
   minotaurAnimator: {fileID: 2676660101553497854}
-  axeAttackPosition: {fileID: 3302264926455984632}
-  pokePosition: {fileID: 2857720016983072778}
   bossState: 0
+  particle: {fileID: 571857514755590252}
   attacks: 0000000001000000020000000300000004000000
-  layerMask:
+  damageLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  axeAttackPosition: {fileID: 3302264926455984632}
   axeAttackRange: 1.4
-  pokeAttackRange: {x: 2, y: 1}
   timeBtwAxeAttack: 0.5
+  axeDamage: 15
+  pokePosition: {fileID: 2857720016983072778}
+  pokeAttackRange: {x: 2, y: 1}
   timeBtwPokeAttack: 0.5
+  pokeDamage: 15
+  floorHitPosition: {fileID: 4201139653007346573}
   timeBtwFloorHitAttack: 0.5
+  numberOfBulletsFH: 24
+  loopsFH: 1
+  bulletSpeedFH: 5
+  numberOfBulletsSpin: 24
   timeSpinning: 1
+  loopsSpin: 1
+  bulletSpeedSpin: 5
+  numberOfBulletsDashExplosion: 36
+  loopsDashExplosion: 1
+  bulletSpeedDashExplosion: 5
+  dashDamage: 20
   timeToCallDashChanceLottery: 0.7
   chanceToDashInRage: 50
   allowToDashInSequence: 1
-  particle: {fileID: 571857514755590252}
   duration: 1
   strength: 1
   vibration: 15
   randomness: 60
   fadeOut: 1
+--- !u!114 &347237573189041442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676660101553497850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7b6c1529f2dd546a2157782ad24da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 4201139653007346573}
+  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+    type: 3}
+  owner: {fileID: 2676660101553497850}
+  speed: 5
+  cooldown: 0.2
+  targetTag: Player
+  m_ShootSound: {fileID: 0}
 --- !u!50 &2676660101553497852
 Rigidbody2D:
   serializedVersion: 4
@@ -308,25 +342,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &347237573189041442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2676660101553497850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7b6c1529f2dd546a2157782ad24da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 4201139653007346573}
-  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
-    type: 3}
-  owner: {fileID: 2676660101553497850}
-  speed: 5
-  cooldown: 0.2
-  targetTag: Player
 --- !u!114 &197929780408758260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,12 +401,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4201139653007346573}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: FloorHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4201139653007346573
 Transform:
   m_ObjectHideFlags: 0
@@ -614,6 +629,11 @@ PrefabInstance:
       propertyPath: m_StatusComponent
       value: 
       objectReference: {fileID: 2676660101553497827}
+    - target: {fileID: 6644772632136117719, guid: 2f571b6601b59fe4cbc76d6f4d0c03bb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -30.099976
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f571b6601b59fe4cbc76d6f4d0c03bb, type: 3}
 --- !u!4 &5627148876509973016 stripped

@@ -401,8 +401,8 @@ MonoBehaviour:
   manualRefresh: 0
   anchorRect:
     serializedVersion: 2
-    x: 106.55066
-    y: 30.689013
+    x: 106.31383
+    y: 32.51244
     width: 199.40149
     height: 40.44999
   anchorVector: {x: 0, y: 0}
@@ -5068,7 +5068,11 @@ MonoBehaviour:
   speed: 20
   cooldown: 0.2
   targetTag: Enemy
-  m_ShootSound: {fileID: 8300000, guid: 641daa99cbd61b94fae0295ac9c858b4, type: 3}
+  m_ShootFX: {fileID: 864205604084340549, guid: 595c58470fd786649956682c937b2ce0,
+    type: 3}
+  m_ShootSound: {fileID: 0}
+  m_Volume: 0.25
+  m_Pitch: 2.16
 --- !u!114 &289259035690399785
 MonoBehaviour:
   m_ObjectHideFlags: 0
