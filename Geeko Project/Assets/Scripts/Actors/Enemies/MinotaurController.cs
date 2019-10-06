@@ -26,25 +26,50 @@ public class MinotaurController : EnemyController
 {
     [Header("Minotaur Properties")]
     public Animator minotaurAnimator;
-    public Transform axeAttackPosition;
-    public Transform pokePosition;
-    [FormerlySerializedAs("minotaurState")] public BossState bossState = BossState.Normal;
+    public BossState bossState;
+    public GameObject particle;
     public MinotaurAttack[] attacks;
-
-    public LayerMask layerMask;
+    public LayerMask damageLayerMask;
+    
+    [Header("Axe Attack")]
+    
+    public Transform axeAttackPosition;
     public float axeAttackRange;
-    public Vector2 pokeAttackRange;
     public float timeBtwAxeAttack;
+    public int axeDamage;
+    
+    [Header("Poke Attack")]
+    
+    public Transform pokePosition;
+    public Vector2 pokeAttackRange;
     public float timeBtwPokeAttack;
+    public int pokeDamage;
+    
+    [Header("Floor Hit Attack")]
+    public Transform floorHitPosition;
     public float timeBtwFloorHitAttack;
+    public int numberOfBulletsFH;
+    public int loopsFH;
+    public float bulletSpeedFH;
+    
+    
+    [Header("Spin Attack")]
+    public int numberOfBulletsSpin;
     public float timeSpinning;
+    public int loopsSpin;
+    public float bulletSpeedSpin;
+
+    [Header("Dash Attack")] 
+    public int numberOfBulletsDashExplosion;
+    public int loopsDashExplosion;
+    public float bulletSpeedDashExplosion;
+    public int dashDamage;
     [Tooltip("time that a function DashChanceLottery will be called, every (x) seconds while rage following.")]
     public float timeToCallDashChanceLottery;
     [Tooltip("Chance of Dash in every x seconds")]
     [Range(0,100)]
     public float chanceToDashInRage;
     public bool allowToDashInSequence;
-    public GameObject particle;
     
     [Header("Camera Shake")]
     public float duration;
@@ -74,15 +99,6 @@ public class MinotaurController : EnemyController
     private float _timeToCallDashChanceLottery;
     private bool _waitingDashCooldown;
     
-    /*
-     *To-do after implement the minotaur states:
-     * 
-     *
-     * spin hit box doenst exist for now
-     * 
-     * Stressed and Rage visual feedback 
-     * 
-     */
 
     public override void Start()
     {
@@ -142,16 +158,15 @@ public class MinotaurController : EnemyController
             Camera.main.DOShakePosition(duration,strength,vibration,randomness,fadeOut);
             if (other.collider.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<StatusComponent>().TakeDamage(20);
+                other.gameObject.GetComponent<StatusComponent>().TakeDamage(dashDamage);
                 Debug.Log("Minotaur hit the player while dashing");
             }
             
             if (other.collider.CompareTag("Room") || other.collider.CompareTag("Door") || other.collider.CompareTag("Wall"))
             {
-                projectile.SetActive(true);
                 var contact = other.GetContact(0);
                 var point = Vector2.MoveTowards(contact.point, gameObject.transform.position,0.2f);
-                SpiralPattern(point, transform.position,36,0,1);
+                SpiralPattern(point, GetPlayer().position,numberOfBulletsDashExplosion,0,loopsDashExplosion,bulletSpeedDashExplosion);
                 Invoke("DeactivateWeapon",0+0.1f);
             } 
             
@@ -364,10 +379,10 @@ public class MinotaurController : EnemyController
     private void HitBoxAxe()
     {
         
-        Collider2D hit = Physics2D.OverlapCircle(axeAttackPosition.position, axeAttackRange, layerMask);
+        Collider2D hit = Physics2D.OverlapCircle(axeAttackPosition.position, axeAttackRange, damageLayerMask);
         if (hit)
         {
-            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(15);
+            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(axeDamage);
             Debug.Log("damaged by axe");
         }
         /*
@@ -379,10 +394,10 @@ public class MinotaurController : EnemyController
 
     private void HitBoxPoke()
     {
-        Collider2D hit = Physics2D.OverlapBox(pokePosition.position, pokeAttackRange, 0,layerMask);
+        Collider2D hit = Physics2D.OverlapBox(pokePosition.position, pokeAttackRange, 0,damageLayerMask);
         if (hit)
         {
-            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(10);
+            hit.gameObject.GetComponent<StatusComponent>().TakeDamage(pokeDamage);
             Debug.Log("damaged by poke");
         }/*
         else
@@ -426,7 +441,7 @@ public class MinotaurController : EnemyController
         Gizmos.DrawWireCube(pokePosition.position, pokeAttackRange);
         
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(projectile.transform.position, 0.1f);
+        Gizmos.DrawWireSphere(floorHitPosition.position, 0.1f);
     }
 
     private void Spin()
@@ -514,16 +529,13 @@ public class MinotaurController : EnemyController
 
     private void ShootPattern()
     {
-        projectile.SetActive(true);
         switch (_curAttack)
         {
             case MinotaurAttack.FloorHit:
-                SpiralPattern(projectile.transform.position,pokePosition.position,24,0,1);
-                Invoke("DeactivateWeapon",0+0.1f);
+                SpiralPattern(floorHitPosition.position,GetPlayer().position,numberOfBulletsFH,0,loopsFH, bulletSpeedFH);
                 break;
             case MinotaurAttack.Spin:
-                SpiralPattern(transform.position,pokePosition.position,24,timeSpinning,1);
-                Invoke("DeactivateWeapon",timeSpinning+0.1f);
+                SpiralPattern(transform.position,GetPlayer().position,numberOfBulletsSpin,timeSpinning,loopsSpin,bulletSpeedSpin);
                 break;
             case MinotaurAttack.Dash:
                 Debug.Log("SE CHAMADO ALGO TA ERRADO");
@@ -532,19 +544,12 @@ public class MinotaurController : EnemyController
         
     }
 
-    private void DeactivateWeapon()
-    {
-        projectile.SetActive(false);
-        minotaurAnimator.SetBool("isHittingFloor",false);
-    }
-
-    private void SpiralPattern(Vector3 origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops)
+    private void SpiralPattern(Vector3 origin,Vector3 target,int numberOfShotsPerLoop,float timeToSpiralOnce, int loops, float speed)
     {
         var weaponComponent = this.gameObject.GetComponent<WeaponComponent>();
         weaponComponent.firePoint.position = origin;
-        var vec3 =  target - origin;
-        var vec2 = new Vector2(vec3.x, vec3.y);
-        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, weaponComponent.speed);
+        Vector2 vec2 = - DirectionNormalized(origin, target);
+        weaponComponent.Spiral(vec2,numberOfShotsPerLoop,timeToSpiralOnce,loops, speed);
         Debug.Log("Spiral");
     }
 
@@ -651,6 +656,7 @@ public class MinotaurController : EnemyController
     public void IdlingAfterAttack()
     {
         minotaurAnimator.SetBool("isIdle",true);
+        minotaurAnimator.SetBool("isHittingFloor",false);
     }
 
     public void OnFlip()
