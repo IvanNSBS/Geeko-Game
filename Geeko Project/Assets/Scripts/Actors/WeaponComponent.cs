@@ -29,7 +29,25 @@ public class WeaponComponent : MonoBehaviour
     private bool _willDisappear = false;
     private float _disappearIn;
 
+    [SerializeField] private GameObject m_ShootFX;
     [SerializeField] private AudioClip m_ShootSound;
+    [SerializeField][Range(0.0f, 1.0f)] private float m_Volume = 0.8f;
+    [SerializeField][Range(0.0f, 3.0f)] private float m_Pitch = 1.0f;
+    private AudioSource m_ShootSource;
+
+    public void Start()
+    {
+        m_ShootSource = gameObject.AddComponent<AudioSource>();
+        m_ShootSource.clip = m_ShootSound;
+        m_ShootSource.volume = m_Volume;
+        m_ShootSource.pitch = m_Pitch;
+    }
+
+    public void Update()
+    {
+        m_ShootSource.pitch = m_Pitch;
+
+    }
 
     public void SetTargetingFunction(Func<Vector2> fun)
     {
@@ -43,7 +61,11 @@ public class WeaponComponent : MonoBehaviour
             _lastShot = Time.time;
             Shoot();
             if (m_ShootSound)
-                AudioSource.PlayClipAtPoint(m_ShootSound, firePoint.position);
+                m_ShootSource.PlayOneShot(m_ShootSound, m_Volume);
+            if (m_ShootFX) { 
+                var inst = Instantiate(m_ShootFX, firePoint);
+                Destroy(inst, 0.4f);
+            }
         }
     }
 
