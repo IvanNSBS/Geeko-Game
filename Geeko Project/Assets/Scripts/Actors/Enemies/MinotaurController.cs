@@ -437,9 +437,7 @@ public class MinotaurController : EnemyController
             {
                 //animations things;
                 StartSpinningAnimation();
-                
-                //hitbox??
-                
+                print("start spinning");
                 ShootPattern();
 
                 _attackingSpin = true;
@@ -448,6 +446,7 @@ public class MinotaurController : EnemyController
             else
             {
                 EndSpinningAnimation();
+                print("end spinning");
                 _attackingSpin = false;
                 setIdle(true);
             }
@@ -573,13 +572,22 @@ public class MinotaurController : EnemyController
         
         Debug.Log("waited: "+sec+", minourState: "+currState);
 
+        if (currState == EnemyState.Idle)
+        {
             ChooseHitFloorOrSpin();
             
             SetWaiting(false);
             setIdle(false);
             _coroutine = null;
             _waitingDashCooldown = false;
-            _timeToCallDashChanceLottery = timeToCallDashChanceLottery; 
+            _timeToCallDashChanceLottery = timeToCallDashChanceLottery;
+        }
+        else
+        {
+            print("coroutine out of sync, canceling");
+            _coroutine = null;
+            SetWaiting(false);
+        }
     }
 
     private void ChooseHitFloorOrSpin()
