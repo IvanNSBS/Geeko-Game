@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     public string targetTag;
 
     public float maxSpeed;
+    public bool ignoreRock;
     private string _instantiatorTag;
     private GameObject _instantiator;
 
@@ -50,6 +51,10 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         List<string> tags_to_ignore = new List<string>() { "Untagged", "Room", "SpellUninteractive", "Item" };
+        if (ignoreRock)
+        {
+            tags_to_ignore.Add("Rock");
+        }
         if (other.CompareTag("SpellInteractive")) {
             GameObject owner = other.gameObject.GetComponent<SpellPrefabManager>().GetOwner();
             if (owner == GetInstantiator())
