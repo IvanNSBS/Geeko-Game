@@ -114,10 +114,15 @@ public static class GameplayStatics
 
     public static bool SpawnDmgPopup(Vector3 position, float damage, DamageType type = DamageType.Normal, bool add_minus = true)
     {
-        var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopUp"));
-        var rect = obj.GetComponent<RectTransform>();
-        rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
-        var text = obj.GetComponent<TextMeshPro>();
+        //var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopUp"));
+        var obj = MonoBehaviour.Instantiate(Resources.Load<GameObject>("DmgPopUp/DmgPopupCanvas"));
+        var rect = obj.transform.GetChild(0).GetComponent<RectTransform>();
+
+        var point = RectTransformUtility.WorldToScreenPoint(Camera.main, position + new Vector3(Random.Range(-0.3f, 0.3f), 0.15f));
+        rect.transform.position = point;
+        // rect.transform.position = position + new Vector3(Random.Range(-0.7f, 0.7f), 0.3f);
+
+        var text = obj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         string txt = "";
         if (add_minus)
             txt = "-";
