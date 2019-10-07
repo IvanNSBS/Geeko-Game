@@ -97,7 +97,7 @@ public class PurpleTotemController : EnemyController
       {
          _shooting = true;
          _shots += 1;
-         _shootingDir = Quaternion.Euler(0, 0, 27.5f) * _shootingDir;
+         _shootingDir = Quaternion.Euler(0, 0, 22.5f) * _shootingDir;
          _weaponComponent.Spiral(_shootingDir,8,0,1,_weaponComponent.speed );
          purpleTotemAnimator.SetBool("isAttacking",true);
          purpleTotemAnimator.SetBool("isIdle",false);
