@@ -405,6 +405,8 @@ MonoBehaviour:
   fadeOutStomp: 1
   stones:
   - {fileID: 4013028645361743780, guid: 662f65cec464ae84697e6e22e475dca7, type: 3}
+  - {fileID: 8523364431175827952, guid: d4d98bbf60cc57648b24181796ef23d1, type: 3}
+  - {fileID: 8595888963546008530, guid: da5a357752bb14e4eaf8bf90d1f62b48, type: 3}
   throwPosition: {fileID: 425668864491374761}
   wallOffSetExplosion: 0.4
   throwRadius: 1
@@ -448,7 +450,10 @@ MonoBehaviour:
   speed: 5
   cooldown: 0.2
   targetTag: Player
+  m_ShootFX: {fileID: 0}
   m_ShootSound: {fileID: 0}
+  m_Volume: 0.8
+  m_Pitch: 1
 --- !u!70 &2361220405482375390
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

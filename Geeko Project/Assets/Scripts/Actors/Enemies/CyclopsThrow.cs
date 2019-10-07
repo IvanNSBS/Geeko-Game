@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum TypeOfStone{
     Red,
-    Black,
-    Green,
+    Purple,
+    Grey,
 }
 
 public class CyclopsThrow : MonoBehaviour
@@ -57,7 +57,6 @@ public class CyclopsThrow : MonoBehaviour
 
                 _cyclops.StoneCollision(stone, other.ClosestPoint(transform.position));
                 _cyclops.CameraShake();
-                EditorApplication.isPaused = true;
                 Destroy(gameObject);
             }
         }

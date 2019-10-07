@@ -105,6 +105,7 @@ public class CyclopsController : EnemyController
     private int _laserRepeat;
     private bool _hitted = false;
     private int _waitHit = 0;
+    private GameObject _choosedStone;
     
     /*to-do
     
@@ -480,15 +481,11 @@ public class CyclopsController : EnemyController
             {
                 if (!_attackingThrow)
                 {
-                    //animations things;
-                   cyclopsAnimator.SetBool("isThrowing",true);
-                   cyclopsAnimator.SetBool("isIdle",false);
+                    _choosedStone = ChooseStone();
+                    ThrowAnimation(_choosedStone);
                    // thrown in the cyclop's throw frame 
-                    //hitbox??
-                    
-                    //ShootPattern();
 
-                    _attackingThrow = true;
+                   _attackingThrow = true;
                     _timeThrowAttack = timeThrowAttack;
                 }
                 else
@@ -502,9 +499,27 @@ public class CyclopsController : EnemyController
             }
             else
             {
-                //LoopSpiningAnimation();
                 _timeThrowAttack -= Time.deltaTime;
             }
+        }
+    }
+
+    private void ThrowAnimation(GameObject choosedStone)
+    {
+        var stone = choosedStone.GetComponent<CyclopsThrow>().stone;
+        cyclopsAnimator.SetBool("isThrowing",true);
+        cyclopsAnimator.SetBool("isIdle",false);
+        switch (stone)
+        {
+            case TypeOfStone.Red:
+                cyclopsAnimator.SetTrigger("Red");
+                break;
+            case TypeOfStone.Purple:
+                cyclopsAnimator.SetTrigger("Purple");
+                break;
+            case TypeOfStone.Grey:
+                cyclopsAnimator.SetTrigger("Grey");
+                break;
         }
     }
 
@@ -543,18 +558,10 @@ public class CyclopsController : EnemyController
 
     public void ThrowStone()
     {
-        var stone = Instantiate(ChooseStone(), throwPosition.position, Quaternion.identity);
+        var tp = throwPosition.position;
+        var stone = Instantiate(_choosedStone, tp, Quaternion.identity);
         var stoneThrown = stone.GetComponent<CyclopsThrow>();
-        stoneThrown.ThrowStone(this,ThrowInPlayerDirection(),throwSpeed);
-    }
-    
-    public Vector3 ThrowInPlayerDirection()
-    {
-        var player = GetPlayer();
-        var colliderPlayer = player.GetComponent<Collider2D>().offset;
-        var playerCenter = player.TransformPoint(colliderPlayer);
-        Vector3 dir = DirectionNormalized(throwPosition.position, playerCenter);
-        return dir;
+        stoneThrown.ThrowStone(this,PlayerDirection(tp),throwSpeed);
     }
 
     private GameObject ChooseStone()
@@ -569,10 +576,15 @@ public class CyclopsController : EnemyController
         {
             case TypeOfStone.Red:
                 FourDiagonalsPattern();
+                print("red");
                 break;
-            case TypeOfStone.Black:
+            case TypeOfStone.Purple:
+                FourDiagonalsPattern();
+                print("purple");
                 break;
-            case TypeOfStone.Green:
+            case TypeOfStone.Grey:
+                FourDiagonalsPattern();
+                print("grey");
                 break;
         }
     }
