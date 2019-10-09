@@ -57,7 +57,6 @@ public class CyclopsThrow : MonoBehaviour
 
                 _cyclops.StoneCollision(stone, other.ClosestPoint(transform.position));
                 _cyclops.CameraShake();
-                EditorApplication.isPaused = true;
                 Destroy(gameObject);
             }
         }
