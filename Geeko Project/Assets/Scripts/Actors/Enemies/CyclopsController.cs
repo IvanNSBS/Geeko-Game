@@ -54,9 +54,27 @@ public class CyclopsController : EnemyController
     public float throwRadius;
     public float throwSpeed;
     public float timeThrowAttack;
-    public int numberOfShotsPerDiagonal4D;
-    public float timeBtwShots4D;
-    public float bulletSpeed4D;
+    public bool useNewStonePatterns;
+    
+    [Header("Red Stone Explosion")]
+    public int numberOfShotsPerDiagonalRS;
+    public float amplitudeRS;
+    public float timeBtwShotsRS;
+    public float bulletSpeedRS;
+
+    [Header("Purple Stone Explosion")] 
+    public int numberOfShotsPerWayPS;
+    public float amplitudePS;
+    public float timeBetweenShotsPS;
+    public float bulletSpeedPS;
+
+    [Header("Grey Stone Explosion")] 
+    public int howManySinWaves;
+    public int numberOfShotsGS;
+    public float amplitudeGS;
+    public float waveLengthGS;
+    public float timeBetweenShotsGS;
+    public float bulletSpeedGS;
 
     [Header("Camera Shake Throw")]
     public float durationThrow;
@@ -83,7 +101,8 @@ public class CyclopsController : EnemyController
     private bool _stompAttacking;
     private bool _stompIt;
     private float _timeStompAttack;
-    private WeaponComponent _weaponComponent;
+    private WeaponComponent _weaponComponentRed;
+    private WeaponComponent _weaponComponentPurple;
     private bool _attackingThrow;
     private float _timeThrowAttack;
     private float _timeLaserAttack;
@@ -105,6 +124,7 @@ public class CyclopsController : EnemyController
     private int _laserRepeat;
     private bool _hitted = false;
     private int _waitHit = 0;
+    private GameObject _choosedStone;
     
     /*to-do
     
@@ -116,7 +136,9 @@ public class CyclopsController : EnemyController
     public override void Start()
     {
         base.Start();
-        _weaponComponent = GetComponent<WeaponComponent>();
+        var wcs = GetComponents<WeaponComponent>();
+        _weaponComponentRed = wcs[0];
+        _weaponComponentPurple = wcs[1];
         _lineRenderer = laserEyePosition.GetComponent<LineRenderer>();
         _chargeLaserAnimation = laserEyePosition.GetComponent<Animator>();
         try
@@ -437,8 +459,8 @@ public class CyclopsController : EnemyController
         }
         _explosionObject = new GameObject();
         _explosionObject.transform.position = stompPosition.position;
-        _weaponComponent.firePoint = _explosionObject.transform;
-        _weaponComponent.SpreadSevenWay(dir,numberOfShotsPerWay7W,amplitude7W,timeBtwShots7W,bulletSpeed7W);
+        _weaponComponentRed.firePoint = _explosionObject.transform;
+        _weaponComponentRed.SpreadSevenWay(dir,numberOfShotsPerWay7W,amplitude7W,timeBtwShots7W,bulletSpeed7W);
         CameraShake();
         
     }
@@ -480,15 +502,11 @@ public class CyclopsController : EnemyController
             {
                 if (!_attackingThrow)
                 {
-                    //animations things;
-                   cyclopsAnimator.SetBool("isThrowing",true);
-                   cyclopsAnimator.SetBool("isIdle",false);
+                    _choosedStone = ChooseStone();
+                    ThrowAnimation(_choosedStone);
                    // thrown in the cyclop's throw frame 
-                    //hitbox??
-                    
-                    //ShootPattern();
 
-                    _attackingThrow = true;
+                   _attackingThrow = true;
                     _timeThrowAttack = timeThrowAttack;
                 }
                 else
@@ -502,9 +520,27 @@ public class CyclopsController : EnemyController
             }
             else
             {
-                //LoopSpiningAnimation();
                 _timeThrowAttack -= Time.deltaTime;
             }
+        }
+    }
+
+    private void ThrowAnimation(GameObject choosedStone)
+    {
+        var stone = choosedStone.GetComponent<CyclopsThrow>().stone;
+        cyclopsAnimator.SetBool("isThrowing",true);
+        cyclopsAnimator.SetBool("isIdle",false);
+        switch (stone)
+        {
+            case TypeOfStone.Red:
+                cyclopsAnimator.SetTrigger("Red");
+                break;
+            case TypeOfStone.Purple:
+                cyclopsAnimator.SetTrigger("Purple");
+                break;
+            case TypeOfStone.Grey:
+                cyclopsAnimator.SetTrigger("Grey");
+                break;
         }
     }
 
@@ -543,18 +579,10 @@ public class CyclopsController : EnemyController
 
     public void ThrowStone()
     {
-        var stone = Instantiate(ChooseStone(), throwPosition.position, Quaternion.identity);
+        var tp = throwPosition.position;
+        var stone = Instantiate(_choosedStone, tp, Quaternion.identity);
         var stoneThrown = stone.GetComponent<CyclopsThrow>();
-        stoneThrown.ThrowStone(this,ThrowInPlayerDirection(),throwSpeed);
-    }
-    
-    public Vector3 ThrowInPlayerDirection()
-    {
-        var player = GetPlayer();
-        var colliderPlayer = player.GetComponent<Collider2D>().offset;
-        var playerCenter = player.TransformPoint(colliderPlayer);
-        Vector3 dir = DirectionNormalized(throwPosition.position, playerCenter);
-        return dir;
+        stoneThrown.ThrowStone(this,PlayerDirection(tp),throwSpeed);
     }
 
     private GameObject ChooseStone()
@@ -568,22 +596,81 @@ public class CyclopsController : EnemyController
         switch (_currStone)
         {
             case TypeOfStone.Red:
-                FourDiagonalsPattern();
+                if (useNewStonePatterns)
+                {
+                    ThreeWay();
+                }
+                else
+                {
+                    FourDiagonals();
+                }
+                print("red");
                 break;
-            case TypeOfStone.Black:
+            case TypeOfStone.Purple:
+                if (useNewStonePatterns)
+                {
+                    FourWayPurple();
+                }
+                else
+                {
+                    FourDiagonals();
+                }
+                print("purple");
                 break;
-            case TypeOfStone.Green:
+            case TypeOfStone.Grey:
+                if (useNewStonePatterns)
+                {
+                    ThreeWaySineWave();
+                }
+                else
+                {
+                    FourDiagonals();
+                }
+                print("grey");
                 break;
         }
     }
 
-    private void FourDiagonalsPattern()
+    private void ThreeWaySineWave()
+    {
+        var point = Vector2.MoveTowards(_explosionObject.transform.position, _roomCenter, wallOffSetExplosion*2);
+        _explosionObject.transform.position = point;
+        Vector2 dir = DirectionNormalized(point,_roomCenter);
+        _weaponComponentRed.firePoint = _explosionObject.transform;
+        var angleCte = 150 / howManySinWaves;
+        dir = dir.Rotate(-angleCte);
+        for(int i=0; i<howManySinWaves;i++)
+        {
+            _weaponComponentRed.SineWave(dir.Rotate(angleCte*i),amplitudeGS,numberOfShotsGS,waveLengthGS,timeBetweenShotsGS,bulletSpeedGS);
+        }
+      
+    }
+
+    private void FourWayPurple()
+    {
+        var point = Vector2.MoveTowards(_explosionObject.transform.position, _roomCenter, wallOffSetExplosion*2);
+        _explosionObject.transform.position = point;
+        var dir = DirectionNormalized(point,_roomCenter);
+        _weaponComponentPurple.firePoint = _explosionObject.transform;
+        _weaponComponentPurple.SpreadSevenWay(dir,numberOfShotsPerWayPS, amplitudePS, timeBetweenShotsPS, bulletSpeedPS);
+    }
+
+    private void ThreeWay()
+    {
+        var point = Vector2.MoveTowards(_explosionObject.transform.position, _roomCenter, wallOffSetExplosion*2);
+        _explosionObject.transform.position = point;
+        var dir = DirectionNormalized(point,_roomCenter);
+        _weaponComponentRed.firePoint = _explosionObject.transform;
+        _weaponComponentRed.SpreadThreeWay(dir, numberOfShotsPerDiagonalRS, amplitudeRS,timeBtwShotsRS, bulletSpeedRS);
+    }
+    
+    private void FourDiagonals()
     {
         var point = Vector2.MoveTowards(_explosionObject.transform.position, _roomCenter, wallOffSetExplosion);
         _explosionObject.transform.position = point;
         var dir = PlayerDirection(point);
-        _weaponComponent.firePoint = _explosionObject.transform;
-        _weaponComponent.FourDiagonals(dir, numberOfShotsPerDiagonal4D, timeBtwShots4D, bulletSpeed4D);
+        _weaponComponentRed.firePoint = _explosionObject.transform;
+        _weaponComponentRed.FourDiagonals(dir, numberOfShotsPerDiagonalRS,timeBtwShotsRS, bulletSpeedRS);
     }
 
     private void Stomp()

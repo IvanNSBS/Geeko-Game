@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum TypeOfStone{
     Red,
-    Black,
-    Green,
+    Purple,
+    Grey,
 }
 
 public class CyclopsThrow : MonoBehaviour

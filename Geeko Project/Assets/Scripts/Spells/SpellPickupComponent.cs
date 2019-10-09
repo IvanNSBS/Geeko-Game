@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class SpellPickupComponent : MonoBehaviour
 {
@@ -9,32 +10,19 @@ public class SpellPickupComponent : MonoBehaviour
     private Spell m_SpellObject;
     [SerializeField] private bool m_UseRandomDrop = false;
     [SerializeField] private List<Spell> m_PossibleSpells;
+
+    [SerializeField] private TextMeshProUGUI m_Text;
+    [SerializeField] private Image m_Icon;
+    [SerializeField] private Image m_Border;
     public Spell GetSpellObject() { return m_SpellObject; }
     public void SetSpellPickup(Spell spell)
     {
-        m_SpellObject = spell;
-        Debug.Log("Setting spell to: " + m_SpellObject.m_SpellName);
-        if (m_SpellObject)
-        {
-            int count = 0;
-            foreach (Transform child in transform.GetChild(0))
-            {
-                if (count < 2)
-                {
-                    var sprite = child.GetComponent<SpriteRenderer>();
-                    if (count == 0)
-                        sprite.sprite = m_SpellObject.m_SpellImage;
-                    else if (count == 1)
-                        sprite.sprite = m_SpellObject.m_BorderImage;
-                }
-                else
-                {
-                    var text = child.GetComponent<TextMeshPro>();
-                    text.text = m_SpellObject.m_SpellName;
-                }
-                count++;
-            }
-        }
+        if (m_Icon)
+            m_Icon.sprite = spell.m_SpellImage;
+        if (m_Border)
+            m_Border.sprite = spell.m_BorderImage;
+        if (m_Text)
+            m_Text.text = spell.m_SpellName;
     }
     void GetOneRandomSpell()
     {

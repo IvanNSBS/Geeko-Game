@@ -230,14 +230,15 @@ MonoBehaviour:
   m_OnReceiveHeal:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: GameplayStatics+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_OnSetMaxHealth:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsInvincible: 0
+  m_DamagePopupOverride: 0
 --- !u!114 &7642116471908049704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,6 +294,7 @@ MonoBehaviour:
   maxTimeFollowing: 3
   dashTime: 0
   basicMeleeAttackTime: 0
+  basicMeleeAttackSpeed: 0
   cooldownBasicMeleeAttackTime: 0
   holdingTime: 0
   timeToReload: 3
@@ -326,12 +328,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 3521556873259961654}
-  bulletPrefab: {fileID: 38914844527191222, guid: 875f4a2f2cf7f764e97dba6a67141d16,
+  bulletPrefab: {fileID: 7350412853073871104, guid: cbe82709aca58fd4587df65a1fc5e216,
     type: 3}
   owner: {fileID: 7642116471908049706}
   speed: 2.5
   cooldown: 0.2
   targetTag: Player
+  m_ShootFX: {fileID: 0}
+  m_ShootSound: {fileID: 0}
+  m_Volume: 0.8
+  m_Pitch: 1
 --- !u!114 &2997464381259191275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7ff9ed8b4cb0c45bd689f496e0bc02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDropSpell: 0
+  SpellDropPrefab: {fileID: 0}
   lootTable:
   - item: {fileID: 2633685713149154552, guid: c8195fce55480e5428fbbf1b8330801a, type: 3}
     dropRate: 100
