@@ -9,6 +9,9 @@ public class MultipleSpellPickupComponent : MonoBehaviour
     List<Spell> m_SpellObjects = new List<Spell>(3);
     [SerializeField] private List<GameObject> m_SpellIcons;
     [SerializeField] private List<Spell> m_PossibleSpells;
+
+    [SerializeField] private TextMeshProUGUI m_Spell2Name;
+
     private Vector3 m_StartPos;
     public Spell GetSpellObjectAt(int idx) {
         if (idx < 0 && idx >= m_SpellObjects.Count)
@@ -25,7 +28,7 @@ public class MultipleSpellPickupComponent : MonoBehaviour
             {
                 var img = child.transform.GetChild(0).GetComponent<SpriteRenderer>();
                 var border = child.transform.GetChild(1).GetComponent<SpriteRenderer>();
-                var text = child.transform.GetChild(2).GetComponent<TextMeshPro>();
+                var text = child.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
 
                 img.sprite = m_SpellObjects[cur_idx].m_SpellImage;
                 border.sprite = m_SpellObjects[cur_idx].m_BorderImage;

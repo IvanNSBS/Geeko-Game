@@ -17,6 +17,7 @@ public class SpellPickupComponent : MonoBehaviour
     public Spell GetSpellObject() { return m_SpellObject; }
     public void SetSpellPickup(Spell spell)
     {
+        m_SpellObject = spell;
         if (m_Icon)
             m_Icon.sprite = spell.m_SpellImage;
         if (m_Border)
