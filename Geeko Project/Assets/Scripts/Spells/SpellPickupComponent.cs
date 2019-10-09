@@ -12,8 +12,8 @@ public class SpellPickupComponent : MonoBehaviour
     [SerializeField] private List<Spell> m_PossibleSpells;
 
     [SerializeField] private TextMeshProUGUI m_Text;
-    [SerializeField] private Image m_Icon;
-    [SerializeField] private Image m_Border;
+    [SerializeField] private SpriteRenderer m_Icon;
+    [SerializeField] private SpriteRenderer m_Border;
     public Spell GetSpellObject() { return m_SpellObject; }
     public void SetSpellPickup(Spell spell)
     {

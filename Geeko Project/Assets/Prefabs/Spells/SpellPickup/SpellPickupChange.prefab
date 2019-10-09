@@ -129,6 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UseRandomDrop: 0
   m_PossibleSpells: []
+  m_Text: {fileID: 0}
+  m_Icon: {fileID: 0}
+  m_Border: {fileID: 0}
 --- !u!50 &2936462306824934528
 Rigidbody2D:
   serializedVersion: 4
@@ -186,7 +189,7 @@ Animator:
   m_GameObject: {fileID: 653331348323633498}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a121a7e0df316004fb223443b70aa511, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
