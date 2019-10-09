@@ -119,12 +119,9 @@ public class SpellSelectionComponent : MonoBehaviour
                 var pickup_prefab = Instantiate(m_SingleSpellPickup);
                 var mv = m_SpellCastingComponent.gameObject.GetComponent<MovementComponent>();
                 float dir = mv.GetSprite().flipX ? 1 : -1;
-                var pos = m_SpellCastingComponent.gameObject.transform.position + new Vector3(0.9f * dir, 0, 0);
-                var rect_pos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
-                // pickup_prefab.transform.position = m_SpellCastingComponent.gameObject.transform.position + new Vector3(0.9f * dir, 0, 0);
+                // var pos = m_SpellCastingComponent.gameObject.transform.position + new Vector3(0.9f * dir, 0, 0);
+                pickup_prefab.transform.position = m_SpellCastingComponent.gameObject.transform.position + new Vector3(0.9f * dir, 0, 0);
                 var pickup = pickup_prefab.GetComponent<SpellPickupComponent>();
-                var pickup_rect = pickup_prefab.GetComponentInChildren<RectTransform>();
-                pickup_rect.transform.position = rect_pos;
                 pickup.SetSpellPickup(m_OldSpell);
             }
         }
