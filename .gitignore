@@ -18,6 +18,7 @@ ExportedObj/
 *.csproj
 *.unityproj
 *.sln
+*.sln.DotSettings
 *.suo
 *.tmp
 *.user
