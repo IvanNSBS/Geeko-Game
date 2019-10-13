@@ -40,7 +40,6 @@ public class Bullet : MonoBehaviour
     {
         _instantiator = instantiator;
         _instantiatorTag = instantiator.tag;
-
     }
 
     public GameObject GetInstantiator()
@@ -48,19 +47,26 @@ public class Bullet : MonoBehaviour
         return _instantiator;
     }
 
+    private static readonly List<string> TagsToIgnore = new List<string>() { "Untagged", "Room", "SpellUninteractive", "Item", "Wall", "Door" };
+
+    private bool ShouldCollide(Collider2D other)
+    {
+        var gameObj = other.gameObject;
+        var rockCollide = !ignoreRock && (gameObj).CompareTag("Rock");
+        var shouldNotIgnore = (rockCollide || GameplayStatics.ObjHasTag(gameObj, TagsToIgnore, true));
+        var ignoreInstantiator = shouldNotIgnore && !other.gameObject.CompareTag(_instantiatorTag);
+        return ignoreInstantiator;
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        List<string> tags_to_ignore = new List<string>() { "Untagged", "Room", "SpellUninteractive", "Item" };
-        if (ignoreRock)
-        {
-            tags_to_ignore.Add("Rock");
-        }
         if (other.CompareTag("SpellInteractive")) {
-            GameObject owner = other.gameObject.GetComponent<SpellPrefabManager>().GetOwner();
+            var owner = other.gameObject.GetComponent<SpellPrefabManager>().GetOwner();
             if (owner == GetInstantiator())
                 return;
         }
-        if (GameplayStatics.ObjHasTag(other.gameObject, tags_to_ignore, true) && !other.gameObject.CompareTag(_instantiatorTag))
+
+        if (ShouldCollide(other))
         {
             GameplayStatics.ApplyDamage(other.gameObject, 10);
             Destroy(gameObject);
