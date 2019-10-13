@@ -31,3 +31,18 @@ MonoBehaviour:
   - SpellUninteractive
   - Room
   m_SpeedMult: 0.3
+  m_StartBehaviors:
+  - m_StartBehavior: {fileID: 11400000, guid: 35c0959d39d68514d9a3752038a46a81, type: 2}
+    m_General:
+      m_Value: 2
+    m_StatusComponentData:
+      m_Health: 0
+      m_IFrameTime: 0
+      m_OverrideDmgType: 0
+    m_FollowRuleData:
+      m_FollowRule: 0
+      m_FollowOffset: {x: 0, y: 0, z: 0}
+      m_FollowSmoothDamp: 0
+      m_CenterAroundCaster: 0
+      m_UseAimedTarget: 0
+      m_MoveImmediately: 0

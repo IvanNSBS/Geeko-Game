@@ -5,6 +5,7 @@ using UnityEngine;
 public class OnStartData
 {
     public OnStartBehavior m_StartBehavior;
+    public GeneralData m_General;
     public StatusComponentData m_StatusComponentData;
     public FollowRuleData m_FollowRuleData;
 }
@@ -26,6 +27,12 @@ public class StatusComponentData
     public float m_Health = 20.0f;
     public float m_IFrameTime = 0.0f;
     public GameplayStatics.DamageType m_OverrideDmgType = GameplayStatics.DamageType.Null;
+}
+
+[Serializable]
+public class GeneralData 
+{
+    public float m_Value;
 }
 
 

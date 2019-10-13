@@ -35,3 +35,35 @@ MonoBehaviour:
   m_ProjectileSpeed: 10
   m_EnemyOnly: 1
   m_Damage: 25
+  m_TickBehaviours: []
+  m_CollBehaviours:
+  - m_HitBehavior: {fileID: 11400000, guid: 8bed0764973a3d645986539b03fb8942, type: 2}
+    m_ApplyDamage:
+      m_Damage: 0
+      m_DamageType: 0
+      m_ValidHitActors: []
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Wall
+      - Room
+      - Door
+    m_CastSpellOnHitData:
+      m_Spell: {fileID: 11400000, guid: eeee24de09851ea4aac79d631b2044c6, type: 2}
+      m_EnemyOnly: 1
+      m_invalid: []
+  - m_HitBehavior: {fileID: 11400000, guid: b2259b383ed76254ea0e6e1f1667cb59, type: 2}
+    m_ApplyDamage:
+      m_Damage: 0
+      m_DamageType: 0
+      m_ValidHitActors: []
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Wall
+      - Room
+      - Door
+    m_CastSpellOnHitData:
+      m_Spell: {fileID: 0}
+      m_EnemyOnly: 0
+      m_invalid: []

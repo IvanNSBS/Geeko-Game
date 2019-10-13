@@ -68,7 +68,7 @@ public class ManaShieldConc : Spell
         //CircleCollider2D circle = obj.GetComponent<SpellPrefabManager>().GetOwner().GetComponent<CircleCollider2D>();
         //Vector3 pos = circle.bounds.center + new Vector3(0,0,-15);
         //obj.transform.position = pos;
-        SpellUtilities.UpdateSpellTTL(obj, this);
+        // SpellUtilities.UpdateSpellTTL(obj, this);
     }
 
     public override void SpellCollisionEnter(Collision2D target, GameObject src)

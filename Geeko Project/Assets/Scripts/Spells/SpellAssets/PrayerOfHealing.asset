@@ -32,3 +32,9 @@ MonoBehaviour:
   - Room
   m_HealAmount: 1
   m_TickDealay: 0.5
+  m_TickBehaviors:
+  - m_Delay: 0.5
+    m_Behavior: {fileID: 11400000, guid: 5be8f9eb451a8fe40be4a41b146e159f, type: 2}
+    m_SCData:
+      m_Value: 1
+      m_RemoveOnModified: 1

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class WindBless : Spell
 {
     [SerializeField] float m_SpeedMult = 0.2f;
+    [SerializeField] List<OnStartData> m_StartBehaviors;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
@@ -19,14 +20,20 @@ public class WindBless : Spell
             var sprite = obj.GetComponent<SpriteRenderer>();
             if (sprite)
                 sprite.enabled = false;
-            var manager = obj.GetComponent<SpellPrefabManager>();
-            manager.SetFollowerOwner(FollowWho.Player);
-            manager.GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SpeedMult);
 
-            obj.GetComponent<SpellPrefabManager>().AddOnDestruction( () => {
-                obj.GetComponent<SpellPrefabManager>().GetOwner().layer = LayerMask.NameToLayer("Player");
-                manager.GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(-m_SpeedMult);
-            });
+            foreach(var behavior in m_StartBehaviors)
+            {
+                if (behavior != null)
+                    behavior.m_StartBehavior.OnStartEvent(obj, behavior);
+            }
+            //var manager = obj.GetComponent<SpellPrefabManager>();
+            //manager.SetFollowerOwner(FollowWho.Player);
+            //manager.GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(m_SpeedMult);
+
+            //obj.GetComponent<SpellPrefabManager>().AddOnDestruction( () => {
+            //    obj.GetComponent<SpellPrefabManager>().GetOwner().layer = LayerMask.NameToLayer("Player");
+            //    manager.GetOwner().GetComponent<EffectManagerComponent>().AddToSpeedMult(-m_SpeedMult);
+            //});
 
             return obj;
         }

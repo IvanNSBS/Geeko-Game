@@ -35,3 +35,61 @@ MonoBehaviour:
   m_ProjectileSpeed: 15
   m_EnemyOnly: 0
   m_Damage: 0
+  m_TickBehaviours:
+  - m_Delay: 0
+    m_Behavior: {fileID: 11400000, guid: 2b3ba7ceae5b88c4f87369ed3c296ff6, type: 2}
+    m_SCData:
+      m_Value: 0
+      m_RemoveOnModified: 0
+    m_TravelData:
+      m_TravelDistance: 12
+      m_SpellToCast: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
+  - m_Delay: 0
+    m_Behavior: {fileID: 11400000, guid: 80afeee28c63f454f85ebf450c508f20, type: 2}
+    m_SCData:
+      m_Value: 0
+      m_RemoveOnModified: 0
+    m_TravelData:
+      m_TravelDistance: 12
+      m_SpellToCast: {fileID: 0}
+  m_CollBehaviours:
+  - m_HitBehavior: {fileID: 11400000, guid: 8bed0764973a3d645986539b03fb8942, type: 2}
+    m_ApplyDamage:
+      m_Damage: 0
+      m_DamageType: 0
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Room
+      - Untagged
+      - Item
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - Wall
+      - Door
+      - Enemy
+    m_CastSpellOnHitData:
+      m_Spell: {fileID: 11400000, guid: b3285110b180a9646a8ac849675be295, type: 2}
+      m_EnemyOnly: 0
+      m_invalid:
+      - SpellUninteractive
+      - Item
+      - Untagged
+      - Room
+  - m_HitBehavior: {fileID: 11400000, guid: b2259b383ed76254ea0e6e1f1667cb59, type: 2}
+    m_ApplyDamage:
+      m_Damage: 0
+      m_DamageType: 0
+      m_ValidHitActors:
+      - SpellUninteractive
+      - Room
+      - Untagged
+      - Item
+    m_DestroySelfData:
+      m_ValidHitActors:
+      - Wall
+      - Door
+      - Enemy
+    m_CastSpellOnHitData:
+      m_Spell: {fileID: 0}
+      m_EnemyOnly: 0
+      m_invalid: []

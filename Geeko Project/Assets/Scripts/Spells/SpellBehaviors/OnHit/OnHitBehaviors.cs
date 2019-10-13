@@ -10,6 +10,7 @@ public class OnCollisionData
     public OnHitBehavior m_HitBehavior;
     public ApplyDamageData m_ApplyDamage;
     public DestroySelfData m_DestroySelfData;
+    public CastSpellData m_CastSpellOnHitData;
 }
 
 [Serializable]
@@ -24,6 +25,14 @@ public class ApplyDamageData
 public class DestroySelfData
 {
     public List<string> m_ValidHitActors = SpellUtilities.entities;
+}
+
+[Serializable]
+public class CastSpellData
+{
+    public Spell m_Spell;
+    public bool m_EnemyOnly = false;
+    public List<string> m_invalid;// = SpellUtilities.invalid2;
 }
 
 [System.Serializable]

@@ -11,6 +11,9 @@ public class TravelProjectile : Spell
     public float m_ProjectileSpeed = 1.0f;
     public bool m_EnemyOnly = false;
     public float m_Damage = 0.0f;
+
+    public List<OnTickData> m_TickBehaviours;
+    public List<OnCollisionData> m_CollBehaviours;
     public override GameObject CastSpell(GameObject owner, GameObject target = null, Vector3? spawn_pos = null, Quaternion? spawn_rot = null)
     {
         if (m_Prefab && owner) {
@@ -26,16 +29,22 @@ public class TravelProjectile : Spell
     }
     public override void OnTick(GameObject obj)
     {
-        GameObject obj_owner = obj.GetComponent<SpellPrefabManager>().GetOwner();
-        if (!obj_owner)
-            return;
+        //GameObject obj_owner = obj.GetComponent<SpellPrefabManager>().GetOwner();
+        //if (!obj_owner)
+        //    return;
 
-        if ((obj.transform.position - obj_owner.transform.position).magnitude > m_TravelDistance)
-            if (m_SpellToCast)
-            {
-                m_SpellToCast.CastSpell(obj_owner, null, obj.transform.position);
-                Destroy(obj);
-            }
+        //if ((obj.transform.position - obj_owner.transform.position).magnitude > m_TravelDistance)
+        //    if (m_SpellToCast)
+        //    {
+        //        m_SpellToCast.CastSpell(obj_owner, null, obj.transform.position);
+        //        Destroy(obj);
+        //    }
+
+        foreach (var behaviour in m_TickBehaviours) 
+        {
+            if (behaviour != null)
+                behaviour.m_Behavior.OnTickEvent(obj, behaviour);
+        }
     }
     public override void StopConcentration(GameObject owner = null)
     {
@@ -61,17 +70,26 @@ public class TravelProjectile : Spell
         Debug.Log("TriggerEnter");
         GameObject target_obj = target.gameObject;
         SpellPrefabManager s_manager = src.GetComponent<SpellPrefabManager>();
-        if(!m_EnemyOnly)
-            SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid2);
-        else if(target.gameObject.CompareTag("Enemy"))
-            SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src));
+        //if (!m_EnemyOnly)
+        //    SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src), SpellUtilities.invalid2);
+        //else if (target.gameObject.CompareTag("Enemy"))
+        //    SpellUtilities.CastSpellOnCollide(target.gameObject, s_manager, m_SpellToCast, GameplayStatics.GetTriggerContactPoint(target.gameObject, src));
         if (m_Damage > 0.0f)
             SpellUtilities.DamageOnCollide(target.gameObject, s_manager, m_Damage, SpellUtilities.invalid2);
 
 
-        if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        //if (target_obj != s_manager.GetOwner() && !GameplayStatics.ObjHasTag(target_obj, SpellUtilities.invalid2))
+        //{
+        //    GameObject.Destroy(src);
+        //}
+
+        foreach (var behaviour in m_CollBehaviours)
         {
-            GameObject.Destroy(src);
+            if (behaviour.m_HitBehavior != null)
+            {
+                Debug.Log("Herererererer");
+                behaviour.m_HitBehavior.OnTriggerHitEvent(target, src, behaviour);
+            }
         }
     }
 
