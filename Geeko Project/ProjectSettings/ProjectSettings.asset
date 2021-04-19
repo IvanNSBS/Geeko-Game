@@ -170,7 +170,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.SlimesDungeon
+    Android: com.SlimeDungeon
     Standalone: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1
