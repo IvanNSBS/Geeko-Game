@@ -73,6 +73,12 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        private static void configureAutoDetectAppVersion (bool flag)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor) {
+                Debug.Log ("configureAutoDetectAppVersion(" + flag + ")");
+            }
+        }
 
         private static void initialize (string gamekey, string gamesecret)
         {
@@ -183,6 +189,30 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
+        private static void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("addAdEvent(" + adAction + "," + adType + "," + adSdkName + "," + adPlacement + "," + duration + ")");
+            }
+        }
+
+        private static void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("addAdEvent(" + adAction + "," + adType + "," + adSdkName + "," + adPlacement + "," + noAdReason + ")");
+            }
+        }
+
+        private static void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement)
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("addAdEvent(" + adAction + "," + adType + "," + adSdkName + "," + adPlacement + ")");
+            }
+        }
+
         private static void setEnabledInfoLog (bool enabled)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
@@ -194,27 +224,6 @@ namespace GameAnalyticsSDK.Wrapper
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
                 Debug.Log ("GameAnalytics setVerboseLog(" + enabled + ")");
-            }
-        }
-
-        private static void setFacebookId (string facebookId)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setFacebookId(" + facebookId + ")");
-            }
-        }
-
-        private static void setGender (string gender)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setGender(" + gender + ")");
-            }
-        }
-
-        private static void setBirthYear (int birthYear)
-        {
-            if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("setBirthYear(" + birthYear + ")");
             }
         }
 
@@ -253,32 +262,86 @@ namespace GameAnalyticsSDK.Wrapper
             }
         }
 
-        // ----------------------- COMMAND CENTER ---------------------- //
-        private static string getCommandCenterValueAsString(string key, string defaultValue)
+        // ----------------------- REMOTE CONFIGS ---------------------- //
+        private static string getRemoteConfigsValueAsString(string key, string defaultValue)
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("getCommandCenterValueAsString()");
+                Debug.Log ("getRemoteConfigsValueAsString()");
             }
             return defaultValue;
         }
 
-        private static bool isCommandCenterReady ()
+        private static bool isRemoteConfigsReady ()
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("isCommandCenterReady()");
+                Debug.Log ("isRemoteConfigsReady()");
             }
             return false;
         }
 
-        private static string getConfigurationsContentAsString()
+        private static string getRemoteConfigsContentAsString()
         {
             if (GameAnalytics.SettingsGA.InfoLogEditor) {
-                Debug.Log ("getConfigurationsContentAsString()");
+                Debug.Log ("getRemoteConfigsContentAsString()");
             }
             return "";
         }
 
-        #endif
+        private static string getABTestingId()
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("getABTestingId()");
+            }
+            return "";
+        }
+
+        private static string getABTestingVariantId()
+        {
+            if (GameAnalytics.SettingsGA.InfoLogEditor)
+            {
+                Debug.Log("getABTestingVariantId()");
+            }
+            return "";
+        }
+
+        private static void startTimer(string key)
+        {
+            Debug.Log("startTimer(" + key + ")");
+        }
+
+        public static void pauseTimer(string key)
+        {
+            Debug.Log("pauseTimer(" + key + ")");
+        }
+
+        public static void resumeTimer(string key)
+        {
+            Debug.Log("resumeTimer(" + key + ")");
+        }
+
+        public static long stopTimer(string key)
+        {
+            Debug.Log("stopTimer(" + key + ")");
+            return 0;
+        }
+
+        private static void subscribeMoPubImpressions()
+        {
+            Debug.Log("subscribeMoPubImpressions()");
+        }
+
+        private static void subscribeFyberImpressions()
+        {
+            Debug.Log("subscribeFyberImpressions()");
+        }
+
+        private static void subscribeIronSourceImpressions()
+        {
+            Debug.Log("subscribeIronSourceImpressions()");
+        }
+
+#endif
 
         public static void SetAvailableCustomDimensions01 (string list)
         {
@@ -318,7 +381,7 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetBuild (string build)
         {
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateBuild (build)) {
+            if (GAValidator.ValidateBuild (build)) {
                 configureBuild (build);
             }
 #else
@@ -329,7 +392,7 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetCustomUserId (string userId)
         {
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateUserId (userId)) {
+            if (GAValidator.ValidateUserId (userId)) {
                 configureUserId (userId);
             }
 #else
@@ -345,6 +408,11 @@ namespace GameAnalyticsSDK.Wrapper
         public static void SetEnabledEventSubmission (bool enabled)
         {
             setEventSubmission (enabled);
+        }
+
+        public static void SetAutoDetectAppVersion (bool flag)
+        {
+            configureAutoDetectAppVersion (flag);
         }
 
         public static void StartSession ()
@@ -368,7 +436,7 @@ namespace GameAnalyticsSDK.Wrapper
         public static void Initialize (string gamekey, string gamesecret)
         {
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateKeys (gamekey, gamesecret)) {
+            if (GAValidator.ValidateKeys (gamekey, gamesecret)) {
                 initialize (gamekey, gamesecret);
             }
 #else
@@ -419,7 +487,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateBusinessEvent (currency, amount, cartType, itemType, itemId)) {
+            if (GAValidator.ValidateBusinessEvent (currency, amount, cartType, itemType, itemId)) {
                 addBusinessEvent (currency, amount, itemType, itemId, cartType, fieldsAsString);
             }
 #else
@@ -432,7 +500,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateResourceEvent (flowType, currency, amount, itemType, itemId)) {
+            if (GAValidator.ValidateResourceEvent (flowType, currency, amount, itemType, itemId)) {
                 addResourceEvent ((int)flowType, currency, amount, itemType, itemId, fieldsAsString);
             }
 #else
@@ -444,7 +512,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateProgressionEvent (progressionStatus, progression01, progression02, progression03)) {
+            if (GAValidator.ValidateProgressionEvent (progressionStatus, progression01, progression02, progression03)) {
                 addProgressionEvent ((int)progressionStatus, progression01, progression02, progression03, fieldsAsString);
             }
 #else
@@ -456,7 +524,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateProgressionEvent (progressionStatus, progression01, progression02, progression03)) {
+            if (GAValidator.ValidateProgressionEvent (progressionStatus, progression01, progression02, progression03)) {
                 addProgressionEventWithScore ((int)progressionStatus, progression01, progression02, progression03, score, fieldsAsString);
             }
 #else
@@ -468,7 +536,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDesignEvent (eventID)) {
+            if (GAValidator.ValidateDesignEvent (eventID)) {
                 addDesignEventWithValue (eventID, eventValue, fieldsAsString);
             }
 #else
@@ -480,7 +548,7 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateDesignEvent (eventID)) {
+            if (GAValidator.ValidateDesignEvent (eventID)) {
                 addDesignEvent (eventID, fieldsAsString);
             }
 #else
@@ -492,11 +560,47 @@ namespace GameAnalyticsSDK.Wrapper
         {
             string fieldsAsString = DictionaryToJsonString(fields);
 #if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateErrorEvent(severity,message)) {
+            if (GAValidator.ValidateErrorEvent(severity,message)) {
                 addErrorEvent ((int)severity, message, fieldsAsString);
             }
 #else
                 addErrorEvent ((int)severity, message, fieldsAsString);
+#endif
+        }
+
+        public static void AddAdEventWithDuration(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, long duration)
+        {
+#if UNITY_EDITOR
+            if (GAValidator.ValidateAdEvent(adAction, adType, adSdkName, adPlacement))
+            {
+                addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration);
+            }
+#elif UNITY_IOS || UNITY_ANDROID
+                addAdEventWithDuration((int)adAction, (int)adType, adSdkName, adPlacement, duration);
+#endif
+        }
+
+        public static void AddAdEventWithReason(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement, GAAdError noAdReason)
+        {
+#if UNITY_EDITOR
+            if (GAValidator.ValidateAdEvent(adAction, adType, adSdkName, adPlacement))
+            {
+                addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason);
+            }
+#elif UNITY_IOS || UNITY_ANDROID
+                addAdEventWithReason((int)adAction, (int)adType, adSdkName, adPlacement, (int)noAdReason);
+#endif
+        }
+
+        public static void AddAdEvent(GAAdAction adAction, GAAdType adType, string adSdkName, string adPlacement)
+        {
+#if UNITY_EDITOR
+            if (GAValidator.ValidateAdEvent(adAction, adType, adSdkName, adPlacement))
+            {
+                addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement);
+            }
+#elif UNITY_IOS || UNITY_ANDROID
+                addAdEvent((int)adAction, (int)adType, adSdkName, adPlacement);
 #endif
         }
 
@@ -510,53 +614,34 @@ namespace GameAnalyticsSDK.Wrapper
             setEnabledVerboseLog (enabled);
         }
 
-        public static void SetFacebookId (string facebookId)
+        // ----------------------- REMOTE CONFIGS ---------------------- //
+        public static string GetRemoteConfigsValueAsString(string key, string defaultValue)
         {
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateFacebookId (facebookId)) {
-                setFacebookId (facebookId);
-            }
+            return getRemoteConfigsValueAsString(key, defaultValue);
+        }
+
+        public static bool IsRemoteConfigsReady()
+        {
+#if (UNITY_WSA) && (!UNITY_EDITOR)
+            return isRemoteConfigsReady() != 0;
 #else
-                setFacebookId (facebookId);
+            return isRemoteConfigsReady();
 #endif
         }
 
-        public static void SetGender (string gender)
+        public static string GetRemoteConfigsContentAsString()
         {
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateGender (gender)) {
-                setGender (gender);
-            }
-#else
-                setGender (gender);
-#endif
+            return getRemoteConfigsContentAsString();
         }
 
-        public static void SetBirthYear (int birthYear)
+        public static string GetABTestingId()
         {
-#if UNITY_EDITOR
-            if (GameAnalyticsSDK.Validators.GAValidator.ValidateBirthyear (birthYear)) {
-                setBirthYear (birthYear);
-            }
-#else
-                setBirthYear (birthYear);
-#endif
+            return getABTestingId();
         }
 
-        // ----------------------- COMMAND CENTER ---------------------- //
-        public static string GetCommandCenterValueAsString(string key, string defaultValue)
+        public static string GetABTestingVariantId()
         {
-            return getCommandCenterValueAsString(key, defaultValue);
-        }
-
-        public static bool IsCommandCenterReady()
-        {
-            return isCommandCenterReady();
-        }
-
-        public static string GetConfigurationsContentAsString()
-        {
-            return getConfigurationsContentAsString();
+            return getABTestingVariantId();
         }
 
         private static string DictionaryToJsonString(IDictionary<string, object> dict)
@@ -570,6 +655,72 @@ namespace GameAnalyticsSDK.Wrapper
                 }
             }
             return GA_MiniJSON.Serialize(table);
+        }
+
+        // TIMER FUNCTIONS
+        public static void StartTimer(string key)
+        {
+#if UNITY_EDITOR
+            startTimer(key);
+#elif UNITY_IOS || UNITY_ANDROID
+            startTimer(key);
+#endif
+        }
+
+        public static void PauseTimer(string key)
+        {
+#if UNITY_EDITOR
+            pauseTimer(key);
+#elif UNITY_IOS || UNITY_ANDROID
+            pauseTimer(key);
+#endif
+        }
+
+        public static void ResumeTimer(string key)
+        {
+#if UNITY_EDITOR
+            resumeTimer(key);
+#elif UNITY_IOS || UNITY_ANDROID
+            resumeTimer(key);
+#endif
+        }
+
+        public static long StopTimer(string key)
+        {
+#if UNITY_EDITOR
+            return stopTimer(key);
+#elif UNITY_IOS || UNITY_ANDROID
+            return stopTimer(key);
+#else
+            return 0;
+#endif
+        }
+
+        public static void SubscribeMoPubImpressions()
+        {
+#if UNITY_EDITOR
+            subscribeMoPubImpressions();
+#elif UNITY_IOS || UNITY_ANDROID
+            subscribeMoPubImpressions();
+#endif
+        }
+
+        public static void SubscribeFyberImpressions()
+        {
+#if UNITY_EDITOR
+            subscribeFyberImpressions();
+#elif UNITY_IOS || UNITY_ANDROID
+            subscribeFyberImpressions();
+#endif
+        }
+
+        public static void SubscribeIronSourceImpressions()
+        {
+#if UNITY_EDITOR
+            subscribeIronSourceImpressions();
+#elif UNITY_IOS || UNITY_ANDROID
+            subscribeIronSourceImpressions();
+#endif
         }
     }
 }

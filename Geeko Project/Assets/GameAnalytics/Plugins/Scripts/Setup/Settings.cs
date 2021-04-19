@@ -53,7 +53,7 @@ namespace GameAnalyticsSDK.Setup
         /// The version of the GA Unity Wrapper plugin
         /// </summary>
         [HideInInspector]
-        public static string VERSION = "5.1.11";
+        public static string VERSION = "6.5.2";
 
         [HideInInspector]
         public static bool CheckingForUpdates = false;
@@ -85,11 +85,15 @@ namespace GameAnalyticsSDK.Setup
         [SerializeField]
         public List<string> Build = new List<string>();
         [SerializeField]
+        public List<string> SelectedPlatformOrganization = new List<string>();
+        [SerializeField]
         public List<string> SelectedPlatformStudio = new List<string>();
         [SerializeField]
         public List<string> SelectedPlatformGame = new List<string>();
         [SerializeField]
         public List<int> SelectedPlatformGameID = new List<int>();
+        [SerializeField]
+        public List<int> SelectedOrganization = new List<int>();
         [SerializeField]
         public List<int> SelectedStudio = new List<int>();
         [SerializeField]
@@ -101,6 +105,8 @@ namespace GameAnalyticsSDK.Setup
         public bool SignUpOpen = true;
         public string StudioName = "";
         public string GameName = "";
+        public string OrganizationName = "";
+        public string OrganizationIdentifier = "";
         public string EmailGA = "";
 
         [System.NonSerialized]
@@ -119,13 +125,14 @@ namespace GameAnalyticsSDK.Setup
         public bool IntroScreen = true;
 
         [System.NonSerialized]
-        public List<Studio> Studios;
+        public List<GameAnalyticsSDK.Setup.Organization> Organizations;
 
         public bool InfoLogEditor = true;
         public bool InfoLogBuild = true;
         public bool VerboseLogBuild = false;
         public bool UseManualSessionHandling = false;
         public bool SendExampleGameDataToMyGame = false;
+        public bool UseIMEI = false;
         //public bool UseBundleVersion = false;
 
         public bool InternetConnectivity;
@@ -219,9 +226,11 @@ namespace GameAnalyticsSDK.Setup
                 this.gameKey.RemoveAt(index);
                 this.secretKey.RemoveAt(index);
                 this.Build.RemoveAt(index);
+                this.SelectedPlatformOrganization.RemoveAt(index);
                 this.SelectedPlatformStudio.RemoveAt(index);
                 this.SelectedPlatformGame.RemoveAt(index);
                 this.SelectedPlatformGameID.RemoveAt(index);
+                this.SelectedOrganization.RemoveAt(index);
                 this.SelectedStudio.RemoveAt(index);
                 this.SelectedGame.RemoveAt(index);
                 this.PlatformFoldOut.RemoveAt(index);
@@ -234,9 +243,11 @@ namespace GameAnalyticsSDK.Setup
             this.gameKey.Add("");
             this.secretKey.Add("");
             this.Build.Add("0.1");
+            this.SelectedPlatformOrganization.Add("");
             this.SelectedPlatformStudio.Add("");
             this.SelectedPlatformGame.Add("");
             this.SelectedPlatformGameID.Add(-1);
+            this.SelectedOrganization.Add(0);
             this.SelectedStudio.Add(0);
             this.SelectedGame.Add(0);
             this.PlatformFoldOut.Add(true);
@@ -425,6 +436,56 @@ namespace GameAnalyticsSDK.Setup
 #endregion
     }
 
+    public class Organization
+    {
+        public string Name { get; private set; }
+        public string ID { get; private set; }
+        public List<GameAnalyticsSDK.Setup.Studio> Studios { get; private set; }
+
+        public Organization(string name, string id)
+        {
+            Name = name;
+            ID = id;
+            Studios = new List<GameAnalyticsSDK.Setup.Studio>();
+        }
+
+        public static string[] GetOrganizationNames(List<GameAnalyticsSDK.Setup.Organization> organizations, bool addFirstEmpty = true)
+        {
+            if (organizations == null)
+            {
+                return new string[] { "-" };
+            }
+
+            if (addFirstEmpty)
+            {
+                string[] names = new string[organizations.Count + 1];
+                names[0] = "-";
+
+                string spaceAdd = "";
+                for (int i = 0; i < organizations.Count; i++)
+                {
+                    names[i + 1] = organizations[i].Name + spaceAdd;
+                    spaceAdd += " ";
+                }
+
+                return names;
+            }
+            else
+            {
+                string[] names = new string[organizations.Count];
+
+                string spaceAdd = "";
+                for (int i = 0; i < organizations.Count; i++)
+                {
+                    names[i] = organizations[i].Name + spaceAdd;
+                    spaceAdd += " ";
+                }
+
+                return names;
+            }
+        }
+    }
+
     //[System.Serializable]
     public class Studio
     {
@@ -432,17 +493,20 @@ namespace GameAnalyticsSDK.Setup
 
         public string ID { get; private set; }
 
-        //[SerializeField]
-        public List<Game> Games { get; private set; }
+        public string OrganizationID { get; private set; }
 
-        public Studio(string name, string id, List<Game> games)
+        //[SerializeField]
+        public List<GameAnalyticsSDK.Setup.Game> Games { get; private set; }
+
+        public Studio(string name, string id, string orgId, List<GameAnalyticsSDK.Setup.Game> games)
         {
             Name = name;
             ID = id;
+            OrganizationID = orgId;
             Games = games;
         }
 
-        public static string[] GetStudioNames(List<Studio> studios, bool addFirstEmpty = true)
+        public static string[] GetStudioNames(List<GameAnalyticsSDK.Setup.Studio> studios, bool addFirstEmpty = true)
         {
             if(studios == null)
             {
@@ -478,7 +542,7 @@ namespace GameAnalyticsSDK.Setup
             }
         }
 
-        public static string[] GetGameNames(int index, List<Studio> studios)
+        public static string[] GetGameNames(int index, List<GameAnalyticsSDK.Setup.Studio> studios)
         {
             if(studios == null || studios[index].Games == null)
             {

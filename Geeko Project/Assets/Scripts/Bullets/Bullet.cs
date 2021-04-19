@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Transactions;
-using GameAnalyticsSDK.Setup;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 public class Bullet : MonoBehaviour
 {

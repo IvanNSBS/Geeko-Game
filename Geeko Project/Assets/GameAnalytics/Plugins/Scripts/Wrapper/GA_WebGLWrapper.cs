@@ -88,22 +88,19 @@ namespace GameAnalyticsSDK.Wrapper
         private static extern void endSession();
 
         [DllImport ("__Internal")]
-        private static extern void setFacebookId(string facebookId);
+        private static extern string getRemoteConfigsValueAsString(string key, string defaultValue);
 
         [DllImport ("__Internal")]
-        private static extern void setGender(int gender);
+        private static extern bool isRemoteConfigsReady();
 
         [DllImport ("__Internal")]
-        private static extern void setBirthYear(int birthYear);
+        private static extern string getRemoteConfigsContentAsString();
 
         [DllImport ("__Internal")]
-        private static extern string getCommandCenterValueAsString(string key, string defaultValue);
+        private static extern string getABTestingId();
 
         [DllImport ("__Internal")]
-        private static extern bool isCommandCenterReady();
-
-        [DllImport ("__Internal")]
-        private static extern string getConfigurationsContentAsString();
+        private static extern string getABTestingVariantId();
 
         private static void gameAnalyticsStartSession()
         {
@@ -115,17 +112,9 @@ namespace GameAnalyticsSDK.Wrapper
             endSession();
         }
 
-        private static void setGender(string gender)
+        private static void configureAutoDetectAppVersion (bool flag)
         {
-            switch(gender)
-            {
-                case "male":
-                    setGender(1);
-                    break;
-                case "female":
-                    setGender(2);
-                    break;
-            }
+            // not supported
         }
 
 #endif

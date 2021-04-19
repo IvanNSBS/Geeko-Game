@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 using GameAnalyticsSDK.Setup;
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
 using UnityEngine.Networking;
 #endif
 
@@ -14,6 +14,8 @@ namespace GameAnalyticsSDK.Editor
         private GUIContent _firstNameLabel = new GUIContent("First name", "Your first name.");
         private GUIContent _lastNameLabel = new GUIContent("Last name", "Your last name (surname).");
         private GUIContent _studioNameLabel = new GUIContent("Studio name", "Your studio's name. You can add more studios and games on the GameAnalytics website.");
+        private GUIContent _organizationNameLabel = new GUIContent("Organization name", "Your organization's name. You can add more studios and games under your organization on the GameAnalytics website.");
+        private GUIContent _organizationIdentifierLabel = new GUIContent("Organization identifier", "Your organization's identifier to be used in url. Must be unique. Can only contain lowercase letters, digits and hyphens");
         private GUIContent _gameNameLabel = new GUIContent("Game name", "Your game's name. You can add more studies and games on the GameAnalytics website.");
         private GUIContent _passwordConfirmLabel = new GUIContent("Confirm password", "Your GameAnalytics user account password.");
         private GUIContent _emailOptInLabel = new GUIContent("Subscribe to release updates, news and tips and tricks.", "If enabled GameAnalytics may send you news about updates, cool tips and tricks, and other news to help you get the most out of our service.");
@@ -44,6 +46,7 @@ namespace GameAnalyticsSDK.Editor
         private bool _createGameInProgress = false;
         private string _googlePlayPublicKey = "";
         private RuntimePlatform _selectedPlatform;
+        private int _selectedOrganization;
         private int _selectedStudio;
 
         private enum StringType
@@ -200,6 +203,38 @@ namespace GameAnalyticsSDK.Editor
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     GameAnalytics.SettingsGA.StudioName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.StudioName, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    EditorGUILayout.Space();
+
+                    // organization name
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(_organizationNameLabel, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GameAnalytics.SettingsGA.OrganizationName = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.OrganizationName, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    EditorGUILayout.Space();
+
+                    // organization identifier
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GUILayout.Label(_organizationIdentifierLabel, GUILayout.Width(INPUT_WIDTH));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GameAnalytics.SettingsGA.OrganizationIdentifier = EditorGUILayout.TextField("", GameAnalytics.SettingsGA.OrganizationIdentifier, GUILayout.Width(INPUT_WIDTH));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -485,13 +520,19 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, Studio.GetStudioNames(GameAnalytics.SettingsGA.Studios, false), GUILayout.Width(200));
+                    this._selectedOrganization = EditorGUILayout.Popup("", this._selectedOrganization, Organization.GetOrganizationNames(GameAnalytics.SettingsGA.Organizations, false), GUILayout.Width(200));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    Settings settings = CreateInstance<Settings>();
+                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, this._selectedOrganization > 0 ? Studio.GetStudioNames(GameAnalytics.SettingsGA.Organizations[this._selectedOrganization - 1].Studios, false) : new string[0], GUILayout.Width(200));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    GameAnalyticsSDK.Setup.Settings settings = CreateInstance<GameAnalyticsSDK.Setup.Settings>();
                     this._selectedPlatform = (RuntimePlatform)EditorGUILayout.Popup("", (int)this._selectedPlatform, settings.GetAvailablePlatforms(), GUILayout.Width(200));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
@@ -532,7 +573,7 @@ namespace GameAnalyticsSDK.Editor
                     }))
                     {
                         _createGameInProgress = true;
-                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedStudio, GameAnalytics.SettingsGA.GameName, this._googlePlayPublicKey, this._selectedPlatform, null);
+                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedOrganization, this._selectedStudio, GameAnalytics.SettingsGA.GameName, this._googlePlayPublicKey, this._selectedPlatform, null);
                     }
                     GUI.enabled = true;
                     GUILayout.FlexibleSpace();
@@ -665,7 +706,13 @@ namespace GameAnalyticsSDK.Editor
 
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, Studio.GetStudioNames(GameAnalytics.SettingsGA.Studios, false), GUILayout.Width(200));
+                    this._selectedOrganization = EditorGUILayout.Popup("", this._selectedOrganization, Organization.GetOrganizationNames(GameAnalytics.SettingsGA.Organizations, false), GUILayout.Width(200));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    this._selectedStudio = EditorGUILayout.Popup("", this._selectedStudio, this._selectedOrganization > 0 ? Studio.GetStudioNames(GameAnalytics.SettingsGA.Organizations[this._selectedOrganization - 1].Studios, false) : new string[0], GUILayout.Width(200));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
@@ -684,7 +731,7 @@ namespace GameAnalyticsSDK.Editor
                     {
                         _createGameInProgress = true;
                         this._selectedPlatform = _appFiguresGame.Store.Equals("google_play") || _appFiguresGame.Store.Equals("amazon_appstore") ? RuntimePlatform.Android : RuntimePlatform.IPhonePlayer;
-                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedStudio, _appFiguresGame.Name, this._googlePlayPublicKey, this._selectedPlatform, _appFiguresGame);
+                        GA_SettingsInspector.CreateGame(GameAnalytics.SettingsGA, this, this._selectedOrganization, this._selectedStudio, _appFiguresGame.Name, this._googlePlayPublicKey, this._selectedPlatform, _appFiguresGame);
                     }
                     GUI.enabled = true;
                     GUILayout.FlexibleSpace();
@@ -1316,14 +1363,18 @@ namespace GameAnalyticsSDK.Editor
             }
         }
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
         public IEnumerator GetAppStoreIconTexture(UnityWebRequest www, string storeName, GA_SignUp signup)
 #else
         public IEnumerator<WWW> GetAppStoreIconTexture(WWW www, string storeName, GA_SignUp signup)
 #endif
         {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1332,7 +1383,9 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2020_1_OR_NEWER
+                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
+#elif UNITY_2017_1_OR_NEWER
                 if (!(www.isNetworkError || www.isHttpError))
 #else
                 if (string.IsNullOrEmpty(www.error))
@@ -1341,35 +1394,35 @@ namespace GameAnalyticsSDK.Editor
                     switch (storeName)
                     {
                         case "amazon_appstore":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.AmazonIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.AmazonIcon = www.texture;
 #endif
                             break;
                         case "google_play":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.GooglePlayIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.GooglePlayIcon = www.texture;
 #endif
                             break;
                         case "apple:ios":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.iosIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.iosIcon = www.texture;
 #endif
                             break;
                         case "apple:mac":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.macIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.macIcon = www.texture;
 #endif
                             break;
                         case "windows_phone":
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                             GameAnalytics.SettingsGA.windowsPhoneIcon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                             GameAnalytics.SettingsGA.windowsPhoneIcon = www.texture;
@@ -1407,7 +1460,7 @@ namespace GameAnalyticsSDK.Editor
             Developer = developer;
             IconUrl = iconUrl;
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
             UnityWebRequest www = UnityWebRequestTexture.GetTexture(iconUrl);
             GA_ContinuationManager.StartCoroutine(GetIconTexture(www, signup), () => www.isDone);
 #else
@@ -1416,14 +1469,18 @@ namespace GameAnalyticsSDK.Editor
 #endif
         }
 
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
         private IEnumerator GetIconTexture(UnityWebRequest www, GA_SignUp signup)
 #else
         private IEnumerator<WWW> GetIconTexture(WWW www, GA_SignUp signup)
 #endif
         {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
+#if UNITY_2017_2_OR_NEWER
             yield return www.SendWebRequest();
+#else
+            yield return www.Send();
+#endif
             while (!www.isDone)
                 yield return null;
 #else
@@ -1432,13 +1489,15 @@ namespace GameAnalyticsSDK.Editor
 
             try
             {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2020_1_OR_NEWER
+                if (!(www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError))
+#elif UNITY_2017_1_OR_NEWER
                 if (!(www.isNetworkError || www.isHttpError))
 #else
                 if (string.IsNullOrEmpty(www.error))
 #endif
                 {
-#if UNITY_2018_3_OR_NEWER
+#if UNITY_2017_1_OR_NEWER
                     Icon = ((DownloadHandlerTexture)www.downloadHandler).texture;
 #else
                     Icon = www.texture;

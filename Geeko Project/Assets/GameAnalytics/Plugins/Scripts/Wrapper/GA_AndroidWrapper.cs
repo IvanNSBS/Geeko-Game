@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 using System.Runtime.InteropServices;
 using GameAnalyticsSDK.Utilities;
 
@@ -12,6 +13,10 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static readonly AndroidJavaClass GA = new AndroidJavaClass("com.gameanalytics.sdk.GameAnalytics");
         private static readonly AndroidJavaClass UNITY_GA = new AndroidJavaClass("com.gameanalytics.sdk.unity.UnityGameAnalytics");
+        private static readonly AndroidJavaClass GA_IMEI = new AndroidJavaClass("com.gameanalytics.sdk.imei.GAImei");
+#if gameanalytics_mopub_enabled
+        private static readonly AndroidJavaClass MoPubClass = new AndroidJavaClass("com.mopub.unity.MoPubUnityPlugin");
+#endif
 
         private static void configureAvailableCustomDimensions01(string list)
         {
@@ -89,8 +94,23 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("configureUserId", userId);
         }
 
+        private static void configureAutoDetectAppVersion(bool flag)
+        {
+            GA.CallStatic("configureAutoDetectAppVersion", flag);
+        }
+
         private static void initialize(string gamekey, string gamesecret)
         {
+            if(GameAnalytics.SettingsGA.UseIMEI)
+            {
+                try
+                {
+                    GA_IMEI.CallStatic("readImei");
+                }
+                catch(Exception)
+                {
+                }
+            }
             UNITY_GA.CallStatic("initialize");
 
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -98,8 +118,8 @@ namespace GameAnalyticsSDK.Wrapper
 
             GA.CallStatic("setEnabledErrorReporting", false);
             AndroidJavaClass ga = new AndroidJavaClass("com.gameanalytics.sdk.GAPlatform");
-            ga.CallStatic("initializeWithActivity", activity);
-            GA.CallStatic("initializeWithGameKey", gamekey, gamesecret);
+            ga.CallStatic("initialize", activity);
+            GA.CallStatic("initialize", gamekey, gamesecret);
         }
 
         private static void setCustomDimension01(string customDimension)
@@ -119,42 +139,57 @@ namespace GameAnalyticsSDK.Wrapper
 
         private static void addBusinessEvent(string currency, int amount, string itemType, string itemId, string cartType, string fields)
         {
-            GA.CallStatic("addBusinessEventWithCurrency", currency, amount, itemType, itemId, cartType/*, fields*/);
+            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType/*, fields*/);
         }
 
         private static void addBusinessEventWithReceipt(string currency, int amount, string itemType, string itemId, string cartType, string receipt, string store, string signature, string fields)
         {
-            GA.CallStatic("addBusinessEventWithCurrency", currency, amount, itemType, itemId, cartType, receipt, store, signature/*, fields*/);
+            GA.CallStatic("addBusinessEvent", currency, amount, itemType, itemId, cartType, receipt, store, signature/*, fields*/);
         }
 
         private static void addResourceEvent(int flowType, string currency, float amount, string itemType, string itemId, string fields)
         {
-            GA.CallStatic("addResourceEventWithFlowType", flowType, currency, amount, itemType, itemId/*, fields*/);
+            GA.CallStatic("addResourceEvent", flowType, currency, amount, itemType, itemId/*, fields*/);
         }
 
         private static void addProgressionEvent(int progressionStatus, string progression01, string progression02, string progression03, string fields)
         {
-            GA.CallStatic("addProgressionEventWithProgressionStatus", progressionStatus, progression01, progression02, progression03/*, fields*/);
+            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03/*, fields*/);
         }
 
         private static void addProgressionEventWithScore(int progressionStatus, string progression01, string progression02, string progression03, int score, string fields)
         {
-            GA.CallStatic("addProgressionEventWithProgressionStatus", progressionStatus, progression01, progression02, progression03, (double)score/*, fields*/);
+            GA.CallStatic("addProgressionEvent", progressionStatus, progression01, progression02, progression03, (double)score/*, fields*/);
         }
 
         private static void addDesignEvent(string eventId, string fields)
         {
-            GA.CallStatic("addDesignEventWithEventId", eventId/*, fields*/);
+            GA.CallStatic("addDesignEvent", eventId/*, fields*/);
         }
 
         private static void addDesignEventWithValue(string eventId, float value, string fields)
         {
-            GA.CallStatic("addDesignEventWithEventId", eventId, (double)value/*, fields*/);
+            GA.CallStatic("addDesignEvent", eventId, (double)value/*, fields*/);
         }
 
         private static void addErrorEvent(int severity, string message, string fields)
         {
-            GA.CallStatic("addErrorEventWithSeverity", severity, message/*, fields*/);
+            GA.CallStatic("addErrorEvent", severity, message/*, fields*/);
+        }
+
+        private static void addAdEventWithDuration(int adAction, int adType, string adSdkName, string adPlacement, long duration)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, duration);
+        }
+
+        private static void addAdEventWithReason(int adAction, int adType, string adSdkName, string adPlacement, int noAdReason)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement, noAdReason);
+        }
+
+        private static void addAdEvent(int adAction, int adType, string adSdkName, string adPlacement)
+        {
+            GA.CallStatic("addAdEvent", adAction, adType, adSdkName, adPlacement);
         }
 
         private static void setEnabledInfoLog(bool enabled)
@@ -165,30 +200,6 @@ namespace GameAnalyticsSDK.Wrapper
         private static void setEnabledVerboseLog(bool enabled)
         {
             GA.CallStatic("setEnabledVerboseLog", enabled);
-        }
-
-        private static void setFacebookId(string facebookId)
-        {
-            GA.CallStatic("setFacebookId", facebookId);
-        }
-
-        private static void setGender(string gender)
-        {
-            switch(gender)
-            {
-                case "male":
-                    GA.CallStatic("setGender", 1);
-                    break;
-                case "female":
-                    GA.CallStatic("setGender", 2);
-                    break;
-            }
-
-        }
-
-        private static void setBirthYear(int birthYear)
-        {
-            GA.CallStatic("setBirthYear", birthYear);
         }
 
         private static void setManualSessionHandling(bool enabled)
@@ -211,19 +222,94 @@ namespace GameAnalyticsSDK.Wrapper
             GA.CallStatic("endSession");
         }
 
-        private static string getCommandCenterValueAsString(string key, string defaultValue)
+        private static string getRemoteConfigsValueAsString(string key, string defaultValue)
         {
-            return GA.CallStatic<string>("getCommandCenterValueAsString", key, defaultValue);
+            return GA.CallStatic<string>("getRemoteConfigsValueAsString", key, defaultValue);
         }
 
-        private static bool isCommandCenterReady ()
+        private static bool isRemoteConfigsReady ()
         {
-            return GA.CallStatic<bool>("isCommandCenterReady");
+            return GA.CallStatic<bool>("isRemoteConfigsReady");
         }
 
-        private static string getConfigurationsContentAsString()
+        private static string getRemoteConfigsContentAsString()
         {
-            return GA.CallStatic<string>("getConfigurationsContentAsString");
+            return GA.CallStatic<string>("getRemoteConfigsContentAsString");
+        }
+
+        private static string getABTestingId()
+        {
+            return GA.CallStatic<string>("getABTestingId");
+        }
+
+        private static string getABTestingVariantId()
+        {
+            return GA.CallStatic<string>("getABTestingVariantId");
+        }
+
+        private static void startTimer(string key)
+        {
+            GA.CallStatic("startTimer", key);
+        }
+
+        private static void pauseTimer(string key)
+        {
+            GA.CallStatic("pauseTimer", key);
+        }
+
+        private static void resumeTimer(string key)
+        {
+            GA.CallStatic("resumeTimer", key);
+        }
+
+        private static long stopTimer(string key)
+        {
+            return GA.CallStatic<long>("stopTimer", key);
+        }
+
+        private static void subscribeMoPubImpressions()
+        {
+            GAMopubIntegration.ListenForImpressions(MopubImpressionHandler);
+        }
+
+        private static void MopubImpressionHandler(string json)
+        {
+#if gameanalytics_mopub_enabled
+            GA.CallStatic("addImpressionMoPubEvent", MoPubClass.CallStatic<string>("getSDKVersion"), json);
+#endif
+        }
+
+        private static void subscribeFyberImpressions()
+        {
+            GAFyberIntegration.ListenForImpressions(FyberImpressionHandler);
+        }
+
+        private static void FyberImpressionHandler(string json)
+        {
+#if gameanalytics_fyber_enabled
+            GA.CallStatic("addImpressionFyberEvent", Fyber.FairBid.Version, json);
+#endif
+        }
+
+        private static void subscribeIronSourceImpressions()
+        {
+            GAIronSourceIntegration.ListenForImpressions(IronSourceImpressionHandler);
+        }
+
+        private static void IronSourceImpressionHandler(string json)
+        {
+#if gameanalytics_ironsource_enabled
+
+            // Remove potential label/tag from version number
+            string v = IronSource.pluginVersion();
+            int index = v.IndexOf("-");
+            if(index >= 0)
+            {
+                v = v.Substring(0, index);
+            }
+
+            GA.CallStatic("addImpressionIronSourceEvent", v, json);
+#endif
         }
 #endif
     }
