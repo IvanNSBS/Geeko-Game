@@ -1,7 +1,7 @@
 # Geeko-Game
 
 ## Apk Download Link:
-- https://drive.google.com/file/d/1IcgvCxfyTlLMqbs0jSjZRE8avCcDY1px/view?usp=sharing
+- https://drive.google.com/file/d/1KDSxXJMP6JH6bTUpBnhvwPSa5Hpzsrtd/view?usp=sharing
 
 ## Game Screenshot:
 ![](./previewImg.png)
